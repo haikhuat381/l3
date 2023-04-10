@@ -13,12 +13,17 @@ import {
   getListEmployeeRequest,
   getListLocation,
   getOtherFeature,
+
+  getListEmployeeAction
 } from "app/redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-import { getdata } from "./EmployeeServices";
+import {  getdata } from "./EmployeeServices";
 import { async, awrap } from "regenerator-runtime";
+import PaginationCustom from "../Pagination/PaginationCustom";
+
+
 const Container = styled("div")(() => ({
   margin: "30px",
   "& .breadcrumb": {
@@ -26,8 +31,11 @@ const Container = styled("div")(() => ({
   },
 }));
 
+
+
 function AddNewEmployee() {
-  // const [listEmployee, setListEmployee] = useState([]);
+  const [listEmployee, setListEmployee] = useState([]);
+
   // const getListEmployee = async (data) => {
   //   const res = await getdata(data);
   //   if (res.status === 200) {
@@ -35,33 +43,44 @@ function AddNewEmployee() {
   //     setListEmployee(res?.data?.data);
   //   }
   // };
-
+  // console.log("dfm hai cho " , getListEmployee);
   // useEffect(() => {
   //   getListEmployee(3);
   // }, []);
 
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-  console.log(" chao bạn", currentPage);
+  // console.log(" chao bạn", currentPage);
   const dispatch = useDispatch();
+
+  const [page, setPage] = useState(1);
+  const [pagesize, setPageSize] = useState(5)
+
+  // useEffect(() => {
+  //   dispatch(getListEmployeeRequest());
+  //   dispatch(getListLocation());
+  //   dispatch(getOtherFeature());
+  // }, []);
+
+  
+  // const listAddNew = useSelector((state) => state.Employee.listEmployee).filter(
+  //   (employee) => {
+  //     return (
+  //       employee.status !== "Chờ duyệt" &&
+  //       employee.status !== "Đã duyệt" &&
+  //       employee.status !== "Kết thúc" &&
+  //       employee.releaseRequest === undefined
+  //     );
+  //   }
+  // );
+  const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
+  const objStatus = useSelector(state => state?.Employee?.objStatus)
+
   useEffect(() => {
-    dispatch(getListEmployeeRequest());
-    dispatch(getListLocation());
-    dispatch(getOtherFeature());
-  }, []);
-  const listAddNew = useSelector((state) => state.Employee.listEmployee).filter(
-    (employee) => {
-      return (
-        employee.status !== "Chờ duyệt" &&
-        employee.status !== "Đã duyệt" &&
-        employee.status !== "Kết thúc" &&
-        employee.releaseRequest === undefined
-      );
-    }
-  );
+    dispatch(getListEmployeeAction("1,3,4,6", page, pagesize))
+  },[page, pagesize])
+  // console.log("listEmployeeDataReducer",listEmployeeDataReducer)
+  // const [listEmployeeData, setListEmployeeData] = useState([]);
+
   const [employeeDelete, setEmployeeDelete] = useState("");
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [shouldOpenViewDialog, setShouldOpenViewDialog] = useState(false);
@@ -70,6 +89,7 @@ function AddNewEmployee() {
     shouldOpenConfirmationDeleteDialog,
     setshouldOpenConfirmationDeleteDialog,
   ] = useState(false);
+  
   const handleChangeEmployee = (rowdata, method) => {
     if (method === 1) {
       dispatch(getEmployeeData(rowdata));
@@ -92,6 +112,14 @@ function AddNewEmployee() {
       })
     );
   };
+
+  const onHandleChange = (page,pageSize) => {
+    // console.log(page)
+    // console.log(size)
+    setPage(page)
+    setPageSize(pageSize)
+  }
+
   const columns = [
     {
       title: "Hành động",
@@ -121,34 +149,43 @@ function AddNewEmployee() {
             </Tooltip>
             <Tooltip title="Xem chi tiết">
               <IconButton
-                disabled={rowData.status !== "Lưu mới" ? false : true}
+                // disabled={rowData.status !== 1 ? false : true}
                 onClick={() => {
                   setShouldOpenViewDialog(true);
                   dispatch(getEmployeeData(rowData));
                 }}
               >
                 <Icon
-                  color={rowData.status !== "Lưu mới" ? "success" : "disabled"}
+                  color="success"
+                  // color={rowData.status !== 1 ? "success" : "disabled"}
                 >
                   visibilityIcon
                 </Icon>
               </IconButton>
             </Tooltip>
             <Tooltip title="Sửa">
-              <IconButton onClick={() => handleChangeEmployee(rowData, 1)}>
-                <Icon color="primary">edit</Icon>
+              <IconButton 
+                disabled ={rowData.status === 1 || rowData.status === 4? false : true}
+                onClick={() => handleChangeEmployee(rowData, 1)}
+              >
+                <Icon 
+                  // color="primary"
+                  color={rowData.status === 1 || rowData.status === 4 ? "primary" : "disabled"}
+                  
+                >edit
+                </Icon>
               </IconButton>
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                disabled={rowData.status === "Lưu mới" ? false : true}
+                disabled={rowData.status === 1 ? false : true}
                 onClick={() => {
                   setEmployeeDelete(rowData);
                   setshouldOpenConfirmationDeleteDialog(true);
                 }}
               >
                 <Icon
-                  color={rowData.status === "Lưu mới" ? "error" : "disabled"}
+                  color={rowData.status === 1 ? "error" : "disabled"}
                 >
                   delete
                 </Icon>
@@ -166,7 +203,10 @@ function AddNewEmployee() {
     },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
-    { title: "Trạng thái", field: "status" },
+    { title: "Trạng thái",
+      field: "status",
+      render: (rowdata) => objStatus[rowdata.status],
+    },
   ];
 
   return (
@@ -205,11 +245,9 @@ function AddNewEmployee() {
       <Box width="100%" overflow="auto">
         <MaterialTable
           title={""}
-          // data={listEmployee}
-          data={[]}
+          data={listEmployeeDataReducer}
+          // data={listAddNew}
           columns={columns}
-          pageSize={currentPage}
-          onChangePage={handlePageChange}
           options={{
             paging: false,
             // pageSizeOptions: [5, 10, 15, 20],
@@ -230,6 +268,9 @@ function AddNewEmployee() {
             // exportButton: true,
             toolbar: false,
           }}
+        />
+        <PaginationCustom 
+          onHandleChange={onHandleChange}
         />
       </Box>
       {shouldOpenConfirmationDeleteDialog && (

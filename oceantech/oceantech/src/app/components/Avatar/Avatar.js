@@ -39,7 +39,7 @@ function CustomAvatar(props) {
   var binaryData = [];
   binaryData.push(defaultPreview);
   window.URL.createObjectURL(new Blob(binaryData, { type: "application/zip" }));
-  console.log("sdjhfjsdhf", binaryData);
+  // console.log("sdjhfjsdhf", binaryData);
   return (
     <>
       <Dialog onClose={onCloseDefault} open={showModal}>

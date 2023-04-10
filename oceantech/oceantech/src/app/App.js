@@ -32,7 +32,7 @@ const App = () => {
 
   useEffect(() => {
     getdata().then((res) => {
-      console.log("sjdhgajsdha", res?.data.access_token);
+      // console.log("sjdhgajsdha", res?.data.access_token);
       localStorage.setItem("access_token", res?.data.access_token);
       // setDataStorage("access_token", JSON.stringify(res?.data.access_token))
     });

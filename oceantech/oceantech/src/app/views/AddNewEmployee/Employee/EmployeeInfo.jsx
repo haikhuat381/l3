@@ -8,21 +8,31 @@ function EmployeeInfo(props) {
   const { formikRoot } = props;
 
   const location = useSelector((state) => state.Location.location);
-  const otherFeature = useSelector((state) => state.OtherFeature.otherFeature);
+  // const otherFeature = useSelector((state) => state.OtherFeature.otherFeature);
+  const otherFeature =[
+    {
+      "id": 1,
+      "name": "Back-End"
+    },
+    {
+      "id": 2,
+      "name": "Front-End"
+    },
+    {
+      "id": 3,
+      "name": "Design"
+    }
+  ]
 
   const Gender = [
     {
-      id: 1,
+      value: "0",
       gender: "Nam",
     },
     {
-      id: 2,
+      value: "1",
       gender: "Nữ",
-    },
-    {
-      id: 3,
-      gender: "Khác",
-    },
+    }
   ];
   return (
     <>
@@ -77,8 +87,8 @@ function EmployeeInfo(props) {
                   error={formikRoot.errors.gender && formikRoot.touched.gender}
                   helperText={formikRoot.errors.gender}
                 >
-                  {Gender.map((item) => (
-                    <MenuItem key={item.id} value={item.gender}>
+                  {Gender?.map((item) => (
+                    <MenuItem key={item.id} value={item.value}>
                       {item.gender}
                     </MenuItem>
                   ))}
@@ -159,8 +169,8 @@ function EmployeeInfo(props) {
                   error={formikRoot.errors.teamId && formikRoot.touched.teamId}
                   helperText={formikRoot.errors.teamId}
                 >
-                  {otherFeature.Team.map((item) => (
-                    <MenuItem key={item.id} value={item.name}>
+                  {otherFeature.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
                   ))}
@@ -192,7 +202,7 @@ function EmployeeInfo(props) {
                   value={formikRoot.values.address}
                   name="address"
                   onChange={formikRoot.handleChange}
-                  error={formikRoot.errors.address && formikRoot.errors.address}
+                  error={formikRoot.errors.address && formikRoot.touched.address}
                   helperText={formikRoot.errors.address}
                 />
               </Grid>

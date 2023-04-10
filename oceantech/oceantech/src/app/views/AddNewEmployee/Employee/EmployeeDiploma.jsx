@@ -23,6 +23,7 @@ function EmployeeDiploma(props) {
 
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [diplomaData, setDiplomaData] = useState({});
+  const [listDiplomaData, setListDiplomaData] = useState([]);
   const [
     shouldOpenConfirmationDeleteDialog,
     setshouldOpenConfirmationDeleteDialog,
@@ -31,6 +32,7 @@ function EmployeeDiploma(props) {
   const handleClose = () => {
     setDiplomaData({});
   };
+  console.log("listDiplomaData", listDiplomaData)
   const handleChangeEmployee = (rowdata, method) => {
     if (method == 1) {
       formik.setValues(rowdata);
@@ -40,6 +42,7 @@ function EmployeeDiploma(props) {
       setshouldOpenConfirmationDeleteDialog(true);
     }
   };
+  
   const handleDeleteDiploma = () => {
     employeeData.listDiploma = employeeData.listDiploma.filter(
       (diploma) => diploma.id !== diplomaData.id
@@ -52,7 +55,7 @@ function EmployeeDiploma(props) {
       name: "",
       field: "",
       educationalOrg: "",
-      graduatedWith: "",
+      content: "",
       issuanceDate: "",
     },
     validationSchema: Yup.object({
@@ -65,7 +68,7 @@ function EmployeeDiploma(props) {
         .max(30, "Nhập nội dung đúng định dạng")
         .required("Không được bỏ trống"),
       educationalOrg: Yup.string().required("Không được bỏ trống"),
-      graduatedWith: Yup.string().required("Không được bỏ trống"),
+      content: Yup.string().required("Không được bỏ trống"),
       issuanceDate: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: (values, { resetForm }) => {
@@ -75,14 +78,21 @@ function EmployeeDiploma(props) {
       if (!values.id) {
         console.log("tao");
         values.id = uuidv4();
-        handleAddDiploma(values, "listDiploma");
+        handleAddDiploma([...listDiplomaData, values], "listDiploma");
+        setListDiplomaData([...listDiplomaData, values])
       } else {
         console.log("sua");
-        employeeData.listDiploma = employeeData.listDiploma.filter(
-          (diploma) => diploma.id !== values.id
-        );
-        console.log(employeeData.listDiploma);
-        employeeData.listDiploma.push(values);
+        // employeeData.listDiploma = employeeData.listDiploma.filter(
+        //   (diploma) => diploma.id !== values.id
+        // );
+        // console.log(employeeData.listDiploma);
+        // employeeData.listDiploma.push(values);
+        setListDiplomaData(listDiplomaData => {
+          const newListDiplomaData = listDiplomaData.filter(diploma => diploma.id !== values.id)
+          newListDiplomaData.push(values)
+          handleAddDiploma(newListDiplomaData, "listDiploma");
+          return newListDiplomaData
+        })
       }
       resetForm();
       handleClose();
@@ -115,9 +125,9 @@ function EmployeeDiploma(props) {
       title: "Nội dung ",
       field: "content",
     },
-    { title: "Nơi cấp", field: "place" },
-    { title: "Ngày cấp", field: "date" },
-    { title: "Lĩnh Vực", render: (rowData) => rowData.field.fieldName },
+    { title: "Nơi cấp", field: "educationalOrg" },
+    { title: "Ngày cấp", field: "issuanceDate" },
+    { title: "Lĩnh Vực", field:"field" },
   ];
 
   return (
@@ -205,14 +215,14 @@ function EmployeeDiploma(props) {
               type="text"
               fullWidth
               variant="outlined"
-              name="graduatedWith"
+              name="content"
               size="small"
-              value={formik.values.graduatedWith}
+              value={formik.values.content}
               onChange={formik.handleChange}
               error={
-                formik.errors.graduatedWith && formik.touched.graduatedWith
+                formik.errors.content && formik.touched.content
               }
-              helperText={formik.errors.graduatedWith}
+              helperText={formik.errors.content}
             />
           </Grid>
 
@@ -233,7 +243,7 @@ function EmployeeDiploma(props) {
                 type="button"
                 onClick={formik.handleSubmit}
               >
-                cap nhat
+                Lưu
               </Button>
             </Grid>
           </Grid>
@@ -261,7 +271,8 @@ function EmployeeDiploma(props) {
       </Box> */}
       <MaterialTable
         title={""}
-        data={employeeData?.listDiploma}
+        // data={employeeData?.listDiploma}
+        data={listDiplomaData}
         columns={columns}
         options={{
           stickyHeader: true,

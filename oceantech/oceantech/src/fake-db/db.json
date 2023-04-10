@@ -809,6 +809,27 @@
       "listRegister": [],
       "listIncreaseSalary": [],
       "createdAt": 1680772911927
+    },
+    {
+      "fullName": "hải khuất",
+      "email": "dahdha@gmail.com",
+      "code": "09877666",
+      "phone": "0977665534",
+      "dateOfBirth": "2023-04-07",
+      "teamId": "Back-End",
+      "citizenId": "012365478910",
+      "address": "ha noi",
+      "gender": 0,
+      "image": "/assets/images/illustrations/dreamer.svg",
+      "listDiploma": [],
+      "listRelationship": [],
+      "status": "Lưu mới",
+      "id": "e299cac2-94c3-4c82-8231-db2c85cb97ab",
+      "listPromote": [],
+      "listPropose": [],
+      "listRegister": [],
+      "listIncreaseSalary": [],
+      "createdAt": 1681092927322
     }
   ]
 }

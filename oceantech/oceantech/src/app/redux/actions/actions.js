@@ -1,4 +1,5 @@
 import { ActionTypes } from "./actionTypes";
+
 export const getListEmployeeRequest = () => {
   return { type: ActionTypes.GET_LIST_EMPLOYEE_REQUEST };
 };
@@ -20,4 +21,13 @@ export const deleteEmployee = (payload) => {
 };
 export const updateEmployee = (payload) => {
   return { type: ActionTypes.UPDATE_EMPLOYEE, payload: { data: payload, id: payload.id } };
+};
+
+
+//moi
+
+export const getListEmployeeAction = (status, page, pageSize) => {
+  const payload = {status, page, pageSize}
+  console.log("payload",payload)
+  return { type: ActionTypes.GET_LIST_EMPLOYEE_DATA, payload: payload};
 };

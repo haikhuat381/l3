@@ -77,36 +77,44 @@ function EmployeeRelation(props) {
       relation: Yup.string().required("Không được bỏ trống"),
       address: Yup.string().required("Không được bỏ trống"),
     }),
-    onSubmit: (valuse) => {
-      console.log(valuse);
-    },
-
-    // onSubmit: (values) => {
-    //   console.log("chao bạn", values);
-    // if (Object.keys(relationship).length === 0) {
-    // if (!values.id) {
-    //   values.id = uuidv4();
-    //   handleAddRelation(values, "listRelationship");
-    //   formik.resetForm();
-    // } else {
-    //   employeeData.listRelationship = employeeData.listRelationship.filter(
-    //     (relationship) => relationship.id !== values.id
-    //   );
-
-    //   formik.resetForm();
-    // }
-    // formik.resetForm();
-    // formik.values = employee;
+    // onSubmit: (valuse) => {
+    //   console.log(valuse);
     // },
+
+    onSubmit: (values) => {
+      if (!values.id) {
+        values.id = uuidv4()
+        handleAddRelation(values, "listRelationship")
+        formik.resetForm()
+
+      } else {
+
+        console.log(values);
+        values.id = relationship.id;
+        console.log('EMPLOYEE DATA TRƯỚC: ',employeeData.listRelationship);
+        
+        employeeData.listRelationship = employeeData.listRelationship.filter(
+          (relationship) => relationship.id !== values.id
+          );
+          console.log('VALUES: ',values);
+        console.log('EMPLOYEE DATA SAU: ',employeeData.listRelationship);
+        employeeData.listRelationship.push(values);
+        console.log('EMPLOYEE SAU KHI PUSH: ',employeeData.listRelationship);
+        formik.resetForm()
+      }
+      formik.resetForm()
+      // handleClose()
+      formik.values=employee
+    },
   });
 
-  // const handleDeleteRelationship = () => {
-  //   employeeData.listRelationship = employeeData.listRelationship.filter(
-  //     (Relationship) => Relationship.id !== relationship.id
-  //   );
-  //   setshouldOpenConfirmationDeleteDialog(false);
-  //   setRelationship({});
-  // };
+  const handleDeleteRelationship = () => {
+    employeeData.listRelationship = employeeData.listRelationship.filter(
+      (Relationship) => Relationship.id !== relationship.id
+    );
+    setshouldOpenConfirmationDeleteDialog(false);
+    setRelationship({});
+  };
   const columns = [
     {
       title: "Hành động",

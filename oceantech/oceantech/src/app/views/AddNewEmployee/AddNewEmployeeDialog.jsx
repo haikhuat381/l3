@@ -35,20 +35,31 @@ function AddNewEmployeeDialog(props) {
   const { handleClose } = props;
   const employee = useSelector((state) => state.Employee.employeeData);
   const [employeeData, setEmployee] = useState(employee);
+  const [listDiploma, setListDiploma] = useState([])
+  const [listRelationship, setListRelationship] = useState([])
+
   useEffect(() => {
     setEmployee(employee);
   }, [employee]);
   // console.log(employeeData)
+  // const handleAddToList = (data, method) => {
+  //   setEmployee({ ...employeeData, [method]: [...employeeData[method], data] });
+  // };
   const handleAddToList = (data, method) => {
-    setEmployee({ ...employeeData, [method]: [...employeeData[method], data] });
+    // method === "listDiploma" ? setListDiploma([...listDiploma, data]) : setListRelationship([...listRelationship, data])
+    method === "listDiploma" ? setListDiploma([...data]) : setListRelationship([...data])
   };
 
   const [employeeId, setEmployeeId] = useState(employeeData.id);
   const [value, setValue] = React.useState("1");
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log(employeeId);
+
+  // console.log(employeeId);
+  console.log("abcd");
+  console.log(listDiploma);
   console.log(employeeData);
   //
   const formik = useFormik({
@@ -98,10 +109,12 @@ function AddNewEmployeeDialog(props) {
         .min(5, "Hãy nhập đầy đủ số CMND")
         .max(999999999999, "Số CMND không được vượt quá 12 chữ số")
         .required("Không được bỏ trống"),
+      address: Yup.string().required("Không được bỏ trống"),
     }),
     onSubmit: (values) => {
       console.log(" heo le em  ,", values);
       if (!employeeId) {
+        const numberGender = +values.gender
         values.id = uuidv4();
         values.status = "Lưu mới";
         setEmployeeId(values.id);
@@ -109,15 +122,18 @@ function AddNewEmployeeDialog(props) {
         values.listPropose = [];
         values.listRegister = [];
         values.listIncreaseSalary = [];
+        const dataCreate = { ...values, gender: numberGender, listDiploma: listDiploma, listRelationship: listRelationship };
         console.log("haha");
-        console.log(values);
-        dispatch(addNewEmployee(values));
+        // console.log(values);
+        console.log(dataCreate);
+        // dispatch(addNewEmployee(values));
         toast.success("Lưu mới thành công");
       } else {
         values.id = employeeId;
         values.listDiploma = employeeData.listDiploma;
         values.listRelationship = employeeData.listRelationship;
-        const updateData = { ...employeeData, ...values };
+        // const updateData = { ...employeeData, ...values };
+        const updateData = { ...values, listDiploma: listDiploma, listRelationship: listRelationship };
         console.log("updateData");
         console.log(updateData);
         dispatch(updateEmployee(updateData));
