@@ -1,7 +1,6 @@
 import { ActionTypes } from "../actions/actionTypes";
 
 const initialState = {
-  listEmployeeData: [],
   objStatus: {
     "1": "Lưu mới",
     // "2": "Chờ xử lý",
@@ -21,12 +20,32 @@ const initialState = {
     "18": "Đã duyệt",
     "19": "Đã từ chối",
   },
-
-  employeeData: {
-    listDiploma: [],
-    listRelationship: [],
-    // listPromote:[],
-  },
+  otherFeature:[
+    {
+      "id": 1,
+      "name": "Back-End"
+    },
+    {
+      "id": 2,
+      "name": "Front-End"
+    },
+    {
+      "id": 3,
+      "name": "Design"
+    }
+  ],
+  Gender: [
+    {
+      value: "0",
+      gender: "Nam",
+    },
+    {
+      value: "1",
+      gender: "Nữ",
+    }
+  ],
+  listEmployeeData: [],
+  employeeData: {},
 };
 
 export default (state = initialState, action) => {
@@ -34,16 +53,21 @@ export default (state = initialState, action) => {
     case ActionTypes.GET_LIST_EMPLOYEE_SUCCESS: {
       return { ...state, listEmployee: action.payload };
     }
-    case ActionTypes.GET_EMPLOYEE_DATA: {
-      return { ...state, employeeData: action.payload };
-    }
-
+    
+    
     //moi
     case ActionTypes.GET_LIST_EMPLOYEE_DATA_SUCCESS: {
       console.log("action",action)
       return { ...state, listEmployeeData: action.payload };
     }
+    
+    case ActionTypes.GET_EMPLOYEE_DATA_SUCCESS: {
+      return { ...state, employeeData: action.payload };
+    }
 
+    case ActionTypes.RESET_EMPLOYEE_DATA_SUCCESS: {
+      return { ...state, employeeData: action.payload };
+    }
 
     default:
       return state;

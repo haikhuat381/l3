@@ -24,9 +24,9 @@ const Container = styled("div")(({ theme }) => ({
 function Approved() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getListEmployeeRequest());
-    dispatch(getListLocation());
-    dispatch(getOtherFeature());
+    // dispatch(getListEmployeeRequest());
+    // dispatch(getListLocation());
+    // dispatch(getOtherFeature());
   }, []);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const listApproved = useSelector((state) => state.Employee.listEmployee).filter((employee) => {

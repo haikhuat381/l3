@@ -106,7 +106,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   handleChangeEmployee(event, "gender");
                 }}
               >
-                {otherFeature.Gender.map((item) => (
+                {otherFeature?.Gender?.map((item) => (
                   <MenuItem key={item.id} value={item.gender}>
                     {item.gender}
                   </MenuItem>
@@ -276,7 +276,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                 handleChangeEmployee(event, "placeIssue");
               }}
             >
-              {otherFeature.placeIssue.map((item) => (
+              {otherFeature?.placeIssue?.map((item) => (
                 <MenuItem key={item.id} value={item.place}>
                   {item.place}
                 </MenuItem>

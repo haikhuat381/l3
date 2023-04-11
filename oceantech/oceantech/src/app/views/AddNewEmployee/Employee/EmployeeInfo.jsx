@@ -2,38 +2,13 @@ import React from "react";
 import { Grid, Box, TextField, MenuItem, Card } from "@mui/material/";
 import styled from "@emotion/styled";
 import { Paragraph } from "app/components/Typography";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomAvatar from "app/components/Avatar/Avatar";
 function EmployeeInfo(props) {
   const { formikRoot } = props;
-
-  const location = useSelector((state) => state.Location.location);
-  // const otherFeature = useSelector((state) => state.OtherFeature.otherFeature);
-  const otherFeature =[
-    {
-      "id": 1,
-      "name": "Back-End"
-    },
-    {
-      "id": 2,
-      "name": "Front-End"
-    },
-    {
-      "id": 3,
-      "name": "Design"
-    }
-  ]
-
-  const Gender = [
-    {
-      value: "0",
-      gender: "Nam",
-    },
-    {
-      value: "1",
-      gender: "Nữ",
-    }
-  ];
+  const otherFeature = useSelector((state) => state?.Employee?.otherFeature);
+  const Gender = useSelector((state) => state?.Employee?.Gender);
+  
   return (
     <>
       <Grid container spacing={8}>
@@ -82,7 +57,7 @@ function EmployeeInfo(props) {
                   label="Giới tính"
                   variant="outlined"
                   name="gender"
-                  value={formikRoot.values.gender || ""}
+                  value={formikRoot.values.gender.toString() || ""}
                   onChange={formikRoot.handleChange}
                   error={formikRoot.errors.gender && formikRoot.touched.gender}
                   helperText={formikRoot.errors.gender}

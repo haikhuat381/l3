@@ -31,3 +31,23 @@ export const getListEmployeeAction = (status, page, pageSize) => {
   console.log("payload",payload)
   return { type: ActionTypes.GET_LIST_EMPLOYEE_DATA, payload: payload};
 };
+
+export const getEmployeeDataAction = (payload) => {
+  return { type: ActionTypes.GET_EMPLOYEE_DATA, payload: payload };
+};
+
+export const resetEmployeeDataAction = (payload) => {
+  return { type: ActionTypes.RESET_EMPLOYEE_DATA, payload: payload };
+};
+
+export const addNewEmployeeAction = (payload) => {
+  return { type: ActionTypes.ADD_NEW_EMPLOYEE, payload: payload };
+};
+
+export const updateEmployeeAction = (id, data) => {
+  return { type: ActionTypes.UPDATE_EMPLOYEE, payload: { id, data } };
+};
+
+export const deleteEmployeeAction = (payload) => {
+  return { type: ActionTypes.DELETE_EMPLOYEE, payload: payload };
+};

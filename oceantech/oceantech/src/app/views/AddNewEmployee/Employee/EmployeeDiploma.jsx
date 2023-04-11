@@ -17,13 +17,14 @@ import { v4 as uuidv4 } from "uuid";
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import moment from "moment";
 
 function EmployeeDiploma(props) {
-  const { employeeData, handleAddDiploma } = props;
+  const { employeeData, handleAddDiploma, listDiploma } = props;
 
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [diplomaData, setDiplomaData] = useState({});
-  const [listDiplomaData, setListDiplomaData] = useState([]);
+  const [listDiplomaData, setListDiplomaData] = useState(listDiploma);
   const [
     shouldOpenConfirmationDeleteDialog,
     setshouldOpenConfirmationDeleteDialog,
@@ -35,6 +36,8 @@ function EmployeeDiploma(props) {
   console.log("listDiplomaData", listDiplomaData)
   const handleChangeEmployee = (rowdata, method) => {
     if (method == 1) {
+      console.log(rowdata)
+      rowdata.issuanceDate = moment(rowdata.issuanceDate).format("YYYY-MM-DD")
       formik.setValues(rowdata);
     }
     if (method == 0) {
@@ -44,9 +47,16 @@ function EmployeeDiploma(props) {
   };
   
   const handleDeleteDiploma = () => {
-    employeeData.listDiploma = employeeData.listDiploma.filter(
-      (diploma) => diploma.id !== diplomaData.id
-    );
+    setListDiplomaData(listDiplomaData => {
+      // const newListDiplomaData = listDiplomaData.filter(diploma => diploma.id !== diplomaData.id) 
+      const newListDiplomaData = listDiplomaData.filter(diploma => !diplomaData?.certificateId ? diploma.id !== diplomaData.id : diploma.certificateId !==  diplomaData.certificateId) 
+      
+      handleAddDiploma(newListDiplomaData, "listDiploma");
+      return newListDiplomaData
+    })
+    // employeeData.listDiploma = employeeData.listDiploma.filter(
+    //   (diploma) => diploma.id !== diplomaData.id
+    // );
     setshouldOpenConfirmationDeleteDialog(false);
     setDiplomaData({});
   };
@@ -73,9 +83,13 @@ function EmployeeDiploma(props) {
     }),
     onSubmit: (values, { resetForm }) => {
       console.log("haikhuat");
+      console.log(diplomaData);
       console.log(values);
-
-      if (!values.id) {
+      // values.issuanceDate = moment(values.issuanceDate).format("YYYY/MM/DD")
+      const isCheck = !diplomaData?.certificateId ? values.id : diplomaData.certificateId
+      console.log("isCheck",isCheck)
+      console.log("isCheck",!isCheck)
+      if (!isCheck) {
         console.log("tao");
         values.id = uuidv4();
         handleAddDiploma([...listDiplomaData, values], "listDiploma");
@@ -88,7 +102,8 @@ function EmployeeDiploma(props) {
         // console.log(employeeData.listDiploma);
         // employeeData.listDiploma.push(values);
         setListDiplomaData(listDiplomaData => {
-          const newListDiplomaData = listDiplomaData.filter(diploma => diploma.id !== values.id)
+          // const newListDiplomaData = listDiplomaData.filter(diploma => diploma.id !== values.id)
+          const newListDiplomaData = listDiplomaData.filter(diploma => !diplomaData?.certificateId ? diploma.id !== values.id : diploma.certificateId !==  diplomaData.certificateId) 
           newListDiplomaData.push(values)
           handleAddDiploma(newListDiplomaData, "listDiploma");
           return newListDiplomaData
@@ -98,7 +113,7 @@ function EmployeeDiploma(props) {
       handleClose();
     },
   });
-  const otherFeature = useSelector((state) => state.OtherFeature.otherFeature);
+  // const otherFeature = useSelector((state) => state.OtherFeature.otherFeature);
 
   const columns = [
     {
@@ -107,7 +122,10 @@ function EmployeeDiploma(props) {
         return (
           <>
             <Tooltip title="Sửa">
-              <IconButton onClick={() => handleChangeEmployee(rowData, 1)}>
+              <IconButton onClick={() => {
+                setDiplomaData(rowData)
+                return handleChangeEmployee(rowData, 1)
+              }}>
                 <Icon color="primary">edit</Icon>
               </IconButton>
             </Tooltip>

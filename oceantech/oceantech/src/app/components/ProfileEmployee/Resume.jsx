@@ -64,7 +64,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Box className="item-box">
                 <Icon>cakeIcon</Icon>
                 <Typography variant="body2">
-                  {employee.birthday.split("-").reverse().join("-")}
+                  {/* {employee.birthday.split("-").reverse().join("-")} */}
                 </Typography>
               </Box>
             </Grid>
@@ -107,7 +107,7 @@ const Resume = React.forwardRef((props, ref) => {
               </Box>
             </Grid>
             <Grid item className="textfield-box" m={"0 24px"}>
-              {textFieldValues.skill.map((value, index) => (
+              {textFieldValues?.skill?.map((value, index) => (
                 <div style={{ display: "flex", alignItems: "center" }} key={index}>
                   <TextField
                     value={value}
@@ -145,7 +145,7 @@ const Resume = React.forwardRef((props, ref) => {
               </Box>
             </Grid>
             <Grid item className="textfield-box" m={"0 24px"}>
-              {textFieldValues.hobby.map((value, index) => (
+              {textFieldValues?.hobby?.map((value, index) => (
                 <div style={{ display: "flex", alignItems: "center" }} key={index}>
                   <TextField
                     value={value}
@@ -178,7 +178,7 @@ const Resume = React.forwardRef((props, ref) => {
             </Typography>
           </Grid>
           <Grid item>
-            {textFieldValues.generalIntroduction.map((value, index) => (
+            {textFieldValues?.generalIntroduction?.map((value, index) => (
               <div style={{ display: "flex", alignItems: "center" }} key={index}>
                 <TextField
                   value={value}
@@ -208,7 +208,7 @@ const Resume = React.forwardRef((props, ref) => {
             </MyButton>
           </Grid>
           <Grid item>
-            {textFieldValues.education.map((value, index) => (
+            {textFieldValues?.education?.map((value, index) => (
               <div style={{ display: "flex", alignItems: "center" }} key={index}>
                 <TextField
                   value={value}
@@ -252,7 +252,7 @@ const Resume = React.forwardRef((props, ref) => {
             </MyButton>
           </Grid>
           <Grid item>
-            {textFieldValues.experience.map((value, index) => (
+            {textFieldValues?.experience?.map((value, index) => (
               <div style={{ display: "flex", alignItems: "center" }} key={index}>
                 <TextField
                   value={value}
@@ -279,7 +279,7 @@ const Resume = React.forwardRef((props, ref) => {
             </Typography>
           </Grid>
           <Grid item>
-            {textFieldValues.careerGoals.map((value, index) => (
+            {textFieldValues?.careerGoals?.map((value, index) => (
               <div style={{ display: "flex", alignItems: "center" }} key={index}>
                 <TextField
                   value={value}

@@ -19,29 +19,33 @@ import {
 import * as Yup from "yup";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 
 import { useFormik } from "formik";
 function EmployeeRelation(props) {
-  // const dispatch = useDispatch();
-  const { employeeData, employee, handleAddRelation, relationshipData } = props;
-  // const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  // const [relationship, setRelationship] = useState({});
-  // const location = useSelector((state) => state.Location.location);
-
-  // const otherFeature = useSelector((state) => state.OtherFeature.otherFeature);
-
-  // const handleClose = () => {
-  //   // setShouldOpenDialog(false);
-  //   setRelationship({});
-  // };
+  const dispatch = useDispatch();
+  const { employeeData, employee, handleAddRelation,listRelationship,  relationshipData } = props;
+  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
+  const [relationship, setRelationship] = useState({});
+  const [listRelationshipData, setListRelationshipData] = useState(listRelationship);
   const [
     shouldOpenConfirmationDeleteDialog,
     setshouldOpenConfirmationDeleteDialog,
   ] = useState(false);
+
+  const Gender = useSelector((state) => state?.Employee?.Gender);
+  
+  
+  const handleClose = () => {
+    // setShouldOpenDialog(false);
+    setRelationship({});
+  };
   const handleChangeEmployee = (rowdata, method) => {
     if (method == 1) {
-      console.log(relationship);
-      setRelationship(rowdata);
+      rowdata.gender = rowdata.gender.toString()
+      rowdata.dateOfBirth = moment(rowdata.dateOfBirth).format("YYYY-MM-DD")
+      console.log("rowdata",rowdata);
+      // setRelationship(rowdata);
       formik.setValues(rowdata);
       // handleClose()
     }
@@ -50,14 +54,30 @@ function EmployeeRelation(props) {
       setshouldOpenConfirmationDeleteDialog(true);
     }
   };
+  const handleDeleteRelationship = () => {
+    setListRelationshipData(listRelationshipData => {
+      // const newListRelationshipData = listRelationshipData.filter(value => value.id !== relationship.id)
+      const newListRelationshipData = listRelationshipData.filter(value => !relationship?.familyId ? value.id !== relationship.id : value.familyId !==  relationship.familyId)
+
+      handleAddRelation(newListRelationshipData, "listRelationship");
+      return newListRelationshipData
+    })
+    // employeeData.listRelationship = employeeData.listRelationship.filter(
+    //   (Relationship) => Relationship.id !== relationship.id
+    // );
+    setshouldOpenConfirmationDeleteDialog(false);
+    setRelationship({});
+  };
+  console.log("listRelationshipData", listRelationshipData)
+  console.log("relationship", relationship)
   const formik = useFormik({
     initialValues: {
       name: "",
       dateOfBirth: "",
       gender: "",
       relation: "",
-      phone: "",
-      email: "",
+      // phone: "",
+      // email: "",
       citizenId: "",
       address: "",
     },
@@ -67,7 +87,7 @@ function EmployeeRelation(props) {
         .max(30, "Nhập họ tên đúng định dạng")
         .required("Không được bỏ trống"),
       gender: Yup.string().required("Không được bỏ trống"),
-      citizenId: Yup.string().required("Không được bỏ trống"),
+      // citizenId: Yup.string().required("Không được bỏ trống"),
 
       dateOfBirth: Yup.date().required("Vui lòng nhập ngày"),
       citizenId: Yup.string()
@@ -81,40 +101,51 @@ function EmployeeRelation(props) {
     //   console.log(valuse);
     // },
 
-    onSubmit: (values) => {
-      if (!values.id) {
+    onSubmit: (values, { resetForm }) => {
+      const numberGender = +values.gender
+      // values.dateOfBirth = moment(values.dateOfBirth).format("YYYY/MM/DD")
+      console.log("values", values)
+      console.log("relationship", relationship)
+      console.log("familyId", relationship.familyId)
+      const isCheck = !relationship?.familyId ? values.id : relationship.familyId
+      if (!isCheck) {
+        // if (!values.employeeId) {
         values.id = uuidv4()
-        handleAddRelation(values, "listRelationship")
-        formik.resetForm()
+        // handleAddRelation(values, "listRelationship")
+        console.log("tao")
+        handleAddRelation([...listRelationshipData, {...values, gender: numberGender}], "listRelationship");
+        setListRelationshipData([...listRelationshipData, {...values, gender: numberGender}])
+        // formik.resetForm()
 
       } else {
+        console.log("sua")
 
-        console.log(values);
-        values.id = relationship.id;
-        console.log('EMPLOYEE DATA TRƯỚC: ',employeeData.listRelationship);
+        setListRelationshipData(listRelationshipData => {
+          const newListRelationshipData = listRelationshipData.filter(value => !relationship?.familyId ? value.id !== values.id : value.familyId !==  relationship.familyId)
+          newListRelationshipData.push({...values, gender: numberGender})
+          handleAddRelation( newListRelationshipData, "listRelationship");
+          return newListRelationshipData
+        })
+
+        // console.log(values);
+        // values.id = relationship.id;
+        // console.log('EMPLOYEE DATA TRƯỚC: ',employeeData.listRelationship);
         
-        employeeData.listRelationship = employeeData.listRelationship.filter(
-          (relationship) => relationship.id !== values.id
-          );
-          console.log('VALUES: ',values);
-        console.log('EMPLOYEE DATA SAU: ',employeeData.listRelationship);
-        employeeData.listRelationship.push(values);
-        console.log('EMPLOYEE SAU KHI PUSH: ',employeeData.listRelationship);
-        formik.resetForm()
+        // employeeData.listRelationship = employeeData.listRelationship.filter(
+        //   (relationship) => relationship.id !== values.id
+        //   );
+        //   console.log('VALUES: ',values);
+        // console.log('EMPLOYEE DATA SAU: ',employeeData.listRelationship);
+        // employeeData.listRelationship.push(values);
+        // console.log('EMPLOYEE SAU KHI PUSH: ',employeeData.listRelationship);
+        // formik.resetForm()
       }
-      formik.resetForm()
-      // handleClose()
-      formik.values=employee
+      resetForm()
+      handleClose()
+      // formik.values=employee
     },
   });
 
-  const handleDeleteRelationship = () => {
-    employeeData.listRelationship = employeeData.listRelationship.filter(
-      (Relationship) => Relationship.id !== relationship.id
-    );
-    setshouldOpenConfirmationDeleteDialog(false);
-    setRelationship({});
-  };
   const columns = [
     {
       title: "Hành động",
@@ -122,15 +153,16 @@ function EmployeeRelation(props) {
         return (
           <>
             <Tooltip title="Sửa">
-              <IconButton onClick={() => handleChangeEmployee(rowData, 1)}>
+              <IconButton onClick={() => {
+                setRelationship(rowData)
+                return handleChangeEmployee(rowData, 1)
+              }}>
                 <Icon color="primary">edit</Icon>
               </IconButton>
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                onClick={() => {
-                  handleChangeEmployee(rowData, 0);
-                }}
+                onClick={() =>  handleChangeEmployee(rowData, 0)}
               >
                 <Icon color={"error"}>delete</Icon>
               </IconButton>
@@ -142,14 +174,16 @@ function EmployeeRelation(props) {
     { title: "Họ và tên", field: "name" },
     {
       title: "Ngày sinh ",
-      field: "birthday",
+      field: "dateOfBirth",
     },
     { title: "Giới tính", field: "gender" },
     {
       title: "Quan hệ",
-      render: (rowData) => rowData.relationship.relationship,
+      field: "relation",
+      // render: (rowData) => rowData.relationship.relationship,
     },
     { title: "Địa chỉ", field: "address" },
+    { title: "Số CMND", field: "citizenId" },
   ];
 
   return (
@@ -201,7 +235,7 @@ function EmployeeRelation(props) {
             />
           </Grid>
           <Grid item sm={3} xs={3} className="input-dialog">
-            <TextField
+            {/* <TextField
               label="Giới tính"
               type="text"
               fullWidth
@@ -212,7 +246,25 @@ function EmployeeRelation(props) {
               onChange={formik.handleChange}
               error={formik.errors.gender && formik.touched.gender}
               helperText={formik.errors.gender}
-            />
+            /> */}
+            <TextField
+                  select
+                  fullWidth
+                  size="small"
+                  label="Giới tính"
+                  variant="outlined"
+                  name="gender"
+                  value={formik.values.gender || ""}
+                  onChange={formik.handleChange}
+                  error={formik.errors.gender && formik.touched.gender}
+                  helperText={formik.errors.gender}
+                >
+                  {Gender?.map((item) => (
+                    <MenuItem key={item.id} value={item.value}>
+                      {item.gender}
+                    </MenuItem>
+                  ))}
+                </TextField>
           </Grid>
           <Grid item sm={3} xs={3} className="input-dialog">
             <TextField
@@ -272,14 +324,14 @@ function EmployeeRelation(props) {
               sx={{ mb: 2, background: "#7467EF" }}
               onClick={() => formik.submitForm()}
             >
-              xac nhan
+              Lưu
             </Button>
           </Grid>
         </Grid>
       </form>
       <MaterialTable
         title={""}
-        data={[]}
+        data={listRelationshipData}
         columns={columns}
         options={{
           stickyHeader: true,

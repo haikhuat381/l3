@@ -56,11 +56,11 @@ function a11yProps(index) {
 
 export default function ApprovedDialog({ handleClose }) {
   const dispatch = useDispatch();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const employeeData = useSelector((state) => state.Employee.employeeData);
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
   const columns = [
     {
       title: "Hành động",
