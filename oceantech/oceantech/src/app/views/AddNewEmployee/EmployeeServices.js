@@ -49,20 +49,20 @@ export const getEmployeeDataByID = async (id) => {
   return await axios.get(url,headers)
 };
 
-export const addNewEmployee = (data) => {
-  return axios.post(API, data, headers)
+export const addNewEmployee = async (data) => {
+  return await axios.post(API, data, headers)
 };
 
-export const updateEmployee = (id, data) => {
+export const updateEmployee = async (id, data) => {
   const url = API + "/" + id
-  return axios.put(url, data, headers);
+  return await axios.put(url, data, headers);
 };
 
-export const deleteEmployee = (id) => {
+export const deleteEmployee = async (id) => {
   // const url = API + "/" + id + "/status"
   const url = `${API}/${id}/status`
   const data = {
     "status": 14
   }
-  return axios.put(url, data, headers);
+  return await axios.put(url, data, headers);
 };

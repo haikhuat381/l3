@@ -28,7 +28,7 @@ export const updateEmployee = (payload) => {
 
 export const getListEmployeeAction = (status, page, pageSize) => {
   const payload = {status, page, pageSize}
-  console.log("payload",payload)
+  // console.log("payload",payload)
   return { type: ActionTypes.GET_LIST_EMPLOYEE_DATA, payload: payload};
 };
 

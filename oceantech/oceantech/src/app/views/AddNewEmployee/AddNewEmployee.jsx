@@ -48,6 +48,7 @@ function AddNewEmployee() {
   // console.log("employeeData", employeeData)
 
   const handleGetListEmployee = () => {
+    console.log("reloadddddddddd")
     const status = "1"
     // const status = "1,3,4,6"
     dispatch(getListEmployeeAction(status, page, pagesize))
