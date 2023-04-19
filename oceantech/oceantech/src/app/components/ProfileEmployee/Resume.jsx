@@ -1,299 +1,400 @@
-import React, { useState } from "react";
-import { Icon, TextField, IconButton } from "@mui/material";
-import { Grid, Typography, Box, Input, InputAdornment } from "@mui/material";
-import styled from "@emotion/styled";
-
+import React, { useEffect, useState } from "react";
+import {
+  Typography,
+  Grid,
+  Box,
+  Select,
+  TextField,
+  MenuItem,
+  IconButton,
+  Icon,
+  Tooltip,
+} from "@mui/material";
+import MaterialTable from "@material-table/core";
+import { InputAdornment, Input } from "@mui/material";
 import CustomAvatar from "../Avatar/Avatar";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "@emotion/styled";
+import { getFormDataAction } from "app/redux/actions/actions";
+import moment from "moment";
 const Resume = React.forwardRef((props, ref) => {
-  const MyButton = styled(IconButton)({
-    display: props.display,
+  // console.log("props", props)
+  // console.log("ref", ref)
+  const { listRelationship, handleChangeFormResume, formDataResumeUpdate, handleChangeEmployee, handleAddRelation, status } = props;
+  const dispatch = useDispatch()
+  // const formData = useSelector((state) => state?.Employee?.formData);
+  const Gender = useSelector((state) => state?.Employee?.Gender);
+  const employeeData = useSelector((state) => state?.Employee?.formData);
+  const employeeCheck = useSelector((state) => {
+    const data = state?.Employee?.formData
+    return {
+      ethnicity: data.ethnicity,
+      religion: data.religion,
+      citizenIdIssuingAuthority: data.citizenIdIssuingAuthority,
+      citizenIdIssuanceDate: data.citizenIdIssuanceDate
+    }
   });
-  const { employee, status } = props;
-  const [textFieldValues, setTextFieldValues] = useState({
-    education: employee.education,
-    experience: employee.experience,
-    skill: employee.skill,
-    hobby: employee.hobby,
-    generalIntroduction: employee.generalIntroduction,
-    careerGoals: employee.careerGoals,
-  });
-  const handleAddTextField = (method) => {
-    const newValues = { ...textFieldValues };
-    newValues[method].push("");
-    setTextFieldValues(newValues);
-  };
+  // const [employeeData, setEmployeeData] = useState(employee)
+  const [resumeData, setResumeData] = useState()
+  useEffect(() => {
+    // setEmployeeData(employee)
+    if(formDataResumeUpdate === undefined) {
+      // if(JSON.stringify(formDataResumeUpdate) === JSON.stringify(employeeCheck)) {
+      // setResumeData(employeeCheck)
+      // console.log("formDataResumeUpdate === undefined)")
+      setResumeData(() => {
+       return {
+          ethnicity: employeeData.ethnicity,
+          religion: employeeData.religion,
+          citizenIdIssuingAuthority: employeeData.citizenIdIssuingAuthority,
+          citizenIdIssuanceDate: employeeData.citizenIdIssuanceDate
+        }
+      })
+    } else {
+      setResumeData(formDataResumeUpdate)
+    }
+  },[employeeData])
 
-  const handleRemoveTextField = (index, method) => () => {
-    const newValues = { ...textFieldValues };
-    newValues[method].splice(index, 1);
-    setTextFieldValues(newValues);
-  };
+  useEffect(() => {
+    if(!status) {
+      handleChangeFormResume(resumeData)
+    }
+  },[resumeData])
 
-  const handleTextFieldChange = (event, index, method) => {
-    const newValues = { ...textFieldValues };
-    newValues[method][index] = event.target.value;
-    console.log(newValues);
-    setTextFieldValues(newValues);
-  };
+  const handleChange = (event,method) => {
+    const newValues = {...resumeData}
+    newValues[method] = event.target.value
+    setResumeData(newValues)
+  }
+  // console.log("employeeData", employeeData)
+  // console.log("listRelationship", listRelationship)
+  // console.log("resumeData", resumeData)
+
+  const columns = [
+    { title: "Họ và tên", field: "name" },
+    {
+      title: "Ngày sinh ",
+      field: "dateOfBirth",
+      render: (rowData) => moment(rowData.dateOfBirth).format("YYYY-MM-DD"),
+    },
+    {
+      title: "Giới tính",
+      field: "gender",
+      render: (rowData) => Gender[rowData.gender]?.gender
+    },
+    {
+      title: "Quan hệ",
+      field: "relation",
+      // render: (rowData) => rowData.relationship.relationship,
+    },
+    { title: "Địa chỉ", field: "address" },
+    { title: "Số CMND", field: "citizenId" },
+  ];
 
   return (
     <div ref={ref}>
-      <Grid container className="resume-container" xs={12} spacing={2}>
-        <Grid container direction={"column"} xs={4} rowSpacing={2} className="resume-left">
-          <Grid item>
-            <CustomAvatar image={employee.image} displayButton={"none"} />
-          </Grid>
-          <Grid item>
-            <Typography variant="h5" textAlign={"center"} textTransform={"uppercase"}>
-              {employee.fullName}
-            </Typography>
-            <Typography variant="subtitle1" textAlign={"center"}>
-              {employee.team}
-            </Typography>
-          </Grid>
-
-          <Grid item container direction={"column"} rowSpacing={2}>
-            <Grid item>
-              <Box className="title-info">
-                <Typography textTransform={"uppercase"} variant="subtitle1">
-                  Thông tin cơ bản
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box className="item-box">
-                <Icon>cakeIcon</Icon>
-                <Typography variant="body2">
-                  {/* {employee.birthday.split("-").reverse().join("-")} */}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box className="item-box">
-                <Icon>transgender</Icon>
-                <Typography variant="body2">{employee.gender}</Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box className="item-box">
-                <Icon>location_on</Icon>
-                <Typography variant="body2">{employee.address}</Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box className="item-box">
-                <Icon>phone</Icon>
-                <Typography variant="body2">{employee.phone}</Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box className="item-box">
-                <Icon>email</Icon>
-                <Typography variant="body2">{employee.email}</Typography>
-              </Box>
-            </Grid>
-          </Grid>
-          <Grid item container direction={"column"} rowSpacing={2}>
-            <Grid item>
-              <Box className="title-skill">
-                <Typography textTransform={"uppercase"} variant="subtitle1">
-                  Kĩ Năng
-                </Typography>
-                <MyButton onClick={() => handleAddTextField("skill")}>
-                  <Icon sx={{ fontSize: "28px", color: "#fff" }} className={"add-button"}>
-                    control_point
-                  </Icon>
-                </MyButton>
-              </Box>
-            </Grid>
-            <Grid item className="textfield-box" m={"0 24px"}>
-              {textFieldValues?.skill?.map((value, index) => (
-                <div style={{ display: "flex", alignItems: "center" }} key={index}>
-                  <TextField
-                    value={value}
-                    fullWidth
-                    focused
-                    multiline
-                    InputProps={{ inputProps: { style: { color: "#fff" } }, readOnly: status }}
-                    variant="standard"
-                    name="skill"
-                    onChange={(event) => {
-                      handleTextFieldChange(event, index, "skill");
-                    }}
-                  />
-
-                  <MyButton onClick={handleRemoveTextField(index, "skill")} s>
-                    <Icon sx={{ color: "#ddd" }} className={"remove-button"}>
-                      remove_circle_outline
-                    </Icon>
-                  </MyButton>
-                </div>
-              ))}
-            </Grid>
-          </Grid>
-          <Grid item container direction={"column"} rowSpacing={2}>
-            <Grid item>
-              <Box className="title-hobby">
-                <Typography textTransform={"uppercase"} variant="subtitle1">
-                  Sở Thích
-                </Typography>
-                <MyButton onClick={() => handleAddTextField("hobby")}>
-                  <Icon sx={{ fontSize: "28px", color: "#fff" }} className={"add-button"}>
-                    control_point
-                  </Icon>
-                </MyButton>
-              </Box>
-            </Grid>
-            <Grid item className="textfield-box" m={"0 24px"}>
-              {textFieldValues?.hobby?.map((value, index) => (
-                <div style={{ display: "flex", alignItems: "center" }} key={index}>
-                  <TextField
-                    value={value}
-                    fullWidth
-                    multiline
-                    focused
-                    InputProps={{ inputProps: { style: { color: "#fff" } }, readOnly: status }}
-                    variant="standard"
-                    name="hobby"
-                    onChange={(event) => {
-                      handleTextFieldChange(event, index, "hobby");
-                    }}
-                  />
-
-                  <MyButton onClick={handleRemoveTextField(index, "hobby")}>
-                    <Icon sx={{ color: "#ddd" }} className={"remove-button"}>
-                      remove_circle_outline
-                    </Icon>
-                  </MyButton>
-                </div>
-              ))}
-            </Grid>
-          </Grid>
+      <Grid container textAlign="center">
+        <Grid item xs={12}>
+          <Typography variant="h5">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</Typography>
         </Grid>
-        <Grid item container xs={8} className="resume-right" direction={"column"} spacing={4}>
-          <Grid item display={"flex"} gap={1} alignItems="center">
-            <Icon sx={{ fontSize: "28px" }}>account_circle</Icon>
-            <Typography textTransform={"uppercase"} variant="body1" fontWeight={600}>
-              Giới thiệu chung
+        <Grid item xs={12}>
+          <Typography variant="h6">Độc lập - Tự do - Hạnh phúc </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography>-------------------------------------</Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={14} padding={4} alignItems={"center"}>
+        <Grid item xs={4} textAlign="center">
+          <CustomAvatar image={employeeData?.resume?.photoUrl} displayButton={"none"} />
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="h5">SƠ YẾU LÝ LỊCH</Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={4}>
+        <Grid container item xs={12} spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h5" paddingBottom={1}>
+              I. BẢN THÂN
             </Typography>
           </Grid>
-          <Grid item>
-            {textFieldValues?.generalIntroduction?.map((value, index) => (
-              <div style={{ display: "flex", alignItems: "center" }} key={index}>
-                <TextField
-                  value={value}
-                  fullWidth
-                  multiline
-                  InputProps={{ readOnly: status }}
-                  variant="standard"
-                  name="generalIntroduction"
-                  onChange={(event) => {
-                    handleTextFieldChange(event, index, "generalIntroduction");
-                  }}
-                />
-              </div>
-            ))}
+          <Grid item container xs={12}>
+            <Grid item xs={8}>
+              <Input
+                id="standard-adornment-amount"
+                fullWidth
+                startAdornment={
+                  <InputAdornment position="start">1. Họ và tên:</InputAdornment>
+                }
+                name="fullName"
+                readOnly={status}
+                // value={formikRoot.values.fullName}
+                // onChange={formikRoot.handleChange}
+                // error={formikRoot.errors.fullName && formikRoot.touched.fullName}
+                // helperText={formikRoot.errors.fullName}
+                value={employeeData?.resume?.fullName}
+                onChange={(event) => {
+                  // handleChangeEmployee(event, "fullName");
+                }}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              {/* <Input
+                id="standard-adornment-amount"
+                fullWidth
+                name="gender"
+                onChange={formikRoot.handleChange}
+                value={formikRoot.values.gender}
+                error={formikRoot.errors.gender && formikRoot.errors.gender}
+                helperText={formikRoot.errors.gender}
+                startAdornment={<InputAdornment position="start"> Giới tính</InputAdornment>}
+              /> */}
+              <TextField
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">Giới tính:</InputAdornment>,
+                  // readOnly: status,
+                }}
+                fullWidth
+                // select
+                variant="standard"
+                value={Gender[employeeData?.resume?.gender]?.gender}
+                name="gender"
+                // onChange={formikRoot.handleChange}
+                onChange={(event) => {
+                  // handleChangeEmployee(event, "gender");
+                }}
+              >
+                {/* {otherFeature?.Gender?.map((item) => (
+                  <MenuItem key={item.id} value={item.gender}>
+                    {item.gender}
+                  </MenuItem>
+                ))} */}
+                {/* {Gender?.map((item) => {
+                  console.log("item",item)
+                  return  (
+                    <MenuItem key={item.id} value={item.value}>
+                      {item.gender}
+                    </MenuItem>
+                  )
+                })} */}
+              </TextField>
+            </Grid>
           </Grid>
-          <Grid item display={"flex"} justifyContent="space-between">
-            <Box display={"flex"} gap={1} alignItems="center">
-              <Icon sx={{ fontSize: "28px" }}>school</Icon>
-              <Typography textTransform={"uppercase"} variant="body1" fontWeight={600}>
-                Học vấn
-              </Typography>
-            </Box>
-            <MyButton onClick={() => handleAddTextField("education")}>
-              <Icon sx={{ fontSize: "28px" }} className={"add-button"}>
-                control_point
-              </Icon>
-            </MyButton>
-          </Grid>
-          <Grid item>
-            {textFieldValues?.education?.map((value, index) => (
-              <div style={{ display: "flex", alignItems: "center" }} key={index}>
-                <TextField
-                  value={value}
-                  fullWidth
-                  InputProps={{ readOnly: status }}
-                  multiline
-                  variant="standard"
-                  name="education"
-                  // onChange={(event) => {
-                  //   handleTextFieldChange(index, "education");
-                  //   textFieldValues.education[index] = event.target.value;
-                  //   // formikRoot.setFieldValue("education", textFieldValues.education);
-                  // }}
-                  onChange={(event) => {
-                    handleTextFieldChange(event, index, "education");
-                  }}
-                />
+          {/* <Grid item xs={12}>
+            <Input
+              id="standard-adornment-amount"
+              fullWidth
+              startAdornment={
+                <InputAdornment position="start">2. Họ tên thường dùng</InputAdornment>
+              }
+            />
+          </Grid> */}
 
-                <MyButton onClick={handleRemoveTextField(index, "education")}>
-                  <Icon className={"remove-button"}>remove_circle_outline</Icon>
-                </MyButton>
-              </div>
-            ))}
+          <Grid item xs={12}>
+            <Input
+              type="date"
+              readOnly={status}
+              id="standard-adornment-amount"
+              fullWidth
+              startAdornment={<InputAdornment position="start">2. Sinh ngày:</InputAdornment>}
+              value={moment(employeeData?.resume?.dateOfBirth).format("YYYY-MM-DD") || ""}
+              name="birthday"
+              onChange={(event) => {
+                // handleChangeEmployee(event, "birthday");
+              }}
+            // onChange={formikRoot.handleChange}
+            // error={formikRoot.errors.birthday && formikRoot.errors.birthday}
+            // helperText={formikRoot.errors.birthday}
+            />
           </Grid>
+          <Grid item container xs={12}>
+            <Grid item xs={6}>
+              <Input
+                id="standard-adornment-amount"
+                fullWidth
+                readOnly={status}
+                startAdornment={<InputAdornment position="start">3. Điện thoại:</InputAdornment>}
+                value={employeeData?.resume?.phone}
+                name="phone"
+                onChange={(event) => {
+                  // handleChangeEmployee(event, "phone");
+                }}
+              // onChange={formikRoot.handleChange}
+              // error={formikRoot.errors.phone && formikRoot.touched.phone}
+              // helperText={formikRoot.errors.phone}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Input
+                id="standard-adornment-amount"
+                fullWidth
+                readOnly={status}
+                startAdornment={<InputAdornment position="start">Email:</InputAdornment>}
+                name="email"
+                value={employeeData?.resume?.email}
+                onChange={(event) => {
+                  // handleChangeEmployee(event, "email");
+                }}
+              // onChange={formikRoot.handleChange}
+              // error={formikRoot.errors.email && formikRoot.touched.email}
+              // helperText={formikRoot.errors.email}
+              />
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Input
+              id="standard-adornment-amount"
+              fullWidth
+              readOnly={status}
+              startAdornment={<InputAdornment position="start">4. Chỗ ở hiện nay:</InputAdornment>}
+              value={employeeData?.resume?.address}
+              name="address"
+              onChange={(event) => {
+                // handleChangeEmployee(event, "address");
+              }}
+            // onChange={formikRoot.handleChange}
+            // error={formikRoot.errors.address && formikRoot.errors.address}
+            // helperText={formikRoot.errors.address}
+            />
+          </Grid>
+          <Grid item container xs={12}>
+            <Grid item xs={6}>
+              <TextField
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">5. Dân tộc:</InputAdornment>,
+                  readOnly: status,
+                }}
+                id="standard-adornment-amount"
+                fullWidth
+                name="ethnic"
+                variant="standard"
+                value={resumeData?.ethnicity || employeeData?.resume?.ethnicity}
+                onChange={(event) => {
+                  // console.log("event", event.target.value)
+                  // handleChangeFormResume(event, "ethnicity");
+                  handleChange(event, "ethnicity")
+                }}
+              >
 
-          <Grid item display={"flex"} justifyContent="space-between">
-            <Box display={"flex"} gap={1} alignItems="center">
-              <Icon sx={{ fontSize: "28px" }}>business_center</Icon>
-              <Typography textTransform={"uppercase"} variant="body1" fontWeight={600}>
-                Kinh nghiệm làm việc
-              </Typography>
-            </Box>
-            <MyButton
-              onClick={() => {
-                handleAddTextField("experience");
+              </TextField>
+
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">Tôn giáo:</InputAdornment>,
+                  readOnly: status,
+                }}
+                variant="standard"
+                id="standard-adornment-amount"
+                fullWidth
+                name="religion"
+                value={resumeData?.religion || employeeData?.resume?.religion}
+                onChange={(event) => {
+                  // handleChangeFormResume(event, "religion")
+                  handleChange(event, "religion")
+                }}
+              >
+
+              </TextField>
+
+            </Grid>
+
+          </Grid>
+          <Grid item container xs={12}>
+            <Grid item xs={6}>
+              <Input
+                id="standard-adornment-amount"
+                fullWidth
+                readOnly={status}
+                startAdornment={<InputAdornment position="start">6. Số CCCD:</InputAdornment>}
+                name="identityCode"
+                value={employeeData?.resume?.citizenId}
+                onChange={(event) => {
+                  // handleChangeEmployee(event, "identityCode");
+                }}
+              // onChange={formikRoot.handleChange}
+              // error={formikRoot.errors.identityCode && formikRoot.touched.identityCode}
+              // helperText={formikRoot.errors.identityCode}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Input
+                type="date"
+                id="standard-adornment-amount"
+                fullWidth
+                readOnly={status}
+                startAdornment={<InputAdornment position="start">Cấp ngày:</InputAdornment>}
+                value={!resumeData?.citizenIdIssuanceDate ? moment(employeeData?.resume?.citizenIdIssuanceDate).format("YYYY-MM-DD") : moment(resumeData?.citizenIdIssuanceDate).format("YYYY-MM-DD")}
+                name="citizenIdIssuanceDate"
+                onChange={(event) => {
+                  // handleChangeEmployee(event, "dateIssue");
+                  handleChange(event, "citizenIdIssuanceDate")
+                }}
+              // onChange={formikRoot.handleChange}
+              // error={formikRoot.errors.dateIssue && formikRoot.errors.dateIssue}
+              // helperText={formikRoot.errors.dateIssue}
+              />
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              InputProps={{
+                startAdornment: <InputAdornment position="start">Nơi cấp:</InputAdornment>,
+                readOnly: status,
+              }}
+              fullWidth
+              // select
+              variant="standard"
+              name="citizenIdIssuingAuthority"
+              value={resumeData?.citizenIdIssuingAuthority || employeeData?.resume?.citizenIdIssuingAuthority}
+              // onChange={(event) => {
+              //   formikRoot.setFieldValue("placeIssue", { place: event.target.value });
+              // }}
+              onChange={(event) => {
+                // handleChangeFormResume(event, "citizenIdIssuingAuthority");
+                handleChange(event, "citizenIdIssuingAuthority");
               }}
             >
-              <Icon sx={{ fontSize: "28px" }} className={"add-button"}>
-                control_point
-              </Icon>
-            </MyButton>
-          </Grid>
-          <Grid item>
-            {textFieldValues?.experience?.map((value, index) => (
-              <div style={{ display: "flex", alignItems: "center" }} key={index}>
-                <TextField
-                  value={value}
-                  fullWidth
-                  multiline
-                  name="experience"
-                  variant="standard"
-                  InputProps={{ readOnly: status }}
-                  onChange={(event) => {
-                    handleTextFieldChange(event, index, "experience");
-                  }}
-                />
 
-                <MyButton onClick={handleRemoveTextField(index, "experience")}>
-                  <Icon className={"remove-button"}>remove_circle_outline</Icon>
-                </MyButton>
-              </div>
-            ))}
+            </TextField>
           </Grid>
-          <Grid item display={"flex"} gap={1} alignItems="center">
-            <Icon sx={{ fontSize: "28px" }}>create</Icon>
-            <Typography textTransform={"uppercase"} variant="body1" fontWeight={600}>
-              Mục tiêu nghề nghiệp
+        </Grid>
+
+        <Grid item xs={12} container>
+          <Grid item xs={12}>
+            <Typography variant="h5" paddingBottom={2}>
+              II. QUAN HỆ GIA ĐÌNH
             </Typography>
           </Grid>
-          <Grid item>
-            {textFieldValues?.careerGoals?.map((value, index) => (
-              <div style={{ display: "flex", alignItems: "center" }} key={index}>
-                <TextField
-                  value={value}
-                  fullWidth
-                  multiline
-                  InputProps={{ readOnly: status }}
-                  variant="standard"
-                  name="careerGoals"
-                  onChange={(event) => {
-                    handleTextFieldChange(event, index, "careerGoals");
-                  }}
-                />
-              </div>
-            ))}
+          <Grid item xs={12}>
+            <MaterialTable
+              title={""}
+              data={!listRelationship ? [] : listRelationship}
+              columns={columns}
+              options={{
+                pageSize: 15,
+                pageSizeOptions: [5, 10, 15, 20],
+                rowStyle: (rowData, index) => {
+                  return {
+                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+                    height: "48px",
+                  };
+                },
+                maxBodyHeight: "1000px",
+                minBodyHeight: "370px",
+                headerStyle: {
+                  backgroundColor: "#262e49",
+                  color: "#fff",
+                },
+                // padding: 'dense',
+                padding: "default",
+                // search: false,
+                // exportButton: true,
+                toolbar: false,
+              }}
+            />
           </Grid>
         </Grid>
       </Grid>

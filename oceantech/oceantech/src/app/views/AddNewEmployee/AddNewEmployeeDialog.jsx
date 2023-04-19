@@ -25,7 +25,9 @@ import {
   getEmployeeData,
 
   addNewEmployeeAction,
-  updateEmployeeAction
+  updateEmployeeAction,
+  getEmployeeDataAction,
+  getFormDataAction
 } from "app/redux/actions/actions";
 
 import * as Yup from "yup";
@@ -34,7 +36,7 @@ import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import {  updateEmployee } from "./EmployeeServices";
 function AddNewEmployeeDialog(props) {
-  const { handleClose, handleGetListEmployee, employeeUpdate } = props;
+  const { handleClose, handleGetListEmployee, handleChangeReload, employeeUpdate } = props;
 
   const dispatch = useDispatch();
 
@@ -48,21 +50,24 @@ function AddNewEmployeeDialog(props) {
   const [listRelationship, setListRelationship] = useState([])
   // const [employeeId, setEmployeeId] = useState();
 
-  
+  // useEffect(() => {
+
+  // },[saved])
   useEffect(() => {
-    setEmployeeData(employeeDataReducer.employeeInfo);
+    setEmployeeData(employeeDataReducer?.employeeInfo);
     setListDiploma(()=> employeeDataReducer?.certificates?.reduce((arr, data) => {
       return [...arr, {
+        certificateId: data.certificateId,
         name: data.name,
         field: data.field,
         educationalOrg: data.educationalOrg,
         content: data.content,
         issuanceDate: moment(data.issuanceDate).format("YYYY-MM-DD"),
-        certificateId: data.certificateId
       }]
     }, []) || [])
     setListRelationship(employeeDataReducer?.familyRelations?.reduce((arr, data) => {
       return [...arr, {
+        // familyRelationId: data.familyId,
         name: data.name,
         gender: data.gender,
         relation: data.relation,
@@ -93,10 +98,10 @@ function AddNewEmployeeDialog(props) {
   };
 
   // console.log(employeeId);
-  // console.log("abcd");
-  console.log("listDiploma", listDiploma);
-  console.log("listRelationship", listRelationship);
-  // console.log(employeeData);
+  // console.log("employeeUpdate", employeeUpdate);
+  // console.log("listDiploma", listDiploma);
+  // console.log("listRelationship", listRelationship);
+  // console.log("employeeData vua bam luu",employeeData);
   //
   const formik = useFormik({
     initialValues: {
@@ -158,8 +163,7 @@ function AddNewEmployeeDialog(props) {
       address: Yup.string().required("Không được bỏ trống"),
     }),
     onSubmit: (values) => {
-      console.log(" heo le em  ,", values);
-      console.log(employeeUpdate);
+      // console.log(employeeUpdate);
       const numberGender = +values.gender
       // values.dateOfBirth = moment(values.dateOfBirth).format("YYYY/MM/DD")
       if (!employeeUpdate?.employeeId) {
@@ -176,14 +180,21 @@ function AddNewEmployeeDialog(props) {
           certificates: listDiploma,
           familyRelations: listRelationship
         }
-        console.log("haha");
-        // console.log(values);
-        console.log("tao moi employee" , dataCreate);
+        // console.log("haha");
+        // console.log("tao moi employee" , dataCreate);
         // dispatch(addNewEmployee(values));
-        dispatch(addNewEmployeeAction(dataCreate));
-        // handleGetListEmployee()
-        // addNewEmployee(dataCreate).then(res => console.log(res))
-        toast.success("Lưu mới thành công");
+        if(dataCreate.certificates.length === 0) {
+          toast.success("Vui lòng nhập Thông tin văn bằng");
+        } else if(dataCreate.familyRelations.length === 0) {
+          toast.success("Vui lòng nhập Quan hệ gia đình");
+        } else {
+
+          dispatch(addNewEmployeeAction(dataCreate));
+          handleChangeReload(values.id)
+          toast.success("Lưu mới thành công");
+          setSaved("block");
+
+        }
       } else {
         // values.id = employeeId; 
         // values.listDiploma = employeeData.listDiploma;
@@ -193,19 +204,32 @@ function AddNewEmployeeDialog(props) {
         const updateData = {
           employeeInfo: dataInfo,
           certificates: listDiploma,
-          familyRelations: listRelationship
+          familyRelations: listRelationship.reduce((arr, data) => {
+            if(data.familyId) {
+              data.familyRelationId = data.familyId
+            }
+            delete data.familyId
+            return [...arr, {...data}]
+          },[])
         }
         // const updateData = { ...values, listDiploma: listDiploma, listRelationship: listRelationship };
-        console.log("employeeUpdate", employeeUpdate);
-        console.log("updateData", updateData);
+        // console.log("employeeUpdatee", employeeUpdate);
+        // console.log("updateDataaaaaaaaaaa", updateData);
         // updateEmployee(employeeUpdate?.employeeId,updateData).them(res=> console.log(res))
+        
         dispatch(updateEmployeeAction(employeeUpdate?.employeeId,updateData))
+        handleChangeReload(employeeUpdate?.gender)
+
         // dispatch(updateEmployee(updateData));
         toast.success("Cập nhật thành công");
+        setSaved("block");
       }
-      handleGetListEmployee()
-      setSaved("block");
+      // handleGetListEmployee()
       setShouldOpenDialog(false);
+      if(!!employeeUpdate?.employeeId) {
+        dispatch(getEmployeeDataAction(employeeUpdate?.employeeId))
+        // dispatch(getFormDataAction(employeeData?.employeeId))
+      }
     },
   });
 
@@ -298,6 +322,7 @@ function AddNewEmployeeDialog(props) {
             sx={{ mb: 2, background: "#339999", display: saved }}
             onClick={() => {
               setShouldOpenDialog("true");
+              dispatch(getFormDataAction(employeeData?.employeeId))
             }}
           >
             Đăng kí
@@ -305,7 +330,7 @@ function AddNewEmployeeDialog(props) {
           <Button
             variant="contained"
             type="submit"
-            sx={{ mb: 2, mr: 5, background: "#7467EF" }}
+            sx={{ mb: 2, mr: 5, background: "#7467EF",  display: saved === "none" ? "block" : "none" }}
             onClick={() => formik.submitForm()}
           >
             Lưu
@@ -319,6 +344,7 @@ function AddNewEmployeeDialog(props) {
             setShouldOpenDialog(false);
           }}
           handleCloseAll={handleClose}
+          handleChangeReload={handleChangeReload}
         />
       )}
       {/* <EmployeeRegisterDialog

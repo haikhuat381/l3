@@ -39,6 +39,14 @@ export const getOtherFeature = () => {
 
 
 // apim moi
+
+
+export const getTotal = async (status) => {
+  const url = `${API}/total?statuses=${status}`
+  console.log("total", url)
+  return await axios.get(url,headers);
+};
+
 export const getListEmployeeData = async (status, page, pageSize) => {
   const url = `${API}?statuses=${status}&page=${page}&size=${pageSize}`
   return await axios.get(url,headers);
@@ -66,3 +74,27 @@ export const deleteEmployee = async (id) => {
   }
   return await axios.put(url, data, headers);
 };
+
+export const getFormData = async (id) => {
+  const url = `${API}/${id}/form`
+  return await axios.get(url, headers);
+}
+
+export const updateForm = async (id, data) => {
+  const url = `${API}/${id}/form`
+  return await axios.put(url, data, headers);
+}
+
+
+export const addRegist = async (id, data) => {
+  const url = `${API}/${id}/status`
+  return await axios.put(url, data, headers);
+}
+
+
+export const leaderOfAction = async (id, data) => {
+  const url = `${API}/${id}/status`
+  return await axios.put(url, data, headers);
+}
+
+

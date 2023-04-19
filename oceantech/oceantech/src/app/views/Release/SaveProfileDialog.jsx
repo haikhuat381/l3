@@ -18,25 +18,29 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { updateEmployee } from "app/redux/actions/actions";
+import { leaderAction, updateEmployee } from "app/redux/actions/actions";
 import { ToastContainer, toast } from "react-toastify";
+
+
 function SaveProfileDialog(props) {
   const dispatch = useDispatch();
-  const employee = useSelector((state) => state.Employee.employeeData);
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
   const { handleClose, handleCloseAll } = props;
   const formik = useFormik({
     initialValues: {
       date: "",
-      numberSave: "",
+      storedProfileCode: "",
     },
     validationSchema: Yup.object({
       date: Yup.date().required("Vui lòng nhập ngày"),
-      numberSave: Yup.string().required("Không được để trống"),
+      storedProfileCode: Yup.string().required("Không được để trống"),
     }),
     onSubmit: (values) => {
-      employee.status = "Đã nộp lưu";
-      employee.saveProfileInfo = values;
-      dispatch(updateEmployee(employee));
+      values.status = 13
+      console.log("nop luu ho soooooooooo")
+      console.log(employeeData?.employeeInfo?.employeeId)
+      console.log(values)
+      // dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
 
       toast.success("Lưu hồ sơ thành côngg");
       handleCloseAll();
@@ -76,11 +80,11 @@ function SaveProfileDialog(props) {
                 size="small"
                 label="Số lưu"
                 variant="outlined"
-                name="numberSave"
-                value={formik.values.numberSave}
+                name="storedProfileCode"
+                value={formik.values.storedProfileCode}
                 onChange={formik.handleChange}
-                error={formik.errors.numberSave && formik.touched.numberSave}
-                helperText={formik.errors.numberSave}
+                error={formik.errors.storedProfileCode && formik.touched.storedProfileCode}
+                helperText={formik.errors.storedProfileCode}
               />
             </Grid>
           </Grid>

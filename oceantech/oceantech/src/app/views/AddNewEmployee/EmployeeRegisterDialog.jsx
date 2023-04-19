@@ -23,7 +23,7 @@ import {
   IconButton,
   Icon,
 } from "@mui/material";
-import { updateEmployee } from "app/redux/actions/actions";
+import { updateEmployee, updateFormAction } from "app/redux/actions/actions";
 import ConfirmPrintDialog from "./PrintDIalog";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,31 +60,55 @@ function a11yProps(index) {
 export default function EmployeeRegisterDialog({
   handleClose,
   handleCloseAll,
+  handleChangeReload
 }) {
   const dispatch = useDispatch();
   const componentRef = useRef();
   const [display, setDisplay] = useState("");
-  const employee = useSelector((state) => state.Employee.employeeData);
+  const employee = useSelector((state) => state?.Employee?.employeeData);
   const [employeeData, setEmployeeData] = useState(employee);
+  const [formDataResumeUpdate, setFormDataResumeUpdate] = useState({});
+  const [formDataCVUpdate, setFormDataCVUpdate] = useState({});
   const [shouldOpenConfirmPrint, setShouldOpenConfirmPrint] = useState(false);
   const [
     shouldOpenSendToLeadershipDialog,
     setshouldOpenSendToLeadershipDialog,
   ] = useState(false);
+  const [saved, setSaved] = useState("none");
 
+
+  // console.log("employeeData haikhuat", employeeData)
+  // console.log("formDataResumeUpdate haikhuat", formDataResumeUpdate)
+  // console.log("formDataCVUpdate haikhuat", formDataCVUpdate)
   useEffect(() => {
     setEmployeeData(employee);
   }, [employee]);
+
   const handleChangeEmployee = (event, method) => {
     if (method === "placeIssue") {
       setEmployeeData({
-        ...employeeData,
-        [method]: { place: event.target.value },
+        ...employeeData, [method]: { place: event.target.value },
       });
     } else {
       setEmployeeData({ ...employeeData, [method]: event.target.value });
     }
   };
+
+  // const handleChangeFormResume = (event, method) => {
+  //   setFormDataResumeUpdate({ ...formDataResumeUpdate, [method]: event.target.value });
+  // };
+  // const handleChangeFormCV = (event, method) => {
+  //   setFormDataCVUpdate({ ...formDataCVUpdate, [method]: method === "workExperiences" ? event : event.target.value });
+  // };
+  const handleChangeFormResume = (data) => {
+    setFormDataResumeUpdate(data);
+  };
+  const handleChangeFormCV = (data) => {
+    setFormDataCVUpdate(data);
+  };
+  
+
+
   const handleAddToList = (data, method) => {
     setEmployeeData({
       ...employeeData,
@@ -127,24 +151,38 @@ export default function EmployeeRegisterDialog({
             <Tab label="Danh sách văn bằng" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={value} index={0} style={{ width: "100%" }}>
-            <Resume
-              ref={componentRef}
-              employee={employeeData}
-              display={display}
-              status={false}
-            />
-          </TabPanel>
-          <TabPanel value={value} index={1} style={{ width: "100%" }}>
             <CurriculumVitae
               ref={componentRef}
               status={false}
-              employeeData={employeeData}
+              IdEmployeeData={employeeData?.employeeInfo?.employeeId}
+              handleChangeFormCV={handleChangeFormCV}
+              // handleChangeFormResume={handleChangeFormResume}
+              employee={employeeData?.employeeInfo}
+              formDataCVUpdate={formDataCVUpdate}
+
               handleChangeEmployee={handleChangeEmployee}
               handleAddRelation={handleAddToList}
             />
           </TabPanel>
+          <TabPanel value={value} index={1} style={{ width: "100%" }}>
+
+            <Resume
+              listRelationship={employeeData?.familyRelations}
+              ref={componentRef}
+              status={false}
+              // handleChangeFormCV={handleChangeFormCV}
+              handleChangeFormResume={handleChangeFormResume}
+              employee={employeeData?.employeeInfo}
+              formDataResumeUpdate={formDataResumeUpdate}
+
+              display={display}
+            />
+          </TabPanel>
           <TabPanel value={value} index={2} style={{ width: "100%" }}>
-            <Diploma ref={componentRef} />
+            <Diploma
+              ref={componentRef}
+              listDiploma={employeeData?.certificates}
+            />
           </TabPanel>
         </DialogContent>
         <DialogActions>
@@ -169,19 +207,26 @@ export default function EmployeeRegisterDialog({
           </Button>
           <Button
             variant="contained"
-            sx={{ mb: 2, background: "#7467EF" }}
+            sx={{ mb: 2, background: "#7467EF",  display: saved === "none" ? "block" : "none" }}
             onClick={() => {
               employeeData.status = "Chờ xử lý";
-              dispatch(updateEmployee(employeeData));
+              dispatch(updateFormAction(employeeData?.employeeInfo?.employeeId, {
+                resume: formDataResumeUpdate,
+                cv: formDataCVUpdate
+              }))
+              handleChangeReload(employeeData?.employeeInfo?.employeeId)
+              setSaved("block");
+              // dispatch(updateEmployee(employeeData));
             }}
           >
             Lưu
           </Button>
           <Button
             variant="contained"
-            sx={{ mb: 2, background: "#339999" }}
+            sx={{ mb: 2, background: "#339999", display: saved }}
             onClick={() => {
               setshouldOpenSendToLeadershipDialog(true);
+              handleChangeReload(employeeData?.employeeInfo?.employeeId)
             }}
           >
             Gửi lãnh đạo
@@ -194,6 +239,7 @@ export default function EmployeeRegisterDialog({
           handleClose={() => {
             setshouldOpenSendToLeadershipDialog(false);
           }}
+          employeeId={employeeData?.employeeInfo?.employeeId}
         />
       )}
       {shouldOpenConfirmPrint && (

@@ -31,6 +31,7 @@ import MaterialTable from "@material-table/core";
 import PromotionLetter from "app/components/PromotionLetter/PromotionLetter";
 import PropostionLetter from "app/components/PropostionLetter/PropostionLetter";
 import IncreaseDialogLetter from "app/components/IncreaseLetter/IncreaseDialogLetter"
+import moment from "moment";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,7 +66,7 @@ function a11yProps(index) {
   };
 }
 
-export default function ApprovalDialog({ handleClose }) {
+export default function ApprovalDialog({ handleClose, handleChangeReload }) {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
@@ -74,32 +75,44 @@ export default function ApprovalDialog({ handleClose }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const employeeData = useSelector((state) => state.Employee.employeeData);
-  console.log("haikhuat");
-  console.log(employeeData);
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  // console.log("haikhuat");
+  // console.log(employeeData);
   const columns = [
-    {
-      title: "Hành động",
-      render: (rowData) => {
-        return (
-          <>
-            <Tooltip title="Sửa">
-              <IconButton>
-                <Icon color="success">visibilityIcon</Icon>
-              </IconButton>
-            </Tooltip>
-          </>
-        );
-      },
-    },
+    // {
+    //   title: "Hành động",
+    //   render: (rowData) => {
+    //     return (
+    //       <>
+    //         <Tooltip title="Sửa">
+    //           <IconButton>
+    //             <Icon color="success">visibilityIcon</Icon>
+    //           </IconButton>
+    //         </Tooltip>
+    //       </>
+    //     );
+    //   },
+    // },
+    // { title: "Tên văn bằng", field: "name" },
+    // {
+    //   title: "Nội dung ",
+    //   field: "content",
+    // },
+    // { title: "Nơi cấp", field: "place" },
+    // { title: "Ngày cấp", field: "date" },
+    // { title: "Lĩnh Vực", render: (rowData) => rowData.field.fieldName },
     { title: "Tên văn bằng", field: "name" },
     {
       title: "Nội dung ",
       field: "content",
     },
-    { title: "Nơi cấp", field: "place" },
-    { title: "Ngày cấp", field: "date" },
-    { title: "Lĩnh Vực", render: (rowData) => rowData.field.fieldName },
+    { title: "Nơi cấp", field: "educationalOrg" },
+    {
+      title: "Ngày cấp",
+      field: "issuanceDate",
+      render: (rowData) => moment(rowData.issuanceDate).format("YYYY-MM-DD"),
+    },
+    { title: "Lĩnh Vực", field: "field" },
   ];
 
   return (
@@ -133,15 +146,25 @@ export default function ApprovalDialog({ handleClose }) {
                 <Tab label="Danh sách văn bằng" {...a11yProps(1)} />
               </Tabs>
               <TabPanel value={value} index={0} style={{ width: "100%" }}>
-                <Resume employee={employeeData} display={"none"} status={true} />
+                <CurriculumVitae
+                  status={true}
+                  employee={employeeData?.employeeInfo}
+                />
               </TabPanel>
               <TabPanel value={value} index={1} style={{ width: "100%" }}>
-                <CurriculumVitae employeeData={employeeData} status={true} />
+                <Resume
+                  listRelationship={employeeData?.familyRelations}
+                  employee={employeeData?.employeeInfo}
+                  display={"none"}
+                  status={true}
+                />
+
               </TabPanel>
               <TabPanel value={value} index={2} style={{ width: "100%" }}>
                 <MaterialTable
                   title={""}
-                  data={employeeData?.listDiploma}
+                  data={employeeData?.certificates}
+                  // data={employeeData?.listDiploma}
                   columns={columns}
                   options={{
                     rowStyle: (rowData, index) => {
@@ -178,6 +201,7 @@ export default function ApprovalDialog({ handleClose }) {
             sx={{ mb: 1 }}
             onClick={() => {
               setShouldOpenRefuseDialog(true);
+              
             }}
           >
             Từ Chối
@@ -210,7 +234,13 @@ export default function ApprovalDialog({ handleClose }) {
           handleClose={() => {
             setShouldOpenRequestDialog(false);
           }}
+          // handleCloseAll={() => {
+          //   handleClose()
+          //   setShouldOpenRequestDialog(false);
+          // }}
           handleCloseAll={handleClose}
+
+          handleChangeReload={handleChangeReload}
         />
       )}
       {shouldOpenRefuseDialog && (
@@ -219,6 +249,7 @@ export default function ApprovalDialog({ handleClose }) {
             setShouldOpenRefuseDialog(false);
           }}
           handleCloseAll={handleClose}
+          handleChangeReload={handleChangeReload}
         />
       )}
       {shouldOpenAcceptDialog && (
@@ -227,6 +258,7 @@ export default function ApprovalDialog({ handleClose }) {
             setShouldOpenAcceptDialog(false);
           }}
           handleCloseAll={handleClose}
+          handleChangeReload={handleChangeReload}
         />
       )}
     </>

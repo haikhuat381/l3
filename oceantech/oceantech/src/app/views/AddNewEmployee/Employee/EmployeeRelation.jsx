@@ -44,7 +44,7 @@ function EmployeeRelation(props) {
     if (method == 1) {
       rowdata.gender = rowdata.gender.toString()
       rowdata.dateOfBirth = moment(rowdata.dateOfBirth).format("YYYY-MM-DD")
-      console.log("rowdata",rowdata);
+      // console.log("rowdata",rowdata);
       // setRelationship(rowdata);
       formik.setValues(rowdata);
       // handleClose()
@@ -68,8 +68,8 @@ function EmployeeRelation(props) {
     setshouldOpenConfirmationDeleteDialog(false);
     setRelationship({});
   };
-  console.log("listRelationshipData", listRelationshipData)
-  console.log("relationship", relationship)
+  // console.log("listRelationshipData", listRelationshipData)
+  // console.log("relationship", relationship)
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -104,25 +104,27 @@ function EmployeeRelation(props) {
     onSubmit: (values, { resetForm }) => {
       const numberGender = +values.gender
       // values.dateOfBirth = moment(values.dateOfBirth).format("YYYY/MM/DD")
-      console.log("values", values)
-      console.log("relationship", relationship)
-      console.log("familyId", relationship.familyId)
+      // console.log("values", values)
+      // console.log("relationship", relationship)
+      // console.log("familyId", relationship.familyId)
       const isCheck = !relationship?.familyId ? values.id : relationship.familyId
       if (!isCheck) {
         // if (!values.employeeId) {
         values.id = uuidv4()
         // handleAddRelation(values, "listRelationship")
-        console.log("tao")
+        // console.log("tao")
         handleAddRelation([...listRelationshipData, {...values, gender: numberGender}], "listRelationship");
         setListRelationshipData([...listRelationshipData, {...values, gender: numberGender}])
         // formik.resetForm()
 
       } else {
-        console.log("sua")
+        // console.log("sua")
 
         setListRelationshipData(listRelationshipData => {
           const newListRelationshipData = listRelationshipData.filter(value => !relationship?.familyId ? value.id !== values.id : value.familyId !==  relationship.familyId)
           newListRelationshipData.push({...values, gender: numberGender})
+          newListRelationshipData.familyRelationId = newListRelationshipData.familyId
+          // delete newListRelationshipData.familyId
           handleAddRelation( newListRelationshipData, "listRelationship");
           return newListRelationshipData
         })

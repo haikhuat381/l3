@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import MaterialTable from "@material-table/core";
-
+import moment from "moment";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -56,34 +56,26 @@ function a11yProps(index) {
 
 export default function ApprovedDialog({ handleClose }) {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  // console.log("employeeData abc", employeeData)
+
   const columns = [
-    {
-      title: "Hành động",
-      render: (rowData) => {
-        return (
-          <>
-            <Tooltip title="Sửa">
-              <IconButton>
-                <Icon color="success">visibilityIcon</Icon>
-              </IconButton>
-            </Tooltip>
-          </>
-        );
-      },
-    },
     { title: "Tên văn bằng", field: "name" },
     {
       title: "Nội dung ",
       field: "content",
     },
-    { title: "Nơi cấp", field: "place" },
-    { title: "Ngày cấp", field: "date" },
-    { title: "Lĩnh Vực", render: (rowData) => rowData.field.fieldName },
+    { title: "Nơi cấp", field: "educationalOrg" },
+    {
+      title: "Ngày cấp",
+      field: "issuanceDate",
+      render: (rowData) => moment(rowData.issuanceDate).format("YYYY-MM-DD"),
+    },
+    { title: "Lĩnh Vực", field: "field" },
   ];
 
   return (
@@ -114,21 +106,36 @@ export default function ApprovedDialog({ handleClose }) {
             <Tab label="Danh sách văn bằng" {...a11yProps(1)} />
           </Tabs>
           <TabPanel value={value} index={0} style={{ width: "100%" }}>
-            <Resume employee={employeeData} display={"none"} status={true} />
+            <CurriculumVitae
+              // IdEmployeeData={IdEmployeeData} 
+              status={true}
+              employee={employeeData?.employeeInfo}
+            />
           </TabPanel>
           <TabPanel value={value} index={1} style={{ width: "100%" }}>
-            <CurriculumVitae employeeData={employeeData} status={true} />
+            <Resume
+              listRelationship={employeeData?.familyRelations}
+              employee={employeeData?.employeeInfo}
+              display={"none"}
+              status={true}
+            // handleChangeFormCV={handleChangeFormCV}
+            />
+
           </TabPanel>
           <TabPanel value={value} index={2} style={{ width: "100%" }}>
             <MaterialTable
               title={""}
-              data={employeeData?.listDiploma}
+              data={employeeData?.certificates}
               columns={columns}
               options={{
                 rowStyle: (rowData, index) => {
                   return {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
                   };
+                },
+                headerStyle: {
+                  backgroundColor: "#262e49",
+                  color: "#fff",
                 },
                 maxBodyHeight: "1000px",
                 minBodyHeight: "370px",

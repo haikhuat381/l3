@@ -33,10 +33,10 @@ function EmployeeDiploma(props) {
   const handleClose = () => {
     setDiplomaData({});
   };
-  console.log("listDiplomaData", listDiplomaData)
+  // console.log("listDiplomaData", listDiplomaData)
   const handleChangeEmployee = (rowdata, method) => {
     if (method == 1) {
-      console.log(rowdata)
+      // console.log(rowdata)
       rowdata.issuanceDate = moment(rowdata.issuanceDate).format("YYYY-MM-DD")
       formik.setValues(rowdata);
     }
@@ -82,20 +82,20 @@ function EmployeeDiploma(props) {
       issuanceDate: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log("haikhuat");
-      console.log(diplomaData);
-      console.log(values);
+      // console.log("haikhuat");
+      // console.log(diplomaData);
+      // console.log(values);
       // values.issuanceDate = moment(values.issuanceDate).format("YYYY/MM/DD")
       const isCheck = !diplomaData?.certificateId ? values.id : diplomaData.certificateId
-      console.log("isCheck",isCheck)
-      console.log("isCheck",!isCheck)
+      // console.log("isCheck",isCheck)
+      // console.log("isCheck",!isCheck)
       if (!isCheck) {
-        console.log("tao");
+        // console.log("tao");
         values.id = uuidv4();
         handleAddDiploma([...listDiplomaData, values], "listDiploma");
         setListDiplomaData([...listDiplomaData, values])
       } else {
-        console.log("sua");
+        // console.log("sua");
         // employeeData.listDiploma = employeeData.listDiploma.filter(
         //   (diploma) => diploma.id !== values.id
         // );

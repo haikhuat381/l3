@@ -44,8 +44,25 @@ const initialState = {
       gender: "Nữ",
     }
   ],
+  leader: [
+    {
+      name: "Nguyen Giam Doc",
+      position: "Giám Đốc"
+    },
+    {
+      name: "Nguyen Truong Phong",
+      position: "Trưởng phòng"
+    },
+    {
+      name: "Nguyen Quan Li",
+      position: "Quản lí"
+    }
+  ],
+  total: null,
   listEmployeeData: [],
   employeeData: {},
+  formData:{},
+  regist:{}
 };
 
 export default (state = initialState, action) => {
@@ -54,13 +71,24 @@ export default (state = initialState, action) => {
       return { ...state, listEmployee: action.payload };
     }
     
-    
+
     //moi
+
+    case ActionTypes.GET_TOTAL_SUCCESS: {
+      // console.log("action.payload",action.payload)
+      return { ...state, total: action.payload };
+    }
+
     case ActionTypes.GET_LIST_EMPLOYEE_DATA_SUCCESS: {
-      console.log("action",action)
+      // console.log("action",action)
       return { ...state, listEmployeeData: action.payload };
     }
-    
+
+    case ActionTypes.ADD_NEW_EMPLOYEE_SUCCESS: {
+      // console.log("action",action)
+      return { ...state, employeeData: action.payload };
+    }
+
     case ActionTypes.GET_EMPLOYEE_DATA_SUCCESS: {
       return { ...state, employeeData: action.payload };
     }
@@ -68,6 +96,17 @@ export default (state = initialState, action) => {
     case ActionTypes.RESET_EMPLOYEE_DATA_SUCCESS: {
       return { ...state, employeeData: action.payload };
     }
+
+    case ActionTypes.GET_FORM_DATA_SUCCESS: {
+      return { ...state, formData: action.payload };
+    }
+
+    case ActionTypes.GET_FORM_DATA_SUCCESS: {
+      return { ...state, formData: action.payload };
+    }
+
+
+
 
     default:
       return state;

@@ -8,7 +8,6 @@ function EmployeeInfo(props) {
   const { formikRoot } = props;
   const otherFeature = useSelector((state) => state?.Employee?.otherFeature);
   const Gender = useSelector((state) => state?.Employee?.Gender);
-  
   return (
     <>
       <Grid container spacing={8}>
@@ -187,7 +186,7 @@ function EmployeeInfo(props) {
             <Grid item xs={12} cx={{ mt: -5 }}>
               <CustomAvatar
                 formikRoot={formikRoot}
-                image={formikRoot.values.image}
+                image={formikRoot.values.photoUrl}
                 displayButton={""}
               />
             </Grid>

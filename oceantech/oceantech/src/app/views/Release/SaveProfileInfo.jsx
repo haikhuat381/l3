@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 function SaveProfileInfo(props) {
   const { handleClose, openEditDialog } = props;
-  const employeeData = useSelector((state) => state.Employee.employeeData);
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
   console.log(employeeData);
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
@@ -33,11 +33,13 @@ function SaveProfileInfo(props) {
           <Grid item xs={12}>
             {" "}
             <Typography>
-              Ngày Lưu: {employeeData.saveProfileInfo.date.split("-").reverse().join("-")}{" "}
+              Ngày Lưu: 
+              {/* Ngày Lưu: {employeeData.saveProfileInfo.date.split("-").reverse().join("-")}{" "} */}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography>Số lưu: {employeeData.saveProfileInfo.numberSave} </Typography>
+            <Typography>Số lưu: {employeeData?.employeeInfo?.storedProfileCode}</Typography>
+            {/* <Typography>Số lưu: {employeeData.saveProfileInfo.numberSave} </Typography> */}
           </Grid>
         </Grid>
       </DialogContent>

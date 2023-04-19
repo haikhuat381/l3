@@ -26,9 +26,13 @@ export const updateEmployee = (payload) => {
 
 //moi
 
+export const getTotalAction = (status) => {
+  const payload = {status}
+  return { type: ActionTypes.GET_TOTAL, payload: payload};
+};
+
 export const getListEmployeeAction = (status, page, pageSize) => {
   const payload = {status, page, pageSize}
-  // console.log("payload",payload)
   return { type: ActionTypes.GET_LIST_EMPLOYEE_DATA, payload: payload};
 };
 
@@ -50,4 +54,22 @@ export const updateEmployeeAction = (id, data) => {
 
 export const deleteEmployeeAction = (payload) => {
   return { type: ActionTypes.DELETE_EMPLOYEE, payload: payload };
+};
+
+
+export const getFormDataAction = (payload) => {
+  return { type: ActionTypes.GET_FORM_DATA, payload: payload };
+};
+
+export const updateFormAction = (id, data) => {
+  return { type: ActionTypes.UPDATE_FORM, payload: { id, data } };
+};
+
+
+export const addRegistAction = (id, data) => {
+  return { type: ActionTypes.ADD_REGIST, payload: { id, data } };
+};
+
+export const leaderAction = (id, data) => {
+  return { type: ActionTypes.LEADER_ACTION, payload: { id, data } };
 };

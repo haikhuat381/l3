@@ -20,96 +20,35 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { updateEmployee } from "app/redux/actions/actions";
 import { ToastContainer, toast } from "react-toastify";
+import { leaderAction } from "app/redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
+
+
 function AcceptDialog(props) {
   const dispatch = useDispatch();
-  const employee = useSelector((state) => state.Employee.employeeData);
-  const { handleClose, handleCloseAll } = props;
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  const { handleClose, handleCloseAll, handleChangeReload } = props;
   const formik = useFormik({
     initialValues: {
-      date: "",
+      appointmentDate: "",
     },
     validationSchema: Yup.object({
-      date: Yup.date().required("Vui lòng nhập ngày"),
+      appointmentDate: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: (values) => {
-      console.log("haihai")
-      console.log(values)
-      console.log(employee)
-
-      if (employee.releaseRequest) {
-        employee.status = "Kết thúc";
-      } else {
-        employee.status = "Đã duyệt";
-
-        if (employee.promoteRequest) {
-          // employee.status = "Đã duyệt";
-  
-          employee.listPromote.forEach((promote) => {
-            if (promote.id === employee.promoteRequest.id) {
-              promote.status = "Đã duyệt"
-            }
-          })
-  
-          employee.promoteRequest = null
-  
-        }
-
-
-        if (employee.proposeRequest) {
-          // employee.status = "Đã duyệt";
-  
-          employee.listPropose.forEach((propose) => {
-            if (propose.id === employee.proposeRequest.id) {
-              propose.status = "Đã duyệt"
-            }
-          })
-  
-          employee.proposeRequest = null
-        } 
-
-
-        if(employee.increaseRequest) {
-          
-          employee.listIncreaseSalary.forEach((item)=>{
-            if(item.id === employee.increaseRequest.id){
-              item.status = "Đã duyệt"
-            }
-          })  
-  
-          employee.increaseRequest= null
-        }
-
+      const isCheck = employeeData?.employeeInfo?.status
+      values.status = isCheck === 3 ? 5 : 10
+      if(isCheck === 8) {
+        values.terminatedDate = values.appointmentDate
+        delete values.appointmentDate
       }
+      // console.log("hai duyet")
+      // console.log(employeeData?.employeeInfo?.employeeId)
+      // console.log(values)
+      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
+      handleChangeReload(employeeData?.employeeInfo?.employeeId)
       
-      // else if (employee.promoteRequest) {
-      //   employee.status = "Đã duyệt";
-
-      //   employee.listPromote.forEach((promote) => {
-      //     if (promote.id === employee.promoteRequest.id) {
-      //       promote.status = "Đã duyệt"
-      //     }
-      //   })
-
-      //   employee.promoteRequest = null
-
-      // } else if (employee.proposeRequest) {
-      //   employee.status = "Đã duyệt";
-
-      //   employee.listPropose.forEach((propose) => {
-      //     if (propose.id === employee.proposeRequest.id) {
-      //       propose.status = "Đã duyệt"
-      //     }
-      //   })
-
-      //   employee.proposeRequest = null
-      // } 
-
-
-      employee.acceptInfo = values;
-
-      
-      dispatch(updateEmployee(employee));
+      // dispatch(updateEmployee(employee));
       toast.success("Phê duyệt thành công");
       handleCloseAll();
     },
@@ -139,11 +78,11 @@ function AcceptDialog(props) {
                   type="date"
                   label="Ngày hẹn"
                   variant="outlined"
-                  name="date"
-                  value={formik.values.date}
+                  name="appointmentDate"
+                  value={formik.values.appointmentDate}
                   onChange={formik.handleChange}
-                  error={formik.errors.date && formik.touched.date}
-                  helperText={formik.errors.date}
+                  error={formik.errors.appointmentDate && formik.touched.appointmentDate}
+                  helperText={formik.errors.appointmentDate}
                 />
               </Grid>
               <Grid item xs={12}>

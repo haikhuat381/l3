@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MaterialTable from "@material-table/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,38 +59,53 @@ function a11yProps(index) {
 }
 
 export default function ReleaseEmployeeDialog({ handleClose }) {
-  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const dispatch = useDispatch();
+
+  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [value, setValue] = React.useState(0);
+
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const employeeData = useSelector((state) => state.Employee.employeeData);
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
   const columns = [
-    {
-      title: "Hành động",
-      render: (rowData) => {
-        return (
-          <>
-            <Tooltip title="Sửa">
-              <IconButton>
-                <Icon color="success">visibilityIcon</Icon>
-              </IconButton>
-            </Tooltip>
-          </>
-        );
-      },
-    },
+    // {
+    //   title: "Hành động",
+    //   render: (rowData) => {
+    //     return (
+    //       <>
+    //         <Tooltip title="Sửa">
+    //           <IconButton>
+    //             <Icon color="success">visibilityIcon</Icon>
+    //           </IconButton>
+    //         </Tooltip>
+    //       </>
+    //     );
+    //   },
+    // },
+    // { title: "Tên văn bằng", field: "name" },
+    // {
+    //   title: "Nội dung ",
+    //   field: "content",
+    // },
+    // { title: "Nơi cấp", field: "place" },
+    // { title: "Ngày cấp", field: "date" },
+    // { title: "Lĩnh Vực", render: (rowData) => rowData.field.fieldName },
     { title: "Tên văn bằng", field: "name" },
     {
       title: "Nội dung ",
       field: "content",
     },
-    { title: "Nơi cấp", field: "place" },
-    { title: "Ngày cấp", field: "date" },
-    { title: "Lĩnh Vực", render: (rowData) => rowData.field.fieldName },
+    { title: "Nơi cấp", field: "educationalOrg" },
+    {
+      title: "Ngày cấp",
+      field: "issuanceDate",
+      render: (rowData) => moment(rowData.issuanceDate).format("YYYY-MM-DD"),
+    },
+    { title: "Lĩnh Vực", field: "field" },
   ];
-
+  // console.log("employeeDataaaaaaaaaaaaâ", employeeData)
   return (
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>
@@ -115,15 +131,24 @@ export default function ReleaseEmployeeDialog({ handleClose }) {
             <Tab label="Danh sách văn bằng" {...a11yProps(1)} />
           </Tabs>
           <TabPanel value={value} index={0} style={{ width: "100%" }}>
-            <Resume employee={employeeData} display={"none"} status={true} />
-          </TabPanel>
-          <TabPanel value={value} index={1} style={{ width: "100%" }}>
-            <CurriculumVitae employeeData={employeeData} status={true} />
-          </TabPanel>
+                <CurriculumVitae
+                  status={true}
+                  employee={employeeData?.employeeInfo}
+                />
+              </TabPanel>
+              <TabPanel value={value} index={1} style={{ width: "100%" }}>
+                <Resume
+                  listRelationship={employeeData?.familyRelations}
+                  employee={employeeData?.employeeInfo}
+                  display={"none"}
+                  status={true}
+                />
+
+              </TabPanel>
           <TabPanel value={value} index={2} style={{ width: "100%" }}>
             <MaterialTable
               title={""}
-              data={employeeData?.listDiploma}
+              data={employeeData?.certificates}
               columns={columns}
               options={{
                 rowStyle: (rowData, index) => {
@@ -143,7 +168,7 @@ export default function ReleaseEmployeeDialog({ handleClose }) {
             />
           </TabPanel>
         </DialogContent>
-        <DialogActions sx={{ display: employeeData.status === "Kết thúc" ? "" : "none" }}>
+        <DialogActions sx={{ display: employeeData?.employeeInfo?.status === 10 ? "" : "none" }}>
           <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
             Hủy
           </Button>
