@@ -25,15 +25,7 @@ const Resume = React.forwardRef((props, ref) => {
   // const formData = useSelector((state) => state?.Employee?.formData);
   const Gender = useSelector((state) => state?.Employee?.Gender);
   const employeeData = useSelector((state) => state?.Employee?.formData);
-  const employeeCheck = useSelector((state) => {
-    const data = state?.Employee?.formData
-    return {
-      ethnicity: data.ethnicity,
-      religion: data.religion,
-      citizenIdIssuingAuthority: data.citizenIdIssuingAuthority,
-      citizenIdIssuanceDate: data.citizenIdIssuanceDate
-    }
-  });
+  //  
   // const [employeeData, setEmployeeData] = useState(employee)
   const [resumeData, setResumeData] = useState()
   useEffect(() => {
@@ -109,7 +101,7 @@ const Resume = React.forwardRef((props, ref) => {
           <CustomAvatar image={employeeData?.resume?.photoUrl} displayButton={"none"} />
         </Grid>
         <Grid item xs={8}>
-          <Typography variant="h5">SƠ YẾU LÝ LỊCH</Typography>
+          <Typography variant="h4">SƠ YẾU LÝ LỊCH</Typography>
         </Grid>
       </Grid>
       <Grid container spacing={4}>
@@ -368,25 +360,29 @@ const Resume = React.forwardRef((props, ref) => {
               II. QUAN HỆ GIA ĐÌNH
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{marginLeft:10}}>
             <MaterialTable
               title={""}
               data={!listRelationship ? [] : listRelationship}
               columns={columns}
               options={{
+                paging: false,
                 pageSize: 15,
                 pageSizeOptions: [5, 10, 15, 20],
-                rowStyle: (rowData, index) => {
-                  return {
-                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-                    height: "48px",
-                  };
-                },
+                // rowStyle: (rowData, index) => {
+                //   return {
+                //     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+                //     height: "48px",
+                //   };
+                // },
+                cellStyle: { border: '1px solid black' },
                 maxBodyHeight: "1000px",
                 minBodyHeight: "370px",
                 headerStyle: {
-                  backgroundColor: "#262e49",
-                  color: "#fff",
+                  border: '1px solid black',
+                  fontWeight: "600"
+                  // backgroundColor: "#262e49",
+                  // color: "#fff",
                 },
                 // padding: 'dense',
                 padding: "default",

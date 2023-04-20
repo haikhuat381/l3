@@ -21,53 +21,55 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
 
   const [textFieldValues, setTextFieldValues] = useState();
   useEffect(() => {
-      // console.log("checkcheck", JSON.stringify(employee?.cv) === JSON.stringify(formDataCVUpdate) )
-      if(formDataCVUpdate === undefined) {
-        // console.log("formDataResumeUpdate === undefined)")
-        // if(!formDataCVUpdate || Object.keys(formDataCVUpdate).length === 0) {
-        setTextFieldValues(() => {
-          const data = {...employeeData?.cv}
-          data.workExperiences = data?.workExperiences?.length !==0 ? data?.workExperiences?.reduce((arr,data) => {
-            return [...arr,
-              { 
-                workExperienceId: data.workExpId,
-                company: data.company,
-                position: data.position,
-                detail: data.detail,
-                startDate: moment(data.startDate).format("YYYY-MM-DD"),
-                endDate: moment(data.endDate).format("YYYY-MM-DD")
-              }
-            ]
-          },[]) : [
-            {
-              company: "",
-              position: "",
-              detail: "",
-              startDate: null,
-              endDate: null
-            }
+    // console.log("checkcheck", JSON.stringify(employee?.cv) === JSON.stringify(formDataCVUpdate) )
+    if (formDataCVUpdate === undefined ) {
+      console.log("vao dayyyyyyyyyyyy")
+      console.log("employeeData?.cv", employeeData?.cv)
+      // console.log("formDataResumeUpdate === undefined)")
+      // if(!formDataCVUpdate || Object.keys(formDataCVUpdate).length === 0) {
+      setTextFieldValues(() => {
+        const data = { ...employeeData?.cv }
+        data.workExperiences = data?.workExperiences?.length !== 0 ? data?.workExperiences?.reduce((arr, data) => {
+          return [...arr,
+          {
+            workExperienceId: data.workExpId,
+            company: data.company,
+            position: data.position,
+            detail: data.detail,
+            startDate: moment(data.startDate).format("YYYY-MM-DD"),
+            endDate: moment(data.endDate).format("YYYY-MM-DD")
+          }
           ]
-          return data
-        })
-      } else {
-        setTextFieldValues(formDataCVUpdate)
-      }
-  },[employeeData])
+        }, []) : [
+          {
+            company: "",
+            position: "",
+            detail: "",
+            startDate: null,
+            endDate: null
+          }
+        ]
+        return data
+      })
+    } else {
+      setTextFieldValues(formDataCVUpdate)
+    }
+  }, [employeeData])
 
   useEffect(() => {
     // handleWorkExperiences(textFieldValues)
-    if(!status) {
+    if (!status) {
       handleChangeFormCV(textFieldValues)
     }
-  },[textFieldValues])
+  }, [textFieldValues])
 
   // console.log("textFieldValuessssssssssssss", textFieldValues)
 
-  
+
 
   const handleAddTextField = () => {
-    const newValues = {...textFieldValues};
-    if(!!newValues?.workExperiences) {
+    const newValues = { ...textFieldValues };
+    if (!!newValues?.workExperiences) {
       newValues.workExperiences = [...newValues.workExperiences, {
         company: "",
         position: "",
@@ -81,20 +83,20 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   };
 
   const handleRemoveTextField = (index) => () => {
-    const newValues = {...textFieldValues};
+    const newValues = { ...textFieldValues };
     newValues.workExperiences.splice(index, 1)
     // console.log("newValues",newValues);
     setTextFieldValues(newValues);
   };
 
   const handleTextFieldChange = (event, index, method) => {
-    const newValues = {...textFieldValues};
+    const newValues = { ...textFieldValues };
     newValues["workExperiences"][index][method] = event.target.value;
     // console.log("newValues",newValues);
     setTextFieldValues(newValues);
   };
   const handleTextFieldChangeChange = (event, method) => {
-    const newValues = {...textFieldValues};
+    const newValues = { ...textFieldValues };
     newValues[method] = event.target.value;
     // console.log("newValues",newValues);
     setTextFieldValues(newValues);
@@ -281,7 +283,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
               </Typography>
             </Box>
             <MyButton
-              style={{display: status ? "none" : "flex"}}
+              style={{ display: status ? "none" : "flex" }}
               onClick={() => {
                 handleAddTextField("experience");
               }}
@@ -293,65 +295,65 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
           </Grid>
           <Grid item>
             {textFieldValues?.workExperiences?.map((value, index) => (
-              <div style={{ display: "flex", alignItems: "start", justifyContent:"space-between", paddingBottom:16 }} key={index}>
-                <div style={{width:"23%"}}>
+              <div style={{ display: "flex", alignItems: "start", justifyContent: "space-between", paddingBottom: 16 }} key={index}>
+                <div style={{ width: "23%" }}>
                   {/* <Grid item container xs={12}> */}
-                    <Grid item xs={12}>
-                      <TextField
-                        type="date"
-                        // value={value.startDate || formDataCVUpdate?.workExperiences[index]?.startDate}
-                        value={value.startDate}
-                        // readOnly={status}
-                        InputProps={{
-                          // startAdornment: <InputAdornment position="start">Công ty:</InputAdornment>,
-                          readOnly: status,
-                        }}
-                        InputLabelProps={{ shrink: true }} 
-                        id="standard-adornment-amount"
-                        // startAdornment={<InputAdornment position="start">Từ</InputAdornment>}
-                        fullWidth
-                        style={{paddingLeft:5}}
-                        // multiline
-                        name="startDate"
-                        variant="standard"
-                        label="Ngày bắt đầu"
-                        margin="dense"
-                        // InputProps={{ readOnly: status }}
-                        onChange={(event) => {
-                          handleTextFieldChange(event, index, "startDate");
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        type="date"
-                        // value={value.endDate || formDataCVUpdate?.workExperiences[index]?.endDate}
-                        value={value.endDate}
-                        // readOnly={status}
-                        InputProps={{
-                          // startAdornment: <InputAdornment position="start">Công ty:</InputAdornment>,
-                          readOnly: status,
-                        }}
-                        InputLabelProps={{ shrink: true }} 
-                        id="standard-adornment-amount"
-                        // startAdornment={<InputAdornment position="start" >-</InputAdornment>}
-                        fullWidth
-                        style={{paddingLeft:5}}
-                        margin="dense"
-                        // multiline
-                        name="endDate"
-                        variant="standard"
-                        label="Ngày kết thúc"
-                        // InputProps={{ readOnly: status }}
-                        onChange={(event) => {
-                          handleTextFieldChange(event, index, "endDate");
-                        }}
-                      />
-                    </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      type="date"
+                      // value={value.startDate || formDataCVUpdate?.workExperiences[index]?.startDate}
+                      value={value.startDate}
+                      // readOnly={status}
+                      InputProps={{
+                        // startAdornment: <InputAdornment position="start">Công ty:</InputAdornment>,
+                        readOnly: status,
+                      }}
+                      InputLabelProps={{ shrink: true }}
+                      id="standard-adornment-amount"
+                      // startAdornment={<InputAdornment position="start">Từ</InputAdornment>}
+                      fullWidth
+                      style={{ paddingLeft: 5 }}
+                      // multiline
+                      name="startDate"
+                      variant="standard"
+                      label="Ngày bắt đầu"
+                      margin="dense"
+                      // InputProps={{ readOnly: status }}
+                      onChange={(event) => {
+                        handleTextFieldChange(event, index, "startDate");
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      type="date"
+                      // value={value.endDate || formDataCVUpdate?.workExperiences[index]?.endDate}
+                      value={value.endDate}
+                      // readOnly={status}
+                      InputProps={{
+                        // startAdornment: <InputAdornment position="start">Công ty:</InputAdornment>,
+                        readOnly: status,
+                      }}
+                      InputLabelProps={{ shrink: true }}
+                      id="standard-adornment-amount"
+                      // startAdornment={<InputAdornment position="start" >-</InputAdornment>}
+                      fullWidth
+                      style={{ paddingLeft: 5 }}
+                      margin="dense"
+                      // multiline
+                      name="endDate"
+                      variant="standard"
+                      label="Ngày kết thúc"
+                      // InputProps={{ readOnly: status }}
+                      onChange={(event) => {
+                        handleTextFieldChange(event, index, "endDate");
+                      }}
+                    />
+                  </Grid>
                   {/* </Grid> */}
-                
+
                 </div>
-                <div style={{width: status ? "73%" : "67%", paddingLeft:25}}>
+                <div style={{ width: status ? "73%" : "67%", paddingLeft: 25 }}>
                   <TextField
                     // value={value.company || formDataCVUpdate?.workExperiences[index]?.company}
                     value={value.company}
@@ -367,6 +369,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                       // startAdornment: <InputAdornment position="start">Công ty:</InputAdornment>,
                       readOnly: status,
                     }}
+                    InputLabelProps={{ shrink: true }}
                     onChange={(event) => {
                       handleTextFieldChange(event, index, "company");
                     }}
@@ -385,6 +388,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                       // startAdornment: <InputAdornment position="start">Chức vụ:</InputAdornment>,
                       readOnly: status,
                     }}
+                    InputLabelProps={{ shrink: true }}
                     onChange={(event) => {
                       handleTextFieldChange(event, index, "position");
                     }}
@@ -396,11 +400,13 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                     name="detail"
                     variant="standard"
                     label="Mô tả"
+                    margin="dense"
                     // size="small"
                     InputProps={{
                       // startAdornment: <InputAdornment position="start">Mô tả:</InputAdornment>,
                       readOnly: status,
                     }}
+                    InputLabelProps={{ shrink: true }}
                     onChange={(event) => {
                       handleTextFieldChange(event, index, "detail");
                     }}
@@ -408,8 +414,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
 
                 </div>
 
-                <MyButton 
-                  style={{display: status ? "none" : "flex"}}
+                <MyButton
+                  style={{ display: status ? "none" : "flex" }}
                   onClick={handleRemoveTextField(index, "experience")}
                 >
                   <Icon className={"remove-button"}>remove_circle_outline</Icon>

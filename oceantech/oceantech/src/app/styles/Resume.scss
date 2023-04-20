@@ -4,9 +4,14 @@
   background-color: rgba(34, 42, 69, 0.96);
   box-sizing: border-box;
   color: white;
-  padding-bottom: 48px;
+  // padding-bottom: 48px;
+  padding-bottom: 10px;
 }
-
+.resume-right {
+  // width: 100%;
+  // max-height: 600px;
+  overflow-y: scroll;
+}
 .item-box {
   display: flex;
   justify-content: flex-start;
