@@ -105,7 +105,7 @@ function ReleaseEmployee() {
       },
     },
     { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName", width: 300 },
+    { title: "Họ tên", field: "fullName", width: 250 },
     // {
     //   title: "Ngày sinh",
     //   field: "dateOfBirth",

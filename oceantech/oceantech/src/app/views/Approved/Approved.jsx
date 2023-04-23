@@ -88,7 +88,7 @@ function Approved() {
       },
     },
     { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName" },
+    { title: "Họ tên", field: "fullName", width: 250 },
     // {
     //   title: "Ngày sinh",
     //   field: "dateOfBirth",
