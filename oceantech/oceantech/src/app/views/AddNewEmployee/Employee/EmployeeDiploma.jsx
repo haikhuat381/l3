@@ -20,9 +20,9 @@ import * as Yup from "yup";
 import moment from "moment";
 
 function EmployeeDiploma(props) {
-  const { employeeData, handleAddDiploma, listDiploma } = props;
+  const { handleAddDiploma, listDiploma } = props;
 
-  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
+  // const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [diplomaData, setDiplomaData] = useState({});
   const [listDiplomaData, setListDiplomaData] = useState(listDiploma);
   const [
@@ -36,7 +36,6 @@ function EmployeeDiploma(props) {
   // console.log("listDiplomaData", listDiplomaData)
   const handleChangeEmployee = (rowdata, method) => {
     if (method == 1) {
-      // console.log(rowdata)
       rowdata.issuanceDate = moment(rowdata.issuanceDate).format("YYYY-MM-DD")
       formik.setValues(rowdata);
     }
@@ -48,15 +47,11 @@ function EmployeeDiploma(props) {
   
   const handleDeleteDiploma = () => {
     setListDiplomaData(listDiplomaData => {
-      // const newListDiplomaData = listDiplomaData.filter(diploma => diploma.id !== diplomaData.id) 
       const newListDiplomaData = listDiplomaData.filter(diploma => !diplomaData?.certificateId ? diploma.id !== diplomaData.id : diploma.certificateId !==  diplomaData.certificateId) 
       
       handleAddDiploma(newListDiplomaData, "listDiploma");
       return newListDiplomaData
     })
-    // employeeData.listDiploma = employeeData.listDiploma.filter(
-    //   (diploma) => diploma.id !== diplomaData.id
-    // );
     setshouldOpenConfirmationDeleteDialog(false);
     setDiplomaData({});
   };
@@ -90,19 +85,11 @@ function EmployeeDiploma(props) {
       // console.log("isCheck",isCheck)
       // console.log("isCheck",!isCheck)
       if (!isCheck) {
-        // console.log("tao");
         values.id = uuidv4();
         handleAddDiploma([...listDiplomaData, values], "listDiploma");
         setListDiplomaData([...listDiplomaData, values])
       } else {
-        // console.log("sua");
-        // employeeData.listDiploma = employeeData.listDiploma.filter(
-        //   (diploma) => diploma.id !== values.id
-        // );
-        // console.log(employeeData.listDiploma);
-        // employeeData.listDiploma.push(values);
         setListDiplomaData(listDiplomaData => {
-          // const newListDiplomaData = listDiplomaData.filter(diploma => diploma.id !== values.id)
           const newListDiplomaData = listDiplomaData.filter(diploma => !diplomaData?.certificateId ? diploma.id !== values.id : diploma.certificateId !==  diplomaData.certificateId) 
           newListDiplomaData.push(values)
           handleAddDiploma(newListDiplomaData, "listDiploma");
@@ -113,7 +100,6 @@ function EmployeeDiploma(props) {
       handleClose();
     },
   });
-  // const otherFeature = useSelector((state) => state.OtherFeature.otherFeature);
 
   const columns = [
     {
@@ -164,7 +150,6 @@ function EmployeeDiploma(props) {
       )}
 
       <form>
-        {/* <Grid style={{ padding: "10px 0px 0px 0px" }}> */}
         <Grid container spacing={2} style={{ paddingBottom: "20px" }}>
           <Grid item sm={4} xs={12}>
             <TextField
@@ -266,30 +251,9 @@ function EmployeeDiploma(props) {
             </Grid>
           </Grid>
         </Grid>
-        {/* </Grid> */}
-        {/* <DialogActions>
-          <Button variant="contained" sx={{ mb: 2, background: "#FF9E43" }} onClick={formik.resetForm}>
-            Hủy
-          </Button>
-          <Button variant="contained" sx={{ mb: 2, background: "#7467EF" }} type="submit" onClick={(e) => { e.preventDefault(); formik.handleSubmit }}>
-            Xác nhận
-          </Button>
-        </DialogActions> */}
       </form>
-
-      {/* <Box className="box" justifyContent="flex-end">
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ mb: 2 }}
-          onClick={() => setShouldOpenDialog(true)}
-        >
-          Thêm mới
-        </Button>
-      </Box> */}
       <MaterialTable
         title={""}
-        // data={employeeData?.listDiploma}
         data={listDiplomaData}
         columns={columns}
         options={{
@@ -305,27 +269,10 @@ function EmployeeDiploma(props) {
             backgroundColor: "#262e49",
             color: "#fff",
           },
-
-          // padding: 'dense',
           padding: "default",
-          // search: false,
-          // exportButton: true,
           toolbar: false,
         }}
       />
-
-      {/* {shouldOpenDialog && (
-        <EmployeeDiplomaDialog
-          open={open}
-          handleClose={handleClose}
-          // employee={employeeData}
-          // diplomaData={diplomaData}
-          // handleAddDiploma={handleAddDiploma}
-          employeeData={employeeData}
-          diplomaData={diplomaData}
-          handleAddDiploma={handleAddDiploma}
-        />
-      )} */}
     </>
   );
 }

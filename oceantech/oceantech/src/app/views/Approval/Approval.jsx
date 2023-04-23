@@ -34,11 +34,9 @@ const Container = styled("div")(({ theme }) => ({
 
 function Approval() {
   const dispatch = useDispatch();
-  // const employeeData = useSelector((state) => state.Employee.employeeData);
   const [page, setPage] = useState(1);
   const [pagesize, setPageSize] = useState(5)
   
-  // const [IdEmployeeData, setIDEmployeeData] = useState()
   
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
@@ -51,28 +49,21 @@ function Approval() {
   }
   
   const handleGetListEmployee = () => {
-    // console.log("reloadddddddddd")
     const status = "3,8"
     // const status = "1,3,4,6"
     dispatch(getTotalAction(status))
     dispatch(getListEmployeeAction(status, page, pagesize))
   }
   useEffect(() => {
-    // dispatch(getListEmployeeAction("1,3,4,6", page, pagesize))
-    // console.log("reloaddddddddddd")
     handleGetListEmployee(page, pagesize)
   }, [page, pagesize, reloadRef.current])
   const onHandleChange = (page, pageSize) => {
-    // console.log("hahaha")
-    // console.log(page)
-    // console.log(pageSize)
     setPage(page)
     setPageSize(pageSize)
   }
   
   const handleClose = () => {
     setShouldOpenDialog(false);
-    // dispatch(getEmployeeData({}));
   };
   const columns = [
     {
@@ -97,12 +88,13 @@ function Approval() {
         );
       },
     },
+    { title: "Mã nhân viên", field: "code" },
     { title: "Họ tên", field: "fullName" },
-    {
-      title: "Ngày sinh",
-      field: "dateOfBirth",
-      render: (rowdata) => moment(rowdata).format("DD/MM/YYYY"),
-    },
+    // {
+    //   title: "Ngày sinh",
+    //   field: "dateOfBirth",
+    //   render: (rowdata) => moment(rowdata.dateOfBirth).format("DD/MM/YYYY"),
+    // },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     {
@@ -112,9 +104,6 @@ function Approval() {
     },
   ];
 
-  // const listApproval = useSelector((state) => state.Employee.listEmployee).filter((employee) => {
-  //   return employee.status === "Chờ duyệt";
-  // });
 
   return (
     <Container>

@@ -36,7 +36,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ padding: "0 24px 0px 24px" }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -94,12 +94,6 @@ export default function EmployeeRegisterDialog({
     }
   };
 
-  // const handleChangeFormResume = (event, method) => {
-  //   setFormDataResumeUpdate({ ...formDataResumeUpdate, [method]: event.target.value });
-  // };
-  // const handleChangeFormCV = (event, method) => {
-  //   setFormDataCVUpdate({ ...formDataCVUpdate, [method]: method === "workExperiences" ? event : event.target.value });
-  // };
   const handleChangeFormResume = (data) => {
     setFormDataResumeUpdate(data);
   };
@@ -156,7 +150,6 @@ export default function EmployeeRegisterDialog({
               status={false}
               IdEmployeeData={employeeData?.employeeInfo?.employeeId}
               handleChangeFormCV={handleChangeFormCV}
-              // handleChangeFormResume={handleChangeFormResume}
               employee={employeeData?.employeeInfo}
               formDataCVUpdate={formDataCVUpdate}
 
@@ -170,7 +163,6 @@ export default function EmployeeRegisterDialog({
               listRelationship={employeeData?.familyRelations}
               ref={componentRef}
               status={false}
-              // handleChangeFormCV={handleChangeFormCV}
               handleChangeFormResume={handleChangeFormResume}
               employee={employeeData?.employeeInfo}
               formDataResumeUpdate={formDataResumeUpdate}
@@ -178,14 +170,14 @@ export default function EmployeeRegisterDialog({
               display={display}
             />
           </TabPanel>
-          <TabPanel value={value} index={2} style={{ width: "100%" }}>
+          <TabPanel value={value} index={2} style={{ width: "100%", marginLeft:"30px" }}>
             <Diploma
               ref={componentRef}
               listDiploma={employeeData?.certificates}
             />
           </TabPanel>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{justifyContent: 'center'}}>
           <Button
             variant="contained"
             color="primary"

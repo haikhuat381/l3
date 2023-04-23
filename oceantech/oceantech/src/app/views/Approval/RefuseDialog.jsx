@@ -41,7 +41,8 @@ function RefuseDialog(props) {
       console.log(employeeData?.employeeInfo?.employeeId)
       console.log(values)
       // isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
-      // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, rejectedReason: values.rejectedReason })) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status}))
+      handleChangeReload(employeeData?.employeeInfo?.employeeId)
 
       // employee.status = "Từ chối";
       // dispatch(updateEmployee(employee));
@@ -96,7 +97,7 @@ function RefuseDialog(props) {
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{justifyContent: 'center'}}>
             <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
               Hủy
             </Button>

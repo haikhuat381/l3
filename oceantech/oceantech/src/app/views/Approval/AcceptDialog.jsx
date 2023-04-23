@@ -42,13 +42,9 @@ function AcceptDialog(props) {
         values.terminatedDate = values.appointmentDate
         delete values.appointmentDate
       }
-      // console.log("hai duyet")
-      // console.log(employeeData?.employeeInfo?.employeeId)
-      // console.log(values)
       isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
       handleChangeReload(employeeData?.employeeInfo?.employeeId)
       
-      // dispatch(updateEmployee(employee));
       toast.success("Phê duyệt thành công");
       handleCloseAll();
     },
@@ -94,7 +90,7 @@ function AcceptDialog(props) {
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{justifyContent: 'center'}}>
             <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
               Hủy
             </Button>

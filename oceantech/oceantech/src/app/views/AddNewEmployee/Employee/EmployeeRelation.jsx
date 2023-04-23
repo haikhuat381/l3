@@ -24,8 +24,8 @@ import moment from "moment";
 import { useFormik } from "formik";
 function EmployeeRelation(props) {
   const dispatch = useDispatch();
-  const { employeeData, employee, handleAddRelation,listRelationship,  relationshipData } = props;
-  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
+  const { handleAddRelation,listRelationship } = props;
+  // const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [relationship, setRelationship] = useState({});
   const [listRelationshipData, setListRelationshipData] = useState(listRelationship);
   const [
@@ -44,8 +44,6 @@ function EmployeeRelation(props) {
     if (method == 1) {
       rowdata.gender = rowdata.gender.toString()
       rowdata.dateOfBirth = moment(rowdata.dateOfBirth).format("YYYY-MM-DD")
-      // console.log("rowdata",rowdata);
-      // setRelationship(rowdata);
       formik.setValues(rowdata);
       // handleClose()
     }
@@ -56,15 +54,11 @@ function EmployeeRelation(props) {
   };
   const handleDeleteRelationship = () => {
     setListRelationshipData(listRelationshipData => {
-      // const newListRelationshipData = listRelationshipData.filter(value => value.id !== relationship.id)
       const newListRelationshipData = listRelationshipData.filter(value => !relationship?.familyId ? value.id !== relationship.id : value.familyId !==  relationship.familyId)
 
       handleAddRelation(newListRelationshipData, "listRelationship");
       return newListRelationshipData
     })
-    // employeeData.listRelationship = employeeData.listRelationship.filter(
-    //   (Relationship) => Relationship.id !== relationship.id
-    // );
     setshouldOpenConfirmationDeleteDialog(false);
     setRelationship({});
   };
@@ -97,50 +91,23 @@ function EmployeeRelation(props) {
       relation: Yup.string().required("Không được bỏ trống"),
       address: Yup.string().required("Không được bỏ trống"),
     }),
-    // onSubmit: (valuse) => {
-    //   console.log(valuse);
-    // },
 
     onSubmit: (values, { resetForm }) => {
       const numberGender = +values.gender
-      // values.dateOfBirth = moment(values.dateOfBirth).format("YYYY/MM/DD")
-      // console.log("values", values)
-      // console.log("relationship", relationship)
-      // console.log("familyId", relationship.familyId)
       const isCheck = !relationship?.familyId ? values.id : relationship.familyId
       if (!isCheck) {
-        // if (!values.employeeId) {
         values.id = uuidv4()
-        // handleAddRelation(values, "listRelationship")
-        // console.log("tao")
         handleAddRelation([...listRelationshipData, {...values, gender: numberGender}], "listRelationship");
         setListRelationshipData([...listRelationshipData, {...values, gender: numberGender}])
-        // formik.resetForm()
 
       } else {
-        // console.log("sua")
-
         setListRelationshipData(listRelationshipData => {
           const newListRelationshipData = listRelationshipData.filter(value => !relationship?.familyId ? value.id !== values.id : value.familyId !==  relationship.familyId)
           newListRelationshipData.push({...values, gender: numberGender})
           newListRelationshipData.familyRelationId = newListRelationshipData.familyId
-          // delete newListRelationshipData.familyId
           handleAddRelation( newListRelationshipData, "listRelationship");
           return newListRelationshipData
         })
-
-        // console.log(values);
-        // values.id = relationship.id;
-        // console.log('EMPLOYEE DATA TRƯỚC: ',employeeData.listRelationship);
-        
-        // employeeData.listRelationship = employeeData.listRelationship.filter(
-        //   (relationship) => relationship.id !== values.id
-        //   );
-        //   console.log('VALUES: ',values);
-        // console.log('EMPLOYEE DATA SAU: ',employeeData.listRelationship);
-        // employeeData.listRelationship.push(values);
-        // console.log('EMPLOYEE SAU KHI PUSH: ',employeeData.listRelationship);
-        // formik.resetForm()
       }
       resetForm()
       handleClose()
@@ -237,18 +204,6 @@ function EmployeeRelation(props) {
             />
           </Grid>
           <Grid item sm={3} xs={3} className="input-dialog">
-            {/* <TextField
-              label="Giới tính"
-              type="text"
-              fullWidth
-              size="small"
-              variant="outlined"
-              name="gender"
-              value={formik.values.gender || ""}
-              onChange={formik.handleChange}
-              error={formik.errors.gender && formik.touched.gender}
-              helperText={formik.errors.gender}
-            /> */}
             <TextField
                   select
                   fullWidth
@@ -337,7 +292,6 @@ function EmployeeRelation(props) {
         columns={columns}
         options={{
           stickyHeader: true,
-
           rowStyle: (rowData, index) => {
             return {
               backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
@@ -349,11 +303,7 @@ function EmployeeRelation(props) {
             backgroundColor: "#262e49",
             color: "#fff",
           },
-
-          // padding: 'dense',
           padding: "default",
-          // search: false,
-          // exportButton: true,
           toolbar: false,
         }}
       />

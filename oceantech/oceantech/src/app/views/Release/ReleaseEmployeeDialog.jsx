@@ -37,7 +37,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ padding: "0 24px 0px 24px" }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -58,7 +58,7 @@ function a11yProps(index) {
   };
 }
 
-export default function ReleaseEmployeeDialog({ handleClose }) {
+export default function ReleaseEmployeeDialog({ handleClose,handleChangeReload }) {
   const dispatch = useDispatch();
 
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
@@ -70,28 +70,6 @@ export default function ReleaseEmployeeDialog({ handleClose }) {
   };
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
   const columns = [
-    // {
-    //   title: "Hành động",
-    //   render: (rowData) => {
-    //     return (
-    //       <>
-    //         <Tooltip title="Sửa">
-    //           <IconButton>
-    //             <Icon color="success">visibilityIcon</Icon>
-    //           </IconButton>
-    //         </Tooltip>
-    //       </>
-    //     );
-    //   },
-    // },
-    // { title: "Tên văn bằng", field: "name" },
-    // {
-    //   title: "Nội dung ",
-    //   field: "content",
-    // },
-    // { title: "Nơi cấp", field: "place" },
-    // { title: "Ngày cấp", field: "date" },
-    // { title: "Lĩnh Vực", render: (rowData) => rowData.field.fieldName },
     { title: "Tên văn bằng", field: "name" },
     {
       title: "Nội dung ",
@@ -145,7 +123,7 @@ export default function ReleaseEmployeeDialog({ handleClose }) {
                 />
 
               </TabPanel>
-          <TabPanel value={value} index={2} style={{ width: "100%" }}>
+          <TabPanel value={value} index={2} style={{ width: "100%", marginLeft:"30px" }}>
             <MaterialTable
               title={""}
               data={employeeData?.certificates}
@@ -158,17 +136,18 @@ export default function ReleaseEmployeeDialog({ handleClose }) {
                 },
                 maxBodyHeight: "1000px",
                 minBodyHeight: "370px",
+                headerStyle: {
+                  backgroundColor: "#262e49",
+                  color: "#fff",
+                },
 
-                // padding: 'dense',
                 padding: "default",
-                // search: false,
-                // exportButton: true,
                 toolbar: false,
               }}
             />
           </TabPanel>
         </DialogContent>
-        <DialogActions sx={{ display: employeeData?.employeeInfo?.status === 10 ? "" : "none" }}>
+        <DialogActions sx={{justifyContent: 'center', display: employeeData?.employeeInfo?.status === 10 ? "" : "none" }}>
           <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
             Hủy
           </Button>
@@ -188,6 +167,7 @@ export default function ReleaseEmployeeDialog({ handleClose }) {
         <SaveProfileDialog
           handleClose={() => setShouldOpenDialog(false)}
           handleCloseAll={handleClose}
+          handleChangeReload={handleChangeReload}
         />
       )}
     </>

@@ -1,17 +1,26 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap");
 
+// .resume-container {
+//   position: relative;
+// }
 .resume-left {
-  background-color: rgba(34, 42, 69, 0.96);
+  // background-color: rgba(34, 42, 69, 0.96);
+  background-color: #373E58;
   box-sizing: border-box;
   color: white;
   // padding-bottom: 48px;
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
+  // width: 60%;
 }
+
 .resume-right {
   // width: 100%;
   // max-height: 600px;
-  overflow-y: scroll;
+  // overflow-y: scroll;
+  // max-width: 600px;
+  // overflow-x: scroll;
 }
+
 .item-box {
   display: flex;
   justify-content: flex-start;
@@ -19,6 +28,7 @@
   margin-left: 24px;
   gap: 10px;
 }
+
 .title-info,
 .title-hobby,
 .title-skill {
@@ -27,9 +37,71 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .add-button:hover {
   color: #1876b2;
 }
+
 .remove-button:hover {
   color: #d32f2f;
+}
+
+.table-resume {
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+
+.hai-test, .hai-testt {
+  color: #d32f2f;
+  padding: 0 !important;
+}
+
+.hai-test::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  bottom: 5px;
+  height: 1px;
+  border-bottom: 2px dotted black;
+}
+
+.hai-test .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input, .hai-testt .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input{
+  padding: 0;
+}
+
+
+.hai-test-cv,
+.hai-testt-cv {
+    color: #d32f2f;
+    padding: 0 !important;
+}
+
+.hai-test-cv::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    // bottom: 20px;
+    bottom: 17px;
+    left: 14px;
+    // right: -14px;
+    height: 1px;
+    border-bottom: 2px dotted black;
+}
+
+.hai-test-cv .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input,
+.hai-testt-cv .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 0 ;
+}
+
+.hai-test-cv .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,
+.hai-testt-cv .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  // padding: 16.5px 7px ;
+  padding: 12px 7px ;
+  margin-left: 7px;
+}
+
+.haikhuat .MuiOutlinedInput-root.MuiInputBase-sizeSmall {
+  padding-top: 2px;
+  padding-bottom: 2px;
 }

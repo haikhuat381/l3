@@ -51,14 +51,12 @@ function ReleaseEmployee() {
   }
   
   const handleGetListEmployee = () => {
-    // console.log("reloadddddddddd")
     const status = "10,13"
     // const status = "10"
     dispatch(getTotalAction(status))
     dispatch(getListEmployeeAction(status, page, pagesize))
   }
   useEffect(() => {
-    // dispatch(getListEmployeeAction("1,3,4,6", page, pagesize))
     handleGetListEmployee(page, pagesize)
   }, [page, pagesize, reloadRef.current])
 
@@ -68,40 +66,9 @@ function ReleaseEmployee() {
   }
   const handleClose = () => {
     setShouldOpenReleaseDialog(false);
-    // dispatch(getEmployeeData({}));
   };
 
   const columns = [
-    // {
-    //   title: "Hành động",
-    //   render: (rowdata) => {
-    //     return (
-    //       <>
-    //         <Tooltip title="Thông tin ">
-    //           <IconButton
-    //             onClick={() => {
-    //               dispatch(getEmployeeData(rowdata));
-    //               setShouldOpenDialog(true);
-    //             }}
-    //             disabled={rowdata.status !== "Kết thúc" ? false : true}
-    //           >
-    //             <Icon color={rowdata.status !== "Kết thúc" ? "primary" : "disabled"}>report</Icon>
-    //           </IconButton>
-    //         </Tooltip>
-    //         <Tooltip title="Xem chi tiết">
-    //           <IconButton
-    //             onClick={() => {
-    //               setShouldOpenReleaseDialog(true);
-    //               dispatch(getEmployeeData(rowdata));
-    //             }}
-    //           >
-    //             <Icon color="success">visibilityIcon</Icon>
-    //           </IconButton>
-    //         </Tooltip>
-    //       </>
-    //     );
-    //   },
-    // },
     {
       title: "Hành động",
       render: (rowdata) => {
@@ -137,12 +104,13 @@ function ReleaseEmployee() {
         );
       },
     },
-    { title: "Họ tên", field: "fullName" },
-    {
-      title: "Ngày sinh",
-      field: "dateOfBirth",
-      render: (rowdata) => moment(rowdata).format("DD/MM/YYYY"),
-    },
+    { title: "Mã nhân viên", field: "code" },
+    { title: "Họ tên", field: "fullName", width: 300 },
+    // {
+    //   title: "Ngày sinh",
+    //   field: "dateOfBirth",
+    //   render: (rowdata) => moment(rowdata.dateOfBirth).format("DD/MM/YYYY"),
+    // },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     {
@@ -198,7 +166,7 @@ function ReleaseEmployee() {
           onHandleChange={onHandleChange}
         />
       </Box>
-      {shouldOpenReleaseDialog && <ReleaseEmployeeDialog handleClose={handleClose} />}
+      {shouldOpenReleaseDialog && <ReleaseEmployeeDialog handleClose={handleClose} handleChangeReload={handleChangeReload} />}
       {shouldOpenDialog && (
         <SaveProfileInfo
           handleClose={() => {

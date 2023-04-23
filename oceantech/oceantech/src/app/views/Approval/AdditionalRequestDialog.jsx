@@ -36,12 +36,8 @@ function AdditionalRequestDialog(props) {
     onSubmit: (values) => {
       const isCheck = employeeData?.employeeInfo?.status
       values.status = isCheck === 3 ? 4 : 9
-      // console.log("hai ycbs")
-      // console.log(employeeData?.employeeInfo?.employeeId)
-      // console.log(values)
       isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
       handleChangeReload(employeeData?.employeeInfo?.employeeId)
-      // dispatch(requestProfileAction())
       handleCloseAll();
       // handleClose();
       toast.success("Gửi yêu cầu bổ sung thành công");
@@ -73,7 +69,7 @@ function AdditionalRequestDialog(props) {
               helperText={formik.errors.statusLog}
             />
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{justifyContent: 'center'}}>
             <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
               Hủy
             </Button>

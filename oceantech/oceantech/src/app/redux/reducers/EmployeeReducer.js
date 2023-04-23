@@ -67,25 +67,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.GET_LIST_EMPLOYEE_SUCCESS: {
-      return { ...state, listEmployee: action.payload };
-    }
     
-
-    //moi
-
     case ActionTypes.GET_TOTAL_SUCCESS: {
-      // console.log("action.payload",action.payload)
       return { ...state, total: action.payload };
     }
 
     case ActionTypes.GET_LIST_EMPLOYEE_DATA_SUCCESS: {
-      // console.log("action",action)
       return { ...state, listEmployeeData: action.payload };
     }
 
     case ActionTypes.ADD_NEW_EMPLOYEE_SUCCESS: {
-      // console.log("action",action)
       return { ...state, employeeData: action.payload };
     }
 

@@ -48,11 +48,8 @@ function AddNewEmployeeDialog(props) {
   const [employeeData, setEmployeeData] = useState(employeeDataReducer.employeeInfo);
   const [listDiploma, setListDiploma] = useState([])
   const [listRelationship, setListRelationship] = useState([])
-  // const [employeeId, setEmployeeId] = useState();
 
-  // useEffect(() => {
 
-  // },[saved])
   useEffect(() => {
     setEmployeeData(employeeDataReducer?.employeeInfo);
     setListDiploma(()=> employeeDataReducer?.certificates?.reduce((arr, data) => {
@@ -77,17 +74,9 @@ function AddNewEmployeeDialog(props) {
         familyId: data.familyId
       }]
     }, []) || [])
-    // setEmployeeId(employeeDataReducer.employeeId) 
   }, [employeeDataReducer]);
 
-  // console.log("employeeDataReducer", employeeDataReducer)
-  // console.log("employeeData", employeeData)
-  // console.log(employeeData)
-  // const handleAddToList = (data, method) => {
-  //   setEmployee({ ...employeeData, [method]: [...employeeData[method], data] });
-  // };
   const handleAddToList = (data, method) => {
-    // method === "listDiploma" ? setListDiploma([...listDiploma, data]) : setListRelationship([...listRelationship, data])
     method === "listDiploma" ? setListDiploma([...data]) : setListRelationship([...data])
   };
 
@@ -163,26 +152,16 @@ function AddNewEmployeeDialog(props) {
       address: Yup.string().required("Không được bỏ trống"),
     }),
     onSubmit: (values) => {
-      // console.log(employeeUpdate);
       const numberGender = +values.gender
-      // values.dateOfBirth = moment(values.dateOfBirth).format("YYYY/MM/DD")
       if (!employeeUpdate?.employeeId) {
         values.id = uuidv4();
         values.status = "Lưu mới";
-        // setEmployeeId(values.id);
-        // values.listPromote = [];
-        // values.listPropose = [];
-        // values.listRegister = [];
-        // values.listIncreaseSalary = [];
         const dataInfo = { ...values, gender: numberGender}
         const dataCreate = {
           employeeInfo: dataInfo,
           certificates: listDiploma,
           familyRelations: listRelationship
         }
-        // console.log("haha");
-        // console.log("tao moi employee" , dataCreate);
-        // dispatch(addNewEmployee(values));
         if(dataCreate.certificates.length === 0) {
           toast.success("Vui lòng nhập Thông tin văn bằng");
         } else if(dataCreate.familyRelations.length === 0) {
@@ -196,10 +175,6 @@ function AddNewEmployeeDialog(props) {
 
         }
       } else {
-        // values.id = employeeId; 
-        // values.listDiploma = employeeData.listDiploma;
-        // values.listRelationship = employeeData.listRelationship;
-        // const updateData = { ...employeeData, ...values };
         const dataInfo = { ...values, gender: numberGender}
         const updateData = {
           employeeInfo: dataInfo,
@@ -212,15 +187,10 @@ function AddNewEmployeeDialog(props) {
             return [...arr, {...data}]
           },[])
         }
-        // const updateData = { ...values, listDiploma: listDiploma, listRelationship: listRelationship };
-        // console.log("employeeUpdatee", employeeUpdate);
-        // console.log("updateDataaaaaaaaaaa", updateData);
-        // updateEmployee(employeeUpdate?.employeeId,updateData).them(res=> console.log(res))
         
         dispatch(updateEmployeeAction(employeeUpdate?.employeeId,updateData))
         handleChangeReload(employeeUpdate?.gender)
 
-        // dispatch(updateEmployee(updateData));
         toast.success("Cập nhật thành công");
         setSaved("block");
       }
@@ -308,6 +278,7 @@ function AddNewEmployeeDialog(props) {
             marginLeft: 20,
             marginRight: 20,
             borderTop: "1px solid #ccc",
+            justifyContent: 'center'
           }}
         >
           <Button
@@ -330,7 +301,7 @@ function AddNewEmployeeDialog(props) {
           <Button
             variant="contained"
             type="submit"
-            sx={{ mb: 2, mr: 5, background: "#7467EF",  display: saved === "none" ? "block" : "none" }}
+            sx={{ mb: 2, background: "#7467EF",  display: saved === "none" ? "block" : "none" }}
             onClick={() => formik.submitForm()}
           >
             Lưu
@@ -347,13 +318,6 @@ function AddNewEmployeeDialog(props) {
           handleChangeReload={handleChangeReload}
         />
       )}
-      {/* <EmployeeRegisterDialog
-        formikRoot={formik}
-        handleClose={() => {
-          setShouldOpenDialog(false);
-        }}
-        handleAddToFomik={handleAddToFomik}
-      /> */}
     </>
   );
 }

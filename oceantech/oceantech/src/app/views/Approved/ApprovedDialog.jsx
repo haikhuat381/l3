@@ -33,7 +33,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ padding: "0 24px 0px 24px" }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -107,7 +107,6 @@ export default function ApprovedDialog({ handleClose }) {
           </Tabs>
           <TabPanel value={value} index={0} style={{ width: "100%" }}>
             <CurriculumVitae
-              // IdEmployeeData={IdEmployeeData} 
               status={true}
               employee={employeeData?.employeeInfo}
             />
@@ -118,11 +117,10 @@ export default function ApprovedDialog({ handleClose }) {
               employee={employeeData?.employeeInfo}
               display={"none"}
               status={true}
-            // handleChangeFormCV={handleChangeFormCV}
             />
 
           </TabPanel>
-          <TabPanel value={value} index={2} style={{ width: "100%" }}>
+          <TabPanel value={value} index={2} style={{ width: "100%", marginLeft:"30px" }}>
             <MaterialTable
               title={""}
               data={employeeData?.certificates}
@@ -139,11 +137,7 @@ export default function ApprovedDialog({ handleClose }) {
                 },
                 maxBodyHeight: "1000px",
                 minBodyHeight: "370px",
-
-                // padding: 'dense',
                 padding: "default",
-                // search: false,
-                // exportButton: true,
                 toolbar: false,
               }}
             />

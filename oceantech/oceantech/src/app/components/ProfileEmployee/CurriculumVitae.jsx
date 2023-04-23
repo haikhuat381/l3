@@ -15,6 +15,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   const otherFeature = useSelector((state) => state?.Employee?.otherFeature);
   const Gender = useSelector((state) => state?.Employee?.Gender);
   const employeeData = useSelector((state) => state?.Employee?.formData);
+  const teamId = useSelector((state) => state?.Employee?.employeeData?.employeeInfo?.teamId);
   // const employeeData = status ? employee : useSelector((state) => state?.Employee?.formData.resume);
   // const employeeData = employee;
   // console.log("employeeData hahaa", employeeData)
@@ -22,7 +23,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   const [textFieldValues, setTextFieldValues] = useState();
   useEffect(() => {
     // console.log("checkcheck", JSON.stringify(employee?.cv) === JSON.stringify(formDataCVUpdate) )
-    if (formDataCVUpdate === undefined ) {
+    if (formDataCVUpdate === undefined) {
       console.log("vao dayyyyyyyyyyyy")
       console.log("employeeData?.cv", employeeData?.cv)
       // console.log("formDataResumeUpdate === undefined)")
@@ -103,18 +104,19 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   };
 
   return (
-    <div ref={ref}>
-      <Grid container className="resume-container" xs={12} spacing={2}>
-        <Grid container direction={"column"} xs={4} rowSpacing={2} className="resume-left">
-          <Grid item>
+    <div ref={ref}  style={{ height: 550, overflowY: "scroll" }}>
+      <Grid container className="resume-container" xs={12} spacing={2} marginLeft={3} >
+        <Grid container direction={"column"} xs={3.5} rowSpacing={2} className="resume-left">
+          <Grid item marginTop={-1}>
             <CustomAvatar image={employeeData?.resume?.photoUrl} displayButton={"none"} />
           </Grid>
           <Grid item>
-            <Typography variant="h5" textAlign={"center"} textTransform={"uppercase"}>
+            <Typography variant="h5" textAlign={"center"} marginTop={-4}>
               {employeeData?.resume?.fullName}
             </Typography>
-            <Typography variant="subtitle1" textAlign={"center"}>
-              {otherFeature[employeeData?.resume?.teamId]?.name}
+            <Typography variant="subtitle1" textAlign={"center"} fontSize={20}>
+              {/* {otherFeature[employeeData?.resume?.teamId]?.name} */}
+              {otherFeature[teamId]?.name}
             </Typography>
           </Grid>
 
@@ -152,7 +154,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                 <Typography variant="body2">{employeeData?.resume?.phone}</Typography>
               </Box>
             </Grid>
-            <Grid item>
+            <Grid item sx={{ padding: "10px 0"}}>
               <Box className="item-box">
                 <Icon>email</Icon>
                 <Typography variant="body2">{employeeData?.resume?.email}</Typography>
@@ -206,222 +208,255 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
           </Grid> */}
         </Grid>
-        <Grid item container xs={8} className="resume-right" direction={"column"} spacing={4}>
-          <Grid item display={"flex"} gap={1} alignItems="center">
-            <Icon sx={{ fontSize: "28px" }}>crisis_alert</Icon>
-            <Typography textTransform={"uppercase"} variant="body1" fontWeight={600}>
-              Mục tiêu nghề nghiệp
-            </Typography>
-          </Grid>
-          <Grid item>
-            <TextField
-              // value={employeeData?.cv?.careerGoal || formDataCVUpdate?.careerGoal}
-              value={textFieldValues?.careerGoal}
-              fullWidth
-              // multiline
-              InputProps={{ readOnly: status }}
-              variant="standard"
-              name="careerGoal"
-              onChange={(event) => {
-                // handleTextFieldChange(event, index, "careerGoal");
-                handleTextFieldChangeChange(event, "careerGoal")
-                // handleChangeFormCV(event, "careerGoal")
-              }}
-            ></TextField>
-          </Grid>
-          <Grid item display={"flex"} justifyContent="space-between">
-            <Box display={"flex"} gap={1} alignItems="center">
-              <Icon sx={{ fontSize: "28px" }}>handyman</Icon>
-              <Typography textTransform={"uppercase"} variant="body1" fontWeight={600}>
-                Kĩ Năng
+        {/* <Grid item container xs={8} className="resume-right" direction={"column"} spacing={2}>
+          <Grid item style={{ height: 550, overflowY: "scroll", margin: "16px" }}> */}
+        <Grid item xs={8} style={{ height: 580, overflowY: "scroll" }}>
+          <Grid item container direction={"column"} spacing={2}>
+            <Grid item display={"flex"} gap={1} alignItems="center" color={"#373E58"}>
+              <Icon sx={{ fontSize: "32px" }}>crisis_alert</Icon>
+              <Typography textTransform={"uppercase"} variant="body1" fontWeight={600} fontSize={18}>
+                Mục tiêu nghề nghiệp
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item>
-            <TextField
-              // value={textFieldValues?.skill || formDataCVUpdate?.skill}
-              value={textFieldValues?.skill}
-              fullWidth
-              // multiline
-              InputProps={{ readOnly: status }}
-              variant="standard"
-              name="skill"
-              onChange={(event) => {
-                // handleTextFieldChange(event, index, "generalIntroduction");
-                handleTextFieldChangeChange(event, "skill")
-                // handleChangeFormCV(event, "skill")
-              }}
-            ></TextField>
-          </Grid>
-          <Grid item display={"flex"} gap={1} alignItems="center">
-            <Icon sx={{ fontSize: "28px" }}>sports_esports</Icon>
-            <Typography textTransform={"uppercase"} variant="body1" fontWeight={600}>
-              Sở Thích
-            </Typography>
-          </Grid>
-          <Grid item>
-            <TextField
-              // value={textFieldValues?.hobby || formDataCVUpdate?.hobby }
-              value={textFieldValues?.hobby}
-              fullWidth
-              // multiline
-              InputProps={{ readOnly: status }}
-              variant="standard"
-              name="hobby"
-              onChange={(event) => {
-                // handleTextFieldChange(event, index, "generalIntroduction");
-                handleTextFieldChangeChange(event, "hobby")
-                // handleChangeFormCV(event, "hobby")
-              }}
-            ></TextField>
-          </Grid>
-          <Grid item display={"flex"} justifyContent="space-between">
-            <Box display={"flex"} gap={1} alignItems="center">
-              <Icon sx={{ fontSize: "28px" }}>business_center</Icon>
-              <Typography textTransform={"uppercase"} variant="body1" fontWeight={600}>
-                Kinh nghiệm làm việc
+            </Grid>
+            <Grid item>
+              <TextField
+                // className="hai-test"
+                className={!status ? "hai-test" : "hai-testt"}
+                InputProps={{
+                  readOnly: status,
+                  style: { padding: 0 },
+                }}
+                id="standard-adornment-mount"
+                fullWidth
+                multiline
+                name="careerGoal"
+                sx={{
+                  "& fieldset": { border: "none", padding: 0 },
+                  marginLeft: "5px"
+                }}
+                size="small"
+                value={textFieldValues?.careerGoal || ""}
+                onChange={(event) => {
+                  handleTextFieldChangeChange(event, "careerGoal")
+                }}
+              >
+              </TextField>
+            </Grid>
+            <Grid item display={"flex"} justifyContent="space-between">
+              <Box display={"flex"} gap={1} alignItems="center" color={"#373E58"}>
+                <Icon sx={{ fontSize: "32px" }}>handyman</Icon>
+                <Typography textTransform={"uppercase"} variant="body1" fontWeight={600} fontSize={18}>
+                  Kĩ Năng
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <TextField
+                // className="hai-test"
+                className={!status ? "hai-test" : "hai-testt"}
+                InputProps={{
+                  readOnly: status,
+                  style: { padding: 0 },
+                }}
+                id="standard-adornment-mount"
+                fullWidth
+                multiline
+                name="skill"
+                sx={{
+                  "& fieldset": { border: "none", padding: 0 },
+                  marginLeft: "5px"
+                }}
+                size="small"
+                value={textFieldValues?.skill || ""}
+                onChange={(event) => {
+                  handleTextFieldChangeChange(event, "skill")
+                }}
+              >
+              </TextField>
+            </Grid>
+            <Grid item display={"flex"} gap={1} alignItems="center" color={"#373E58"}>
+              <Icon sx={{ fontSize: "32px" }}>sports_esports</Icon>
+              <Typography textTransform={"uppercase"} variant="body1" fontWeight={600} fontSize={18}>
+                Sở Thích
               </Typography>
-            </Box>
-            <MyButton
-              style={{ display: status ? "none" : "flex" }}
-              onClick={() => {
-                handleAddTextField("experience");
-              }}
-            >
-              <Icon sx={{ fontSize: "28px" }} className={"add-button"}>
-                control_point
-              </Icon>
-            </MyButton>
-          </Grid>
-          <Grid item>
-            {textFieldValues?.workExperiences?.map((value, index) => (
-              <div style={{ display: "flex", alignItems: "start", justifyContent: "space-between", paddingBottom: 16 }} key={index}>
-                <div style={{ width: "23%" }}>
-                  {/* <Grid item container xs={12}> */}
-                  <Grid item xs={12}>
+            </Grid>
+            <Grid item>
+              <TextField
+                // className="hai-test"
+                className={!status ? "hai-test" : "hai-testt"}
+                InputProps={{
+                  readOnly: status,
+                  style: { padding: 0 },
+                }}
+                id="standard-adornment-mount"
+                fullWidth
+                multiline
+                name="hobby"
+                sx={{
+                  "& fieldset": { border: "none", padding: 0 },
+                  marginLeft: "5px"
+                }}
+                size="small"
+                value={textFieldValues?.hobby || ""}
+                onChange={(event) => {
+                  handleTextFieldChangeChange(event, "hobby")
+                }}
+              >
+              </TextField>
+            </Grid>
+            <Grid item display={"flex"} justifyContent="space-between">
+              <Box display={"flex"} gap={1} alignItems="center" color={"#373E58"}>
+                <Icon sx={{ fontSize: "32px" }}>business_center</Icon>
+                <Typography textTransform={"uppercase"} variant="body1" fontWeight={600} fontSize={18}>
+                  Kinh nghiệm làm việc
+                </Typography>
+              </Box>
+              <MyButton
+                style={{ display: status ? "none" : "flex" }}
+                onClick={() => {
+                  handleAddTextField("experience");
+                }}
+              >
+                <Icon sx={{ fontSize: "28px" }} className={"add-button"}>
+                  control_point
+                </Icon>
+              </MyButton>
+            </Grid>
+            <Grid item>
+              {textFieldValues?.workExperiences?.map((value, index) => (
+                <div style={{ display: "flex", alignItems: "start", justifyContent: "space-between", padding: "12px 0 0 0", borderBottom: index !== textFieldValues?.workExperiences?.length - 1 ? "1px solid #E5E5E5" : "" }} key={index}>
+                  <div style={{ width: "23%" }}>
+                    <Grid item xs={12}>
+                      <TextField
+                        // className="hai-test-cv"
+                        className={!status ? "hai-test-cv" : "hai-testt-cv"}
+                        type="date"
+                        InputProps={{
+                          readOnly: status,
+                          style: { padding: 0 },
+                        }}
+                        id="standard-adornment-amount"
+                        fullWidth
+                        name="startDate"
+                        sx={{
+                          "& fieldset": { border: "none", padding: 0 },
+                          // "& label": { color: '#373E58'},
+                        }}
+                        label="Ngày bắt đầu"
+                        InputLabelProps={{ shrink: true }}
+                        margin="dense"
+                        value={value.startDate}
+                        onChange={(event) => {
+                          handleTextFieldChange(event, index, "startDate");
+                        }}
+                      >
+                      </TextField>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        // className="hai-test-cv"
+                        className={!status ? "hai-test-cv" : "hai-testt-cv"}
+                        type="date"
+                        InputProps={{
+                          readOnly: status,
+                          style: { padding: 0 },
+                        }}
+                        id="standard-adornment-amount"
+                        fullWidth
+                        name="endDate"
+                        sx={{
+                          "& fieldset": { border: "none", padding: 0 },
+                        }}
+                        label="Ngày kết thúc"
+                        InputLabelProps={{ shrink: true }}
+                        margin="dense"
+                        value={value.endDate}
+                        onChange={(event) => {
+                          handleTextFieldChange(event, index, "endDate");
+                        }}
+                      >
+                      </TextField>
+                    </Grid>
+
+                  </div>
+                  <div style={{ width: status ? "73%" : "67%", paddingLeft: 25 }}>
                     <TextField
-                      type="date"
-                      // value={value.startDate || formDataCVUpdate?.workExperiences[index]?.startDate}
-                      value={value.startDate}
-                      // readOnly={status}
+                      // className="hai-test-cv"
+                      className={!status ? "hai-test-cv" : "hai-testt-cv"}
                       InputProps={{
-                        // startAdornment: <InputAdornment position="start">Công ty:</InputAdornment>,
                         readOnly: status,
+                        style: { padding: 0 },
                       }}
-                      InputLabelProps={{ shrink: true }}
-                      id="standard-adornment-amount"
-                      // startAdornment={<InputAdornment position="start">Từ</InputAdornment>}
                       fullWidth
-                      style={{ paddingLeft: 5 }}
                       // multiline
-                      name="startDate"
-                      variant="standard"
-                      label="Ngày bắt đầu"
-                      margin="dense"
-                      // InputProps={{ readOnly: status }}
-                      onChange={(event) => {
-                        handleTextFieldChange(event, index, "startDate");
+                      name="company"
+                      sx={{
+                        "& fieldset": { border: "none", padding: 0 },
                       }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
+                      label="Công ty"
+                      InputLabelProps={{ shrink: true }}
+                      margin="dense"
+                      value={value.company}
+                      onChange={(event) => {
+                        handleTextFieldChange(event, index, "company");
+                      }}
+                    >
+                    </TextField>
                     <TextField
-                      type="date"
-                      // value={value.endDate || formDataCVUpdate?.workExperiences[index]?.endDate}
-                      value={value.endDate}
-                      // readOnly={status}
+                      // className="hai-test-cv"
+                      className={!status ? "hai-test-cv" : "hai-testt-cv"}
                       InputProps={{
-                        // startAdornment: <InputAdornment position="start">Công ty:</InputAdornment>,
                         readOnly: status,
+                        style: { padding: 0 },
                       }}
-                      InputLabelProps={{ shrink: true }}
-                      id="standard-adornment-amount"
-                      // startAdornment={<InputAdornment position="start" >-</InputAdornment>}
                       fullWidth
-                      style={{ paddingLeft: 5 }}
-                      margin="dense"
                       // multiline
-                      name="endDate"
-                      variant="standard"
-                      label="Ngày kết thúc"
-                      // InputProps={{ readOnly: status }}
-                      onChange={(event) => {
-                        handleTextFieldChange(event, index, "endDate");
+                      name="position"
+                      sx={{
+                        "& fieldset": { border: "none", padding: 0 },
                       }}
-                    />
-                  </Grid>
-                  {/* </Grid> */}
+                      label="Chức vụ"
+                      InputLabelProps={{ shrink: true }}
+                      margin="dense"
+                      value={value.position}
+                      onChange={(event) => {
+                        handleTextFieldChange(event, index, "position");
+                      }}
+                    >
+                    </TextField>
+                    <TextField
+                      // className="hai-test-cv"
+                      className={!status ? "hai-test-cv" : "hai-testt-cv"}
+                      InputProps={{
+                        readOnly: status,
+                        style: { padding: 0 },
+                      }}
+                      fullWidth
+                      // multiline
+                      name="detail"
+                      sx={{
+                        "& fieldset": { border: "none", padding: 0 },
+                      }}
+                      label="Mô tả"
+                      InputLabelProps={{ shrink: true }}
+                      margin="dense"
+                      value={value.detail}
+                      onChange={(event) => {
+                        handleTextFieldChange(event, index, "detail");
+                      }}
+                    >
+                    </TextField>
+                  </div>
 
+                  <MyButton
+                    style={{ display: status ? "none" : "flex" }}
+                    onClick={handleRemoveTextField(index, "experience")}
+                  >
+                    <Icon className={"remove-button"}>remove_circle_outline</Icon>
+                  </MyButton>
                 </div>
-                <div style={{ width: status ? "73%" : "67%", paddingLeft: 25 }}>
-                  <TextField
-                    // value={value.company || formDataCVUpdate?.workExperiences[index]?.company}
-                    value={value.company}
-                    fullWidth
-                    multiline
-                    name="company"
-                    variant="standard"
-                    label="Công ty"
-                    // size="small"
-                    margin="dense"
-                    // variant="filled"
-                    InputProps={{
-                      // startAdornment: <InputAdornment position="start">Công ty:</InputAdornment>,
-                      readOnly: status,
-                    }}
-                    InputLabelProps={{ shrink: true }}
-                    onChange={(event) => {
-                      handleTextFieldChange(event, index, "company");
-                    }}
-                  />
-                  <TextField
-                    // value={value.position || formDataCVUpdate?.workExperiences[index]?.position}
-                    value={value.position}
-                    fullWidth
-                    multiline
-                    name="position"
-                    variant="standard"
-                    label="Chức vụ"
-                    // size="small"
-                    margin="dense"
-                    InputProps={{
-                      // startAdornment: <InputAdornment position="start">Chức vụ:</InputAdornment>,
-                      readOnly: status,
-                    }}
-                    InputLabelProps={{ shrink: true }}
-                    onChange={(event) => {
-                      handleTextFieldChange(event, index, "position");
-                    }}
-                  />
-                  <TextField
-                    value={value.detail}
-                    fullWidth
-                    multiline
-                    name="detail"
-                    variant="standard"
-                    label="Mô tả"
-                    margin="dense"
-                    // size="small"
-                    InputProps={{
-                      // startAdornment: <InputAdornment position="start">Mô tả:</InputAdornment>,
-                      readOnly: status,
-                    }}
-                    InputLabelProps={{ shrink: true }}
-                    onChange={(event) => {
-                      handleTextFieldChange(event, index, "detail");
-                    }}
-                  />
-
-                </div>
-
-                <MyButton
-                  style={{ display: status ? "none" : "flex" }}
-                  onClick={handleRemoveTextField(index, "experience")}
-                >
-                  <Icon className={"remove-button"}>remove_circle_outline</Icon>
-                </MyButton>
-              </div>
-            ))}
+              ))}
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

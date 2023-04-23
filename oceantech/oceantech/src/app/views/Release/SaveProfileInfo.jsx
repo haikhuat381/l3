@@ -43,7 +43,7 @@ function SaveProfileInfo(props) {
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions>
+      <DialogActions style={{justifyContent: 'center'}}>
         <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
           Hủy
         </Button>

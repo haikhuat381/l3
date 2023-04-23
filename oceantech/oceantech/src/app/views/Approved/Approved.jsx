@@ -48,27 +48,20 @@ function Approved() {
   }
   
   const handleGetListEmployee = () => {
-    // console.log("reloadddddddddd")
     const status = "5,6,10,11,18"
     // const status = "5,6,10,11,18"
     dispatch(getTotalAction(status))
     dispatch(getListEmployeeAction(status, page, pagesize))
   }
   useEffect(() => {
-    // dispatch(getListEmployeeAction("1,3,4,6", page, pagesize))
-    // console.log("reloaddddddddddd")
     handleGetListEmployee(page, pagesize)
   }, [page, pagesize, reloadRef.current])
   const onHandleChange = (page, pageSize) => {
-    // console.log("hahaha")
-    // console.log(page)
-    // console.log(pageSize)
     setPage(page)
     setPageSize(pageSize)
   }
   const handleClose = () => {
     setShouldOpenDialog(false);
-    // dispatch(getEmployeeData({}));
   };
 
   const columns = [
@@ -94,12 +87,13 @@ function Approved() {
         );
       },
     },
+    { title: "Mã nhân viên", field: "code" },
     { title: "Họ tên", field: "fullName" },
-    {
-      title: "Ngày sinh",
-      field: "dateOfBirth",
-      render: (rowdata) => moment(rowdata).format("DD/MM/YYYY"),
-    },
+    // {
+    //   title: "Ngày sinh",
+    //   field: "dateOfBirth",
+    //   render: (rowdata) => moment(rowdata.dateOfBirth).format("DD/MM/YYYY"),
+    // },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     {
@@ -119,7 +113,6 @@ function Approved() {
       <Box width="100%" overflow="auto">
         <MaterialTable
           title={""}
-          // data={listApproved}
           data={listEmployeeDataReducer}
           columns={columns}
           options={{
@@ -135,10 +128,7 @@ function Approved() {
               backgroundColor: "#222943",
               color: "#fff",
             },
-            // padding: 'dense',
             padding: "default",
-            // search: false,
-            // exportButton: true,
             toolbar: true,
           }}
         />

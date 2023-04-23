@@ -25,7 +25,7 @@ import { ToastContainer, toast } from "react-toastify";
 function SaveProfileDialog(props) {
   const dispatch = useDispatch();
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
-  const { handleClose, handleCloseAll } = props;
+  const { handleClose, handleCloseAll,handleChangeReload } = props;
   const formik = useFormik({
     initialValues: {
       date: "",
@@ -41,7 +41,8 @@ function SaveProfileDialog(props) {
       console.log(employeeData?.employeeInfo?.employeeId)
       console.log(values)
       // dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
-
+      dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, storedProfileCode:values.storedProfileCode}))
+      handleChangeReload(employeeData?.employeeInfo?.employeeId)
       toast.success("Lưu hồ sơ thành côngg");
       handleCloseAll();
     },
@@ -89,7 +90,7 @@ function SaveProfileDialog(props) {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{justifyContent: 'center'}}>
           <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
             Hủy
           </Button>

@@ -45,7 +45,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ padding: "0 24px 0px 24px"  }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -76,31 +76,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
     setValue(newValue);
   };
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
-  // console.log("haikhuat");
-  // console.log(employeeData);
   const columns = [
-    // {
-    //   title: "Hành động",
-    //   render: (rowData) => {
-    //     return (
-    //       <>
-    //         <Tooltip title="Sửa">
-    //           <IconButton>
-    //             <Icon color="success">visibilityIcon</Icon>
-    //           </IconButton>
-    //         </Tooltip>
-    //       </>
-    //     );
-    //   },
-    // },
-    // { title: "Tên văn bằng", field: "name" },
-    // {
-    //   title: "Nội dung ",
-    //   field: "content",
-    // },
-    // { title: "Nơi cấp", field: "place" },
-    // { title: "Ngày cấp", field: "date" },
-    // { title: "Lĩnh Vực", render: (rowData) => rowData.field.fieldName },
     { title: "Tên văn bằng", field: "name" },
     {
       title: "Nội dung ",
@@ -127,7 +103,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           </IconButton>
         </DialogTitle>
         
-        <DialogContent>
+        <DialogContent sx={{padding: '0 24px'}}>
           {employeeData.releaseRequest  ? (
             <ResignationLetter />
           ) : employeeData.promoteRequest ? (<PromotionLetter/>) : employeeData.proposeRequest ? (<PropostionLetter/>) 
@@ -139,7 +115,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
                 value={value}
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
-                sx={{ borderRight: 1, borderColor: "divider" }}
+                sx={{ borderRight: 1, borderColor: "divider", padding: 0 }}
               >
                 <Tab label="Hồ sơ" {...a11yProps(0)} />
                 <Tab label="Sơ yếu lý lịch" {...a11yProps(2)} />
@@ -160,7 +136,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
                 />
 
               </TabPanel>
-              <TabPanel value={value} index={2} style={{ width: "100%" }}>
+              <TabPanel value={value} index={2} style={{ width: "100%", marginLeft:"30px" }}>
                 <MaterialTable
                   title={""}
                   data={employeeData?.certificates}
@@ -174,11 +150,12 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
                     },
                     maxBodyHeight: "1000px",
                     minBodyHeight: "370px",
+                    headerStyle: {
+                      backgroundColor: "#262e49",
+                      color: "#fff",
+                    },
 
-                    // padding: 'dense',
                     padding: "default",
-                    // search: false,
-                    // exportButton: true,
                     toolbar: false,
                   }}
                 />
@@ -187,7 +164,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           )}
         </DialogContent>
 
-        <DialogActions>
+        <DialogActions style={{justifyContent: 'center'}}>
           <Button
             variant="contained"
             sx={{ background: "#FF9E43", mb: 1 }}
@@ -264,8 +241,3 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
     </>
   );
 }
-// {shouldOpenDialog && ! ? (
-//   <ApprovalDialog handleClose={() => setShouldOpenDialog(false)} />
-// ) : shouldOpenDialog && employeeData.releaseRequest ? (
-//   <ReleaseDialog handleClose={() => setShouldOpenDialog(false)} />
-// ) : null}

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import MaterialTable from "@material-table/core";
 import { Tooltip, Icon, IconButton } from "@mui/material";
 import moment from "moment";
+
 const Diploma = React.forwardRef((props, ref) => {
   const { listDiploma } = props
   const employeeData = useSelector((state) => state.Employee.employeeData);
@@ -43,11 +44,16 @@ const Diploma = React.forwardRef((props, ref) => {
         data={!listDiploma ? [] : listDiploma}
         columns={columns}
         options={{
+          paging:false,
           rowStyle: (rowData, index) => {
             return {
               backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
             };
           },
+          // headerStyle: {
+          //   backgroundColor: "#262e49",
+          //   color: "#fff",
+          // },
           headerStyle: {
             backgroundColor: "#262e49",
             color: "#fff",

@@ -38,12 +38,10 @@ const Container = styled("div")(() => ({
 
 
 function AddNewEmployee() {
-  // const [listEmployee, setListEmployee] = useState([]);
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1);
   const [pagesize, setPageSize] = useState(5)
-  // const [IdEmployeeData, setIDEmployeeData] = useState()
 
   const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
   const objStatus = useSelector(state => state?.Employee?.objStatus)
@@ -55,13 +53,10 @@ function AddNewEmployee() {
   }
   
   useEffect(() => {
-    // dispatch(getListEmployeeAction("1,3,4,6", page, pagesize))
-    // console.log("goi laiiiiiiii")
     handleGetListEmployee(page, pagesize)
   }, [page, pagesize, reloadRef.current])
   
   const handleGetListEmployee = () => {
-    // console.log("reloadddddddddd")
     // const status = "1"
     const status = "1,3,4,6"
     dispatch(getTotalAction(status))
@@ -82,16 +77,12 @@ function AddNewEmployee() {
 
   const handleChangeEmployee = (rowdata, method) => {
     if (method === 1) {
-      // console.log("rowdata",rowdata)
       setEmployeeUpdate(rowdata)
       dispatch(getEmployeeDataAction(rowdata.employeeId))
       setShouldOpenDialog(true);
     }
     if (method === 0) {
-      // console.log("rowdata delete",rowdata)
       handleChangeReload(rowdata.employeeId)
-      // dispatch(deleteEmployee(rowdata.employeeId))
-      // handleGetListEmployee()
       setshouldOpenConfirmationDeleteDialog(false);
       toast.success("Xóa nhân viên thành công");
     }
@@ -104,9 +95,6 @@ function AddNewEmployee() {
   };
 
   const onHandleChange = (page, pageSize) => {
-    // console.log("hahaha")
-    // console.log(page)
-    // console.log(pageSize)
     setPage(page)
     setPageSize(pageSize)
   }
@@ -237,14 +225,16 @@ function AddNewEmployee() {
         );
       },
     },
-    { title: "Họ tên", field: "fullName" },
-    {
-      title: "Ngày sinh",
-      field: "dateOfBirth",
-      render: (rowdata) => moment(rowdata).format("DD/MM/YYYY"),
-    },
+    { title: "Mã nhân viên", field: "code" },
+    { title: "Họ tên", field: "fullName", width: 250 },
+    // {
+    //   title: "Ngày sinh",
+    //   field: "dateOfBirth",
+    //   render: (rowdata) => moment(rowdata.dateOfBirth).format("DD/MM/YYYY"),
+    // },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
+    { title: "Mã CCCD/CMT", field: "citizenId" },
     {
       title: "Trạng thái",
       field: "status",
@@ -289,11 +279,9 @@ function AddNewEmployee() {
         <MaterialTable
           title={""}
           data={listEmployeeDataReducer}
-          // data={listAddNew}
           columns={columns}
           options={{
             paging: false,
-            // pageSizeOptions: [5, 10, 15, 20],
             rowStyle: (rowData, index) => {
               return {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
@@ -305,10 +293,7 @@ function AddNewEmployee() {
               backgroundColor: "#262e49",
               color: "#fff",
             },
-            // padding: 'dense',
             padding: "default",
-            // search: false,
-            // exportButton: true,
             toolbar: false,
           }}
         />
@@ -351,10 +336,7 @@ function AddNewEmployee() {
         <ApprovedDialog
           handleClose={() => {
             setShouldOpenViewDialog(false);
-            // setIDEmployeeData(null)
-            // dispatch(getEmployeeData({}));
           }}
-          // IdEmployeeData={IdEmployeeData}
         />
       )}
     </Container>

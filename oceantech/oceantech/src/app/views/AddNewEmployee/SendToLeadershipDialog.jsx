@@ -45,15 +45,9 @@ function SendToLeadershipDialog(props) {
       // registerPosition: Yup.string().required("Nhập vị trí"),
     }),
     onSubmit: (values) => {
-      // values.registerPosition = leader?.find(value => value.name === values.registerName)?.position
       values.registerPosition = position
       values.status = 3
-      // console.log("trinh lanh dao value", values)
-      // console.log("trinh lanh dao id", employeeId)
       dispatch(addRegistAction(employeeId,values))
-      // employee.sendLeader = values;
-      // employee.status = "Chờ duyệt";
-      // dispatch(updateEmployee(employee));
 
       // handleCloseAll();
       toast.success("Gửi lãnh đạo thành công");
@@ -155,7 +149,7 @@ function SendToLeadershipDialog(props) {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{justifyContent: 'center'}}>
           <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
             Hủy
           </Button>
