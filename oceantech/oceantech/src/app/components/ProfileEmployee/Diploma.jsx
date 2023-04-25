@@ -63,7 +63,7 @@ const Diploma = React.forwardRef((props, ref) => {
         }}
         localization={{
             body: {
-              emptyDataSourceMessage: "Không có dữ liệu",
+              emptyDataSourceMessage: "Không có thông tin",
             }
         }}
       />

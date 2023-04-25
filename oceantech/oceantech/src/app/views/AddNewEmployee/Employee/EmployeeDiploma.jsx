@@ -253,36 +253,45 @@ function EmployeeDiploma(props) {
           </Grid>
         </Grid>
       </form>
-      <MaterialTable
-        title={""}
-        data={listDiplomaData}
-        columns={columns}
-        options={{
-          paging: false,
-          pageSize: 10,
-          pageSizeOptions: [10, 20, 50],
-          // paginationType: 'stepped',
-          stickyHeader: true,
-          rowStyle: (rowData, index) => {
-            return {
-              backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-            };
-          },
-          maxBodyHeight: "200px",
-          minBodyHeight: "200px",
-          headerStyle: {
-            backgroundColor: "#262e49",
-            color: "#fff",
-          },
-          padding: "default",
-          toolbar: false,
-        }}
-        localization={{
-            body: {
-              emptyDataSourceMessage: "Không có dữ liệu",
-            }
-        }}
-      />
+      <div className="table-diploma">
+        <MaterialTable
+          title={""}
+          data={listDiplomaData}
+          columns={columns}
+          options={{
+            paging: false,
+            pageSize: 10,
+            pageSizeOptions: [10, 20, 50],
+            // paginationType: 'stepped',
+            stickyHeader: true,
+            rowStyle: (rowData, index) => {
+              return {
+                backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+              };
+            },
+            maxBodyHeight: "200px",
+            minBodyHeight: "200px",
+            headerStyle: {
+              // borderRadius: '4px',
+              backgroundColor: "#262e49",
+              color: "#fff",
+            },
+            // headerCell: {
+            //   '&:first-child': {
+            //     borderTopLeftRadius: '10px',
+            //     backgroundColor: "red"
+            //   },
+            // },
+            padding: "default",
+            toolbar: false,
+          }}
+          localization={{
+              body: {
+                emptyDataSourceMessage: "Không có thông tin",
+              }
+          }}
+        />
+      </div>
     </>
   );
 }

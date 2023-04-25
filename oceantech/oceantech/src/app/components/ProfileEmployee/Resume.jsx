@@ -430,6 +430,7 @@ const Resume = React.forwardRef((props, ref) => {
                 boxShadow: "none",
                 fontFamily: "Times New Roman",
               }}
+              sorting={false}
               options={{
                 sorting: false,
                 filtering: false,
@@ -448,7 +449,7 @@ const Resume = React.forwardRef((props, ref) => {
               }}
               localization={{
                   body: {
-                    emptyDataSourceMessage: "Không có dữ liệu",
+                    emptyDataSourceMessage: "Không có thông tin",
                   }
               }}
             />

@@ -314,7 +314,7 @@ function EmployeeRelation(props) {
         }}
         localization={{
             body: {
-              emptyDataSourceMessage: "Không có dữ liệu",
+              emptyDataSourceMessage: "Không có thông tin",
             }
         }}
       />

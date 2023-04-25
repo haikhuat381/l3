@@ -243,7 +243,8 @@ function AddNewEmployeeDialog(props) {
                   // borderBottom: 1,
                   // borderColor: "divider",
                   background: "#ddd",
-                  overflow: "hidden"
+                  overflow: "hidden",
+                  // borderRadius: "4px"
                 }}
               >
                 <TabList onChange={handleChange}>

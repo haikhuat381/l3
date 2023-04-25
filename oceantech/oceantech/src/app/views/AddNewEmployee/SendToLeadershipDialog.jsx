@@ -18,7 +18,7 @@ import * as Yup from "yup";
 import { addRegistAction, updateEmployee } from "app/redux/actions/actions";
 import { ToastContainer, toast } from "react-toastify";
 function SendToLeadershipDialog(props) {
-  const { handleClose, employeeId, handleCloseAll } = props;
+  const { handleClose, employeeId, handleCloseAll, status } = props;
   const dispatch = useDispatch();
   // const employee = useSelector((state) => state.Employee.employeeData);
   const leader = useSelector((state) => state?.Employee?.leader);
@@ -46,7 +46,8 @@ function SendToLeadershipDialog(props) {
     }),
     onSubmit: (values) => {
       values.registerPosition = position
-      values.status = 3
+      values.status = status === 1 || status === 4 || status === 6 ? 3 : null
+      console.log("status dong 50", status)
       dispatch(addRegistAction(employeeId,values))
 
       handleCloseAll();
