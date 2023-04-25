@@ -49,20 +49,24 @@ function SendToLeadershipDialog(props) {
       values.status = 3
       dispatch(addRegistAction(employeeId,values))
 
-      // handleCloseAll();
+      handleCloseAll();
       toast.success("Gửi lãnh đạo thành công");
     },
   });
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
-      <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+            padding: "9px 24px",
+            boxShadow: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
+            zIndex: 10000
+          }}>
         Gửi lãnh đạo
         <Box onClick={handleClose}>
           <Close color="error"></Close>
         </Box>
       </DialogTitle>
       <form onSubmit={formik.handleSubmit}>
-        <DialogContent style={{ paddingTop: 10 }}>
+        <DialogContent style={{ paddingTop: 20 }}>
           <Grid container spacing={2}>
             <Grid item container>
               <TextField
@@ -149,12 +153,12 @@ function SendToLeadershipDialog(props) {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions style={{justifyContent: 'center'}}>
-          <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
-            Hủy
-          </Button>
-          <Button variant="contained" sx={{ mb: 2, background: "#7467EF" }} type="submit">
+        <DialogActions style={{justifyContent: 'center', boxShadow: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
+          <Button variant="contained" type="submit" color="primary">
             Xác nhận
+          </Button>
+          <Button variant="contained" onClick={handleClose} color="error">
+            Hủy
           </Button>
         </DialogActions>
       </form>

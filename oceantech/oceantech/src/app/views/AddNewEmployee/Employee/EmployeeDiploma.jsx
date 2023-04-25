@@ -145,12 +145,13 @@ function EmployeeDiploma(props) {
           onYesClick={() => {
             handleDeleteDiploma();
           }}
-          title="Xóa văn bằng"
+          title= "Xóa bản ghi"
+          content= "Bạn có chhắc chắn muốn xóa Văn bằng này?"
         />
       )}
 
       <form>
-        <Grid container spacing={2} style={{ paddingBottom: "20px" }}>
+        <Grid container spacing={2} style={{ paddingBottom: "13px" }}>
           <Grid item sm={4} xs={12}>
             <TextField
               label="Tên văn bằng"
@@ -233,20 +234,20 @@ function EmployeeDiploma(props) {
             <Grid item>
               <Button
                 variant="contained"
-                sx={{ background: "#FF9E43" }}
-                onClick={formik.resetForm}
+                color="primary"
+                type="button"
+                onClick={formik.handleSubmit}
               >
-                Hủy
+                Lưu
               </Button>
             </Grid>
             <Grid item>
               <Button
                 variant="contained"
-                sx={{ background: "#7467EF" }}
-                type="button"
-                onClick={formik.handleSubmit}
+                color="error"
+                onClick={formik.resetForm}
               >
-                Lưu
+                Hủy
               </Button>
             </Grid>
           </Grid>
@@ -257,6 +258,10 @@ function EmployeeDiploma(props) {
         data={listDiplomaData}
         columns={columns}
         options={{
+          paging: false,
+          pageSize: 10,
+          pageSizeOptions: [10, 20, 50],
+          // paginationType: 'stepped',
           stickyHeader: true,
           rowStyle: (rowData, index) => {
             return {
@@ -271,6 +276,11 @@ function EmployeeDiploma(props) {
           },
           padding: "default",
           toolbar: false,
+        }}
+        localization={{
+            body: {
+              emptyDataSourceMessage: "Không có dữ liệu",
+            }
         }}
       />
     </>

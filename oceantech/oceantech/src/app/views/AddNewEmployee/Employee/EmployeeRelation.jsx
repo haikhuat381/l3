@@ -166,12 +166,13 @@ function EmployeeRelation(props) {
           onYesClick={() => {
             handleDeleteRelationship();
           }}
-          title="Xóa quan hệ"
+          title= "Xóa bản ghi"
+          content= "Bạn có chhắc chắn muốn xóa Quan hệ này?"
         />
       )}
 
-      <form onSubmit={formik.handleSubmit} style={{ marginTop: 10 }}>
-        <Grid container spacing={3}>
+      <form onSubmit={formik.handleSubmit}>
+        <Grid container spacing={2}>
           <Grid item sm={3} xs={3} className="input-dialog">
             <TextField
               label="Họ và Tên"
@@ -271,17 +272,19 @@ function EmployeeRelation(props) {
             {" "}
             <Button
               variant="contained"
-              sx={{ mb: 2, mr: 2, background: "#FF9E43" }}
-              onClick={formik.resetForm}
-            >
-              Hủy
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ mb: 2, background: "#7467EF" }}
+              color="primary"
+              sx={{ mb: 2, mr: 1}}
               onClick={() => formik.submitForm()}
             >
               Lưu
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ mb: 2}}
+              onClick={formik.resetForm}
+            >
+              Hủy
             </Button>
           </Grid>
         </Grid>
@@ -291,6 +294,9 @@ function EmployeeRelation(props) {
         data={listRelationshipData}
         columns={columns}
         options={{
+          paging: false,
+          pageSize: 10,
+          pageSizeOptions: [10, 20, 50],
           stickyHeader: true,
           rowStyle: (rowData, index) => {
             return {
@@ -305,6 +311,11 @@ function EmployeeRelation(props) {
           },
           padding: "default",
           toolbar: false,
+        }}
+        localization={{
+            body: {
+              emptyDataSourceMessage: "Không có dữ liệu",
+            }
         }}
       />
     </>

@@ -36,7 +36,7 @@ import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import {  updateEmployee } from "./EmployeeServices";
 function AddNewEmployeeDialog(props) {
-  const { handleClose, handleGetListEmployee, handleChangeReload, employeeUpdate } = props;
+  const { handleClose, handleChangeReload, employeeUpdate } = props;
 
   const dispatch = useDispatch();
 
@@ -224,6 +224,9 @@ function AddNewEmployeeDialog(props) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            // borderBottom: "1px solid #ccc",
+            boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
+            padding: "12px 24px"
           }}
         >
           {!employeeData?.employeeId ? "Thêm mới nhân viên" : "Sửa nhân viên"}
@@ -232,14 +235,15 @@ function AddNewEmployeeDialog(props) {
           </Box>
         </DialogTitle>
 
-        <DialogContent style={{ overflow: "hidden" }}>
+        <DialogContent style={{ overflow: "hidden", marginTop: 16, padding: "0 24px" }}>
           <form onSubmit={formik.handleSubmit}>
             <TabContext value={value}>
               <Box
                 sx={{
-                  borderBottom: 1,
-                  borderColor: "divider",
+                  // borderBottom: 1,
+                  // borderColor: "divider",
                   background: "#ddd",
+                  overflow: "hidden"
                 }}
               >
                 <TabList onChange={handleChange}>
@@ -248,7 +252,8 @@ function AddNewEmployeeDialog(props) {
                   <Tab label="Thông tin quan hệ gia đình" value="3" />
                 </TabList>
               </Box>
-              <TabPanel value="1" sx={{ p: "20px 0" }}>
+              {/* <TabPanel value="1" sx={{ p: "20px 0" }}> */}
+              <TabPanel value="1" sx={{ p: "0 0 20px 0" }}>
                 <EmployeeInfo 
                   formikRoot={formik}
                   dataUp 
@@ -275,22 +280,18 @@ function AddNewEmployeeDialog(props) {
 
         <DialogActions
           style={{
-            marginLeft: 20,
-            marginRight: 20,
-            borderTop: "1px solid #ccc",
-            justifyContent: 'center'
+            // marginLeft: 20,
+            // marginRight: 20,
+            // borderTop: "1px solid #ccc",
+            boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
+            justifyContent: 'center',
+            // alignItems: "center"
           }}
         >
           <Button
             variant="contained"
-            sx={{ mb: 2, background: "#FF9E43" }}
-            onClick={() => handleClose()}
-          >
-            Hủy
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ mb: 2, background: "#339999", display: saved }}
+            color="success"
+            sx={{ display: saved }}
             onClick={() => {
               setShouldOpenDialog("true");
               dispatch(getFormDataAction(employeeData?.employeeId))
@@ -301,10 +302,19 @@ function AddNewEmployeeDialog(props) {
           <Button
             variant="contained"
             type="submit"
-            sx={{ mb: 2, background: "#7467EF",  display: saved === "none" ? "block" : "none" }}
+            color="primary"
+            sx={{ display: saved === "none" ? "block" : "none" }}
             onClick={() => formik.submitForm()}
           >
             Lưu
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            // sx={{ background: "#FF9E43" }}
+            onClick={() => handleClose()}
+          >
+            Hủy
           </Button>
         </DialogActions>
       </Dialog>

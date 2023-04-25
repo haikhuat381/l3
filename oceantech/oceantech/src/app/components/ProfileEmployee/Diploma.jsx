@@ -38,7 +38,7 @@ const Diploma = React.forwardRef((props, ref) => {
   ];
 
   return (
-    <div ref={ref}>
+    <div ref={ref} style={{height: "500px", paddingLeft: "30px"}}>
       <MaterialTable
         title={""}
         data={!listDiploma ? [] : listDiploma}
@@ -50,10 +50,6 @@ const Diploma = React.forwardRef((props, ref) => {
               backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
             };
           },
-          // headerStyle: {
-          //   backgroundColor: "#262e49",
-          //   color: "#fff",
-          // },
           headerStyle: {
             backgroundColor: "#262e49",
             color: "#fff",
@@ -61,11 +57,14 @@ const Diploma = React.forwardRef((props, ref) => {
           maxBodyHeight: "1000px",
           minBodyHeight: "370px",
 
-          // padding: 'dense',
           padding: "default",
-          // search: false,
-          // exportButton: true,
           toolbar: false,
+
+        }}
+        localization={{
+            body: {
+              emptyDataSourceMessage: "Không có dữ liệu",
+            }
         }}
       />
     </div>

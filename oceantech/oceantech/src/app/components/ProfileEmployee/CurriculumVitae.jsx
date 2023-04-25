@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomAvatar from "../Avatar/Avatar";
 import moment from "moment";
 import { json } from "react-router";
+
 const CurriculumVitae = React.forwardRef((props, ref) => {
   const MyButton = styled(IconButton)({
     display: props.display,
@@ -104,17 +105,17 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   };
 
   return (
-    <div ref={ref}  style={{ height: 550, overflowY: "scroll" }}>
-      <Grid container className="resume-container" xs={12} spacing={2} marginLeft={3} >
+    <div ref={ref}  style={{ height: 500, overflowY: "scroll", overflowX:"hidden"}}>
+      <Grid container className="resume-container" xs={12} spacing={2} marginLeft={3}>
         <Grid container direction={"column"} xs={3.5} rowSpacing={2} className="resume-left">
-          <Grid item marginTop={-1}>
+          <Grid item sx={{pt: 0, mb: 2}}>
             <CustomAvatar image={employeeData?.resume?.photoUrl} displayButton={"none"} />
           </Grid>
           <Grid item>
             <Typography variant="h5" textAlign={"center"} marginTop={-4}>
               {employeeData?.resume?.fullName}
             </Typography>
-            <Typography variant="subtitle1" textAlign={"center"} fontSize={20}>
+            <Typography variant="subtitle1" textAlign={"center"} fontSize={18}>
               {/* {otherFeature[employeeData?.resume?.teamId]?.name} */}
               {otherFeature[teamId]?.name}
             </Typography>
@@ -210,7 +211,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
         </Grid>
         {/* <Grid item container xs={8} className="resume-right" direction={"column"} spacing={2}>
           <Grid item style={{ height: 550, overflowY: "scroll", margin: "16px" }}> */}
-        <Grid item xs={8} style={{ height: 580, overflowY: "scroll" }}>
+        <Grid item xs={8} className="resume-right" style={{mb:0, height: 600, overflowY: "scroll", overflowX:"hidden" }}>
           <Grid item container direction={"column"} spacing={2}>
             <Grid item display={"flex"} gap={1} alignItems="center" color={"#373E58"}>
               <Icon sx={{ fontSize: "32px" }}>crisis_alert</Icon>
@@ -220,8 +221,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item>
               <TextField
-                // className="hai-test"
-                className={!status ? "hai-test" : "hai-testt"}
+                // className="rs-noReadonly"
+                className={!status ? "rs-noReadonly" : "rs-readonly"}
                 InputProps={{
                   readOnly: status,
                   style: { padding: 0 },
@@ -252,8 +253,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item>
               <TextField
-                // className="hai-test"
-                className={!status ? "hai-test" : "hai-testt"}
+                // className="rs-noReadonly"
+                className={!status ? "rs-noReadonly" : "rs-readonly"}
                 InputProps={{
                   readOnly: status,
                   style: { padding: 0 },
@@ -282,8 +283,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item>
               <TextField
-                // className="hai-test"
-                className={!status ? "hai-test" : "hai-testt"}
+                // className="rs-noReadonly"
+                className={!status ? "rs-noReadonly" : "rs-readonly"}
                 InputProps={{
                   readOnly: status,
                   style: { padding: 0 },
@@ -326,10 +327,11 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
               {textFieldValues?.workExperiences?.map((value, index) => (
                 <div style={{ display: "flex", alignItems: "start", justifyContent: "space-between", padding: "12px 0 0 0", borderBottom: index !== textFieldValues?.workExperiences?.length - 1 ? "1px solid #E5E5E5" : "" }} key={index}>
                   <div style={{ width: "23%" }}>
+                    <Grid item container xs={12}>
                     <Grid item xs={12}>
                       <TextField
-                        // className="hai-test-cv"
-                        className={!status ? "hai-test-cv" : "hai-testt-cv"}
+                        // className="cv-noReadonly"
+                        className={!status ? "cv-noReadonly" : "cv-readonly"}
                         type="date"
                         InputProps={{
                           readOnly: status,
@@ -354,8 +356,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        // className="hai-test-cv"
-                        className={!status ? "hai-test-cv" : "hai-testt-cv"}
+                        // className="cv-noReadonly"
+                        className={!status ? "cv-noReadonly" : "cv-readonly"}
                         type="date"
                         InputProps={{
                           readOnly: status,
@@ -377,12 +379,13 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                       >
                       </TextField>
                     </Grid>
+                    </Grid>
 
                   </div>
                   <div style={{ width: status ? "73%" : "67%", paddingLeft: 25 }}>
                     <TextField
-                      // className="hai-test-cv"
-                      className={!status ? "hai-test-cv" : "hai-testt-cv"}
+                      // className="cv-noReadonly"
+                      className={!status ? "cv-noReadonly" : "cv-readonly"}
                       InputProps={{
                         readOnly: status,
                         style: { padding: 0 },
@@ -403,8 +406,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                     >
                     </TextField>
                     <TextField
-                      // className="hai-test-cv"
-                      className={!status ? "hai-test-cv" : "hai-testt-cv"}
+                      // className="cv-noReadonly"
+                      className={!status ? "cv-noReadonly" : "cv-readonly"}
                       InputProps={{
                         readOnly: status,
                         style: { padding: 0 },
@@ -425,8 +428,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                     >
                     </TextField>
                     <TextField
-                      // className="hai-test-cv"
-                      className={!status ? "hai-test-cv" : "hai-testt-cv"}
+                      // className="cv-noReadonly"
+                      className={!status ? "cv-noReadonly" : "cv-readonly"}
                       InputProps={{
                         readOnly: status,
                         style: { padding: 0 },

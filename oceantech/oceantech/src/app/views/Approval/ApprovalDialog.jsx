@@ -32,7 +32,15 @@ import PromotionLetter from "app/components/PromotionLetter/PromotionLetter";
 import PropostionLetter from "app/components/PropostionLetter/PropostionLetter";
 import IncreaseDialogLetter from "app/components/IncreaseLetter/IncreaseDialogLetter"
 import moment from "moment";
-
+import Diploma from "app/components/ProfileEmployee/Diploma";
+// import { makeStyles } from '@material-ui/core/styles';
+// const useStyles = makeStyles({
+//   noPaddingBottom: {
+//     '&.MuiDialogActions-root + .MuiDialogContent-root': {
+//       paddingBottom: 0,
+//     },
+//   },
+// });
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -45,7 +53,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ padding: "0 24px 0px 24px"  }}>
+        <Box sx={{ padding: "0 24px"  }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -67,6 +75,7 @@ function a11yProps(index) {
 }
 
 export default function ApprovalDialog({ handleClose, handleChangeReload }) {
+  // const classes = useStyles();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
@@ -93,9 +102,12 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
 
   return (
     <>
-      <Dialog open={true} maxWidth={"lg"} fullWidth>
+      <Dialog open={true} maxWidth={"lg"} fullWidth >
         <DialogTitle
-          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 24px",
+            boxShadow: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
+            zIndex: 10000
+           }}
         >
           Hồ sơ nhân viên
           <IconButton onClick={() => handleClose()}>
@@ -103,7 +115,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           </IconButton>
         </DialogTitle>
         
-        <DialogContent sx={{padding: '0 24px'}}>
+        <DialogContent sx={{padding: '0 24px', mt: 1}}>
           {employeeData.releaseRequest  ? (
             <ResignationLetter />
           ) : employeeData.promoteRequest ? (<PromotionLetter/>) : employeeData.proposeRequest ? (<PropostionLetter/>) 
@@ -115,7 +127,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
                 value={value}
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
-                sx={{ borderRight: 1, borderColor: "divider", padding: 0 }}
+                sx={{ borderRight: 1, borderColor: "divider", padding: 0, overflow: "hidden" }}
               >
                 <Tab label="Hồ sơ" {...a11yProps(0)} />
                 <Tab label="Sơ yếu lý lịch" {...a11yProps(2)} />
@@ -136,46 +148,40 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
                 />
 
               </TabPanel>
-              <TabPanel value={value} index={2} style={{ width: "100%", marginLeft:"30px" }}>
-                <MaterialTable
-                  title={""}
-                  data={employeeData?.certificates}
-                  // data={employeeData?.listDiploma}
-                  columns={columns}
-                  options={{
-                    rowStyle: (rowData, index) => {
-                      return {
-                        backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-                      };
-                    },
-                    maxBodyHeight: "1000px",
-                    minBodyHeight: "370px",
-                    headerStyle: {
-                      backgroundColor: "#262e49",
-                      color: "#fff",
-                    },
-
-                    padding: "default",
-                    toolbar: false,
-                  }}
+              <TabPanel value={value} index={2} style={{ width: "100%" }}>
+                <Diploma
+                  listDiploma={employeeData?.certificates}
                 />
               </TabPanel>
             </Box>
           )}
         </DialogContent>
 
-        <DialogActions style={{justifyContent: 'center'}}>
+        <DialogActions style={{justifyContent: 'center', gap: '-8px', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
           <Button
             variant="contained"
-            sx={{ background: "#FF9E43", mb: 1 }}
-            onClick={() => handleClose()}
+            color="success"
+            sx={{ }}
+            onClick={() => {
+              setShouldOpenAcceptDialog(true);
+            }}
           >
-            Hủy
+            Duyệt
+          </Button>
+          <Button
+            sx={{ }}
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setShouldOpenRequestDialog(true);
+            }}
+          >
+            Yêu cầu bổ sung
           </Button>
           <Button
             variant="contained"
-            color="error"
-            sx={{ mb: 1 }}
+            color="warning"
+            sx={{ }}
             onClick={() => {
               setShouldOpenRefuseDialog(true);
               
@@ -185,23 +191,11 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           </Button>
           <Button
             variant="contained"
-            color="success"
-            sx={{ mb: 1 }}
-            onClick={() => {
-              setShouldOpenAcceptDialog(true);
-            }}
+            color="error"
+            // sx={{ background: "#FF9E43", }}
+            onClick={() => handleClose()}
           >
-            Duyệt
-          </Button>
-          <Button
-            sx={{ mb: 1 }}
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              setShouldOpenRequestDialog(true);
-            }}
-          >
-            Yêu cầu bổ sung
+            Hủy
           </Button>
         </DialogActions>
       </Dialog>

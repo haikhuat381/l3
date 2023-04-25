@@ -49,14 +49,14 @@ function SaveProfileDialog(props) {
   });
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
-      <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding:"9px 24px", boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px' }}>
         Lưu hồ sơ
         <Box onClick={handleClose}>
           <Close color="error"></Close>
         </Box>
       </DialogTitle>
       <form onSubmit={formik.handleSubmit}>
-        <DialogContent style={{ paddingTop: 10 }}>
+        <DialogContent style={{ paddingTop: 24 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -90,11 +90,11 @@ function SaveProfileDialog(props) {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions style={{justifyContent: 'center'}}>
-          <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
+        <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
+          <Button variant="contained" onClick={handleClose} color="error">
             Hủy
           </Button>
-          <Button variant="contained" color="primary" sx={{ mb: 2 }} type="submit">
+          <Button variant="contained" color="primary" type="submit">
             Xác nhận
           </Button>
         </DialogActions>

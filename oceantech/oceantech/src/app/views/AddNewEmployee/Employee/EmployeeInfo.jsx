@@ -10,9 +10,9 @@ function EmployeeInfo(props) {
   const Gender = useSelector((state) => state?.Employee?.Gender);
   return (
     <>
-      <Grid container spacing={8}>
-        <Grid item container xs={12} spacing={8}>
-          <Grid item container xs={9}>
+      <Grid container>
+        <Grid item container xs={12}>
+          <Grid item container xs={9} sx={{padding:"20px 0 29px"}}>
             <Grid
               item
               container
@@ -20,7 +20,7 @@ function EmployeeInfo(props) {
               spacing={4}
               style={{ marginBottom: "20px" }}
             >
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <TextField
                   fullWidth
                   size="small"
@@ -35,7 +35,7 @@ function EmployeeInfo(props) {
                   helperText={formikRoot.errors.fullName}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <TextField
                   fullWidth
                   size="small"
@@ -48,7 +48,35 @@ function EmployeeInfo(props) {
                   helperText={formikRoot.errors.code}
                 />
               </Grid>
-              <Grid item xs={4}>
+            </Grid>
+            <Grid
+              item
+              container
+              xs={12}
+              spacing={4}
+              style={{ marginBottom: "20px" }}
+            >
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  type="date"
+                  label="Ngày sinh"
+                  variant="outlined"
+                  name="dateOfBirth"
+                  value={formikRoot.values.dateOfBirth || ""}
+                  onChange={formikRoot.handleChange}
+                  error={
+                    formikRoot.errors.dateOfBirth &&
+                    formikRoot.touched.dateOfBirth
+                  }
+                  helperText={formikRoot.errors.dateOfBirth}
+                />
+              </Grid>
+              <Grid item xs={6}>
                 <TextField
                   select
                   fullWidth
@@ -76,7 +104,7 @@ function EmployeeInfo(props) {
               spacing={4}
               style={{ marginBottom: "20px" }}
             >
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <TextField
                   size="small"
                   fullWidth
@@ -89,27 +117,7 @@ function EmployeeInfo(props) {
                   helperText={formikRoot.errors.email}
                 />
               </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  type="date"
-                  label="Ngày sinh"
-                  variant="outlined"
-                  name="dateOfBirth"
-                  value={formikRoot.values.dateOfBirth || ""}
-                  onChange={formikRoot.handleChange}
-                  error={
-                    formikRoot.errors.dateOfBirth &&
-                    formikRoot.touched.dateOfBirth
-                  }
-                  helperText={formikRoot.errors.dateOfBirth}
-                />
-              </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <TextField
                   size="small"
                   fullWidth
@@ -182,8 +190,8 @@ function EmployeeInfo(props) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={3}>
-            <Grid item xs={12} cx={{ mt: -5 }}>
+          <Grid item container xs={3} spacing={0} justifyContent={"center"}>
+            <Grid item xs={12}>
               <CustomAvatar
                 formikRoot={formikRoot}
                 image={formikRoot.values.photoUrl}

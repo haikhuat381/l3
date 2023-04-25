@@ -51,11 +51,11 @@ function AddNewEmployee() {
   const handleChangeReload = (value) => {
     reloadRef.current = value
   }
-  
+
   useEffect(() => {
     handleGetListEmployee(page, pagesize)
   }, [page, pagesize, reloadRef.current])
-  
+
   const handleGetListEmployee = () => {
     // const status = "1"
     const status = "1,3,4,6"
@@ -69,6 +69,7 @@ function AddNewEmployee() {
   const [employeeUpdate, setEmployeeUpdate] = useState();
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [shouldOpenViewDialog, setShouldOpenViewDialog] = useState(false);
+  const [dataReport, setDataReport] = useState()
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
   const [
     shouldOpenConfirmationDeleteDialog,
@@ -77,6 +78,7 @@ function AddNewEmployee() {
 
   const handleChangeEmployee = (rowdata, method) => {
     if (method === 1) {
+      console.log("rowdataaaaaa", rowdata)
       setEmployeeUpdate(rowdata)
       dispatch(getEmployeeDataAction(rowdata.employeeId))
       setShouldOpenDialog(true);
@@ -102,33 +104,40 @@ function AddNewEmployee() {
   const columns = [
     {
       title: "Hành động",
+      width: 120,
+      // marginLeft: "-10px",
+      cellStyle: { textAlign: 'center' },
       render: (rowData) => {
         return (
           <>
-            {/* <Tooltip title="Thông tin">
-              <span>
-                <IconButton
-                  disabled={
-                    rowData.additionalRequest || rowData.refuseInfo ? false : true
-                  }
-                  onClick={() => {
-                    // dispatch(getEmployeeData(rowData));
-                    setShouldOpenRequestDialog(true);
-                  }}
-                >
-                  <Icon
-                    color={
-                      rowData.additionalRequest || rowData.refuseInfo
-                        ? "primary"
-                        : "disabled"
-                    }
-                  >
-                    report
-                  </Icon>
-                </IconButton>
-              </span>
-            </Tooltip> */}
-            <Tooltip title="Xem chi tiết">
+            {
+              (rowData.status === 4 || rowData.status === 6) && 
+                <Tooltip title="Thông tin">
+                  <span>
+                    <IconButton
+                      // disabled={
+                      //   rowData.additionalRequest || rowData.refuseInfo ? false : true
+                      // }
+                      onClick={() => {
+                        dispatch(getEmployeeDataAction(rowData.employeeId))
+                        // dispatch(getFormDataAction(rowData.employeeId))
+                        setDataReport(rowData)
+                        setShouldOpenRequestDialog(true);
+                      }}
+                    >
+                      <Icon
+                        // color="warning"
+                        style={{color: "#EED370"}}
+                      >
+                        report
+                      </Icon>
+                    </IconButton>
+                  </span>
+                </Tooltip>
+            }
+            {
+              rowData.status === 3 && 
+                <Tooltip title="Xem chi tiết">
               <span>
                 <IconButton
                   // disabled={rowData.status !== 1 ? false : true}
@@ -148,45 +157,47 @@ function AddNewEmployee() {
                   </Icon>
                 </IconButton>
               </span>
-            </Tooltip>
+                </Tooltip>
+            }
+            
             {
-              (rowData.status === 1 || rowData.status === 4 || rowData.status === 6) && 
-                <Tooltip title="Sửa">
-              <span>
-                <IconButton
-                  // disabled={rowData.status === 1 || rowData.status === 4 ? false : true}
-                  onClick={() => handleChangeEmployee(rowData, 1)}
-                >
-                  <Icon
-                    color="primary"
+              (rowData.status === 1 || rowData.status === 4 || rowData.status === 6) &&
+              <Tooltip title="Sửa">
+                <span>
+                  <IconButton
+                    // disabled={rowData.status === 1 || rowData.status === 4 ? false : true}
+                    onClick={() => handleChangeEmployee(rowData, 1)}
+                  >
+                    <Icon
+                      color="primary"
                     // color={rowData.status === 1 || rowData.status === 4 ? "primary" : "disabled"}
 
-                  >edit
-                  </Icon>
-                </IconButton>
-              </span>
-            </Tooltip>
+                    >edit
+                    </Icon>
+                  </IconButton>
+                </span>
+              </Tooltip>
             }
-            { 
+            {
               rowData.status === 1 &&
-                <Tooltip title="Xóa">
-                  <span>
-                    <IconButton
-                      // disabled={rowData.status === 1 ? false : true}
-                      onClick={() => {
-                        setEmployeeDelete(rowData);
-                        setshouldOpenConfirmationDeleteDialog(true);
-                      }}
+              <Tooltip title="Xóa">
+                <span>
+                  <IconButton
+                    // disabled={rowData.status === 1 ? false : true}
+                    onClick={() => {
+                      setEmployeeDelete(rowData);
+                      setshouldOpenConfirmationDeleteDialog(true);
+                    }}
+                  >
+                    <Icon
+                      color="error"
+                    // color={rowData.status === 1 ? "error" : "disabled"}
                     >
-                      <Icon
-                        color="error"
-                        // color={rowData.status === 1 ? "error" : "disabled"}
-                      >
-                        delete
-                      </Icon>
-                    </IconButton>
-                  </span>
-                </Tooltip>
+                      delete
+                    </Icon>
+                  </IconButton>
+                </span>
+              </Tooltip>
             }
             {/* <Tooltip title="Sửa" style={{display: rowData.status === 1 || rowData.status === 4 ? "" : "none"}}>
               <span>
@@ -312,7 +323,8 @@ function AddNewEmployee() {
 
             handleChangeEmployee(employeeDelete, 0);
           }}
-          title="Xóa nhân viên"
+          title= "Xóa bản ghi"
+          content= "Bạn có chhắc chắn muốn xóa Nhân viên này?"
         />
       )}
       {shouldOpenRequestDialog && (
@@ -321,6 +333,8 @@ function AddNewEmployee() {
             setShouldOpenRequestDialog(false);
           }}
           openEditDialog={() => {
+            setEmployeeUpdate(dataReport)
+            dispatch(getEmployeeDataAction(dataReport.employeeId))
             setShouldOpenDialog(true);
           }}
         />
@@ -328,7 +342,6 @@ function AddNewEmployee() {
 
       {shouldOpenDialog && <AddNewEmployeeDialog
         handleClose={handleClose}
-        handleGetListEmployee={handleGetListEmployee}
         handleChangeReload={handleChangeReload}
         employeeUpdate={employeeUpdate}
       />}

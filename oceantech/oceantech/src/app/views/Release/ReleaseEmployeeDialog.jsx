@@ -24,6 +24,7 @@ import MaterialTable from "@material-table/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
+import Diploma from "app/components/ProfileEmployee/Diploma";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -37,7 +38,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ padding: "0 24px 0px 24px" }}>
+        <Box sx={{ padding: "0 24px" }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -88,21 +89,24 @@ export default function ReleaseEmployeeDialog({ handleClose,handleChangeReload }
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>
         <DialogTitle
-          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 24px",
+            boxShadow: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
+            zIndex: 10000
+          }}
         >
           Hồ sơ nhân viên
           <IconButton onClick={() => handleClose()}>
             <Icon color="error">close</Icon>
           </IconButton>
         </DialogTitle>
-        <DialogContent sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex" }}>
+        <DialogContent sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex", mt: 1, padding: "0 24px" }}>
           <Tabs
             orientation="vertical"
             variant="scrollable"
             value={value}
             onChange={handleChange}
             aria-label="Vertical tabs example"
-            sx={{ borderRight: 1, borderColor: "divider" }}
+            sx={{ borderRight: 1, borderColor: "divider", overflow: "hidden" }}
           >
             <Tab label="Hồ sơ" {...a11yProps(0)} />
             <Tab label="Sơ yếu lý lịch" {...a11yProps(2)} />
@@ -123,38 +127,22 @@ export default function ReleaseEmployeeDialog({ handleClose,handleChangeReload }
                 />
 
               </TabPanel>
-          <TabPanel value={value} index={2} style={{ width: "100%", marginLeft:"30px" }}>
-            <MaterialTable
-              title={""}
-              data={employeeData?.certificates}
-              columns={columns}
-              options={{
-                rowStyle: (rowData, index) => {
-                  return {
-                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-                  };
-                },
-                maxBodyHeight: "1000px",
-                minBodyHeight: "370px",
-                headerStyle: {
-                  backgroundColor: "#262e49",
-                  color: "#fff",
-                },
-
-                padding: "default",
-                toolbar: false,
-              }}
+          <TabPanel value={value} index={2} style={{ width: "100%"}}>
+            <Diploma
+              listDiploma={employeeData?.certificates}
             />
           </TabPanel>
         </DialogContent>
-        <DialogActions sx={{justifyContent: 'center', display: employeeData?.employeeInfo?.status === 10 ? "" : "none" }}>
-          <Button variant="contained" onClick={handleClose} sx={{ mb: 2, background: "#FF9E43" }}>
+        <DialogActions sx={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px' }}>
+          <Button variant="contained" onClick={handleClose} color="error">
             Hủy
           </Button>
           <Button
             variant="contained"
             color="primary"
-            sx={{ mb: 2 }}
+            sx={{
+              display: employeeData?.employeeInfo?.status === 10 ? "" : "none"
+            }}
             onClick={() => {
               setShouldOpenDialog(true);
             }}

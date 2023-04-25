@@ -66,17 +66,22 @@ const Resume = React.forwardRef((props, ref) => {
   // console.log("resumeData", resumeData)
 
   const columns = [
-    { title: "Họ và tên", field: "name", width: 200 },
+    // {
+    //   title: "STT",
+    //   width: 50,
+    //   render: (rowData) => rowData.tableData.index + 1
+    // },
+    { title: "Họ và tên", field: "name", width: 200},
     {
       title: "Ngày sinh ",
       field: "dateOfBirth",
-      width: 140,
+      width: 180,
       render: (rowData) => moment(rowData.dateOfBirth).format("YYYY-MM-DD"),
     },
     {
       title: "Giới tính",
       field: "gender",
-      width: 140,
+      width: 160,
       render: (rowData) => Gender[rowData.gender]?.gender
     },
     {
@@ -86,44 +91,46 @@ const Resume = React.forwardRef((props, ref) => {
       // render: (rowData) => rowData.relationship.relationship,
     },
     { title: "Địa chỉ", field: "address", width: 200 },
-    { title: "Số CMND", field: "citizenId" },
+    { title: "Số CMND/CMT", field: "citizenId" },
   ];
 
   return (
-    <div ref={ref} style={{padding:"0 50px", height: 550, overflowY: "scroll"}}>
-      <Grid container textAlign="center">
-        <Grid item xs={12}>
-          <Typography variant="h5">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h6">Độc lập - Tự do - Hạnh phúc </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>-------------------------------------</Typography>
-        </Grid>
-      </Grid>
-      <Grid container spacing={14} padding={2} >
-        <Grid item xs={4} textAlign="center">
+    <div ref={ref} style={{padding:"0 50px", height: 500, overflowY: "scroll"}} className="form-resume">
+      <Grid item container xs={12} sx={{mb: 6, display:"flex", justifyContent: "space-between"}} spacing={0}>
+        <Grid item xs={3}>
           <CustomAvatar image={employeeData?.resume?.photoUrl} displayButton={"none"} isNoneBorder={true} />
         </Grid>
-        <Grid item xs={8} marginTop={8}>
-          <Typography variant="h4" fontWeight={550}>SƠ YẾU LÝ LỊCH</Typography>
-          <Typography variant="h6" marginLeft={10}>TỰ THUẬT</Typography>
+        <Grid item container xs={9} textAlign="center" spacing={0} sx={{mt: 1}}>
+          <Grid  item xs={12} spacing={0}>
+            <Grid item xs={12} >
+              <Typography variant="h6" fontWeight={"bold"}>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" fontWeight={"bold"}>Độc lập - Tự do - Hạnh phúc </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>-------------------------------------</Typography>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h5" fontWeight={550}>SƠ YẾU LÝ LỊCH</Typography>
+            <Typography variant="h6">TỰ THUẬT</Typography>
+          </Grid>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
         <Grid container item xs={12} spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h5" paddingBottom={1}>
+            <Typography variant="h6" fontWeight={"600"}>
               I. BẢN THÂN
             </Typography>
           </Grid>
           <Grid item container xs={12} justifyContent="space-between">
             <Grid item container xs={5.8} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }} >
-              <Typography item xs={3}>1. Họ và tên:</Typography>
-              <Grid item fullWidth xs={9}>
+              <Typography item xs={2}>Họ và tên:</Typography>
+              <Grid item fullWidth xs={9.7}>
                 <TextField
-                  className="hai-test"
+                  className="rs-noReadonly"
                   InputProps={{
                     readOnly: status,
                     style: { padding: 0 },
@@ -145,9 +152,9 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item container xs={6} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
               <Typography item xs={2}>Giới tính:</Typography>
-              <Grid item xs={9.8}>
+              <Grid item xs={9.9}>
                 <TextField
-                  className="hai-test"
+                  className="rs-noReadonly"
                   InputProps={{
                     readOnly: status,
                     style: { padding: 0 },
@@ -179,11 +186,11 @@ const Resume = React.forwardRef((props, ref) => {
             />
           </Grid> */}
           <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
-            <Typography item xs={2}>2. Sinh ngày:</Typography>
-            <Grid item xs={10.5} fullWidth>
+            <Typography item xs={2}>Sinh ngày:</Typography>
+            <Grid item xs={10.9} fullWidth>
               <TextField
-                // className= { !status ? "hai-test" : "hai-testt"}
-                className="hai-test"
+                // className= { !status ? "rs-noReadonly" : "rs-readonly"}
+                className="rs-noReadonly"
                 type="date"
                 InputProps={{
                   readOnly: true,
@@ -203,10 +210,10 @@ const Resume = React.forwardRef((props, ref) => {
           </Grid>
           <Grid item container xs={12} justifyContent="space-between">
             <Grid item container xs={5.8} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
-              <Typography item xs={3}>3. Điện thoại:</Typography>
-              <Grid item xs={9}>
+              <Typography item xs={2}>Điện thoại:</Typography>
+              <Grid item xs={9.6}>
                 <TextField
-                  className="hai-test"
+                  className="rs-noReadonly"
                   InputProps={{
                     readOnly: status,
                     style: { padding: 0 },
@@ -228,9 +235,9 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item container xs={6} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
               <Typography item xs={1}>Email:</Typography>
-              <Grid item xs={10.5}>
+              <Grid item xs={10.6}>
                 <TextField
-                  className="hai-test"
+                  className="rs-noReadonly"
                   InputProps={{
                     readOnly: status,
                     style: { padding: 0 },
@@ -253,11 +260,11 @@ const Resume = React.forwardRef((props, ref) => {
           </Grid>
 
           <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
-            <Typography item xs={2}>4. Chỗ ở hiện nay:</Typography>
-            <Grid item xs={10} fullWidth>
+            <Typography item xs={2}>Chỗ ở hiện nay:</Typography>
+            <Grid item xs={10.4} fullWidth>
               <TextField
-                // className= { !status ? "hai-test" : "hai-testt"}
-                className="hai-test"
+                // className= { !status ? "rs-noReadonly" : "rs-readonly"}
+                className="rs-noReadonly"
                 InputProps={{
                   readOnly: status,
                   style: { padding: 0 },
@@ -277,10 +284,10 @@ const Resume = React.forwardRef((props, ref) => {
 
           <Grid item container xs={12} justifyContent="space-between">
             <Grid item container xs={5.8} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
-              <Typography item xs={2}>5. Dân tộc:</Typography>
-              <Grid item xs={9.5}>
+              <Typography item xs={2}>Dân tộc:</Typography>
+              <Grid item xs={10}>
                 <TextField
-                  className="hai-test"
+                  className="rs-noReadonly"
                   InputProps={{
                     readOnly: status,
                     style: { padding: 0 },
@@ -302,9 +309,9 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item container xs={6} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
               <Typography item xs={2}>Tôn giáo:</Typography>
-              <Grid item xs={9.8}>
+              <Grid item xs={9.9}>
                 <TextField
-                  className="hai-test"
+                  className="rs-noReadonly"
                   InputProps={{
                     readOnly: status,
                     style: { padding: 0 },
@@ -327,10 +334,10 @@ const Resume = React.forwardRef((props, ref) => {
           </Grid>
           <Grid item container xs={12} justifyContent="space-between">
             <Grid item container xs={5.8} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
-              <Typography item xs={3}>6. Số CCCD:</Typography>
-              <Grid item xs={9}>
+              <Typography item xs={2}>Số CCCD:</Typography>
+              <Grid item xs={9.6}>
                 <TextField
-                  className="hai-test"
+                  className="rs-noReadonly"
                   InputProps={{
                     readOnly: status,
                     style: { padding: 0 },
@@ -352,9 +359,9 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item container xs={6} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
               <Typography item xs={2}>Cấp ngày:</Typography>
-              <Grid item xs={9.7}>
+              <Grid item xs={9.8}>
                 <TextField
-                  className="hai-test"
+                  className="rs-noReadonly"
                   InputProps={{
                     readOnly: status,
                     style: { padding: 0 },
@@ -377,11 +384,11 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
           </Grid>
           <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
-            <Typography item xs={1}>Nơi cấp:</Typography>
+            <Typography item xs={1.1}>Nơi cấp:</Typography>
             <Grid item xs={11} fullWidth>
               <TextField
-                // className= { !status ? "hai-test" : "hai-testt"}
-                className="hai-test"
+                // className= { !status ? "rs-noReadonly" : "rs-readonly"}
+                className="rs-noReadonly"
                 InputProps={{
                   readOnly: status,
                   style: { padding: 0 },
@@ -405,23 +412,27 @@ const Resume = React.forwardRef((props, ref) => {
 
         <Grid item xs={12} container>
           <Grid item xs={12}>
-            <Typography variant="h5" paddingBottom={2}>
+            <Typography variant="h6" fontWeight={"600"}>
               II. QUAN HỆ GIA ĐÌNH
             </Typography>
           </Grid>
           <Grid>
-            <Typography style={{ fontStyle: "italic"}}>Ghi rõ họ tên, năm sinh, nghề nghiệp, nơi công tác của bố mẹ đẻ, anh chị em ruột, vợ(hoặc chồng), con</Typography>
+            <Typography style={{ fontStyle: "italic", fontSize: "16px"}}>Ghi rõ họ tên, năm sinh, nghề nghiệp, nơi công tác của bố mẹ đẻ, anh chị em ruột, vợ(hoặc chồng), con</Typography>
 
           </Grid>
-          <Grid item xs={12} style={{ margin: "10px 0 20px 0" }}>
+          <Grid item xs={12} style={{ margin: "10px 0 20px 0" }} className="table-resume">
             <MaterialTable
               title={""}
               data={!listRelationship ? [] : listRelationship}
               columns={columns}
-              className="table-resume"
-              style={{ boxShadow: "none" }}
+              // className="table-resume"
+              style={{ 
+                boxShadow: "none",
+                fontFamily: "Times New Roman",
+              }}
               options={{
                 sorting: false,
+                filtering: false,
                 paging: false,
                 pageSize: 15,
                 pageSizeOptions: [5, 10, 15, 20],
@@ -433,12 +444,22 @@ const Resume = React.forwardRef((props, ref) => {
                 },
                 padding: "default",
                 toolbar: false,
+                
+              }}
+              localization={{
+                  body: {
+                    emptyDataSourceMessage: "Không có dữ liệu",
+                  }
               }}
             />
           </Grid>
+          <Grid item xs={12} justify="center" alignItems="center">
+            <Typography variant="h6" fontWeight={"600"} align="center" margin={"4px 0 8px"}>
+              LỜI CAM ĐOAN
+            </Typography>
+          </Grid>
           <Grid>
             <Typography>Tôi xin cam đoan bản khai sơ yếu lý lịch trên đúng sự thật, nếu có điều gì không đúng tôi chịu trách nhiệm trước pháp luật về lời khai của mình.</Typography>
-
           </Grid>
 
           <Grid
@@ -446,7 +467,7 @@ const Resume = React.forwardRef((props, ref) => {
             item
             sm={12}
             xs={12}
-            sx={{ pl: 10, pr: 10 }}
+            sx={{ pl: 10, pr: 10, pt:4, pb:4 }}
             justifyContent="flex-end"
           >
             <Grid
@@ -459,19 +480,21 @@ const Resume = React.forwardRef((props, ref) => {
               spacing={1}
             >
               <Grid item >
-                <Typography>{`Hà Nội, ngày ${today.getDate()} tháng ${today.getMonth() + 1} năm ${today.getFullYear()}`}</Typography>
+                <Typography style={{ fontStyle: "italic"}}>{`Hà Nội, ngày ${today.getDate()} tháng ${today.getMonth() + 1} năm ${today.getFullYear()}`}</Typography>
               </Grid>
               <Grid item>
-                <Typography style={{ fontWeight: "bold" }}>Người khai</Typography>
+                <Typography style={{ fontWeight: "bold" }}>Người khai ký tên</Typography>
+                <Typography style={{ fontStyle: "italic", fontSize:14 }}>(Ký, ghi rõ họ tên)</Typography>
               </Grid>
+              
               <Grid item>
                 {" "}
-                <Typography style={{ fontWeight: "bold" }}>
+                <Typography style={{ fontWeight: "bold", fontStyle: "italic" }}>
                   {employeeData?.resume?.fullName.split(" ").pop()}
                 </Typography>
               </Grid>
               <Grid item sx={{paddingBottom: "10px"}}>
-                <Typography style={{ fontWeight: "bold" }}>{employeeData?.resume?.fullName}</Typography>
+                <Typography style={{ fontWeight: "bold", fontStyle: "italic" }}>{employeeData?.resume?.fullName}</Typography>
               </Grid>
             </Grid>
           </Grid>

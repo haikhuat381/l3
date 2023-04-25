@@ -21,6 +21,8 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import MaterialTable from "@material-table/core";
 import moment from "moment";
+import Diploma from "app/components/ProfileEmployee/Diploma";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -33,7 +35,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ padding: "0 24px 0px 24px" }}>
+        <Box sx={{ padding: "0 24px" }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -82,7 +84,10 @@ export default function ApprovedDialog({ handleClose }) {
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>
         <DialogTitle
-          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 24px",
+            boxShadow: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
+            zIndex: 10000
+           }}
         >
           Hồ sơ nhân viên
           <IconButton onClick={() => handleClose()}>
@@ -90,7 +95,7 @@ export default function ApprovedDialog({ handleClose }) {
           </IconButton>
         </DialogTitle>
         <DialogContent
-          sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex" }}
+          sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex", mt: 1, padding: '0 24px' }}
           id="dialog"
         >
           <Tabs
@@ -99,7 +104,7 @@ export default function ApprovedDialog({ handleClose }) {
             value={value}
             onChange={handleChange}
             aria-label="Vertical tabs example"
-            sx={{ borderRight: 1, borderColor: "divider" }}
+            sx={{ borderRight: 1, borderColor: "divider", overflow: "hidden" }}
           >
             <Tab label="Hồ sơ" {...a11yProps(0)} />
             <Tab label="Sơ yếu lý lịch" {...a11yProps(2)} />
@@ -120,29 +125,18 @@ export default function ApprovedDialog({ handleClose }) {
             />
 
           </TabPanel>
-          <TabPanel value={value} index={2} style={{ width: "100%", marginLeft:"30px" }}>
-            <MaterialTable
-              title={""}
-              data={employeeData?.certificates}
-              columns={columns}
-              options={{
-                rowStyle: (rowData, index) => {
-                  return {
-                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-                  };
-                },
-                headerStyle: {
-                  backgroundColor: "#262e49",
-                  color: "#fff",
-                },
-                maxBodyHeight: "1000px",
-                minBodyHeight: "370px",
-                padding: "default",
-                toolbar: false,
-              }}
+          <TabPanel value={value} index={2} style={{ width: "100%" }}>
+            <Diploma
+              listDiploma={employeeData?.certificates}
             />
+            
           </TabPanel>
         </DialogContent>
+        <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
+          <Button variant="contained" onClick={handleClose} color="error">
+            Hủy
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   );
