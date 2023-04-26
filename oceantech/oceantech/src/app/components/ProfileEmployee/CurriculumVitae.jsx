@@ -211,8 +211,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
         </Grid>
         {/* <Grid item container xs={8} className="resume-right" direction={"column"} spacing={2}>
           <Grid item style={{ height: 550, overflowY: "scroll", margin: "16px" }}> */}
-        <Grid item xs={8} className="resume-right" style={{ mb: 0, height: 600, overflowY: "scroll", overflowX: "hidden" }}>
-          <Grid item container direction={"column"} spacing={2}>
+        <Grid item xs={8} className="resume-right" sx={{ mb: 0, height: 600, overflowY: "scroll", overflowX: "hidden" }}>
+          <Grid item container direction={"column"} spacing={2} sx={{pt: 2}}>
             <Grid item display={"flex"} gap={1} alignItems="center" color={"#373E58"}>
               <Icon sx={{ fontSize: "32px" }}>crisis_alert</Icon>
               <Typography textTransform={"uppercase"} variant="body1" fontWeight={600} fontSize={18}>
@@ -236,7 +236,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   marginLeft: "5px"
                 }}
                 size="small"
-                value={textFieldValues?.careerGoal || ""}
+                value={textFieldValues?.careerGoal || (!status ? "" : "Không có thông tin")}
                 onChange={(event) => {
                   handleTextFieldChangeChange(event, "careerGoal")
                 }}
@@ -268,7 +268,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   marginLeft: "5px"
                 }}
                 size="small"
-                value={textFieldValues?.skill || ""}
+                value={textFieldValues?.skill || (!status ? "" : "Không có thông tin")}
                 onChange={(event) => {
                   handleTextFieldChangeChange(event, "skill")
                 }}
@@ -298,7 +298,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   marginLeft: "5px"
                 }}
                 size="small"
-                value={textFieldValues?.hobby || ""}
+                value={textFieldValues?.hobby || (!status ? "" : "Không có thông tin")}
                 onChange={(event) => {
                   handleTextFieldChangeChange(event, "hobby")
                 }}
@@ -459,17 +459,102 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   </MyButton>
                 </div>
               ))} */}
-              {textFieldValues?.workExperiences?.map((value, index) => (
-                <div className="workExperiences" style={{ display: "flex", alignItems: "start", justifyContent: "space-between", padding: "20px 0", borderBottom: index !== textFieldValues?.workExperiences?.length - 1 ? "1px solid #E5E5E5" : "" }} key={index}>
-                  <Grid item container xs={12} fullWidth spacing={2}>
-                    <Grid item container xs={12} fullWidth justifyContent="space-between" sx={{display: !status ? "flex" : "none"}}>
-                      <Grid item container xs={5.4} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
-                        <Typography item xs={2}>Ngày bắt đầu:</Typography>
-                        <Grid item xs={6.7}>
+              {
+                textFieldValues?.workExperiences?.map((value, index) => (textFieldValues?.workExperiences?.length === 1 && !value.startDate && status) ? "Không có thông tin" :
+                (
+                  <div className="workExperiences" style={{ display: "flex", alignItems: "start", justifyContent: "space-between", padding: index === 0 ? "0 0 20px" : "20px 0", borderBottom: index !== textFieldValues?.workExperiences?.length - 1 ? "1px solid #E5E5E5" : "" }} key={index}>
+                    <Grid item container xs={12} fullWidth spacing={2}>
+                      <Grid item container xs={12} fullWidth justifyContent="space-between" sx={{display: !status ? "flex" : "none"}}>
+                        <Grid item container xs={5.4} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                          <Typography item xs={2}>Ngày bắt đầu:</Typography>
+                          <Grid item xs={6.7}>
+                            <TextField
+                              type="date"
+                              // className="rs-noReadonly"
+                              className= { !status ? "rs-noReadonly" : "rs-readonly"}
+                              InputProps={{
+                                readOnly: status,
+                                style: { padding: 0 },
+                              }}
+                              id="standard-adornment-mount"
+                              fullWidth
+                              sx={{
+                                "& fieldset": { border: "none", padding: 0 },
+                              }}
+                              size="small"
+                              name="startDate"
+                              value={value.startDate}
+                              onChange={(event) => {
+                                handleTextFieldChange(event, index, "startDate");
+                              }}
+                            >
+                            </TextField>
+                          </Grid>
+                        </Grid>
+                        <Grid item container xs={5.4} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                          <Typography item xs={2}>Ngày kết thúc:</Typography>
+                          <Grid item xs={6.5}>
+                            <TextField
+                              type="date"
+                              // className="rs-noReadonly"
+                              className= { !status ? "rs-noReadonly" : "rs-readonly"}
+                              InputProps={{
+                                readOnly: status,
+                                style: { padding: 0 },
+                              }}
+                              id="standard-adornment-mount"
+                              fullWidth
+                              sx={{
+                                "& fieldset": { border: "none", padding: 0 },
+                              }}
+                              size="small"
+                              name="endDate"
+                              value={value.endDate}
+                              onChange={(event) => {
+                                handleTextFieldChange(event, index, "endDate");
+                              }}
+                            >
+                            </TextField>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                        <Typography item xs={2} sx={{display: !status ? "flex" : "none"}}>Tên công ty:</Typography>
+                        <Grid item xs={!status ? 9.9 : 7.5} fullWidth>
                           <TextField
-                            type="date"
-                            // className="rs-noReadonly"
                             className= { !status ? "rs-noReadonly" : "rs-readonly"}
+                            // className="rs-noReadonly"
+                            InputProps={{
+                              readOnly: status,
+                              style: { 
+                                padding: 0,
+                                fontWeight: !status ? "450" : "550"
+                              },
+                            }}
+                            id="standard-adornment-mount"
+                            fullWidth
+                            sx={{
+                              "& fieldset": { border: "none", padding: 0 },
+                            }}
+                            size="small"
+                            name="company"
+                            value={value.company}
+                            onChange={(event) => {
+                              handleTextFieldChange(event, index, "company");
+                            }}
+                          >
+                          </TextField>
+                        </Grid>
+                        <Typography item xs={4} sx={{fontSize: 14, fontWeight: 550, display: !status ? "none" : ""}}>
+                          { !value.startDate || !value.endDate || `${moment(value.startDate).format("DD/MM/YYYY")} - ${moment(value.endDate).format("DD/MM/YYYY")}`}
+                        </Typography>
+                      </Grid>
+                      <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                        <Typography item xs={1} sx={{display: !status ? "flex" : "none"}}>Vị trí:</Typography>
+                        <Grid item xs={!status ? 11 : 12} fullWidth>
+                          <TextField
+                            className= { !status ? "rs-noReadonly" : "rs-readonly"}
+                            // className="rs-noReadonly"
                             InputProps={{
                               readOnly: status,
                               style: { padding: 0 },
@@ -480,22 +565,21 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                               "& fieldset": { border: "none", padding: 0 },
                             }}
                             size="small"
-                            name="startDate"
-                            value={value.startDate}
+                            name="position"
+                            value={value.position}
                             onChange={(event) => {
-                              handleTextFieldChange(event, index, "startDate");
+                              handleTextFieldChange(event, index, "position");
                             }}
                           >
                           </TextField>
                         </Grid>
                       </Grid>
-                      <Grid item container xs={5.4} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
-                        <Typography item xs={2}>Ngày kết thúc:</Typography>
-                        <Grid item xs={6.5}>
+                      <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                        <Typography item xs={2.2} sx={{display: !status ? "flex" : "none"}}>Mô tả công việc:</Typography>
+                        <Grid item xs={!status ? 9.2 : 12} fullWidth>
                           <TextField
-                            type="date"
-                            // className="rs-noReadonly"
                             className= { !status ? "rs-noReadonly" : "rs-readonly"}
+                            // className="rs-noReadonly"
                             InputProps={{
                               readOnly: status,
                               style: { padding: 0 },
@@ -506,111 +590,30 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                               "& fieldset": { border: "none", padding: 0 },
                             }}
                             size="small"
-                            name="endDate"
-                            value={value.endDate}
+                            multiline
+                            name="detail"
+                            value={value.detail}
                             onChange={(event) => {
-                              handleTextFieldChange(event, index, "endDate");
+                              handleTextFieldChange(event, index, "detail");
                             }}
                           >
                           </TextField>
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
-                      <Typography item xs={2} sx={{display: !status ? "flex" : "none"}}>Tên công ty:</Typography>
-                      <Grid item xs={!status ? 9.9 : 7.5} fullWidth>
-                        <TextField
-                          className= { !status ? "rs-noReadonly" : "rs-readonly"}
-                          // className="rs-noReadonly"
-                          InputProps={{
-                            readOnly: status,
-                            style: { 
-                              padding: 0,
-                              fontWeight: !status ? "450" : "550"
-                            },
-                          }}
-                          id="standard-adornment-mount"
-                          fullWidth
-                          sx={{
-                            "& fieldset": { border: "none", padding: 0 },
-                          }}
-                          size="small"
-                          name="company"
-                          value={value.company}
-                          onChange={(event) => {
-                            handleTextFieldChange(event, index, "company");
-                          }}
-                        >
-                        </TextField>
-                      </Grid>
-                      <Typography item xs={4} sx={{fontSize: 14, fontWeight: 550, display: !status ? "none" : ""}}>
-                        {`${moment(value.startDate).format("DD/MM/YYYY")} - ${moment(value.endDate).format("DD/MM/YYYY")}`}
-                      </Typography>
-                    </Grid>
-                    <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
-                      <Typography item xs={1} sx={{display: !status ? "flex" : "none"}}>Vị trí:</Typography>
-                      <Grid item xs={!status ? 11 : 12} fullWidth>
-                        <TextField
-                          className= { !status ? "rs-noReadonly" : "rs-readonly"}
-                          // className="rs-noReadonly"
-                          InputProps={{
-                            readOnly: status,
-                            style: { padding: 0 },
-                          }}
-                          id="standard-adornment-mount"
-                          fullWidth
-                          sx={{
-                            "& fieldset": { border: "none", padding: 0 },
-                          }}
-                          size="small"
-                          name="position"
-                          value={value.position}
-                          onChange={(event) => {
-                            handleTextFieldChange(event, index, "position");
-                          }}
-                        >
-                        </TextField>
-                      </Grid>
-                    </Grid>
-                    <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
-                      <Typography item xs={2.2} sx={{display: !status ? "flex" : "none"}}>Mô tả công việc:</Typography>
-                      <Grid item xs={!status ? 9.2 : 12} fullWidth>
-                        <TextField
-                          className= { !status ? "rs-noReadonly" : "rs-readonly"}
-                          // className="rs-noReadonly"
-                          InputProps={{
-                            readOnly: status,
-                            style: { padding: 0 },
-                          }}
-                          id="standard-adornment-mount"
-                          fullWidth
-                          sx={{
-                            "& fieldset": { border: "none", padding: 0 },
-                          }}
-                          size="small"
-                          multiline
-                          name="detail"
-                          value={value.detail}
-                          onChange={(event) => {
-                            handleTextFieldChange(event, index, "detail");
-                          }}
-                        >
-                        </TextField>
-                      </Grid>
-                    </Grid>
-                  </Grid>
 
-                  <Grid item xs={1} fullWidth sx={{ display: !status ? "flex" : "none", justifyContent: "end", alignItems: "start" }}>
-                    <MyButton
-                      // style={{ display: status ? "none" : "flex", padding: 0 }}
-                      style={{ padding: 0 }}
-                      onClick={handleRemoveTextField(index, "experience")}
-                    >
-                      <Icon className={"remove-button"}>remove_circle_outline</Icon>
-                    </MyButton>
-                  </Grid>
-                </div>
-              ))}
+                    <Grid item xs={1} fullWidth sx={{ display: !status ? "flex" : "none", justifyContent: "end", alignItems: "start" }}>
+                      <MyButton
+                        // style={{ display: status ? "none" : "flex", padding: 0 }}
+                        style={{ padding: 0 }}
+                        onClick={handleRemoveTextField(index, "experience")}
+                      >
+                        <Icon className={"remove-button"}>remove_circle_outline</Icon>
+                      </MyButton>
+                    </Grid>
+                  </div>
+                ))
+              }
             </Grid>
           </Grid>
         </Grid>

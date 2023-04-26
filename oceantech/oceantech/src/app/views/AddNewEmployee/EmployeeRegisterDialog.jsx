@@ -198,11 +198,11 @@ export default function EmployeeRegisterDialog({
 
               dispatch(updateFormAction(employeeData?.employeeInfo?.employeeId, {
                 resume: formDataResumeUpdate,
-                cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate.workExperiences.filter(data => data.startDate !== "Invalid date" && data.endDate !== "Invalid date") }
+                cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate.workExperiences.filter(data => data.startDate !== null && data.endDate !== null) }
               }))
+              
               handleChangeReload(employeeData?.employeeInfo?.employeeId)
               setSaved("block");
-              // dispatch(updateEmployee(employeeData));
             }}
           >
             Lưu

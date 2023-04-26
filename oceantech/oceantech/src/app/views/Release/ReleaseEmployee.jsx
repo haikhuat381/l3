@@ -78,8 +78,8 @@ function ReleaseEmployee() {
               <IconButton
                 onClick={() => {
                   // console.log("rowdata",rowdata)
-                  dispatch(getEmployeeDataAction(rowdata.employeeId))
                   dispatch(getFormDataAction(rowdata.employeeId))
+                  dispatch(getEmployeeDataAction(rowdata.employeeId))
                   setShouldOpenDialog(true);
                   // dispatch(getEmployeeData(rowdata));
                 }}
@@ -92,8 +92,8 @@ function ReleaseEmployee() {
               <IconButton
                 onClick={() => {
                   // console.log("rowdata",rowdata)
-                  dispatch(getEmployeeDataAction(rowdata.employeeId))
                   dispatch(getFormDataAction(rowdata.employeeId))
+                  dispatch(getEmployeeDataAction(rowdata.employeeId))
                   setShouldOpenReleaseDialog(true);
                 }}
               >

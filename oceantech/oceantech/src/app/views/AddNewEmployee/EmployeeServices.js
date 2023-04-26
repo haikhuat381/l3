@@ -43,7 +43,7 @@ export const getOtherFeature = () => {
 
 export const getTotal = async (status) => {
   const url = `${API}/total?statuses=${status}`
-  console.log("total", url)
+  // console.log("total", url)
   return await axios.get(url,headers);
 };
 

@@ -119,8 +119,8 @@ function AddNewEmployee() {
                       //   rowData.additionalRequest || rowData.refuseInfo ? false : true
                       // }
                       onClick={() => {
-                        dispatch(getEmployeeDataAction(rowData.employeeId))
                         // dispatch(getFormDataAction(rowData.employeeId))
+                        dispatch(getEmployeeDataAction(rowData.employeeId))
                         setDataReport(rowData)
                         setShouldOpenRequestDialog(true);
                       }}
@@ -136,16 +136,16 @@ function AddNewEmployee() {
                 </Tooltip>
             }
             {
-              rowData.status === 3 && 
+              (rowData.status === 3 || rowData.status === 4 || rowData.status === 6 || rowData.status === 1) && 
                 <Tooltip title="Xem chi tiết">
               <span>
                 <IconButton
                   // disabled={rowData.status !== 1 ? false : true}
                   onClick={() => {
-                    // setIDEmployeeData(rowData.employeeId)
-                    dispatch(getEmployeeDataAction(rowData.employeeId))
                     dispatch(getFormDataAction(rowData.employeeId))
+                    dispatch(getEmployeeDataAction(rowData.employeeId))
                     setShouldOpenViewDialog(true);
+                    // setIDEmployeeData(rowData.employeeId)
                     // dispatch(getEmployeeData(rowData));
                   }}
                 >
@@ -349,6 +349,7 @@ function AddNewEmployee() {
         <ApprovedDialog
           handleClose={() => {
             setShouldOpenViewDialog(false);
+            dispatch(resetEmployeeDataAction({}))
           }}
         />
       )}
