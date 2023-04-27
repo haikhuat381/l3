@@ -144,9 +144,7 @@ function AddNewEmployeeDialog(props) {
         } else {
 
           dispatch(addNewEmployeeAction(dataCreate));
-          handleChangeReload(values.id)
           // toast.success("Lưu mới thành công");
-          setSaved("block");
 
         }
       } else {
@@ -164,16 +162,12 @@ function AddNewEmployeeDialog(props) {
         }
         
         dispatch(updateEmployeeAction(employeeUpdate?.employeeId,updateData))
-        handleChangeReload(employeeUpdate?.gender)
-
         // toast.success("Cập nhật thành công");
-        setSaved("block");
+
       }
+      handleChangeReload(employeeUpdate?.gender)
+      setSaved("block");
       setShouldOpenDialog(false);
-      if(!!employeeUpdate?.employeeId) {
-        dispatch(getEmployeeDataAction(employeeUpdate?.employeeId))
-        // dispatch(getFormDataAction(employeeData?.employeeId))
-      }
     },
   });
 
@@ -263,10 +257,7 @@ function AddNewEmployeeDialog(props) {
             sx={{ display: saved }}
             onClick={() => {
               dispatch(getFormDataAction(employeeData?.employeeId))
-              if(employeeData?.employeeId) {
-                console.log("employeeData?.employeeId", employeeData?.employeeId)
-                dispatch(getEmployeeDataAction(employeeData?.employeeId))
-              }
+              dispatch(getEmployeeDataAction(employeeData?.employeeId))
               setShouldOpenDialog("true");
             }}
           >
