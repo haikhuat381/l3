@@ -157,7 +157,7 @@ function AddNewEmployee() {
             {/* (rowData.status === 1 || rowData.status === 4 || rowData.status === 6) && */}
             
             {
-              rowData.status === 1 &&
+              (rowData.status === 1 || rowData.status === 4) &&
               <Tooltip title="Sửa">
                 <span>
                   <IconButton
