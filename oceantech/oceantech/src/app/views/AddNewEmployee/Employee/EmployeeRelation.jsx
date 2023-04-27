@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateEmployee } from "app/redux/actions/actions";
 import MaterialTable from "@material-table/core";
 import {
   Button,
-  Box,
   Icon,
   IconButton,
-  styled,
   Tooltip,
-  DialogContent,
   Grid,
   TextField,
   MenuItem,
-  DialogActions,
 } from "@mui/material";
-
 import * as Yup from "yup";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
-
 import { useFormik } from "formik";
+
+
+
 function EmployeeRelation(props) {
   const dispatch = useDispatch();
   const { handleAddRelation,listRelationship } = props;
@@ -54,7 +50,8 @@ function EmployeeRelation(props) {
   };
   const handleDeleteRelationship = () => {
     setListRelationshipData(listRelationshipData => {
-      const newListRelationshipData = listRelationshipData.filter(value => !relationship?.familyId ? value.id !== relationship.id : value.familyId !==  relationship.familyId)
+      const newListRelationshipData = listRelationshipData.filter(value => 
+        !relationship?.familyId ? value.id !== relationship.id : value.familyId !==  relationship.familyId)
 
       handleAddRelation(newListRelationshipData, "listRelationship");
       return newListRelationshipData
@@ -62,8 +59,7 @@ function EmployeeRelation(props) {
     setshouldOpenConfirmationDeleteDialog(false);
     setRelationship({});
   };
-  // console.log("listRelationshipData", listRelationshipData)
-  // console.log("relationship", relationship)
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -98,7 +94,8 @@ function EmployeeRelation(props) {
 
       } else {
         setListRelationshipData(listRelationshipData => {
-          const newListRelationshipData = listRelationshipData.filter(value => !relationship?.familyId ? value.id !== values.id : value.familyId !==  relationship.familyId)
+          const newListRelationshipData = listRelationshipData.filter(value => 
+            !relationship?.familyId ? value.id !== values.id : value.familyId !==  relationship.familyId)
           newListRelationshipData.push({...values, gender: numberGender})
           newListRelationshipData.familyRelationId = newListRelationshipData.familyId
           handleAddRelation( newListRelationshipData, "listRelationship");
@@ -107,7 +104,6 @@ function EmployeeRelation(props) {
       }
       resetForm()
       handleClose()
-      // formik.values=employee
     },
   });
 
@@ -148,7 +144,6 @@ function EmployeeRelation(props) {
     {
       title: "Quan hệ",
       field: "relation",
-      // render: (rowData) => rowData.relationship.relationship,
     },
     { title: "Địa chỉ", field: "address" },
     { title: "Số CMND", field: "citizenId",
@@ -186,7 +181,6 @@ function EmployeeRelation(props) {
               onChange={formik.handleChange}
               error={formik.errors.name && formik.touched.name}
               helperText={formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
-              // helperText={formik.errors.name}
             />
           </Grid>
           <Grid item sm={3} xs={3} className="input-dialog">
@@ -204,7 +198,6 @@ function EmployeeRelation(props) {
               onChange={formik.handleChange}
               error={formik.errors.dateOfBirth && formik.touched.dateOfBirth}
               helperText={formik.touched.dateOfBirth && formik.errors.dateOfBirth ? <div>{formik.errors.dateOfBirth}</div> : null}
-              // helperText={formik.errors.dateOfBirth}
             />
           </Grid>
           <Grid item sm={3} xs={3} className="input-dialog">
@@ -219,7 +212,6 @@ function EmployeeRelation(props) {
                   onChange={formik.handleChange}
                   error={formik.errors.gender && formik.touched.gender}
                   helperText={formik.touched.gender && formik.errors.gender ? <div>{formik.errors.gender}</div> : null}
-                  // helperText={formik.errors.gender}
                 >
                   {Gender?.map((item) => (
                     <MenuItem key={item.id} value={item.value}>
@@ -240,7 +232,6 @@ function EmployeeRelation(props) {
               onChange={formik.handleChange}
               error={formik.errors.relation && formik.touched.relation}
               helperText={formik.touched.relation && formik.errors.relation ? <div>{formik.errors.relation}</div> : null}
-              // helperText={formik.errors.relation}
             />
           </Grid>
 
@@ -256,7 +247,6 @@ function EmployeeRelation(props) {
               onChange={formik.handleChange}
               error={formik.errors.citizenId && formik.touched.citizenId}
               helperText={formik.touched.citizenId && formik.errors.citizenId ? <div>{formik.errors.citizenId}</div> : null}
-              // helperText={formik.errors.citizenId}
             />
           </Grid>
 
@@ -272,31 +262,8 @@ function EmployeeRelation(props) {
               onChange={formik.handleChange}
               error={formik.errors.address && formik.touched.address}
               helperText={formik.touched.address && formik.errors.address ? <div>{formik.errors.address}</div> : null}
-              // helperText={formik.errors.address}
             />
           </Grid>
-
-          {/* <Grid container item xs={3} spacing={1}>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                type="button"
-                onClick={formik.handleSubmit}
-              >
-                Lưu quan hệ
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={formik.resetForm}
-              >
-                Hủy
-              </Button>
-            </Grid>
-          </Grid> */}
           <Grid item sm={3} xs={3} className="input-dialog">
             {" "}
             <Button

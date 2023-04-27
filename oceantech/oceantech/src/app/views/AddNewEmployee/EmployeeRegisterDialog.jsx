@@ -7,12 +7,9 @@ import Resume from "app/components/ProfileEmployee/Resume";
 import Diploma from "app/components/ProfileEmployee/Diploma";
 import CurriculumVitae from "app/components/ProfileEmployee/CurriculumVitae";
 import SendToLeadershipDialog from "./SendToLeadershipDialog";
-import EmployeeDiploma from "./Employee/EmployeeDiploma";
 import { useRef } from "react";
-import ReactToPrint from "react-to-print";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import {
   Dialog,
   DialogContent,
@@ -23,7 +20,7 @@ import {
   IconButton,
   Icon,
 } from "@mui/material";
-import { updateEmployee, updateFormAction } from "app/redux/actions/actions";
+import { updateFormAction } from "app/redux/actions/actions";
 import ConfirmPrintDialog from "./PrintDIalog";
 
 function TabPanel(props) {
@@ -58,6 +55,8 @@ function a11yProps(index) {
   };
 }
 
+
+
 export default function EmployeeRegisterDialog({
   handleClose,
   handleCloseAll,
@@ -77,10 +76,6 @@ export default function EmployeeRegisterDialog({
   ] = useState(false);
   const [saved, setSaved] = useState("none");
 
-
-  // console.log("employeeData haikhuat", employeeData)
-  // console.log("formDataResumeUpdate haikhuat", formDataResumeUpdate)
-  // console.log("formDataCVUpdate haikhuat", formDataCVUpdate)
   useEffect(() => {
     setEmployeeData(employee);
   }, [employee]);
@@ -102,7 +97,6 @@ export default function EmployeeRegisterDialog({
     setFormDataCVUpdate(data);
   };
   
-
 
   const handleAddToList = (data, method) => {
     setEmployeeData({
@@ -175,12 +169,10 @@ export default function EmployeeRegisterDialog({
             />
           </TabPanel>
           <TabPanel value={value} index={2} style={{ width: "100%" }}>
-            {/* <div style={{height: "510px"}}>  */}
               <Diploma
                 ref={componentRef}
                 listDiploma={employeeData?.certificates}
               />
-            {/* </div> */}
           </TabPanel>
         </DialogContent>
         <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
@@ -189,18 +181,10 @@ export default function EmployeeRegisterDialog({
             color="primary"
             sx={{display: saved === "none" ? "block" : "none" }}
             onClick={() => {
-              // employeeData.status = "Chờ xử lý";
-
-              // dispatch(updateFormAction(employeeData?.employeeInfo?.employeeId, {
-              //   resume: formDataResumeUpdate,
-              //   cv: formDataCVUpdate
-              // }))
-
               dispatch(updateFormAction(employeeData?.employeeInfo?.employeeId, {
                 resume: formDataResumeUpdate,
                 cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate.workExperiences.filter(data => data.startDate !== null && data.endDate !== null) }
               }))
-              
               handleChangeReload(employeeData?.employeeInfo?.employeeId)
               setSaved("block");
             }}
@@ -221,7 +205,6 @@ export default function EmployeeRegisterDialog({
           <Button
             variant="contained"
             color="secondary"
-            sx={{}}
             onClick={() => {
               setShouldOpenConfirmPrint(true);
               setDisplay("none");
@@ -232,7 +215,6 @@ export default function EmployeeRegisterDialog({
 
           <Button
             variant="contained"
-            // sx={{ background: "#FF9E43" }}
             color="error"
             onClick={() => handleClose()}
           >

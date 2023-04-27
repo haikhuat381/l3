@@ -5,8 +5,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Resume from "app/components/ProfileEmployee/Resume";
 import CurriculumVitae from "app/components/ProfileEmployee/CurriculumVitae";
-
-import { updateEmployee } from "app/redux/actions/actions";
 import {
   Tooltip,
   Dialog,
@@ -19,7 +17,6 @@ import {
   Icon,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import MaterialTable from "@material-table/core";
 import moment from "moment";
 import Diploma from "app/components/ProfileEmployee/Diploma";
 
@@ -63,22 +60,6 @@ export default function ApprovedDialog({ handleClose }) {
     setValue(newValue);
   };
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
-  // console.log("employeeData abc", employeeData)
-
-  const columns = [
-    { title: "Tên văn bằng", field: "name" },
-    {
-      title: "Nội dung ",
-      field: "content",
-    },
-    { title: "Nơi cấp", field: "educationalOrg" },
-    {
-      title: "Ngày cấp",
-      field: "issuanceDate",
-      render: (rowData) => moment(rowData.issuanceDate).format("YYYY-MM-DD"),
-    },
-    { title: "Lĩnh Vực", field: "field" },
-  ];
 
   return (
     <>

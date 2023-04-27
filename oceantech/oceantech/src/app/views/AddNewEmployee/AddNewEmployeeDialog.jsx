@@ -20,21 +20,18 @@ import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  addNewEmployee,
-  // updateEmployee,
-  getEmployeeData,
-
   addNewEmployeeAction,
   updateEmployeeAction,
   getEmployeeDataAction,
   getFormDataAction
 } from "app/redux/actions/actions";
-
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
-import {  updateEmployee } from "./EmployeeServices";
+
+
+
 function AddNewEmployeeDialog(props) {
   const { handleClose, handleChangeReload, employeeUpdate } = props;
 
@@ -64,14 +61,13 @@ function AddNewEmployeeDialog(props) {
     }, []) || [])
     setListRelationship(employeeDataReducer?.familyRelations?.reduce((arr, data) => {
       return [...arr, {
-        // familyRelationId: data.familyId,
+        familyId: data.familyId,
         name: data.name,
         gender: data.gender,
         relation: data.relation,
         citizenId: data.citizenId,
         address: data.address,
         dateOfBirth: moment(data.dateOfBirth).format("YYYY-MM-DD"),
-        familyId: data.familyId
       }]
     }, []) || [])
   }, [employeeDataReducer]);
@@ -83,7 +79,6 @@ function AddNewEmployeeDialog(props) {
   const [value, setValue] = React.useState("1");
   
   const handleChange = (event, newValue) => {
-    console.log("fỏmiksađá", formik)
     const valueCheck = {...formik.values}
     delete valueCheck.photoUrl
     if (Object.keys(formik.errors).length === 0 && Object.values(valueCheck).every(value => value !== '')) {
@@ -174,7 +169,6 @@ function AddNewEmployeeDialog(props) {
         // toast.success("Cập nhật thành công");
         setSaved("block");
       }
-      // handleGetListEmployee()
       setShouldOpenDialog(false);
       if(!!employeeUpdate?.employeeId) {
         dispatch(getEmployeeDataAction(employeeUpdate?.employeeId))
@@ -204,7 +198,6 @@ function AddNewEmployeeDialog(props) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            // borderBottom: "1px solid #ccc",
             boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
             padding: "12px 24px"
           }}
@@ -260,12 +253,8 @@ function AddNewEmployeeDialog(props) {
 
         <DialogActions
           style={{
-            // marginLeft: 20,
-            // marginRight: 20,
-            // borderTop: "1px solid #ccc",
             boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
             justifyContent: 'center',
-            // alignItems: "center"
           }}
         >
           <Button
@@ -273,8 +262,9 @@ function AddNewEmployeeDialog(props) {
             color="success"
             sx={{ display: saved }}
             onClick={() => {
-              setShouldOpenDialog("true");
               dispatch(getFormDataAction(employeeData?.employeeId))
+              dispatch(getEmployeeDataAction(employeeUpdate?.employeeId))
+              setShouldOpenDialog("true");
             }}
           >
             Đăng kí
@@ -291,7 +281,6 @@ function AddNewEmployeeDialog(props) {
           <Button
             variant="contained"
             color="error"
-            // sx={{ background: "#FF9E43" }}
             onClick={() => handleClose()}
           >
             Hủy

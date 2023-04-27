@@ -5,30 +5,21 @@ import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import CustomAvatar from "../Avatar/Avatar";
 import moment from "moment";
-import { json } from "react-router";
 
 const CurriculumVitae = React.forwardRef((props, ref) => {
   const MyButton = styled(IconButton)({
     display: props.display,
   });
   const { employee, handleChangeFormCV, formDataCVUpdate, status } = props;
-  // console.log("employeeeeeeeeeee", employee)
+
   const otherFeature = useSelector((state) => state?.Employee?.otherFeature);
   const Gender = useSelector((state) => state?.Employee?.Gender);
   const employeeData = useSelector((state) => state?.Employee?.formData);
   const teamId = useSelector((state) => state?.Employee?.employeeData?.employeeInfo?.teamId);
-  // const employeeData = status ? employee : useSelector((state) => state?.Employee?.formData.resume);
-  // const employeeData = employee;
-  // console.log("employeeData hahaa", employeeData)
 
   const [textFieldValues, setTextFieldValues] = useState();
   useEffect(() => {
-    // console.log("checkcheck", JSON.stringify(employee?.cv) === JSON.stringify(formDataCVUpdate) )
     if (formDataCVUpdate === undefined) {
-      console.log("vao dayyyyyyyyyyyy")
-      console.log("employeeData?.cv", employeeData?.cv)
-      // console.log("formDataResumeUpdate === undefined)")
-      // if(!formDataCVUpdate || Object.keys(formDataCVUpdate).length === 0) {
       setTextFieldValues(() => {
         const data = { ...employeeData?.cv }
         data.workExperiences = data?.workExperiences?.length !== 0 ? data?.workExperiences?.reduce((arr, data) => {
@@ -59,15 +50,10 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   }, [employeeData])
 
   useEffect(() => {
-    // handleWorkExperiences(textFieldValues)
     if (!status) {
       handleChangeFormCV(textFieldValues)
     }
   }, [textFieldValues])
-
-  // console.log("textFieldValuessssssssssssss", textFieldValues)
-
-
 
   const handleAddTextField = () => {
     const newValues = { ...textFieldValues };
@@ -87,20 +73,17 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   const handleRemoveTextField = (index) => () => {
     const newValues = { ...textFieldValues };
     newValues.workExperiences.splice(index, 1)
-    // console.log("newValues",newValues);
     setTextFieldValues(newValues);
   };
 
   const handleTextFieldChange = (event, index, method) => {
     const newValues = { ...textFieldValues };
     newValues["workExperiences"][index][method] = event.target.value;
-    // console.log("newValues",newValues);
     setTextFieldValues(newValues);
   };
   const handleTextFieldChangeChange = (event, method) => {
     const newValues = { ...textFieldValues };
     newValues[method] = event.target.value;
-    // console.log("newValues",newValues);
     setTextFieldValues(newValues);
   };
 
@@ -161,52 +144,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
               </Box>
             </Grid>
           </Grid>
-          {/* <Grid item container direction={"column"} rowSpacing={2}>
-            <Grid item>
-              <Box className="title-skill">
-                <Typography textTransform={"uppercase"} variant="subtitle1">
-                  Kĩ Năng
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item className="textfield-box" m={"0 24px"}>
-              <TextField
-                  value={employeeData?.skill}
-                  fullWidth
-                  focused
-                  InputProps={{ inputProps: { style: { color: "#fff" } }, readOnly: status }}
-                  variant="standard"
-                  name="skill"
-                  onChange={(event) => {
-                    // handleTextFieldChange(event, index, "generalIntroduction");
-                    handleChangeFormCV(event, "skill")
-                  }}
-                ></TextField>
-            </Grid>
-          </Grid>
-          <Grid item container direction={"column"} rowSpacing={2}>
-            <Grid item>
-              <Box className="title-hobby">
-                <Typography textTransform={"uppercase"} variant="subtitle1">
-                  Sở Thích
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item className="textfield-box" m={"0 24px"}>
-              <TextField
-                  value={employee?.hobby}
-                  fullWidth
-                  focused
-                  InputProps={{ inputProps: { style: { color: "#fff" } }, readOnly: status }}
-                  variant="standard"
-                  name="hobby"
-                  onChange={(event) => {
-                    // handleTextFieldChange(event, index, "generalIntroduction");
-                    handleChangeFormCV(event, "hobby")
-                  }}
-                ></TextField>
-            </Grid>
-          </Grid> */}
         </Grid>
         <Grid item xs={7.5} className="resume-right" sx={{ mb: 0, height: 600, overflowY: "scroll", overflowX: "hidden" }}>
           <Grid item container direction={"column"} spacing={2} sx={{pt: 2}}>
@@ -321,141 +258,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
               </MyButton>
             </Grid>
             <Grid item container xs={12}>
-              {/* {textFieldValues?.workExperiences?.map((value, index) => (
-                <div style={{ display: "flex", alignItems: "start", justifyContent: "space-between", padding: "12px 0 0 0", borderBottom: index !== textFieldValues?.workExperiences?.length - 1 ? "1px solid #E5E5E5" : "" }} key={index}>
-                  <div style={{ width: "23%" }}>
-                    <Grid item container xs={12}>
-                    <Grid item xs={12}>
-                      <TextField
-                        // className="cv-noReadonly"
-                        className={!status ? "cv-noReadonly" : "cv-readonly"}
-                        type="date"
-                        InputProps={{
-                          readOnly: status,
-                          style: { padding: 0 },
-                        }}
-                        id="standard-adornment-amount"
-                        fullWidth
-                        name="startDate"
-                        sx={{
-                          "& fieldset": { border: "none", padding: 0 },
-                          // "& label": { color: '#373E58'},
-                        }}
-                        label="Ngày bắt đầu"
-                        InputLabelProps={{ shrink: true }}
-                        margin="dense"
-                        value={value.startDate}
-                        onChange={(event) => {
-                          handleTextFieldChange(event, index, "startDate");
-                        }}
-                      >
-                      </TextField>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        // className="cv-noReadonly"
-                        className={!status ? "cv-noReadonly" : "cv-readonly"}
-                        type="date"
-                        InputProps={{
-                          readOnly: status,
-                          style: { padding: 0 },
-                        }}
-                        id="standard-adornment-amount"
-                        fullWidth
-                        name="endDate"
-                        sx={{
-                          "& fieldset": { border: "none", padding: 0 },
-                        }}
-                        label="Ngày kết thúc"
-                        InputLabelProps={{ shrink: true }}
-                        margin="dense"
-                        value={value.endDate}
-                        onChange={(event) => {
-                          handleTextFieldChange(event, index, "endDate");
-                        }}
-                      >
-                      </TextField>
-                    </Grid>
-                    </Grid>
-
-                  </div>
-                  <div style={{ width: status ? "73%" : "67%", paddingLeft: 25 }}>
-                    <TextField
-                      // className="cv-noReadonly"
-                      className={!status ? "cv-noReadonly" : "cv-readonly"}
-                      InputProps={{
-                        readOnly: status,
-                        style: { padding: 0 },
-                      }}
-                      fullWidth
-                      // multiline
-                      name="company"
-                      sx={{
-                        "& fieldset": { border: "none", padding: 0 },
-                      }}
-                      label="Công ty"
-                      InputLabelProps={{ shrink: true }}
-                      margin="dense"
-                      value={value.company}
-                      onChange={(event) => {
-                        handleTextFieldChange(event, index, "company");
-                      }}
-                    >
-                    </TextField>
-                    <TextField
-                      // className="cv-noReadonly"
-                      className={!status ? "cv-noReadonly" : "cv-readonly"}
-                      InputProps={{
-                        readOnly: status,
-                        style: { padding: 0 },
-                      }}
-                      fullWidth
-                      // multiline
-                      name="position"
-                      sx={{
-                        "& fieldset": { border: "none", padding: 0 },
-                      }}
-                      label="Chức vụ"
-                      InputLabelProps={{ shrink: true }}
-                      margin="dense"
-                      value={value.position}
-                      onChange={(event) => {
-                        handleTextFieldChange(event, index, "position");
-                      }}
-                    >
-                    </TextField>
-                    <TextField
-                      // className="cv-noReadonly"
-                      className={!status ? "cv-noReadonly" : "cv-readonly"}
-                      InputProps={{
-                        readOnly: status,
-                        style: { padding: 0 },
-                      }}
-                      fullWidth
-                      // multiline
-                      name="detail"
-                      sx={{
-                        "& fieldset": { border: "none", padding: 0 },
-                      }}
-                      label="Mô tả"
-                      InputLabelProps={{ shrink: true }}
-                      margin="dense"
-                      value={value.detail}
-                      onChange={(event) => {
-                        handleTextFieldChange(event, index, "detail");
-                      }}
-                    >
-                    </TextField>
-                  </div>
-
-                  <MyButton
-                    style={{ display: status ? "none" : "flex" }}
-                    onClick={handleRemoveTextField(index, "experience")}
-                  >
-                    <Icon className={"remove-button"}>remove_circle_outline</Icon>
-                  </MyButton>
-                </div>
-              ))} */}
               {
                 textFieldValues?.workExperiences?.map((value, index) => (textFieldValues?.workExperiences?.length === 1 && !value.startDate && status) ? "Không có thông tin" :
                 (

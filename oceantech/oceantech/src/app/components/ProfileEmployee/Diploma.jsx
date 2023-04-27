@@ -1,13 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import MaterialTable from "@material-table/core";
-import { Tooltip, Icon, IconButton } from "@mui/material";
 import moment from "moment";
 
 const Diploma = React.forwardRef((props, ref) => {
   const { listDiploma } = props
   const employeeData = useSelector((state) => state.Employee.employeeData);
-  // console.log("employeeData hahaa", employeeData)
   const columns = [
     { title: "Tên văn bằng", field: "name",
       headerStyle: {borderTopLeftRadius: "4px"},

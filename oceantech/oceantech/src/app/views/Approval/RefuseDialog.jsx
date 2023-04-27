@@ -6,18 +6,17 @@ import {
   DialogTitle,
   Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
   Grid,
   TextField,
-  MenuItem,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
 function RefuseDialog(props) {
   const dispatch = useDispatch();
   const { handleClose, handleCloseAll, handleChangeReload } = props;
@@ -78,7 +77,6 @@ function RefuseDialog(props) {
                   value={formik.values.date}
                   onChange={formik.handleChange}
                   error={formik.errors.date && formik.touched.date}
-                  // helperText={formik.errors.date}
                   helperText={formik.touched.date && formik.errors.date ? <div>{formik.errors.date}</div> : null}
                 />
               </Grid>
@@ -93,7 +91,6 @@ function RefuseDialog(props) {
                   onChange={formik.handleChange}
                   value={formik.values.rejectedReason}
                   error={formik.errors.rejectedReason && formik.touched.rejectedReason}
-                  // helperText={formik.errors.rejectedReason}
                   helperText={formik.touched.rejectedReason && formik.errors.rejectedReason ? <div>{formik.errors.rejectedReason}</div> : null}
                 ></TextField>
               </Grid>

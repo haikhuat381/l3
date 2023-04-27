@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import MaterialTable from "@material-table/core";
-import { updateEmployee, getEmployeeData } from "app/redux/actions/actions";
-
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import {
   Button,
@@ -10,14 +8,12 @@ import {
   Tooltip,
   Grid,
   TextField,
-  MenuItem,
 } from "@mui/material";
-
 import { v4 as uuidv4 } from "uuid";
-import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
+
 
 function EmployeeDiploma(props) {
   const { handleAddDiploma, listDiploma } = props;
@@ -33,7 +29,6 @@ function EmployeeDiploma(props) {
   const handleClose = () => {
     setDiplomaData({});
   };
-  // console.log("listDiplomaData", listDiplomaData)
   const handleChangeEmployee = (rowdata, method) => {
     if (method == 1) {
       rowdata.issuanceDate = moment(rowdata.issuanceDate).format("YYYY-MM-DD")
@@ -47,7 +42,8 @@ function EmployeeDiploma(props) {
   
   const handleDeleteDiploma = () => {
     setListDiplomaData(listDiplomaData => {
-      const newListDiplomaData = listDiplomaData.filter(diploma => !diplomaData?.certificateId ? diploma.id !== diplomaData.id : diploma.certificateId !==  diplomaData.certificateId) 
+      const newListDiplomaData = listDiplomaData.filter(diploma => 
+        !diplomaData?.certificateId ? diploma.id !== diplomaData.id : diploma.certificateId !==  diplomaData.certificateId) 
       
       handleAddDiploma(newListDiplomaData, "listDiploma");
       return newListDiplomaData
@@ -77,20 +73,15 @@ function EmployeeDiploma(props) {
       issuanceDate: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: (values, { resetForm }) => {
-      // console.log("haikhuat");
-      // console.log(diplomaData);
-      // console.log(values);
-      // values.issuanceDate = moment(values.issuanceDate).format("YYYY/MM/DD")
       const isCheck = !diplomaData?.certificateId ? values.id : diplomaData.certificateId
-      // console.log("isCheck",isCheck)
-      // console.log("isCheck",!isCheck)
       if (!isCheck) {
         values.id = uuidv4();
         handleAddDiploma([...listDiplomaData, values], "listDiploma");
         setListDiplomaData([...listDiplomaData, values])
       } else {
         setListDiplomaData(listDiplomaData => {
-          const newListDiplomaData = listDiplomaData.filter(diploma => !diplomaData?.certificateId ? diploma.id !== values.id : diploma.certificateId !==  diplomaData.certificateId) 
+          const newListDiplomaData = listDiplomaData.filter(diploma => 
+            !diplomaData?.certificateId ? diploma.id !== values.id : diploma.certificateId !==  diplomaData.certificateId) 
           newListDiplomaData.push(values)
           handleAddDiploma(newListDiplomaData, "listDiploma");
           return newListDiplomaData
@@ -169,7 +160,6 @@ function EmployeeDiploma(props) {
               onChange={formik.handleChange}
               error={formik.errors.name && formik.touched.name}
               helperText={formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
-              // helperText={formik.errors.name}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -187,7 +177,6 @@ function EmployeeDiploma(props) {
               onChange={formik.handleChange}
               error={formik.errors.issuanceDate && formik.touched.issuanceDate}
               helperText={formik.touched.issuanceDate && formik.errors.issuanceDate ? <div>{formik.errors.issuanceDate}</div> : null}
-              // helperText={formik.errors.issuanceDate}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -202,7 +191,6 @@ function EmployeeDiploma(props) {
               onChange={formik.handleChange}
               error={formik.errors.field && formik.touched.field}
               helperText={formik.touched.field && formik.errors.field ? <div>{formik.errors.field}</div> : null}
-              // helperText={formik.errors.field}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -219,7 +207,6 @@ function EmployeeDiploma(props) {
                 formik.errors.educationalOrg && formik.touched.educationalOrg
               }
               helperText={formik.touched.educationalOrg && formik.errors.educationalOrg ? <div>{formik.errors.educationalOrg}</div> : null}
-              // helperText={formik.errors.educationalOrg}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -236,7 +223,6 @@ function EmployeeDiploma(props) {
                 formik.errors.content && formik.touched.content
               }
               helperText={formik.touched.content && formik.errors.content ? <div>{formik.errors.content}</div> : null}
-              // helperText={formik.errors.content}
             />
           </Grid>
 

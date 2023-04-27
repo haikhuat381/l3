@@ -2,41 +2,24 @@ import React, { useEffect, useState } from "react";
 import {
   Typography,
   Grid,
-  Box,
-  Select,
   TextField,
-  MenuItem,
-  IconButton,
-  Icon,
-  Tooltip,
 } from "@mui/material";
 import MaterialTable from "@material-table/core";
-import { InputAdornment, Input } from "@mui/material";
 import CustomAvatar from "../Avatar/Avatar";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "@emotion/styled";
-import { getFormDataAction } from "app/redux/actions/actions";
 import moment from "moment";
 
 
 const Resume = React.forwardRef((props, ref) => {
-  // console.log("props", props)
-  // console.log("ref", ref)
-  const { listRelationship, handleChangeFormResume, formDataResumeUpdate, handleChangeEmployee, handleAddRelation, status } = props;
+  const { listRelationship, handleChangeFormResume, formDataResumeUpdate, status } = props;
   const dispatch = useDispatch()
   var today = new Date();
-  // const formData = useSelector((state) => state?.Employee?.formData);
   const Gender = useSelector((state) => state?.Employee?.Gender);
   const employeeData = useSelector((state) => state?.Employee?.formData);
   //  
-  // const [employeeData, setEmployeeData] = useState(employee)
   const [resumeData, setResumeData] = useState()
   useEffect(() => {
-    // setEmployeeData(employee)
     if (formDataResumeUpdate === undefined) {
-      // if(JSON.stringify(formDataResumeUpdate) === JSON.stringify(employeeCheck)) {
-      // setResumeData(employeeCheck)
-      // console.log("formDataResumeUpdate === undefined)")
       setResumeData(() => {
         return {
           ethnicity: employeeData.ethnicity,
@@ -61,9 +44,6 @@ const Resume = React.forwardRef((props, ref) => {
     newValues[method] = event.target.value
     setResumeData(newValues)
   }
-  // console.log("employeeData", employeeData)
-  // console.log("listRelationship", listRelationship)
-  // console.log("resumeData", resumeData)
 
   const columns = [
     // {
@@ -88,7 +68,6 @@ const Resume = React.forwardRef((props, ref) => {
       title: "Quan hệ",
       field: "relation",
       width: 140,
-      // render: (rowData) => rowData.relationship.relationship,
     },
     { title: "Địa chỉ", field: "address", width: 200 },
     { title: "Số CMND/CMT", field: "citizenId" },
@@ -175,16 +154,6 @@ const Resume = React.forwardRef((props, ref) => {
               </Grid>
             </Grid>
           </Grid>
-
-          {/* <Grid item xs={12}>
-            <Input
-              id="standard-adornment-amount"
-              fullWidth
-              startAdornment={
-                <InputAdornment position="start">2. Họ tên thường dùng</InputAdornment>
-              }
-            />
-          </Grid> */}
           <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
             <Typography item xs={2}>Sinh ngày:</Typography>
             <Grid item xs={10.9} fullWidth>
@@ -441,7 +410,6 @@ const Resume = React.forwardRef((props, ref) => {
                 headerStyle: {
                   border: '1px solid black',
                   fontWeight: "600",
-                  // textAlign: 'center'
                 },
                 padding: "default",
                 toolbar: false,

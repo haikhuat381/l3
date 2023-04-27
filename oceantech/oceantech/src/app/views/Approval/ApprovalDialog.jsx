@@ -6,14 +6,10 @@ import Typography from "@mui/material/Typography";
 import Resume from "app/components/ProfileEmployee/Resume";
 import CurriculumVitae from "app/components/ProfileEmployee/CurriculumVitae";
 import AdditionalRequestDialog from "./AdditionalRequestDialog";
-import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import RefuseDialog from "./RefuseDialog";
 import AcceptDialog from "./AcceptDialog";
 import { useState } from "react";
-import { updateEmployee } from "app/redux/actions/actions";
 import ResignationLetter from "app/components/ResignationLetter/ResignationLetter";
-import ReleaseDialog from "../ManageEmployee/ReleaseDialog";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   Tooltip,
@@ -27,20 +23,12 @@ import {
   Icon,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import MaterialTable from "@material-table/core";
 import PromotionLetter from "app/components/PromotionLetter/PromotionLetter";
 import PropostionLetter from "app/components/PropostionLetter/PropostionLetter";
 import IncreaseDialogLetter from "app/components/IncreaseLetter/IncreaseDialogLetter"
 import moment from "moment";
 import Diploma from "app/components/ProfileEmployee/Diploma";
-// import { makeStyles } from '@material-ui/core/styles';
-// const useStyles = makeStyles({
-//   noPaddingBottom: {
-//     '&.MuiDialogActions-root + .MuiDialogContent-root': {
-//       paddingBottom: 0,
-//     },
-//   },
-// });
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -74,8 +62,8 @@ function a11yProps(index) {
   };
 }
 
+
 export default function ApprovalDialog({ handleClose, handleChangeReload }) {
-  // const classes = useStyles();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
@@ -85,20 +73,6 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
     setValue(newValue);
   };
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
-  const columns = [
-    { title: "Tên văn bằng", field: "name" },
-    {
-      title: "Nội dung ",
-      field: "content",
-    },
-    { title: "Nơi cấp", field: "educationalOrg" },
-    {
-      title: "Ngày cấp",
-      field: "issuanceDate",
-      render: (rowData) => moment(rowData.issuanceDate).format("YYYY-MM-DD"),
-    },
-    { title: "Lĩnh Vực", field: "field" },
-  ];
 
   return (
     <>
@@ -161,7 +135,6 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           <Button
             variant="contained"
             color="success"
-            sx={{ }}
             onClick={() => {
               setShouldOpenAcceptDialog(true);
             }}
@@ -169,7 +142,6 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
             Duyệt
           </Button>
           <Button
-            sx={{ }}
             variant="contained"
             color="primary"
             onClick={() => {
@@ -181,7 +153,6 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           <Button
             variant="contained"
             color="warning"
-            sx={{ }}
             onClick={() => {
               setShouldOpenRefuseDialog(true);
               
@@ -192,7 +163,6 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           <Button
             variant="contained"
             color="error"
-            // sx={{ background: "#FF9E43", }}
             onClick={() => handleClose()}
           >
             Hủy
@@ -205,12 +175,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           handleClose={() => {
             setShouldOpenRequestDialog(false);
           }}
-          // handleCloseAll={() => {
-          //   handleClose()
-          //   setShouldOpenRequestDialog(false);
-          // }}
           handleCloseAll={handleClose}
-
           handleChangeReload={handleChangeReload}
         />
       )}

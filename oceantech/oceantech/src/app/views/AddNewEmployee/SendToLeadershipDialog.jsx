@@ -6,7 +6,6 @@ import {
   DialogTitle,
   Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
   Grid,
@@ -15,8 +14,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { addRegistAction, updateEmployee } from "app/redux/actions/actions";
-import { ToastContainer, toast } from "react-toastify";
+import { addRegistAction } from "app/redux/actions/actions";
 function SendToLeadershipDialog(props) {
   const { handleClose, employeeId, handleCloseAll, status } = props;
   const dispatch = useDispatch();
@@ -78,7 +76,6 @@ function SendToLeadershipDialog(props) {
                 onChange={formik.handleChange}
                 value={formik.values.registerDate}
                 error={formik.errors.registerDate && formik.touched.registerDate}
-                // helperText={formik.errors.registerDate}
                 helperText={formik.touched.registerDate && formik.errors.registerDate ? <div>{formik.errors.registerDate}</div> : null}
                 InputLabelProps={{
                   shrink: true,
@@ -99,14 +96,12 @@ function SendToLeadershipDialog(props) {
                   }}
                   value={formik.values.registerName}
                   error={formik.errors.registerName && formik.touched.registerName}
-                  // helperText={formik.errors.registerName}
                   helperText={formik.touched.registerName && formik.errors.registerName ? <div>{formik.errors.registerName}</div> : null}
                 >
                   {leader?.map((item, index) => (
                     <MenuItem 
                       key={index} 
                       value={item.name}
-                      
                     >
                       {item.name}
                     </MenuItem>
@@ -116,30 +111,12 @@ function SendToLeadershipDialog(props) {
               <Grid item xs={6}>
               <TextField
                   fullWidth
-                  // autoFocus
                   label="Chức Vụ"
                   name="registerPosition"
-                  // value={formik.values.position}
                   value={position || ""}
                   onChange={formik.handleChange}
-                  // error={formik.errors.position && formik.touched.position}
-                  // helperText={formik.errors.position}
                 />
                 </Grid>
-              {/* <Grid item xs={4}>
-                <TextField
-                  fullWidth
-                  label="Chức Vụ"
-                  name="position"
-                  onChange={formik.handleChange}
-                  // value={formik.values.position}
-                  value={() => {
-                    return leader.find(value => value.name === formik.values.name).position
-                  }}
-                  error={formik.errors.position && formik.touched.position}
-                  helperText={formik.errors.position}
-                />
-              </Grid> */}
             </Grid>
             <Grid item container>
               <TextField
@@ -151,7 +128,6 @@ function SendToLeadershipDialog(props) {
                 onChange={formik.handleChange}
                 value={formik.values.registerContent}
                 error={formik.errors.registerContent && formik.touched.registerContent}
-                // helperText={formik.errors.registerContent}
                 helperText={formik.touched.registerContent && formik.errors.registerContent ? <div>{formik.errors.registerContent}</div> : null}
               />
             </Grid>

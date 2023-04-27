@@ -12,8 +12,6 @@ import { getListEmployeeSaga,
   addRegistSaga,
   leaderActionSaga
 } from "./EmployeeSaga";
-import getListLocationSaga from "./LocationSaga";
-import getOtherFeatureSaga from "./OtherFeatureSaga";
 import { addNewEmployeeSaga } from "./EmployeeSaga";
 export default function* rootSaga() {
   

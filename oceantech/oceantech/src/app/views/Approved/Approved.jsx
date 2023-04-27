@@ -3,11 +3,6 @@ import Breadcrumb from "app/components/Breadcrumb";
 import MaterialTable from "@material-table/core";
 import { useState, useEffect, useRef } from "react";
 import {
-  deleteEmployee,
-  getEmployeeData,
-  getListEmployeeRequest,
-  getListLocation,
-  getOtherFeature,
   getTotalAction,
   getListEmployeeAction,
   getEmployeeDataAction,
@@ -41,7 +36,6 @@ function Approved() {
   const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
   const objStatus = useSelector(state => state?.Employee?.objStatus)
   const employeeData = useSelector(state => state?.Employee?.employeeData)
-  // console.log("employeeData bbbbbb", employeeData)
   const reloadRef = useRef()
   const handleChangeReload = (value) => {
     reloadRef.current = value
@@ -49,7 +43,6 @@ function Approved() {
   
   const handleGetListEmployee = () => {
     const status = "5,6,10,11,18"
-    // const status = "5,6,10,11,18"
     dispatch(getTotalAction(status))
     dispatch(getListEmployeeAction(status, page, pagesize))
   }

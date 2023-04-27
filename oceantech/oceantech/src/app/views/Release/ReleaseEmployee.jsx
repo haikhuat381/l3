@@ -3,17 +3,13 @@ import Breadcrumb from "app/components/Breadcrumb";
 import MaterialTable from "@material-table/core";
 import { useState, useEffect, useRef } from "react";
 import {
-  deleteEmployee,
-  getEmployeeData,
-  getListEmployeeRequest,
-  getListLocation,
-  getOtherFeature,
   getTotalAction,
-  getListEmployeeAction, getEmployeeDataAction, getFormDataAction
+  getListEmployeeAction,
+  getEmployeeDataAction,
+  getFormDataAction
 } from "app/redux/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
 import ReleaseEmployeeDialog from "./ReleaseEmployeeDialog";
-import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import { Button, Box, Icon, IconButton, styled, Table, Tooltip } from "@mui/material";
 import SaveProfileInfo from "./SaveProfileInfo";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
@@ -45,7 +41,6 @@ function ReleaseEmployee() {
   const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
   const objStatus = useSelector(state => state?.Employee?.objStatus)
   const employeeData = useSelector(state => state?.Employee?.employeeData)
-  // console.log("employeeData bbbbbb", employeeData)
   const reloadRef = useRef()
   const handleChangeReload = (value) => {
     reloadRef.current = value
@@ -53,7 +48,6 @@ function ReleaseEmployee() {
   
   const handleGetListEmployee = () => {
     const status = "10,13"
-    // const status = "10"
     dispatch(getTotalAction(status))
     dispatch(getListEmployeeAction(status, page, pagesize))
   }

@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Close } from "@mui/icons-material";
-
 import {
   Dialog,
   DialogTitle,
@@ -12,14 +11,10 @@ import {
   DialogContent,
   Grid,
   TextField,
-  MenuItem,
-  Checkbox,
-  FormControlLabel,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { leaderAction, updateEmployee } from "app/redux/actions/actions";
-import { ToastContainer, toast } from "react-toastify";
+import { leaderAction } from "app/redux/actions/actions";
 
 
 function SaveProfileDialog(props) {
@@ -72,7 +67,6 @@ function SaveProfileDialog(props) {
                 value={formik.values.date}
                 onChange={formik.handleChange}
                 error={formik.errors.date && formik.touched.date}
-                // helperText={formik.errors.date}
                 helperText={formik.touched.date && formik.errors.date ? <div>{formik.errors.date}</div> : null}
               />
             </Grid>
@@ -86,7 +80,6 @@ function SaveProfileDialog(props) {
                 value={formik.values.storedProfileCode}
                 onChange={formik.handleChange}
                 error={formik.errors.storedProfileCode && formik.touched.storedProfileCode}
-                // helperText={formik.errors.storedProfileCode}
                 helperText={formik.touched.storedProfileCode && formik.errors.storedProfileCode ? <div>{formik.errors.storedProfileCode}</div> : null}
 
               />

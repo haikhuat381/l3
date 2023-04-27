@@ -1,12 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Close, UndoRounded } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
   Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
   Grid,
@@ -28,8 +27,6 @@ function MoreInfoDialog(props) {
             boxShadow: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
             zIndex: 10000 
             }}>
-        {/* {rowDataInfo === undefined ? (employeeData.refuseInfo ? "Từ chối" : "Yêu cầu bổ sung") : 
-          ( rowDataInfo?.status) } */}
           {
             employeeData?.status === 6 ? "Từ chối" : "Yêu cầu bổ sung"
           }
@@ -40,10 +37,6 @@ function MoreInfoDialog(props) {
 
       <DialogContent style={{ paddingTop: 20 }}>
         <Typography>
-          {/* {rowDataInfo === undefined ? (employeeData.refuseInfo ? "Lý do:" : "") :  ( rowDataInfo?.status === "Từ chối" ? "Lý do:" : "") }{" "}
-          { rowDataInfo?.content || employeeData.refuseInfo?.content || employeeData.additionalRequest?.content} */}
-          
-          
           {
             employeeData?.status === 6 ? "Lý do:" : "Nội dung:"
           }{" "}

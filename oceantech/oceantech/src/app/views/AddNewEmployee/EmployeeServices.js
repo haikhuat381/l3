@@ -43,7 +43,6 @@ export const getOtherFeature = () => {
 
 export const getTotal = async (status) => {
   const url = `${API}/total?statuses=${status}`
-  // console.log("total", url)
   return await axios.get(url,headers);
 };
 
@@ -67,7 +66,6 @@ export const updateEmployee = async (id, data) => {
 };
 
 export const deleteEmployee = async (id) => {
-  // const url = API + "/" + id + "/status"
   const url = `${API}/${id}/status`
   const data = {
     "status": 14

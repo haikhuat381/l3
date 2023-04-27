@@ -6,18 +6,18 @@ import {
   DialogTitle,
   Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
   Grid,
   TextField,
-  MenuItem,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
+
 function AdditionalRequestDialog(props) {
   const dispatch = useDispatch();
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
@@ -71,7 +71,7 @@ function AdditionalRequestDialog(props) {
             />
           </DialogContent>
           <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
-            <Button variant="contained" color="primary" sx={{ }} type="submit">
+            <Button variant="contained" color="primary" type="submit">
               Xác nhận
             </Button>
             <Button variant="contained" onClick={handleClose} color="error">

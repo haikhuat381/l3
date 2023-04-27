@@ -1,25 +1,20 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Close } from "@mui/icons-material";
-
 import {
   Dialog,
   DialogTitle,
   Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
   Grid,
   TextField,
-  MenuItem,
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { updateEmployee } from "app/redux/actions/actions";
-import { ToastContainer, toast } from "react-toastify";
 import { leaderAction } from "app/redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -42,7 +37,8 @@ function AcceptDialog(props) {
         values.terminatedDate = values.appointmentDate
         delete values.appointmentDate
       }
-      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Phê duyệt")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values,  "Phê duyệt"))
+      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Phê duyệt"))
+       : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values,  "Phê duyệt"))
       handleChangeReload(employeeData?.employeeInfo?.employeeId)
       
       // toast.success("Phê duyệt thành công");
@@ -91,7 +87,7 @@ function AcceptDialog(props) {
             </Grid>
           </DialogContent>
           <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
-            <Button variant="contained" color="primary" sx={{}} type="submit">
+            <Button variant="contained" color="primary" type="submit">
               Xác nhận
             </Button>
             <Button variant="contained" onClick={handleClose} color="error" >

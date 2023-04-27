@@ -4,15 +4,9 @@ import MaterialTable from "@material-table/core";
 import { Button, Box, Icon, IconButton, styled, Table, Tooltip } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
-import ReleaseDialog from "../ManageEmployee/ReleaseDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  deleteEmployee,
-  getEmployeeData,
-  getListEmployeeRequest,
-  getListLocation,
-  getOtherFeature,
   getTotalAction,
   getListEmployeeAction,
   getEmployeeDataAction,
@@ -21,6 +15,7 @@ import {
 import ApprovalDialog from "./ApprovalDialog";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import moment from "moment";
+
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
@@ -42,7 +37,6 @@ function Approval() {
   const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
   const objStatus = useSelector(state => state?.Employee?.objStatus)
   const employeeData = useSelector(state => state?.Employee?.employeeData)
-  // console.log("employeeData bbbbbb", employeeData)
   const reloadRef = useRef()
   const handleChangeReload = (value) => {
     reloadRef.current = value
@@ -50,7 +44,6 @@ function Approval() {
   
   const handleGetListEmployee = () => {
     const status = "3,8"
-    // const status = "1,3,4,6"
     dispatch(getTotalAction(status))
     dispatch(getListEmployeeAction(status, page, pagesize))
   }

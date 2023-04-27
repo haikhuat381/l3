@@ -21,7 +21,6 @@ export default function ConfirmDialog({ onConfirmDialogClose, onYesClick, title,
         fullWidth
         maxWidth={"sm"}
       >
-        {/* <DialogTitle id="alert-dialog-title">{title}</DialogTitle> */}
         <DialogTitle
           sx={{
             display: "flex",

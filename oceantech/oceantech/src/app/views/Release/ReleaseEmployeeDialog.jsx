@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Resume from "app/components/ProfileEmployee/Resume";
 import CurriculumVitae from "app/components/ProfileEmployee/CurriculumVitae";
 import SaveProfileDialog from "./SaveProfileDIalog";
-import { updateEmployee } from "app/redux/actions/actions";
 import { useState } from "react";
 import {
   Tooltip,
@@ -20,8 +19,6 @@ import {
   Icon,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import MaterialTable from "@material-table/core";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 import Diploma from "app/components/ProfileEmployee/Diploma";
@@ -84,7 +81,6 @@ export default function ReleaseEmployeeDialog({ handleClose,handleChangeReload }
     },
     { title: "Lĩnh Vực", field: "field" },
   ];
-  // console.log("employeeDataaaaaaaaaaaaâ", employeeData)
   return (
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>

@@ -9,23 +9,16 @@ import ApprovedDialog from "../Approved/ApprovedDialog";
 import "react-toastify/dist/ReactToastify.css";
 import {
   deleteEmployee,
-  getEmployeeData,
-  getListEmployeeRequest,
-  getListLocation,
-  getOtherFeature,
-
   getListEmployeeAction,
   getEmployeeDataAction,
   getFormDataAction,
-  getTotalAction
+  getTotalAction, 
+  resetEmployeeDataAction
 } from "app/redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-import { getdata } from "./EmployeeServices";
-import { async, awrap } from "regenerator-runtime";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
-import { resetEmployeeDataAction } from "app/redux/actions/actions";
 
 
 const Container = styled("div")(() => ({
@@ -46,8 +39,8 @@ function AddNewEmployee() {
   const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
   const objStatus = useSelector(state => state?.Employee?.objStatus)
   const employeeData = useSelector(state => state?.Employee?.employeeData)
-  // console.log("employeeData bbbbbb", employeeData)
   const reloadRef = useRef()
+
   const handleChangeReload = (value) => {
     reloadRef.current = value
   }
@@ -62,8 +55,6 @@ function AddNewEmployee() {
     dispatch(getTotalAction(status))
     dispatch(getListEmployeeAction(status, page, pagesize))
   }
-  // console.log("listEmployeeDataReducer",listEmployeeDataReducer)
-  // const [listEmployeeData, setListEmployeeData] = useState([]);
 
   const [employeeDelete, setEmployeeDelete] = useState();
   const [employeeUpdate, setEmployeeUpdate] = useState();
@@ -78,7 +69,6 @@ function AddNewEmployee() {
 
   const handleChangeEmployee = (rowdata, method) => {
     if (method === 1) {
-      console.log("rowdataaaaaa", rowdata)
       setEmployeeUpdate(rowdata)
       dispatch(getEmployeeDataAction(rowdata.employeeId))
       setShouldOpenDialog(true);
@@ -142,7 +132,6 @@ function AddNewEmployee() {
                     dispatch(getFormDataAction(rowData.employeeId))
                     dispatch(getEmployeeDataAction(rowData.employeeId))
                     setShouldOpenViewDialog(true);
-                    // setIDEmployeeData(rowData.employeeId)
                   }}
                 >
                   <Icon

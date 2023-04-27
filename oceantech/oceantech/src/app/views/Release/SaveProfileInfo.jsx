@@ -6,13 +6,9 @@ import {
   DialogTitle,
   Box,
   Button,
-  InputAdornment,
-  styled,
   DialogActions,
   DialogContent,
   Grid,
-  TextField,
-  MenuItem,
   Typography,
 } from "@mui/material";
 function SaveProfileInfo(props) {
@@ -37,12 +33,10 @@ function SaveProfileInfo(props) {
             {" "}
             <Typography>
               Ngày Lưu: 
-              {/* Ngày Lưu: {employeeData.saveProfileInfo.date.split("-").reverse().join("-")}{" "} */}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography>Số lưu: {employeeData?.employeeInfo?.storedProfileCode}</Typography>
-            {/* <Typography>Số lưu: {employeeData.saveProfileInfo.numberSave} </Typography> */}
           </Grid>
         </Grid>
       </DialogContent>
