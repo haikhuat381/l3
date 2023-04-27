@@ -110,22 +110,24 @@ function AddNewEmployeeDialog(props) {
       fullName: Yup.string()
         .matches(/^[\p{L}\s]+$/u, "Không đọc nhập số và kí tự đặc biệt")
         .min(5, "Hãy nhập đầy đủ họ và tên")
-        .max(40, "Nhập họ tên đúng định dạng")
+        .max(32, "Nhập họ tên đúng định dạng")
         .required("Không được bỏ trống"),
       email: Yup.string().email("Email sai định dạng").required("Không được bỏ trống"),
       gender: Yup.string().required("Không được bỏ trống").nullable(),
-      code: Yup.string().required("Không được bỏ trống"),
-      dateOfBirth: Yup.date().required("Vui lòng nhập ngày"),
-      teamId: Yup.string().required("Hãy nhập lĩnh vực").nullable(),
-      phone: Yup.number()
-        .typeError("Vui lòng nhập số ĐT")
-        .min(5, "Hãy nhập đầy đủ số ĐT")
-        .max(9999999999, "Số ĐT không được vượt quá 10 chữ số")
+      code: Yup.string()
+        .min(6, "Nhập tối thiểu 6 kí tự")
+        .max(32, "Nhập tối đa 32 kí tự")
         .required("Không được bỏ trống"),
-      citizenId: Yup.number()
-        .typeError("Vui lòng nhập số CMND")
-        .min(5, "Hãy nhập đầy đủ số CMND")
-        .max(999999999999, "Số CMND không được vượt quá 12 chữ số")
+      dateOfBirth: Yup.date()
+        .max(new Date(Date.now() - 567648000000), "Yêu cầu trên 18 tuổi")
+        .min(new Date(Date.now() - 1892160000000), "Yêu cầu dưới 60 tuổi")
+        .required("Vui lòng nhập ngày"),
+      teamId: Yup.string().required("Hãy nhập lĩnh vực").nullable(),
+      citizenId: Yup.string()
+        .matches(/^[0-9]{12}$/, "Số CCCD/CMT không hợp lệ")
+        .required("Không được bỏ trống"),
+      phone: Yup.string()
+        .matches(/^[0-9]{10}$/, "Số điện thoại không hợp lệ")
         .required("Không được bỏ trống"),
       address: Yup.string().required("Không được bỏ trống"),
     }),

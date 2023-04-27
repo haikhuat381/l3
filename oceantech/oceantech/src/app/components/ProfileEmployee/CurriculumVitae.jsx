@@ -116,7 +116,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
               {employeeData?.resume?.fullName}
             </Typography>
             <Typography variant="subtitle1" textAlign={"center"} fontSize={18}>
-              {/* {otherFeature[employeeData?.resume?.teamId]?.name} */}
               {otherFeature[teamId]?.name}
             </Typography>
           </Grid>
@@ -209,8 +208,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
           </Grid> */}
         </Grid>
-        {/* <Grid item container xs={8} className="resume-right" direction={"column"} spacing={2}>
-          <Grid item style={{ height: 550, overflowY: "scroll", margin: "16px" }}> */}
         <Grid item xs={7.5} className="resume-right" sx={{ mb: 0, height: 600, overflowY: "scroll", overflowX: "hidden" }}>
           <Grid item container direction={"column"} spacing={2} sx={{pt: 2}}>
             <Grid item display={"flex"} gap={1} alignItems="center" color={"#373E58"}>

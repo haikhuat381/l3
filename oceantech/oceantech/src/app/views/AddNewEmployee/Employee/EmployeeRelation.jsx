@@ -70,23 +70,19 @@ function EmployeeRelation(props) {
       dateOfBirth: "",
       gender: "",
       relation: "",
-      // phone: "",
-      // email: "",
       citizenId: "",
       address: "",
     },
     validationSchema: Yup.object({
       name: Yup.string()
+        .matches(/^[\p{L}\s]+$/u, "Không đọc nhập số và kí tự đặc biệt")
         .min(5, "Hãy nhập đầy đủ họ và tên")
-        .max(30, "Nhập họ tên đúng định dạng")
+        .max(32, "Nhập họ tên đúng định dạng")
         .required("Không được bỏ trống"),
       gender: Yup.string().required("Không được bỏ trống"),
-      // citizenId: Yup.string().required("Không được bỏ trống"),
-
       dateOfBirth: Yup.date().required("Vui lòng nhập ngày"),
       citizenId: Yup.string()
-        .min(5, "Hãy nhập đầy đủ số CMND")
-        .max(20, "Nhập đúng định dạng số CMD")
+        .matches(/^[0-9]{12}$/, "Số CCCD/CMT không hợp lệ")
         .required("Không được bỏ trống"),
       relation: Yup.string().required("Không được bỏ trống"),
       address: Yup.string().required("Không được bỏ trống"),

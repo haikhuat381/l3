@@ -65,12 +65,12 @@ function EmployeeDiploma(props) {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(5, "Hãy nhập đầy tên van bằng")
-        .max(30, "Nhập nội dung đúng định dạng")
+        .min(5, "Hãy nhập đầy đủ tên văn bằng")
+        .max(32, "Nhập nội dung đúng định dạng")
         .required("Không được bỏ trống"),
       field: Yup.string()
-        .min(5, "Hãy nhập đầy tên van bằng")
-        .max(30, "Nhập nội dung đúng định dạng")
+        .min(5, "Hãy nhập đầy đủ tên van bằng")
+        .max(32, "Nhập nội dung đúng định dạng")
         .required("Không được bỏ trống"),
       educationalOrg: Yup.string().required("Không được bỏ trống"),
       content: Yup.string().required("Không được bỏ trống"),
