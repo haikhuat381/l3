@@ -140,7 +140,9 @@ function EmployeeRelation(props) {
       title: "Ngày sinh ",
       field: "dateOfBirth",
     },
-    { title: "Giới tính", field: "gender" },
+    { title: "Giới tính", field: "gender",
+      render: (rowData) => Gender[rowData.gender]?.gender
+    },
     {
       title: "Quan hệ",
       field: "relation",

@@ -49,7 +49,7 @@ function SendToLeadershipDialog(props) {
       dispatch(addRegistAction(employeeId,values))
 
       handleCloseAll();
-      // toast.success("Gửi lãnh đạo thành công");
+      toast.success("Gửi lãnh đạo thành công");
     },
   });
   return (

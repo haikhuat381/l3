@@ -92,10 +92,10 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
       <Grid container className="resume-container" xs={12} spacing={2} marginLeft={3}>
         <Grid container direction={"column"} xs={4} rowSpacing={2} className="resume-left">
           <Grid item sx={{ pt: 0, mb: 2 }}>
-            <CustomAvatar image={employeeData?.resume?.photoUrl} displayButton={"none"} />
+            <CustomAvatar image={employeeData?.resume?.photoUrl} isPadding={true} displayButton={"none"} />
           </Grid>
           <Grid item>
-            <Typography variant="h5" textAlign={"center"} marginTop={-4}>
+            <Typography variant="h5" textAlign={"center"} marginTop={-3}>
               {employeeData?.resume?.fullName}
             </Typography>
             <Typography variant="subtitle1" textAlign={"center"} fontSize={18}>
