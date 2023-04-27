@@ -263,7 +263,10 @@ function AddNewEmployeeDialog(props) {
             sx={{ display: saved }}
             onClick={() => {
               dispatch(getFormDataAction(employeeData?.employeeId))
-              dispatch(getEmployeeDataAction(employeeUpdate?.employeeId))
+              if(employeeData?.employeeId) {
+                console.log("employeeData?.employeeId", employeeData?.employeeId)
+                dispatch(getEmployeeDataAction(employeeData?.employeeId))
+              }
               setShouldOpenDialog("true");
             }}
           >

@@ -56,9 +56,10 @@ export function* resetEmployeeDataSaga(action) {
 export function* addNewEmployeeSaga(action) {
   const res = yield call(addNewEmployee, action.payload);
   console.log("resres",res)
-  if(res.status === 200 || res.status === 409) {
+  if(res.status === 200) {
     toast.success("Lưu mới thành công")
   } else {
+    console.log("loii", res)
     // toast.error()
   }
   yield put({ type: ActionTypes.ADD_NEW_EMPLOYEE_SUCCESS, payload: res.data.data });
@@ -66,18 +67,20 @@ export function* addNewEmployeeSaga(action) {
 
 export function* updateEmployeeSaga(action) {
   const res = yield call(updateEmployee, action.payload.id, action.payload.data);
-  if(res.status === 200 || res.status === 409) {
+  if(res.status === 200) {
     toast.success("Cập nhật thành công")
   } else {
+    console.log("loii", res)
     // toast.error()
   }
 }
 
 export function* deleteEmployeeSaga(action) {
   const res = yield call(deleteEmployee, action.payload);
-  if(res.status === 200 || res.status === 409) {
+  if(res.status === 200) {
     toast.success("Xóa nhân viên thành công")
   } else {
+    console.log("loii", res)
     // toast.error()
   }
 }
@@ -90,9 +93,10 @@ export function* getFormDataSaga(action) {
 
 export function* updateFormSaga(action) {
   const resForm = yield call(updateForm, action.payload.id, action.payload.data);
-  if(resForm.status === 200 || res.status === 409) {
+  if(resForm.status === 200) {
     toast.success("Cập nhật hồ sơ thành công")
   } else {
+    console.log("loii", res)
     // toast.error()
   }
   const res = yield call(getFormData, action.payload.id);
@@ -101,18 +105,20 @@ export function* updateFormSaga(action) {
 
 export function* addRegistSaga(action) {
   const res = yield call(addRegist, action.payload.id, action.payload.data);
-  if(res.status === 200 || res.status === 409) {
+  if(res.status === 200) {
     toast.success("Gửi lãnh đạo thành công")
   } else {
+    console.log("loii", res)
     // toast.error()
   }
 }
 
 export function* leaderActionSaga(action) {
   const res = yield call(leaderOfAction, action.payload.id, action.payload.data);
-  if(res.status === 200 || res.status === 409) {
+  if(res.status === 200) {
     toast.success(`${action.payload.action} thành công`)
   } else {
+    console.log("loii", res)
     // toast.error()
   }
 }
