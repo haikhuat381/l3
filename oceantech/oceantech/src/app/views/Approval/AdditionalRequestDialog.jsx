@@ -36,11 +36,11 @@ function AdditionalRequestDialog(props) {
     onSubmit: (values) => {
       const isCheck = employeeData?.employeeInfo?.status
       values.status = isCheck === 3 ? 4 : 9
-      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
+      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung"))
       handleChangeReload(employeeData?.employeeInfo?.employeeId)
       handleCloseAll();
       // handleClose();
-      toast.success("Gửi yêu cầu bổ sung thành công");
+      // toast.success("Gửi yêu cầu bổ sung thành công");
     },
   });
   return (
@@ -62,7 +62,7 @@ function AdditionalRequestDialog(props) {
               minRows={5}
               multiline
               name="statusLog"
-              label="Yêu cầu bổ sung"
+              label="Nội dung"
               InputLabelProps={{ shrink: true }}
               onChange={formik.handleChange}
               value={formik.values.statusLog}

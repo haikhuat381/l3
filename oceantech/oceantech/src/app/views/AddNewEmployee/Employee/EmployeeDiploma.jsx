@@ -104,6 +104,9 @@ function EmployeeDiploma(props) {
   const columns = [
     {
       title: "Hành động",
+      headerStyle: { 
+        borderTopLeftRadius: "4px"
+      },
       render: (rowData) => {
         return (
           <>
@@ -131,7 +134,9 @@ function EmployeeDiploma(props) {
     },
     { title: "Nơi cấp", field: "educationalOrg" },
     { title: "Ngày cấp", field: "issuanceDate" },
-    { title: "Lĩnh Vực", field:"field" },
+    { title: "Lĩnh Vực", field:"field",
+      headerStyle: {borderTopRightRadius: "4px"},
+    },
   ];
 
   return (
@@ -151,7 +156,7 @@ function EmployeeDiploma(props) {
       )}
 
       <form>
-        <Grid container spacing={2} style={{ paddingBottom: "13px" }}>
+        <Grid container spacing={2} style={{ paddingBottom: "12px" }}>
           <Grid item sm={4} xs={12}>
             <TextField
               label="Tên văn bằng"
@@ -163,7 +168,8 @@ function EmployeeDiploma(props) {
               value={formik.values.name}
               onChange={formik.handleChange}
               error={formik.errors.name && formik.touched.name}
-              helperText={formik.errors.name}
+              helperText={formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
+              // helperText={formik.errors.name}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -180,7 +186,8 @@ function EmployeeDiploma(props) {
               value={formik.values.issuanceDate}
               onChange={formik.handleChange}
               error={formik.errors.issuanceDate && formik.touched.issuanceDate}
-              helperText={formik.errors.issuanceDate}
+              helperText={formik.touched.issuanceDate && formik.errors.issuanceDate ? <div>{formik.errors.issuanceDate}</div> : null}
+              // helperText={formik.errors.issuanceDate}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -194,7 +201,8 @@ function EmployeeDiploma(props) {
               value={formik.values?.field || ""}
               onChange={formik.handleChange}
               error={formik.errors.field && formik.touched.field}
-              helperText={formik.errors.field}
+              helperText={formik.touched.field && formik.errors.field ? <div>{formik.errors.field}</div> : null}
+              // helperText={formik.errors.field}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -210,10 +218,11 @@ function EmployeeDiploma(props) {
               error={
                 formik.errors.educationalOrg && formik.touched.educationalOrg
               }
-              helperText={formik.errors.educationalOrg}
+              helperText={formik.touched.educationalOrg && formik.errors.educationalOrg ? <div>{formik.errors.educationalOrg}</div> : null}
+              // helperText={formik.errors.educationalOrg}
             />
           </Grid>
-          <Grid item sm={5} xs={12}>
+          <Grid item sm={4} xs={12}>
             <TextField
               label="Nội dung văn bằng"
               type="text"
@@ -226,7 +235,8 @@ function EmployeeDiploma(props) {
               error={
                 formik.errors.content && formik.touched.content
               }
-              helperText={formik.errors.content}
+              helperText={formik.touched.content && formik.errors.content ? <div>{formik.errors.content}</div> : null}
+              // helperText={formik.errors.content}
             />
           </Grid>
 
@@ -238,7 +248,7 @@ function EmployeeDiploma(props) {
                 type="button"
                 onClick={formik.handleSubmit}
               >
-                Lưu
+                Lưu văn bằng
               </Button>
             </Grid>
             <Grid item>
@@ -269,26 +279,20 @@ function EmployeeDiploma(props) {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
               };
             },
-            maxBodyHeight: "200px",
-            minBodyHeight: "200px",
+            maxBodyHeight: "215px",
+            minBodyHeight: "215px",
             headerStyle: {
-              // borderRadius: '4px',
               backgroundColor: "#262e49",
               color: "#fff",
+              position: 'sticky', top: 0, zIndex: 99
             },
-            // headerCell: {
-            //   '&:first-child': {
-            //     borderTopLeftRadius: '10px',
-            //     backgroundColor: "red"
-            //   },
-            // },
             padding: "default",
             toolbar: false,
           }}
           localization={{
-              body: {
-                emptyDataSourceMessage: "Không có thông tin",
-              }
+            body: {
+              emptyDataSourceMessage: "Không có thông tin",
+            }
           }}
         />
       </div>

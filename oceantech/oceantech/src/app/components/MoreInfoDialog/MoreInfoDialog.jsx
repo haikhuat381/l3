@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 function MoreInfoDialog(props) {
-  const { handleClose, openEditDialog, display, title, rowDataInfo, handleEditPromote } = props;
+  const { handleClose, openEditDialog, openViewDialog, display, title, rowDataInfo, handleEditPromote } = props;
   const employeeData = useSelector((state) => state?.Employee?.employeeData?.employeeInfo);
 
   console.log("haikhuat");
@@ -38,14 +38,14 @@ function MoreInfoDialog(props) {
         </Box>
       </DialogTitle>
 
-      <DialogContent style={{ paddingTop: 10 }}>
+      <DialogContent style={{ paddingTop: 20 }}>
         <Typography>
           {/* {rowDataInfo === undefined ? (employeeData.refuseInfo ? "Lý do:" : "") :  ( rowDataInfo?.status === "Từ chối" ? "Lý do:" : "") }{" "}
           { rowDataInfo?.content || employeeData.refuseInfo?.content || employeeData.additionalRequest?.content} */}
           
           
           {
-            employeeData?.status === 6 ? "Lý do:" : ""
+            employeeData?.status === 6 ? "Lý do:" : "Nội dung:"
           }{" "}
           {
             employeeData?.status === 6 ? employeeData?.rejectedReason : employeeData?.statusLog
@@ -57,13 +57,14 @@ function MoreInfoDialog(props) {
         <Button
           variant="contained"
           color="primary"
-          // sx={{ mb: 2, display:  employeeData?.status === 6 ?  "none" : ""}}
-          // sx={{ mb: 2}}
+          sx={{display: employeeData?.status === 6 ?  "none" : ""}}
           onClick={openEditDialog}
+          // onClick={employeeData?.status === 6 ? openViewDialog : openEditDialog}
           // onClick={rowDataInfo !== undefined ? handleEditPromote() : openEditDialog }
         >
+            {/* employeeData?.status === 6 ? "Xem hồ sơ" : "Bổ sung thông tin" */}
           {
-            employeeData?.status === 6 ? "Sửa thông tin" : "Bổ sung thông tin"
+            "Bổ sung thông tin"
           }
         </Button>
         <Button variant="contained" onClick={handleClose} color="error">

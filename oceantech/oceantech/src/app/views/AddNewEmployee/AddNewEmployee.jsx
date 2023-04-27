@@ -86,7 +86,7 @@ function AddNewEmployee() {
     if (method === 0) {
       handleChangeReload(rowdata.employeeId)
       setshouldOpenConfirmationDeleteDialog(false);
-      toast.success("Xóa nhân viên thành công");
+      // toast.success("Xóa nhân viên thành công");
     }
   };
   const handleClose = () => {
@@ -104,9 +104,11 @@ function AddNewEmployee() {
   const columns = [
     {
       title: "Hành động",
-      width: 120,
-      // marginLeft: "-10px",
-      cellStyle: { textAlign: 'center' },
+      width: 150,
+      // cellStyle: { textAlign: 'center' },
+      headerStyle: { 
+        borderTopLeftRadius: "4px"
+      },
       render: (rowData) => {
         return (
           <>
@@ -115,11 +117,7 @@ function AddNewEmployee() {
                 <Tooltip title="Thông tin">
                   <span>
                     <IconButton
-                      // disabled={
-                      //   rowData.additionalRequest || rowData.refuseInfo ? false : true
-                      // }
                       onClick={() => {
-                        // dispatch(getFormDataAction(rowData.employeeId))
                         dispatch(getEmployeeDataAction(rowData.employeeId))
                         setDataReport(rowData)
                         setShouldOpenRequestDialog(true);
@@ -136,22 +134,19 @@ function AddNewEmployee() {
                 </Tooltip>
             }
             {
-              (rowData.status === 3 || rowData.status === 4 || rowData.status === 6 || rowData.status === 1) && 
+              (rowData.status === 3 || rowData.status === 6) && 
                 <Tooltip title="Xem chi tiết">
               <span>
                 <IconButton
-                  // disabled={rowData.status !== 1 ? false : true}
                   onClick={() => {
                     dispatch(getFormDataAction(rowData.employeeId))
                     dispatch(getEmployeeDataAction(rowData.employeeId))
                     setShouldOpenViewDialog(true);
                     // setIDEmployeeData(rowData.employeeId)
-                    // dispatch(getEmployeeData(rowData));
                   }}
                 >
                   <Icon
                     color="success"
-                  // color={rowData.status !== 1 ? "success" : "disabled"}
                   >
                     visibilityIcon
                   </Icon>
@@ -159,19 +154,17 @@ function AddNewEmployee() {
               </span>
                 </Tooltip>
             }
+            {/* (rowData.status === 1 || rowData.status === 4 || rowData.status === 6) && */}
             
             {
-              (rowData.status === 1 || rowData.status === 4 || rowData.status === 6) &&
+              rowData.status === 1 &&
               <Tooltip title="Sửa">
                 <span>
                   <IconButton
-                    // disabled={rowData.status === 1 || rowData.status === 4 ? false : true}
                     onClick={() => handleChangeEmployee(rowData, 1)}
                   >
                     <Icon
                       color="primary"
-                    // color={rowData.status === 1 || rowData.status === 4 ? "primary" : "disabled"}
-
                     >edit
                     </Icon>
                   </IconButton>
@@ -183,7 +176,6 @@ function AddNewEmployee() {
               <Tooltip title="Xóa">
                 <span>
                   <IconButton
-                    // disabled={rowData.status === 1 ? false : true}
                     onClick={() => {
                       setEmployeeDelete(rowData);
                       setshouldOpenConfirmationDeleteDialog(true);
@@ -191,7 +183,6 @@ function AddNewEmployee() {
                   >
                     <Icon
                       color="error"
-                    // color={rowData.status === 1 ? "error" : "disabled"}
                     >
                       delete
                     </Icon>
@@ -199,56 +190,19 @@ function AddNewEmployee() {
                 </span>
               </Tooltip>
             }
-            {/* <Tooltip title="Sửa" style={{display: rowData.status === 1 || rowData.status === 4 ? "" : "none"}}>
-              <span>
-                <IconButton
-                  // disabled={rowData.status === 1 || rowData.status === 4 ? false : true}
-                  onClick={() => handleChangeEmployee(rowData, 1)}
-                >
-                  <Icon
-                    color="primary"
-                    // color={rowData.status === 1 || rowData.status === 4 ? "primary" : "disabled"}
-
-                  >edit
-                  </Icon>
-                </IconButton>
-              </span>
-            </Tooltip> */}
-            {/* <Tooltip title="Xóa" style={{display: rowData.status === 1 ? "" : "none"}}>
-              <span>
-                <IconButton
-                  // disabled={rowData.status === 1 ? false : true}
-                  onClick={() => {
-                    setEmployeeDelete(rowData);
-                    setshouldOpenConfirmationDeleteDialog(true);
-                  }}
-                >
-                  <Icon
-                    color="error"
-                    // color={rowData.status === 1 ? "error" : "disabled"}
-                  >
-                    delete
-                  </Icon>
-                </IconButton>
-              </span>
-            </Tooltip> */}
           </>
         );
       },
     },
     { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName", width: 250 },
-    // {
-    //   title: "Ngày sinh",
-    //   field: "dateOfBirth",
-    //   render: (rowdata) => moment(rowdata.dateOfBirth).format("DD/MM/YYYY"),
-    // },
+    { title: "Họ tên", field: "fullName"},
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     { title: "Mã CCCD/CMT", field: "citizenId" },
     {
       title: "Trạng thái",
       field: "status",
+      headerStyle: {borderTopRightRadius: "4px"},
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];
@@ -298,8 +252,6 @@ function AddNewEmployee() {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
               };
             },
-            maxBodyHeight: "1000px",
-            minBodyHeight: "370px",
             headerStyle: {
               backgroundColor: "#262e49",
               color: "#fff",
@@ -337,6 +289,11 @@ function AddNewEmployee() {
             dispatch(getEmployeeDataAction(dataReport.employeeId))
             setShouldOpenDialog(true);
           }}
+          // openViewDialog={() => {
+          //   dispatch(getFormDataAction(dataReport.employeeId))
+          //   dispatch(getEmployeeDataAction(dataReport.employeeId))
+          //   setShouldOpenViewDialog(true);
+          // }}
         />
       )}
 

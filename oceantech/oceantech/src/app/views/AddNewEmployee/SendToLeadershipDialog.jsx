@@ -51,7 +51,7 @@ function SendToLeadershipDialog(props) {
       dispatch(addRegistAction(employeeId,values))
 
       handleCloseAll();
-      toast.success("Gửi lãnh đạo thành công");
+      // toast.success("Gửi lãnh đạo thành công");
     },
   });
   return (
@@ -78,7 +78,8 @@ function SendToLeadershipDialog(props) {
                 onChange={formik.handleChange}
                 value={formik.values.registerDate}
                 error={formik.errors.registerDate && formik.touched.registerDate}
-                helperText={formik.errors.registerDate}
+                // helperText={formik.errors.registerDate}
+                helperText={formik.touched.registerDate && formik.errors.registerDate ? <div>{formik.errors.registerDate}</div> : null}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -98,7 +99,8 @@ function SendToLeadershipDialog(props) {
                   }}
                   value={formik.values.registerName}
                   error={formik.errors.registerName && formik.touched.registerName}
-                  helperText={formik.errors.registerName}
+                  // helperText={formik.errors.registerName}
+                  helperText={formik.touched.registerName && formik.errors.registerName ? <div>{formik.errors.registerName}</div> : null}
                 >
                   {leader?.map((item, index) => (
                     <MenuItem 
@@ -149,7 +151,8 @@ function SendToLeadershipDialog(props) {
                 onChange={formik.handleChange}
                 value={formik.values.registerContent}
                 error={formik.errors.registerContent && formik.touched.registerContent}
-                helperText={formik.errors.registerContent}
+                // helperText={formik.errors.registerContent}
+                helperText={formik.touched.registerContent && formik.errors.registerContent ? <div>{formik.errors.registerContent}</div> : null}
               />
             </Grid>
           </Grid>

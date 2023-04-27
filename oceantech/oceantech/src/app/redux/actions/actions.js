@@ -70,6 +70,6 @@ export const addRegistAction = (id, data) => {
   return { type: ActionTypes.ADD_REGIST, payload: { id, data } };
 };
 
-export const leaderAction = (id, data) => {
-  return { type: ActionTypes.LEADER_ACTION, payload: { id, data } };
+export const leaderAction = (id, data, action) => {
+  return { type: ActionTypes.LEADER_ACTION, payload: { id, data, action } };
 };

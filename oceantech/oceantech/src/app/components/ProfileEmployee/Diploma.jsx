@@ -9,21 +9,9 @@ const Diploma = React.forwardRef((props, ref) => {
   const employeeData = useSelector((state) => state.Employee.employeeData);
   // console.log("employeeData hahaa", employeeData)
   const columns = [
-    // {
-    //   title: "Hành động",
-    //   render: (rowData) => {
-    //     return (
-    //       <>
-    //         <Tooltip title="Sửa">
-    //           <IconButton>
-    //             <Icon color="success">visibilityIcon</Icon>
-    //           </IconButton>
-    //         </Tooltip>
-    //       </>
-    //     );
-    //   },
-    // },
-    { title: "Tên văn bằng", field: "name" },
+    { title: "Tên văn bằng", field: "name",
+      headerStyle: {borderTopLeftRadius: "4px"},
+    },
     {
       title: "Nội dung ",
       field: "content",
@@ -34,7 +22,7 @@ const Diploma = React.forwardRef((props, ref) => {
       field: "issuanceDate",
       render: (rowData) => moment(rowData?.issuanceDate).format("YYYY-MM-DD"),
     },
-    { title: "Lĩnh Vực", field: "field" },
+    { title: "Lĩnh Vực", field: "field", headerStyle: {borderTopRightRadius: "4px"} },
   ];
 
   return (

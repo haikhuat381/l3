@@ -107,7 +107,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   return (
     <div ref={ref} style={{ height: 500, overflowY: "scroll", overflowX: "hidden" }}>
       <Grid container className="resume-container" xs={12} spacing={2} marginLeft={3}>
-        <Grid container direction={"column"} xs={3.5} rowSpacing={2} className="resume-left">
+        <Grid container direction={"column"} xs={4} rowSpacing={2} className="resume-left">
           <Grid item sx={{ pt: 0, mb: 2 }}>
             <CustomAvatar image={employeeData?.resume?.photoUrl} displayButton={"none"} />
           </Grid>
@@ -211,7 +211,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
         </Grid>
         {/* <Grid item container xs={8} className="resume-right" direction={"column"} spacing={2}>
           <Grid item style={{ height: 550, overflowY: "scroll", margin: "16px" }}> */}
-        <Grid item xs={8} className="resume-right" sx={{ mb: 0, height: 600, overflowY: "scroll", overflowX: "hidden" }}>
+        <Grid item xs={7.5} className="resume-right" sx={{ mb: 0, height: 600, overflowY: "scroll", overflowX: "hidden" }}>
           <Grid item container direction={"column"} spacing={2} sx={{pt: 2}}>
             <Grid item display={"flex"} gap={1} alignItems="center" color={"#373E58"}>
               <Icon sx={{ fontSize: "32px" }}>crisis_alert</Icon>
@@ -467,7 +467,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                       <Grid item container xs={12} fullWidth justifyContent="space-between" sx={{display: !status ? "flex" : "none"}}>
                         <Grid item container xs={5.4} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
                           <Typography item xs={2}>Ngày bắt đầu:</Typography>
-                          <Grid item xs={6.7}>
+                          <Grid item xs={6.5}>
                             <TextField
                               type="date"
                               // className="rs-noReadonly"
@@ -493,7 +493,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                         </Grid>
                         <Grid item container xs={5.4} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
                           <Typography item xs={2}>Ngày kết thúc:</Typography>
-                          <Grid item xs={6.5}>
+                          <Grid item xs={6.3}>
                             <TextField
                               type="date"
                               // className="rs-noReadonly"
@@ -520,7 +520,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                       </Grid>
                       <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
                         <Typography item xs={2} sx={{display: !status ? "flex" : "none"}}>Tên công ty:</Typography>
-                        <Grid item xs={!status ? 9.9 : 7.5} fullWidth>
+                        <Grid item xs={!status ? 9.7 : 7.5} fullWidth>
                           <TextField
                             className= { !status ? "rs-noReadonly" : "rs-readonly"}
                             // className="rs-noReadonly"
@@ -551,7 +551,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                       </Grid>
                       <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
                         <Typography item xs={1} sx={{display: !status ? "flex" : "none"}}>Vị trí:</Typography>
-                        <Grid item xs={!status ? 11 : 12} fullWidth>
+                        <Grid item xs={!status ? 10.9 : 12} fullWidth>
                           <TextField
                             className= { !status ? "rs-noReadonly" : "rs-readonly"}
                             // className="rs-noReadonly"
@@ -576,7 +576,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                       </Grid>
                       <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
                         <Typography item xs={2.2} sx={{display: !status ? "flex" : "none"}}>Mô tả công việc:</Typography>
-                        <Grid item xs={!status ? 9.2 : 12} fullWidth>
+                        <Grid item xs={!status ? 9 : 12} fullWidth>
                           <TextField
                             className= { !status ? "rs-noReadonly" : "rs-readonly"}
                             // className="rs-noReadonly"

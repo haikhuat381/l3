@@ -41,13 +41,13 @@ function RefuseDialog(props) {
       console.log(employeeData?.employeeInfo?.employeeId)
       console.log(values)
       // isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
-      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, rejectedReason: values.rejectedReason })) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status}))
+      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, rejectedReason: values.rejectedReason }, "Từ chối")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status}, "Từ chối"))
       handleChangeReload(employeeData?.employeeInfo?.employeeId)
 
       // employee.status = "Từ chối";
       // dispatch(updateEmployee(employee));
       handleCloseAll();
-      toast.success("Từ chối thành công");
+      // toast.success("Từ chối thành công");
     },
   });
   return (
@@ -78,7 +78,8 @@ function RefuseDialog(props) {
                   value={formik.values.date}
                   onChange={formik.handleChange}
                   error={formik.errors.date && formik.touched.date}
-                  helperText={formik.errors.date}
+                  // helperText={formik.errors.date}
+                  helperText={formik.touched.date && formik.errors.date ? <div>{formik.errors.date}</div> : null}
                 />
               </Grid>
 
@@ -92,7 +93,8 @@ function RefuseDialog(props) {
                   onChange={formik.handleChange}
                   value={formik.values.rejectedReason}
                   error={formik.errors.rejectedReason && formik.touched.rejectedReason}
-                  helperText={formik.errors.rejectedReason}
+                  // helperText={formik.errors.rejectedReason}
+                  helperText={formik.touched.rejectedReason && formik.errors.rejectedReason ? <div>{formik.errors.rejectedReason}</div> : null}
                 ></TextField>
               </Grid>
             </Grid>

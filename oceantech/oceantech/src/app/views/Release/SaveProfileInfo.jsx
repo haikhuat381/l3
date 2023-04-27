@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 function SaveProfileInfo(props) {
-  const { handleClose, openEditDialog } = props;
+  const { handleClose, openEditDialog, openViewDialog } = props;
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
   console.log(employeeData);
   return (
@@ -47,6 +47,13 @@ function SaveProfileInfo(props) {
         </Grid>
       </DialogContent>
       <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
+      <Button
+          variant="contained"
+          color="primary"
+          onClick={openViewDialog}
+        >
+          Xem hồ sơ
+        </Button>
         <Button variant="contained" onClick={handleClose} color="error">
           Hủy
         </Button>

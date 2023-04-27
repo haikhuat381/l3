@@ -41,9 +41,9 @@ function SaveProfileDialog(props) {
       console.log(employeeData?.employeeInfo?.employeeId)
       console.log(values)
       // dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
-      dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, storedProfileCode:values.storedProfileCode}))
+      dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, storedProfileCode:values.storedProfileCode}, "Lưu hồ sơ"))
       handleChangeReload(employeeData?.employeeInfo?.employeeId)
-      toast.success("Lưu hồ sơ thành côngg");
+      // toast.success("Lưu hồ sơ thành côngg");
       handleCloseAll();
     },
   });
@@ -72,7 +72,8 @@ function SaveProfileDialog(props) {
                 value={formik.values.date}
                 onChange={formik.handleChange}
                 error={formik.errors.date && formik.touched.date}
-                helperText={formik.errors.date}
+                // helperText={formik.errors.date}
+                helperText={formik.touched.date && formik.errors.date ? <div>{formik.errors.date}</div> : null}
               />
             </Grid>
             <Grid item xs={12}>
@@ -85,17 +86,19 @@ function SaveProfileDialog(props) {
                 value={formik.values.storedProfileCode}
                 onChange={formik.handleChange}
                 error={formik.errors.storedProfileCode && formik.touched.storedProfileCode}
-                helperText={formik.errors.storedProfileCode}
+                // helperText={formik.errors.storedProfileCode}
+                helperText={formik.touched.storedProfileCode && formik.errors.storedProfileCode ? <div>{formik.errors.storedProfileCode}</div> : null}
+
               />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
-          <Button variant="contained" onClick={handleClose} color="error">
-            Hủy
-          </Button>
           <Button variant="contained" color="primary" type="submit">
             Xác nhận
+          </Button>
+          <Button variant="contained" onClick={handleClose} color="error">
+            Hủy
           </Button>
         </DialogActions>
       </form>

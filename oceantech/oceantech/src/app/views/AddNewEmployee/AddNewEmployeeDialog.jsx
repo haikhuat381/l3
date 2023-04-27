@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Tab from "@mui/material/Tab";
 import {
   Dialog,
@@ -81,44 +81,30 @@ function AddNewEmployeeDialog(props) {
   };
 
   const [value, setValue] = React.useState("1");
-
+  
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    console.log("fỏmiksađá", formik)
+    const valueCheck = {...formik.values}
+    delete valueCheck.photoUrl
+    if (Object.keys(formik.errors).length === 0 && Object.values(valueCheck).every(value => value !== '')) {
+      setValue(newValue);
+    } else {
+      formik.handleSubmit()
+    }
   };
 
-  // console.log(employeeId);
-  // console.log("employeeUpdate", employeeUpdate);
-  // console.log("listDiploma", listDiploma);
-  // console.log("listRelationship", listRelationship);
-  // console.log("employeeData vua bam luu",employeeData);
-  //
   const formik = useFormik({
     initialValues: {
-      // fullName: employeeData?.fullName || "",
-      // email: employeeData?.email || "",
-      // code: employeeData?.code || "",
-      // phone: employeeData?.phone || "",
-      // dateOfBirth: employeeData?.dateOfBirth | "",
-      // teamId: employeeData?.teamId || "",
-      // citizenId: employeeData?.citizenId || "",
-      // address: employeeData?.address || "",
-      // gender: employeeData?.gender ? employeeData.gender.toString() : "",
-      // photoUrl: employeeData?.photoUrl || "",
       fullName: employeeUpdate?.fullName || "",
       email: employeeUpdate?.email || "",
       code: employeeUpdate?.code || "",
       phone: employeeUpdate?.phone || "",
-      // dateOfBirth: employeeUpdate?.dateOfBirth || "",
       dateOfBirth: !employeeUpdate?.dateOfBirth ? "" : moment(employeeUpdate?.dateOfBirth).format("YYYY-MM-DD"),
       teamId: employeeUpdate?.teamId || "",
       citizenId: employeeUpdate?.citizenId || "",
       address: employeeUpdate?.address || "",
       gender:  employeeUpdate?.gender?.toString() || "",
       photoUrl: employeeUpdate?.photoUrl || "",
-      // listDiploma: employeeData?.listDiploma || [],
-      // listRelationship: employeeData?.listRelationship || [],
-
-      // status: employeeData?.status || "Lưu mới",
     },
     validationSchema: Yup.object({
       fullName: Yup.string()
@@ -126,15 +112,7 @@ function AddNewEmployeeDialog(props) {
         .min(5, "Hãy nhập đầy đủ họ và tên")
         .max(40, "Nhập họ tên đúng định dạng")
         .required("Không được bỏ trống"),
-      email: Yup.string()
-        .email("Email không đúng định dạng")
-        .test("contains-mail", "Email phải chứa @gmail.com", (value) => {
-          if (value && !/@gmail\.com\s*$/.test(value)) {
-            return false;
-          }
-          return true;
-        })
-        .required("Email không được bỏ trống"),
+      email: Yup.string().email("Email sai định dạng").required("Không được bỏ trống"),
       gender: Yup.string().required("Không được bỏ trống").nullable(),
       code: Yup.string().required("Không được bỏ trống"),
       dateOfBirth: Yup.date().required("Vui lòng nhập ngày"),
@@ -170,7 +148,7 @@ function AddNewEmployeeDialog(props) {
 
           dispatch(addNewEmployeeAction(dataCreate));
           handleChangeReload(values.id)
-          toast.success("Lưu mới thành công");
+          // toast.success("Lưu mới thành công");
           setSaved("block");
 
         }
@@ -191,7 +169,7 @@ function AddNewEmployeeDialog(props) {
         dispatch(updateEmployeeAction(employeeUpdate?.employeeId,updateData))
         handleChangeReload(employeeUpdate?.gender)
 
-        toast.success("Cập nhật thành công");
+        // toast.success("Cập nhật thành công");
         setSaved("block");
       }
       // handleGetListEmployee()
@@ -253,7 +231,6 @@ function AddNewEmployeeDialog(props) {
                   <Tab label="Thông tin quan hệ gia đình" value="3" />
                 </TabList>
               </Box>
-              {/* <TabPanel value="1" sx={{ p: "20px 0" }}> */}
               <TabPanel value="1" sx={{ p: "0 0 20px 0" }}>
                 <EmployeeInfo 
                   formikRoot={formik}

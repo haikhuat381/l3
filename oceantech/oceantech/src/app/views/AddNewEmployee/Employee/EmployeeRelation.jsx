@@ -118,6 +118,9 @@ function EmployeeRelation(props) {
   const columns = [
     {
       title: "Hành động",
+      headerStyle: { 
+        borderTopLeftRadius: "4px"
+      },
       render: (rowData) => {
         return (
           <>
@@ -152,7 +155,9 @@ function EmployeeRelation(props) {
       // render: (rowData) => rowData.relationship.relationship,
     },
     { title: "Địa chỉ", field: "address" },
-    { title: "Số CMND", field: "citizenId" },
+    { title: "Số CMND", field: "citizenId",
+      headerStyle: {borderTopRightRadius: "4px"},
+    },
   ];
 
   return (
@@ -184,7 +189,8 @@ function EmployeeRelation(props) {
               value={formik.values.name || ""}
               onChange={formik.handleChange}
               error={formik.errors.name && formik.touched.name}
-              helperText={formik.errors.name}
+              helperText={formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
+              // helperText={formik.errors.name}
             />
           </Grid>
           <Grid item sm={3} xs={3} className="input-dialog">
@@ -201,7 +207,8 @@ function EmployeeRelation(props) {
               value={formik.values.dateOfBirth || ""}
               onChange={formik.handleChange}
               error={formik.errors.dateOfBirth && formik.touched.dateOfBirth}
-              helperText={formik.errors.dateOfBirth}
+              helperText={formik.touched.dateOfBirth && formik.errors.dateOfBirth ? <div>{formik.errors.dateOfBirth}</div> : null}
+              // helperText={formik.errors.dateOfBirth}
             />
           </Grid>
           <Grid item sm={3} xs={3} className="input-dialog">
@@ -215,7 +222,8 @@ function EmployeeRelation(props) {
                   value={formik.values.gender || ""}
                   onChange={formik.handleChange}
                   error={formik.errors.gender && formik.touched.gender}
-                  helperText={formik.errors.gender}
+                  helperText={formik.touched.gender && formik.errors.gender ? <div>{formik.errors.gender}</div> : null}
+                  // helperText={formik.errors.gender}
                 >
                   {Gender?.map((item) => (
                     <MenuItem key={item.id} value={item.value}>
@@ -235,11 +243,12 @@ function EmployeeRelation(props) {
               value={formik.values.relation || ""}
               onChange={formik.handleChange}
               error={formik.errors.relation && formik.touched.relation}
-              helperText={formik.errors.relation}
+              helperText={formik.touched.relation && formik.errors.relation ? <div>{formik.errors.relation}</div> : null}
+              // helperText={formik.errors.relation}
             />
           </Grid>
 
-          <Grid item sm={4} xs={4} className="input-dialog">
+          <Grid item sm={3} xs={3} className="input-dialog">
             <TextField
               label="Số CMND"
               type="text"
@@ -250,11 +259,12 @@ function EmployeeRelation(props) {
               value={formik.values.citizenId || ""}
               onChange={formik.handleChange}
               error={formik.errors.citizenId && formik.touched.citizenId}
-              helperText={formik.errors.citizenId}
+              helperText={formik.touched.citizenId && formik.errors.citizenId ? <div>{formik.errors.citizenId}</div> : null}
+              // helperText={formik.errors.citizenId}
             />
           </Grid>
 
-          <Grid item sm={5} xs={5} className="input-dialog">
+          <Grid item sm={6} xs={6} className="input-dialog">
             <TextField
               label="Địa chỉ cụ thể"
               type="text"
@@ -265,9 +275,32 @@ function EmployeeRelation(props) {
               value={formik.values.address || ""}
               onChange={formik.handleChange}
               error={formik.errors.address && formik.touched.address}
-              helperText={formik.errors.address}
+              helperText={formik.touched.address && formik.errors.address ? <div>{formik.errors.address}</div> : null}
+              // helperText={formik.errors.address}
             />
           </Grid>
+
+          {/* <Grid container item xs={3} spacing={1}>
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                type="button"
+                onClick={formik.handleSubmit}
+              >
+                Lưu quan hệ
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={formik.resetForm}
+              >
+                Hủy
+              </Button>
+            </Grid>
+          </Grid> */}
           <Grid item sm={3} xs={3} className="input-dialog">
             {" "}
             <Button
@@ -276,7 +309,7 @@ function EmployeeRelation(props) {
               sx={{ mb: 2, mr: 1}}
               onClick={() => formik.submitForm()}
             >
-              Lưu
+              Lưu quan hệ
             </Button>
             <Button
               variant="contained"
@@ -303,19 +336,20 @@ function EmployeeRelation(props) {
               backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
             };
           },
-          maxBodyHeight: "200px",
-          minBodyHeight: "200px",
+          maxBodyHeight: "215px",
+          minBodyHeight: "215px",
           headerStyle: {
             backgroundColor: "#262e49",
             color: "#fff",
+            position: 'sticky', top: 0, zIndex: 99
           },
           padding: "default",
           toolbar: false,
         }}
         localization={{
-            body: {
-              emptyDataSourceMessage: "Không có thông tin",
-            }
+          body: {
+            emptyDataSourceMessage: "Không có thông tin",
+          }
         }}
       />
     </>

@@ -12,7 +12,7 @@ function EmployeeInfo(props) {
     <>
       <Grid container>
         <Grid item container xs={12}>
-          <Grid item container xs={9} sx={{padding:"20px 0 29px"}}>
+          <Grid item container xs={9} sx={{padding:"33px 0 30px"}}>
             <Grid
               item
               container
@@ -32,7 +32,9 @@ function EmployeeInfo(props) {
                   error={
                     formikRoot.errors.fullName && formikRoot.touched.fullName
                   }
-                  helperText={formikRoot.errors.fullName}
+                  // helperText={formikRoot.errors.fullName}
+                  helperText={formikRoot.touched.fullName && formikRoot.errors.fullName ? <div>{formikRoot.errors.fullName}</div> : null}
+                  
                 />
               </Grid>
               <Grid item xs={6}>
@@ -45,7 +47,9 @@ function EmployeeInfo(props) {
                   name="code"
                   onChange={formikRoot.handleChange}
                   error={formikRoot.errors.code && formikRoot.touched.code}
-                  helperText={formikRoot.errors.code}
+                  // helperText={formikRoot.errors.code}
+                  helperText={formikRoot.touched.code && formikRoot.errors.code ? <div>{formikRoot.errors.code}</div> : null}
+
                 />
               </Grid>
             </Grid>
@@ -73,7 +77,9 @@ function EmployeeInfo(props) {
                     formikRoot.errors.dateOfBirth &&
                     formikRoot.touched.dateOfBirth
                   }
-                  helperText={formikRoot.errors.dateOfBirth}
+                  // helperText={formikRoot.errors.dateOfBirth}
+                  helperText={formikRoot.touched.dateOfBirth && formikRoot.errors.dateOfBirth ? <div>{formikRoot.errors.dateOfBirth}</div> : null}
+
                 />
               </Grid>
               <Grid item xs={6}>
@@ -87,7 +93,9 @@ function EmployeeInfo(props) {
                   value={formikRoot.values.gender.toString() || ""}
                   onChange={formikRoot.handleChange}
                   error={formikRoot.errors.gender && formikRoot.touched.gender}
-                  helperText={formikRoot.errors.gender}
+                  helperText={formikRoot.touched.gender && formikRoot.errors.gender ? <div>{formikRoot.errors.gender}</div> : null}
+                  // helperText={formikRoot.errors.gender}
+                  
                 >
                   {Gender?.map((item) => (
                     <MenuItem key={item.id} value={item.value}>
@@ -114,7 +122,8 @@ function EmployeeInfo(props) {
                   onChange={formikRoot.handleChange}
                   value={formikRoot.values.email}
                   error={formikRoot.errors.email && formikRoot.touched.email}
-                  helperText={formikRoot.errors.email}
+                  helperText={formikRoot.touched.email && formikRoot.errors.email ? <div>{formikRoot.errors.email}</div> : null}
+                  // helperText={formikRoot.errors.email}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -127,7 +136,8 @@ function EmployeeInfo(props) {
                   name="phone"
                   onChange={formikRoot.handleChange}
                   error={formikRoot.errors.phone && formikRoot.touched.phone}
-                  helperText={formikRoot.errors.phone}
+                  helperText={formikRoot.touched.phone && formikRoot.errors.phone ? <div>{formikRoot.errors.phone}</div> : null}
+                  // helperText={formikRoot.errors.phone}
                 />
               </Grid>
             </Grid>
@@ -149,7 +159,8 @@ function EmployeeInfo(props) {
                   name="teamId"
                   onChange={formikRoot.handleChange}
                   error={formikRoot.errors.teamId && formikRoot.touched.teamId}
-                  helperText={formikRoot.errors.teamId}
+                  helperText={formikRoot.touched.teamId && formikRoot.errors.teamId ? <div>{formikRoot.errors.teamId}</div> : null}
+                  // helperText={formikRoot.errors.teamId}
                 >
                   {otherFeature.map((item) => (
                     <MenuItem key={item.id} value={item.id}>
@@ -170,7 +181,8 @@ function EmployeeInfo(props) {
                   error={
                     formikRoot.errors.citizenId && formikRoot.touched.citizenId
                   }
-                  helperText={formikRoot.errors.citizenId}
+                  helperText={formikRoot.touched.citizenId && formikRoot.errors.citizenId ? <div>{formikRoot.errors.citizenId}</div> : null}
+                  // helperText={formikRoot.errors.citizenId}
                 />
               </Grid>
             </Grid>
@@ -185,7 +197,8 @@ function EmployeeInfo(props) {
                   name="address"
                   onChange={formikRoot.handleChange}
                   error={formikRoot.errors.address && formikRoot.touched.address}
-                  helperText={formikRoot.errors.address}
+                  helperText={formikRoot.touched.address && formikRoot.errors.address ? <div>{formikRoot.errors.address}</div> : null}
+                  // helperText={formikRoot.errors.address}
                 />
               </Grid>
             </Grid>

@@ -114,7 +114,7 @@ const Resume = React.forwardRef((props, ref) => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h5" fontWeight={550}>SƠ YẾU LÝ LỊCH</Typography>
-            <Typography variant="h6">TỰ THUẬT</Typography>
+            <Typography variant="h6" fontSize={18}>TỰ THUẬT</Typography>
           </Grid>
         </Grid>
       </Grid>

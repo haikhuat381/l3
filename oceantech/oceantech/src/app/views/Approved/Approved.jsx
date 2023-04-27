@@ -67,17 +67,20 @@ function Approved() {
   const columns = [
     {
       title: "Hành động",
+      width: 150,
+      // cellStyle: { textAlign: 'center' },
+      headerStyle: { 
+        borderTopLeftRadius: "4px"
+      },
       render: (rowdata) => {
         return (
           <>
             <Tooltip title="Xem chi tiết">
               <IconButton
                 onClick={() => {
-                  // console.log("rowdata",rowdata)
                   dispatch(getFormDataAction(rowdata.employeeId))
                   dispatch(getEmployeeDataAction(rowdata.employeeId))
                   setShouldOpenDialog(true);
-                  // dispatch(getEmployeeData(rowdata));
                 }}
               >
                 <Icon color="success">visibilityIcon</Icon>
@@ -88,17 +91,13 @@ function Approved() {
       },
     },
     { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName", width: 250 },
-    // {
-    //   title: "Ngày sinh",
-    //   field: "dateOfBirth",
-    //   render: (rowdata) => moment(rowdata.dateOfBirth).format("DD/MM/YYYY"),
-    // },
+    { title: "Họ tên", field: "fullName"},
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     {
       title: "Trạng thái",
       field: "status",
+      headerStyle: {borderTopRightRadius: "4px"},
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];
@@ -122,8 +121,6 @@ function Approved() {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
               };
             },
-            maxBodyHeight: "1000px",
-            minBodyHeight: "370px",
             headerStyle: {
               backgroundColor: "#222943",
               color: "#fff",

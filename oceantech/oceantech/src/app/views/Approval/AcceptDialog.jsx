@@ -42,10 +42,10 @@ function AcceptDialog(props) {
         values.terminatedDate = values.appointmentDate
         delete values.appointmentDate
       }
-      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
+      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Phê duyệt")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values,  "Phê duyệt"))
       handleChangeReload(employeeData?.employeeInfo?.employeeId)
       
-      toast.success("Phê duyệt thành công");
+      // toast.success("Phê duyệt thành công");
       handleCloseAll();
     },
   });

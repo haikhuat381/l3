@@ -64,7 +64,7 @@ function LayoutTopbar(props) {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{"Luận"}</strong>
+                    Hi <strong>{"Admin"}</strong>
                   </Span>
                 </Hidden>
                 <Avatar

@@ -40,6 +40,7 @@ function ReleaseEmployee() {
 
   const [shouldOpenReleaseDialog, setShouldOpenReleaseDialog] = useState(false);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
+  const [idView, setIdview] = useState()
 
   const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
   const objStatus = useSelector(state => state?.Employee?.objStatus)
@@ -71,51 +72,57 @@ function ReleaseEmployee() {
   const columns = [
     {
       title: "Hành động",
+      width: 150,
+      // cellStyle: { textAlign: 'center' },
+      headerStyle: { 
+        borderTopLeftRadius: "4px"
+      },
       render: (rowdata) => {
         return (
           <>
-            <Tooltip title="Thông tin">
-              <IconButton
-                onClick={() => {
-                  // console.log("rowdata",rowdata)
-                  dispatch(getFormDataAction(rowdata.employeeId))
-                  dispatch(getEmployeeDataAction(rowdata.employeeId))
-                  setShouldOpenDialog(true);
-                  // dispatch(getEmployeeData(rowdata));
-                }}
-                disabled={rowdata.status !== 10 ? false : true}
-              >
-                <Icon color={rowdata.status !== 10 ? "primary" : "disabled"}>report</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Xem chi tiết">
-              <IconButton
-                onClick={() => {
-                  // console.log("rowdata",rowdata)
-                  dispatch(getFormDataAction(rowdata.employeeId))
-                  dispatch(getEmployeeDataAction(rowdata.employeeId))
-                  setShouldOpenReleaseDialog(true);
-                }}
-              >
-                <Icon color="success">visibilityIcon</Icon>
-              </IconButton>
-            </Tooltip>
+            { rowdata.status === 13 &&
+              <Tooltip title="Thông tin">
+                <IconButton
+                  onClick={() => {
+                    dispatch(getFormDataAction(rowdata.employeeId))
+                    dispatch(getEmployeeDataAction(rowdata.employeeId))
+                    setShouldOpenDialog(true);
+                    setIdview(rowdata.employeeId)
+                  }}
+                  // disabled={rowdata.status !== 10 ? false : true}
+                >
+                  {/* <Icon color={rowdata.status !== 10 ? "primary" : "disabled"}>report</Icon> */}
+                  {/* <Icon style={{color: rowdata.status !== 10 ? "#EED370" : "disabled"}}>report</Icon> */}
+                  <Icon style={{color: "#EED370"}}>report</Icon>
+                </IconButton>
+              </Tooltip>
+            }
+            {
+              rowdata.status === 10 &&
+              <Tooltip title="Xem chi tiết">
+                <IconButton
+                  onClick={() => {
+                    dispatch(getFormDataAction(rowdata.employeeId))
+                    dispatch(getEmployeeDataAction(rowdata.employeeId))
+                    setShouldOpenReleaseDialog(true);
+                  }}
+                >
+                  <Icon color="success">visibilityIcon</Icon>
+                </IconButton>
+              </Tooltip>
+            }
           </>
         );
       },
     },
     { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName", width: 250 },
-    // {
-    //   title: "Ngày sinh",
-    //   field: "dateOfBirth",
-    //   render: (rowdata) => moment(rowdata.dateOfBirth).format("DD/MM/YYYY"),
-    // },
+    { title: "Họ tên", field: "fullName"},
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     {
       title: "Trạng thái",
       field: "status",
+      headerStyle: {borderTopRightRadius: "4px"},
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];
@@ -149,8 +156,6 @@ function ReleaseEmployee() {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
               };
             },
-            maxBodyHeight: "1000px",
-            minBodyHeight: "370px",
             headerStyle: {
               backgroundColor: "#222943",
               color: "#fff",
@@ -172,6 +177,11 @@ function ReleaseEmployee() {
           handleClose={() => {
             setShouldOpenDialog(false);
           }}
+          openViewDialog={() => {
+                  dispatch(getFormDataAction(idView))
+                  dispatch(getEmployeeDataAction(idView))
+                  setShouldOpenReleaseDialog(true);
+                }}
         />
       )}
     </Container>
