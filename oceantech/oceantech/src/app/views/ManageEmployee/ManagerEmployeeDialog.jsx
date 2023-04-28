@@ -35,7 +35,7 @@ function ManagerEmployeeDialog(props) {
   const otherFeature = useSelector((state) => state.Employee.otherFeature);
   const Gender = useSelector((state) => state.Employee.Gender);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-
+  console.log(" chao bn ", employeeData?.photoUrl);
   return (
     <>
       {" "}
@@ -56,7 +56,16 @@ function ManagerEmployeeDialog(props) {
         <DialogContent>
           <Grid container xs={12} spacing={4}>
             <Grid item container xs={4} spacing={2}>
-              <Grid item xs={12}>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  marginTop: 5,
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
                 <CustomAvatar
                   image={employeeData?.employeeInfo?.photoUrl}
                   displayButton={"none"}
@@ -66,6 +75,7 @@ function ManagerEmployeeDialog(props) {
                   variant="h5"
                   textAlign={"center"}
                   textTransform={"uppercase"}
+                  mt={2}
                 >
                   {employeeData?.fullName}
                 </Typography>
@@ -168,17 +178,19 @@ function ManagerEmployeeDialog(props) {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            sx={{ mb: 2, background: "#FF9E43" }}
-            onClick={handleClose}
-          >
+        <DialogActions
+          style={{
+            boxShadow:
+              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+            justifyContent: "center",
+          }}
+        >
+          <Button variant="contained" color="warning" onClick={handleClose}>
             Hủy
           </Button>
           <Button
             variant="contained"
-            sx={{ mb: 2, background: "#d32f2f" }}
+            color="error"
             onClick={() => setShouldOpenDialog(true)}
           >
             Kết thúc

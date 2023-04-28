@@ -289,7 +289,7 @@ function Promote(props) {
               <Grid item>
                 <Button
                   variant="contained"
-                  sx={{ background: "#FF9E43" }}
+                  color="warning"
                   onClick={() => formik.resetForm()}
                 >
                   Hủy

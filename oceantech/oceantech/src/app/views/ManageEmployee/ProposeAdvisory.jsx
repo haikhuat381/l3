@@ -40,7 +40,7 @@ function ProposeAdvisory(props) {
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [proposeDataDialog, setProposeDataDialog] = useState({});
   const handleReloadPro = async (values) => {
-    console.log(" lam moi lai bang  ", values);
+    // console.log(" lam moi lai bang  ", values);
     reloadProposal.current(values);
   };
   useEffect(() => {
@@ -290,7 +290,7 @@ function ProposeAdvisory(props) {
               <Grid item>
                 <Button
                   variant="contained"
-                  sx={{ background: "#FF9E43" }}
+                  color="warning"
                   onClick={() => formik.resetForm()}
                 >
                   Hủy

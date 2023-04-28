@@ -46,8 +46,8 @@ function RegisterDocumentDialog(props) {
       // date: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: (values) => {
-      console.log("values");
-      console.log(values);
+      // console.log("values");
+      // console.log(values);
       employeeData.listRegister = {
         ...values,
         date: registerDataDialog.date,

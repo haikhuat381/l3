@@ -109,26 +109,34 @@ function ProposeAdvisoryDialog(props) {
             status={false}
           />
         </DialogContent>
-        <DialogActions>
+        <DialogActions
+          style={{
+            justifyContent: "center",
+            gap: "-8px",
+            boxShadow:
+              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+          }}
+        >
           <Button
             className="button-cancel"
             variant="contained"
-            sx={{ mb: 2, background: "#FF9E43" }}
+            color="error"
+            sx={{ mb: 2 }}
             onClick={handleClose}
           >
             Hủy
           </Button>
           <Button
-            className="button-confirm1"
             variant="contained"
+            color="success"
             sx={{ mb: 2, display: saved }}
-            color="primary"
           >
             Trình lãnh đạo
           </Button>
           <Button
             variant="contained"
             type="submit"
+            color="primary"
             sx={{ display: saved === "none" ? "block" : "none", mb: 2 }}
             onClick={() => {
               setSaved("block"), handleSubmit();

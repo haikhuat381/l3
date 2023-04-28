@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -15,18 +15,21 @@ import {
   MenuItem,
   TextareaAutosize,
 } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-function ResignationLetter(props) {
+import { useSelector } from "react-redux";
+function ReleaseLetter(props) {
+  const { employeeData, otherFeature } = props;
+  //   const otherFeature = useSelector((state) => state.Employee.otherFeature);
   var options = {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   };
+  // console.log("dâtta", employeeData);
   var today = new Date();
-  const employeeData = useSelector((state) => state.Employee.employeeData);
+
   return (
-    <div>
+    <>
       <Grid
         container
         spacing={2}
@@ -127,7 +130,7 @@ function ResignationLetter(props) {
             <Grid item sm={5.5} xs={8.5}>
               <TextField
                 className="luan"
-                value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
+                // value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
@@ -197,7 +200,7 @@ function ResignationLetter(props) {
                     }}
                     value={"Vợ tôi bắt tôi nghỉ việc "}
                     // value={formik.values.terminateRequestDetail || ""}
-                    onChange={formik.handleChange}
+                    // onChange={formik.handleChange}
                   />
                 </Grid>
               </Grid>
@@ -283,8 +286,8 @@ function ResignationLetter(props) {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }
 
-export default ResignationLetter;
+export default ReleaseLetter;

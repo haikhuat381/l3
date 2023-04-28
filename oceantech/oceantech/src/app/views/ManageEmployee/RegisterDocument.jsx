@@ -61,7 +61,7 @@ function RegisterDocument(props) {
       setShouldOpenDialog(true);
 
       if (!values.id) {
-        console.log("them");
+        // console.log("them");
         values.id = uuidv4();
         setEmployee({
           ...employeeData,
@@ -77,19 +77,19 @@ function RegisterDocument(props) {
             { ...values, status: "Lưu mới" },
           ],
         };
-        console.log("hai");
-        console.log(dataUpdate);
+        // console.log("hai");
+        // console.log(dataUpdate);
         dispatch(updateEmployee(dataUpdate));
         toast.success("Thêm thành công");
       } else {
-        console.log("sua");
+        // console.log("sua");
         // const newListFilter = listPromote.filter((Promote) => Promote.id != values.id);
         // setEmployee([...newListFilter, values]);
 
         employeeData.listRegister = employeeData.listRegister.filter(
           (register) => register.id !== values.id
         );
-        console.log(employeeData);
+        // console.log(employeeData);
         employeeData.listRegister.push({ ...values, status: "Lưu mới" });
         dispatch(updateEmployee(employeeData));
         toast.success("Sửa thành công");
@@ -107,7 +107,7 @@ function RegisterDocument(props) {
     employeeData.listRegister = employeeData.listRegister.filter(
       (register) => register.id !== registerData.id
     );
-    console.log(employeeData);
+    // console.log(employeeData);
     setEmployee(employeeData);
     dispatch(updateEmployee(employeeData));
     setshouldOpenConfirmationDeleteDialog(false);
@@ -275,7 +275,7 @@ function RegisterDocument(props) {
               <Grid item>
                 <Button
                   variant="contained"
-                  sx={{ background: "#FF9E43" }}
+                  color="warning"
                   onClick={handleClose}
                 >
                   Hủy

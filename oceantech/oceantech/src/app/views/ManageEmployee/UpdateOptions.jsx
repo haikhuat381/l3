@@ -75,7 +75,7 @@ function UpdateOptions({ EmployeeId }) {
   };
 
   const handleClose = (panel) => {
-    console.log("run", panel);
+    // console.log("run", panel);
     const newExpanded = { ...expanded };
     newExpanded[panel] = false;
     setExpanded(newExpanded);

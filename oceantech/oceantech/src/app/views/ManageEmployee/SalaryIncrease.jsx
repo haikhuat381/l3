@@ -49,11 +49,11 @@ function SalaryIncrease(props) {
   const handleAllGet = async () => {
     handleGetSalary();
     handleGetSalary();
-    console.log("a");
+    // console.log("a");
   };
   const handleGetSalary = async () => {
     dispatch(getSalaryIncreaseHistoryAction(ID));
-    console.log("b");
+    // console.log("b");
   };
   const handleRemoveSalary = async () => {
     dispatch(deleteSalaryIncreaseAction(deleteSalary?.salaryId));
@@ -96,7 +96,7 @@ function SalaryIncrease(props) {
     onSubmit: async (values, { resetForm }) => {
       setSalaryDialog(values);
 
-      console.log(" them luong ", updateSalary);
+      // console.log(" them luong ", updateSalary);
       if (!updateSalary?.employeeId) {
         dispatch(addSalaryIncreaseAction(ID, values));
         handleAllGet();
@@ -138,10 +138,10 @@ function SalaryIncrease(props) {
                       ...rowData.refuseInfo,
                       status: "Từ chối",
                     });
-                    console.log("hai");
-                    console.log({ ...rowData.refuseInfo, status: "Từ chối" });
+                    // console.log("hai");
+                    // console.log({ ...rowData.refuseInfo, status: "Từ chối" });
                   }
-                  console.log("ROW DATA:", rowData);
+                  // console.log("ROW DATA:", rowData);
                   setShouldOpenRequestDialog(true);
                 }}
               >
@@ -294,7 +294,7 @@ function SalaryIncrease(props) {
               <Grid item>
                 <Button
                   variant="contained"
-                  sx={{ background: "#FF9E43" }}
+                  color="warning"
                   onClick={() => formik.resetForm()}
                 >
                   Hủy

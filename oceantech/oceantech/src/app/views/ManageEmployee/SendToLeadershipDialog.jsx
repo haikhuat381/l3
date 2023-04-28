@@ -44,7 +44,7 @@ function SendToLeadershipDialog(props) {
       registerDate: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: async (values) => {
-      console.log("sdhasjdhas", values);
+      // console.log("sdhasjdhas", values);
       values.registerPosition = position;
       values.status = 8;
       dispatch(addRegistAction(employeeId, values));
