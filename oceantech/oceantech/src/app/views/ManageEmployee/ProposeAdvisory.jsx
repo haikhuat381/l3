@@ -9,39 +9,74 @@ import {
   IconButton,
 } from "@mui/material";
 import MaterialTable from "@material-table/core";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateEmployee } from "app/redux/actions/actions";
+import {
+  getProposalConsultationAction,
+  addProposalConsult,
+  updateProposalConsult,
+  deleteProposalConsult,
+} from "app/redux/actions/actions";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import ProposeAdvisoryDialog from "./ProposeAdvisoryDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-
+import moment from "moment";
+import { async } from "regenerator-runtime";
 function ProposeAdvisory(props) {
-  const { handleClose } = props;
+  const { handleClose, ID } = props;
   const dispatch = useDispatch();
+  const listPropose = useSelector(
+    (state) => state.Employee.proposalConsulHistory
+  );
+  const reloadProposal = useRef();
+  const [deleteProposal, setDeleteProposal] = useState({});
+  const [updateProposal, setUpdateProposal] = useState({});
+  const [idProposal, SetIdProposal] = useState();
+  const [shouldOpenDeleteDialog, setshouldOpenDeleteDialog] = useState(false);
+  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
+  const [proposeDataDialog, setProposeDataDialog] = useState({});
+  const handleReloadPro = async (values) => {
+    console.log(" lam moi lai bang  ", values);
+    reloadProposal.current(values);
+  };
+  useEffect(() => {
+    handleGetPropose();
+  }, [ID]);
+  useEffect(() => {
+    handleAllGet();
+  }, [reloadProposal.current]);
+  const handleAllGet = async () => {
+    handleGetPropose();
+    handleGetPropose();
+  };
+  const handleGetPropose = async () => {
+    dispatch(getProposalConsultationAction(ID));
+  };
+  const handleEditPropose = (rowData) => {
+    setUpdateProposal(rowData);
+    formik.setValues({
+      type: rowData?.type,
+      content: rowData?.content,
+      note: rowData?.note,
+      date: moment(rowData?.date).format("YYYY-MM-DD"),
+    });
+  };
+
+  const handleRemovePropose = () => {
+    dispatch(deleteProposalConsult(deleteProposal?.proposalConsultationId));
+    handleAllGet();
+    setshouldOpenDeleteDialog(false);
+  };
+  // api
 
   const employee = useSelector((state) => state.Employee.employeeData);
-  const [employeeData, setEmployee] = useState(employee);
-  const [proposeData, setProposeData] = useState({});
-
-  const [proposeDataDialog, setProposeDataDialog] = useState({});
-  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
 
   const [rowDataInfo, setRowDataInfo] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
-
-  const [
-    shouldOpenConfirmationDeleteDialog,
-    setshouldOpenConfirmationDeleteDialog,
-  ] = useState(false);
-
-  useEffect(() => {
-    setEmployee(employee);
-  }, [employee]);
 
   const formik = useFormik({
     initialValues: {
@@ -58,67 +93,22 @@ function ProposeAdvisory(props) {
     }),
     onSubmit: (values, { resetForm }) => {
       setProposeDataDialog(values);
-      setShouldOpenDialog(true);
-
-      if (!values.id) {
-        console.log("them");
-        values.id = uuidv4();
-        setEmployee({
-          ...employeeData,
-          listPropose: [
-            ...employeeData.listPropose,
-            { ...values, status: "Lưu mới" },
-          ],
-        });
-        const dataUpdate = {
-          ...employeeData,
-          listPropose: [
-            ...employeeData.listPropose,
-            { ...values, status: "Lưu mới" },
-          ],
-        };
-        console.log("hai");
-        console.log(dataUpdate);
-        dispatch(updateEmployee(dataUpdate));
-        toast.success("Thêm thành công");
+      if (!updateProposal?.employeeId) {
+        dispatch(addProposalConsult(ID, values));
+        handleAllGet();
       } else {
-        console.log("sua");
-        // const newListFilter = listPromote.filter((Promote) => Promote.id != values.id);
-        // setEmployee([...newListFilter, values]);
+        SetIdProposal(updateProposal?.proposalConsultationId);
 
-        employeeData.listPropose = employeeData.listPropose.filter(
-          (propose) => propose.id !== values.id
+        dispatch(
+          updateProposalConsult(updateProposal?.proposalConsultationId, values)
         );
-        console.log(employeeData);
-        employeeData.listPropose.push({ ...values, status: "Lưu mới" });
-        dispatch(updateEmployee(employeeData));
-        toast.success("Sửa thành công");
+        setUpdateProposal({});
+        handleAllGet();
       }
-
+      setShouldOpenDialog(true);
       resetForm();
     },
   });
-
-  // const [listPropose, setListPropose] = useState([]);
-
-  const handleEditPropose = (rowData) => {
-    formik.setValues(rowData);
-  };
-
-  const handleRemovePropose = (rowData) => {
-    // const newListFilter = listPropose.filter((Propose) => Propose.id != rowData.id);
-    // // setListPropose([...newListFilter]);
-    // toast.success("Xóa thành công");
-    // employeeData.listPropose = employeeData.listPropose.filter((propose) => propose.id !== values.id);
-    employeeData.listPropose = employeeData.listPropose.filter(
-      (propose) => propose.id !== proposeData.id
-    );
-    console.log(employeeData);
-    setEmployee(employeeData);
-    dispatch(updateEmployee(employeeData));
-    setshouldOpenConfirmationDeleteDialog(false);
-    toast.success("Xóa thành công");
-  };
 
   const handleSave = () => {
     toast.success("Lưu thành công");
@@ -138,17 +128,13 @@ function ProposeAdvisory(props) {
                     : true
                 }
                 onClick={() => {
-                  // dispatch(getEmployeeData(rowData));
-                  // setIdRowDataInfo(rowData.id)
                   if (rowData.additionalRequest) {
-                    // setRowDataInfo(rowData.additionalRequest?.content)
                     setRowDataInfo({
                       ...rowData.additionalRequest,
                       status: "Yêu cầu bổ sung",
                     });
                   }
                   if (rowData.refuseInfo) {
-                    // setRowDataInfo(rowData.refuseInfo?.content)
                     setRowDataInfo({
                       ...rowData.refuseInfo,
                       status: "Từ chối",
@@ -187,25 +173,13 @@ function ProposeAdvisory(props) {
                 color="error"
                 onClick={() => {
                   // handleRemovePropose(rowData);
-                  setshouldOpenConfirmationDeleteDialog(true);
-                  setProposeData(rowData);
+                  setshouldOpenDeleteDialog(true);
+                  setDeleteProposal(rowData);
                 }}
               >
                 <Icon>delete</Icon>
               </IconButton>
             </Tooltip>
-            {/* <Tooltip title="Lưu">
-              <IconButton
-                color="primary"
-                onClick={() => {
-                  // setPromoteDataDialog({ ...employeeData, "listPromote": [rowData] })
-                  setProposeDataDialog(rowData)
-                  setShouldOpenDialog(true)
-                }}
-              >
-                <Icon>save</Icon>
-              </IconButton>
-            </Tooltip> */}
           </>
         );
       },
@@ -213,17 +187,20 @@ function ProposeAdvisory(props) {
 
     { title: "Loại", field: "type" },
     { title: "Nội dung", field: "content" },
-    { title: "Ngày", field: "date" },
+    {
+      title: "Ngày",
+      field: "date",
+      render: (rowdata) => moment(rowdata?.date).format("DD/MM/YYYY"),
+    },
     { title: "Ghi chú", field: "note" },
-    { title: "Trạng thái", field: "status" },
   ];
 
   return (
     <>
-      {shouldOpenConfirmationDeleteDialog && (
+      {shouldOpenDeleteDialog && (
         <ConfirmDialog
           onConfirmDialogClose={() => {
-            setshouldOpenConfirmationDeleteDialog(false);
+            setshouldOpenDeleteDialog(false);
           }}
           onYesClick={() => {
             handleRemovePropose();
@@ -248,7 +225,12 @@ function ProposeAdvisory(props) {
                 value={formik.values.date}
                 onChange={formik.handleChange}
                 error={formik.errors.date && formik.touched.date}
-                helperText={formik.errors.date}
+                // helperText={formik.errors.date}
+                helperText={
+                  formik.touched.date && formik.errors.date ? (
+                    <div>{formik.errors.date}</div>
+                  ) : null
+                }
               />
             </Grid>
             <Grid item xs={6}>
@@ -260,7 +242,12 @@ function ProposeAdvisory(props) {
                 value={formik.values.type}
                 onChange={formik.handleChange}
                 error={formik.errors.type && formik.touched.type}
-                helperText={formik.errors.type}
+                // helperText={formik.errors.type}
+                helperText={
+                  formik.touched.type && formik.errors.type ? (
+                    <div>{formik.errors.type}</div>
+                  ) : null
+                }
               />
             </Grid>
           </Grid>
@@ -274,7 +261,12 @@ function ProposeAdvisory(props) {
                 value={formik.values.content}
                 onChange={formik.handleChange}
                 error={formik.errors.content && formik.touched.content}
-                helperText={formik.errors.content}
+                // helperText={formik.errors.content}
+                helperText={
+                  formik.touched.content && formik.errors.content ? (
+                    <div>{formik.errors.content}</div>
+                  ) : null
+                }
               />
             </Grid>
             <Grid item xs={3}>
@@ -286,7 +278,12 @@ function ProposeAdvisory(props) {
                 value={formik.values.note}
                 onChange={formik.handleChange}
                 error={formik.errors.note && formik.touched.note}
-                helperText={formik.errors.note}
+                // helperText={formik.errors.note}
+                helperText={
+                  formik.touched.note && formik.errors.note ? (
+                    <div>{formik.errors.note}</div>
+                  ) : null
+                }
               />
             </Grid>
             <Grid container item xs={3} spacing={1}>
@@ -294,7 +291,7 @@ function ProposeAdvisory(props) {
                 <Button
                   variant="contained"
                   sx={{ background: "#FF9E43" }}
-                  onClick={handleClose}
+                  onClick={() => formik.resetForm()}
                 >
                   Hủy
                 </Button>
@@ -314,8 +311,7 @@ function ProposeAdvisory(props) {
           <Grid item xs={12}>
             <MaterialTable
               title={""}
-              // data={listPropose}
-              data={employeeData?.listPropose}
+              data={listPropose}
               columns={columns}
               options={{
                 pageSize: 5,
@@ -346,7 +342,10 @@ function ProposeAdvisory(props) {
         <ProposeAdvisoryDialog
           proposeDataDialog={proposeDataDialog}
           handleClose={() => setShouldOpenDialog(false)}
+          handleReloadPro={handleReloadPro}
           handleCloseAll={handleClose}
+          idProposal={idProposal}
+          handleAllGet={handleAllGet}
         />
       )}
       {shouldOpenRequestDialog && (

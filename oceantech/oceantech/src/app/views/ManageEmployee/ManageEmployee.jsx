@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useEffect } from "react";
-import {
-  deleteEmployee,
-  getEmployeeData,
-  getListEmployeeRequest,
-  getListLocation,
-  getOtherFeature,
-} from "app/redux/actions/actions";
+
 import { useSelector, useDispatch } from "react-redux";
 import Breadcrumb from "app/components/Breadcrumb";
+import {
+  getListEmployeeAction,
+  getEmployeeDataAction,
+} from "app/redux/actions/actions";
 import MaterialTable from "@material-table/core";
-import { Button, Box, Icon, IconButton, styled, Table, Tooltip } from "@mui/material";
+import moment from "moment";
+import PaginationCustom from "app/components/Pagination/PaginationCustom";
+import {
+  Button,
+  Box,
+  Icon,
+  IconButton,
+  styled,
+  Table,
+  Tooltip,
+} from "@mui/material";
 import ManagerEmployeeDialog from "./ManagerEmployeeDialog";
 import ReleaseDialog from "./ReleaseDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
@@ -26,25 +35,28 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 function ManagerEmployee() {
-  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getListEmployeeRequest());
-    dispatch(getListLocation());
-    dispatch(getOtherFeature());
-  }, []);
-  const [openManagerEmployeeDialog, setOpenManagerEmployeeDialog] = useState(false);
-  const employeeData = useSelector((state) => state.Employee.employeeData);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const reloadRef = useRef();
+  const [shouldDialogManage, setShouldDialogManage] = useState(false);
+  const listEmployee = useSelector((state) => state.Employee.listEmployeeData);
+  const objStatus = useSelector((state) => state?.Employee?.objStatus);
+  const handleChangeReload = (value) => {
+    console.log(" reof", value);
+    reloadRef.current = value;
+  };
 
-  const listEmployee = useSelector((state) => state.Employee.listEmployee).filter((employee) => {
-    return (
-      employee.status === "Đã duyệt" || 
-      (employee.releaseRequest !== undefined && employee.status === "Yêu cầu bổ sung") ||
-      (employee.releaseRequest !== undefined && employee.status === "Từ chối")
-    );
-  });
+  useEffect(() => {
+    dispatch(getListEmployeeAction("5", page, pageSize));
+  }, [page, pageSize, reloadRef.current]);
+
+  const onHandleChange = (page, pageSize) => {
+    setPage(page);
+    setPageSize(pageSize);
+  };
   const handleClose = () => {
-    setShouldOpenDialog(false);
+    setShouldDialogManage(false);
   };
   const columns = [
     {
@@ -53,24 +65,19 @@ function ManagerEmployee() {
         return (
           <>
             <Tooltip title="Thông tin">
-              <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
-                onClick={() => {
-                  dispatch(getEmployeeData(rowData));
-                  setShouldOpenDialog(true);
-                }}
-              >
-                <Icon color={rowData.status === "Đã duyệt" ? "disabled" : "primary"}>report</Icon>
+              <IconButton>
+                <Icon>report</Icon>
               </IconButton>
             </Tooltip>
+
             <Tooltip title="Cập nhật diễn biến">
               <IconButton
                 onClick={() => {
-                  setOpenManagerEmployeeDialog(true);
-                  dispatch(getEmployeeData(rowData));
+                  setShouldDialogManage(true);
+                  dispatch(getEmployeeDataAction(rowData?.employeeId));
                 }}
               >
-                <Icon color="success">visibilityIcon</Icon>
+                <Icon color="primary">edit</Icon>
               </IconButton>
             </Tooltip>
           </>
@@ -78,12 +85,19 @@ function ManagerEmployee() {
       },
     },
     { title: "Họ tên", field: "fullName" },
-    { title: "Vị trí", field: "position" },
+    {
+      title: "Ngày sinh",
+      field: "dateOfBirth",
+      render: (rowdata) => moment(rowdata).format("DD/MM/YYYY"),
+    },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
-    { title: "Trạng thái", field: "status" },
+    {
+      title: "Trạng thái",
+      field: "status",
+      render: (rowdata) => objStatus[rowdata.status],
+    },
   ];
-
   return (
     <Container>
       <ToastContainer
@@ -100,54 +114,38 @@ function ManagerEmployee() {
       />
       <Box className="breadcrumb">
         <Breadcrumb
-          routeSegments={[{ name: "Quản lý", path: "/" }, { name: "Quản lý nhân viên" }]}
+          routeSegments={[
+            { name: "Quản lý", path: "/" },
+            { name: "Quản lý nhân viên" },
+          ]}
         />
       </Box>
+      <MaterialTable
+        columns={columns}
+        data={listEmployee}
+        options={{
+          paging: false,
 
-      <Box width="100%" overflow="auto">
-        <MaterialTable
-          title={""}
-          data={listEmployee}
-          columns={columns}
-          options={{
-            rowStyle: (rowData, index) => {
-              return {
-                backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-              };
-            },
-            maxBodyHeight: "1000px",
-            minBodyHeight: "370px",
-            headerStyle: {
-              backgroundColor: "#222943",
-              color: "#fff",
-            },
-            // padding: 'dense',
-            padding: "default",
-            // search: false,
-            // exportButton: true,0
-            toolbar: true,
-          }}
-        />
-      </Box>
-      {openManagerEmployeeDialog && (
+          rowStyle: (rowData, index) => {
+            return {
+              backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+            };
+          },
+          maxBodyHeight: "1000px",
+          minBodyHeight: "370px",
+          headerStyle: {
+            backgroundColor: "#262e49",
+            color: "#fff",
+          },
+          padding: "default",
+          toolbar: false,
+        }}
+      />
+      <PaginationCustom onHandleChange={onHandleChange} />
+      {shouldDialogManage && (
         <ManagerEmployeeDialog
-          handleClose={() => {
-            setOpenManagerEmployeeDialog(false);
-            // dispatch(getEmployeeData({}));
-            dispatch(getEmployeeData({
-              listDiploma: [],
-              listRelationship: [],
-              // listPromote:[],
-            }));
-          }}
-        />
-      )}
-      {shouldOpenDialog && (
-        <MoreInfoDialog
           handleClose={handleClose}
-          openEditDialog={() => {
-            setOpenManagerEmployeeDialog(true);
-          }}
+          handleChangeReload={handleChangeReload}
         />
       )}
     </Container>

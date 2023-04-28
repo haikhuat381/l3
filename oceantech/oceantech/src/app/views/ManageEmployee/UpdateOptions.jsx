@@ -31,12 +31,19 @@ import { color } from "echarts";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { addNewEmployee, updateEmployee, getEmployeeData } from "app/redux/actions/actions";
+import {
+  addNewEmployee,
+  updateEmployee,
+  getEmployeeData,
+  getPromoteHistoryAction,
+} from "app/redux/actions/actions";
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { getPromoteHistory } from "./ManageEmployeeServices";
 
-function UpdateOptions(props) {
+function UpdateOptions({ EmployeeId }) {
+  // console.log("ID a ", EmployeeId);
   const dispatch = useDispatch();
 
   const accordion1Ref = useRef(null);
@@ -52,12 +59,14 @@ function UpdateOptions(props) {
       color: "#fff",
     },
   });
+
   const [expanded, setExpanded] = useState({
     panel1: false,
     panel2: false,
     panel3: false,
     panel4: false,
   });
+
   const handleChange = (panel, accordionRef) => (event, isExpanded) => {
     const newExpanded = { ...expanded };
     newExpanded[panel] = isExpanded ? panel : false;
@@ -128,6 +137,7 @@ function UpdateOptions(props) {
                 handleClose={() => {
                   handleClose("panel2");
                 }}
+                ID={EmployeeId}
               />
             </AccordionDetails>
           </Accordion>
@@ -146,10 +156,11 @@ function UpdateOptions(props) {
               <Typography>Thăng chức</Typography>
             </MyAccordionSummary>
             <AccordionDetails>
-              <Promote 
+              <Promote
                 handleClose={() => {
                   handleClose("panel3");
                 }}
+                ID={EmployeeId}
               />
             </AccordionDetails>
           </Accordion>
@@ -172,6 +183,7 @@ function UpdateOptions(props) {
                 handleClose={() => {
                   handleClose("panel4");
                 }}
+                ID={EmployeeId}
               />
             </AccordionDetails>
           </Accordion>

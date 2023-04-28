@@ -1,122 +1,110 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { TextField, Grid, Button, Icon, Tooltip, IconButton } from "@mui/material";
+import {
+  TextField,
+  Grid,
+  Button,
+  Icon,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
 import MaterialTable from "@material-table/core";
 import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import { updateEmployee, getEmployeeData } from "app/redux/actions/actions";
-import { use } from "echarts";
+import {
+  updatePromoteHistoryAction,
+  getPromoteHistoryAction,
+  deletePromoteHistoryAction,
+  addPromoteHistoryAction,
+} from "app/redux/actions/actions";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import PromoteDialog from "./PromoteDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 
-
-
+import moment from "moment";
+import { async } from "regenerator-runtime";
 function Promote(props) {
-  const { handleClose } = props;
-
+  const { handleClose, ID } = props;
   const dispatch = useDispatch();
-
-  // const [listPromote, setListPromote] = useState([]);
-  const employee = useSelector((state) => state.Employee.employeeData);
-  const [employeeData, setEmployee] = useState(employee);
-
+  const reloadPro = useRef();
+  const promoteData = useSelector((state) => state.Employee.listPromoteHistory);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-
+  const [employeeDelete, setEmployeeDelete] = useState({});
+  const [updatePromote, setUpdatePromote] = useState({});
+  const [idPromoteDialog, setIdPromoteDialog] = useState();
+  const [shouldOpenDeleteDialog, setshouldOpenDeleteDialog] = useState(false);
+  const [promoteDataDialog, setPromoteDataDialog] = useState({});
   const [rowDataInfo, setRowDataInfo] = useState();
   const [rowData, setRowData] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
-
-  const [promoteDataDialog, setPromoteDataDialog] = useState({});
-
-
-  const [promoteData, setPromoteData] = useState({});
-  const [shouldOpenConfirmationDeleteDialog, setshouldOpenConfirmationDeleteDialog] =
-    useState(false);
-  // console.log("cach" , employee)
-  // console.log(employeeData)
-
   useEffect(() => {
-    setEmployee(employee)
-  }, [employee])
+    handleGetPromote();
+  }, [ID]);
+  const handleReloadPro = async (values) => {
+    reloadPro.current(values);
+  };
+  useEffect(() => {
+    handleAllGet();
+  }, [reloadPro.current]);
+  const handleAllGet = async () => {
+    handleGetPromote();
+    handleGetPromote();
+  };
+  const handleGetPromote = async () => {
+    dispatch(getPromoteHistoryAction(ID));
+  };
 
-  console.log("employeeData")
-  console.log(employeeData)
+  const handleDeletePromote = () => {
+    dispatch(deletePromoteHistoryAction(employeeDelete?.promotionId));
 
+    handleAllGet();
+    setshouldOpenDeleteDialog(false);
+  };
   const handleEditPromote = (rowData) => {
-    formik.setValues(rowData);
+    setUpdatePromote(rowData);
+    formik.setValues({
+      reason: rowData?.reason,
+      note: rowData?.note,
+      newPosition: rowData?.newPosition,
+      date: moment(rowData?.date).format("YYYY-MM-DD"),
+    });
   };
 
-  const handleRemovePromote = (rowData) => {
-    // const newListFilter = listPromote.filter((Promote) => Promote.id != rowData.id);
-    // setListPromote([...newListFilter]);
-    console.log(rowData);
-    console.log(employeeData.listPromote);
-    // employeeData.listPromote = employeeData.listPromote.filter((promote) => promote.id !== values.id);
-    employeeData.listPromote = employeeData.listPromote.filter((promote) => promote.id !== promoteData.id);
-    console.log(employeeData);
-    setEmployee(employeeData)
-    dispatch(updateEmployee(employeeData))
-    setshouldOpenConfirmationDeleteDialog(false)
-    toast.success("Xóa thành công");
-  };
-
-  const handleSavePromote = () => {
-    setShouldOpenDialog(true)
-    // toast.success("Thêm thành công");
-  };
+  // fake-api
 
   const formik = useFormik({
     initialValues: {
-      reason: "",
-      time: "",
-      note: "",
-      date: "",
-      oldPosition: "",
-      currentPosition: "",
+      reason: updatePromote?.reason || "",
+      note: updatePromote?.note || "",
+      date: updatePromote?.date
+        ? moment(updatePromote?.date).format("YYYY-MM-DD")
+        : "",
+      newPosition: updatePromote?.newPosition || "",
     },
     validationSchema: Yup.object({
       reason: Yup.string().required("Không được bỏ trống"),
       note: Yup.string().required("Không được bỏ trống"),
-      time: Yup.string().required("Không được bỏ trống"),
-      oldPosition: Yup.string().required("Không được bỏ trống"),
-      currentPosition: Yup.string().required("Không được bỏ trống"),
+      newPosition: Yup.string().required("Không được bỏ trống"),
       date: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: (values, { resetForm }) => {
-      // setPromoteDataDialog({ ...employeeData, "listPromote": [...employeeData.listPromote, values] })
-      // values.status = "Chờ duyệt"
-      setPromoteDataDialog(values)
-      setShouldOpenDialog(true)
+      setPromoteDataDialog(values);
 
-      console.log("employee truoc khi sua,", employeeData);
-      if (!values.id) {
-
-        console.log("them");
-        values.id = uuidv4();
-
-        // setListPromote([...listPromote, values]);
-        setEmployee({ ...employeeData, "listPromote": [...employeeData.listPromote, { ...values, status: "Lưu mới" }] });
-        const dataUpdate = { ...employeeData, "listPromote": [...employeeData.listPromote, { ...values, status: "Lưu mới" }] }
-        // console.log(values)
-        console.log("hai")
-        console.log(employeeData)
-        dispatch(updateEmployee(dataUpdate))
-        toast.success("Thêm thành công");
+      if (!updatePromote?.employeeId) {
+        dispatch(addPromoteHistoryAction(ID, values));
+        handleAllGet();
       } else {
-        console.log("sua");
-        // const newListFilter = listPromote.filter((Promote) => Promote.id != values.id);
-        // setEmployee([...newListFilter, values]);
-
-        employeeData.listPromote = employeeData.listPromote.filter((promote) => promote.id !== values.id);
-        console.log(employeeData)
-        employeeData.listPromote.push({ ...values, status: "Lưu mới" });
-        dispatch(updateEmployee(employeeData))
-        toast.success("Sửa thành công");
+        setIdPromoteDialog(updatePromote?.promotionId);
+        dispatch(
+          updatePromoteHistoryAction(updatePromote?.promotionId, values)
+        );
+        handleAllGet();
+        setUpdatePromote({});
       }
+      setShouldOpenDialog(true);
       resetForm();
     },
   });
@@ -129,29 +117,38 @@ function Promote(props) {
           <>
             <Tooltip title="Thông tin">
               <IconButton
-                disabled={(rowData.additionalRequest || rowData.refuseInfo) && rowData.status !== "Lưu mới" ? false : true}
+                disabled={
+                  (rowData.additionalRequest || rowData.refuseInfo) &&
+                  rowData.status !== "Lưu mới"
+                    ? false
+                    : true
+                }
                 onClick={() => {
-                  // dispatch(getEmployeeData(rowData));
-                  // setIdRowDataInfo(rowData.id)
-                  console.log(rowData)
                   if (rowData.additionalRequest) {
-                    // setRowDataInfo(rowData.additionalRequest?.content)
-                    setRowDataInfo({ ...rowData.additionalRequest, status: "Yêu cầu bổ sung" })
-
+                    setRowDataInfo({
+                      ...rowData.additionalRequest,
+                      status: "Yêu cầu bổ sung",
+                    });
                   }
                   if (rowData.refuseInfo) {
-                    // setRowDataInfo(rowData.refuseInfo?.content)
-                    setRowDataInfo({ ...rowData.refuseInfo, status: "Từ chối" })
-                    console.log("hai")
-                    console.log({ ...rowData.refuseInfo, status: "Từ chối" })
-
+                    setRowDataInfo({
+                      ...rowData.refuseInfo,
+                      status: "Từ chối",
+                    });
+                    // console.log("hai");
+                    // console.log({ ...rowData.refuseInfo, status: "Từ chối" });
                   }
-                  setRowData(rowData)
+                  setRowData(rowData);
                   setShouldOpenRequestDialog(true);
                 }}
               >
                 <Icon
-                  color={(rowData.additionalRequest || rowData.refuseInfo) && rowData.status !== "Lưu mới" ? "primary" : "disabled"}
+                  color={
+                    (rowData.additionalRequest || rowData.refuseInfo) &&
+                    rowData.status !== "Lưu mới"
+                      ? "primary"
+                      : "disabled"
+                  }
                 >
                   report
                 </Icon>
@@ -173,49 +170,38 @@ function Promote(props) {
                 disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="error"
                 onClick={() => {
-                  setshouldOpenConfirmationDeleteDialog(true);
-                  setPromoteData(rowData)
-                  // handleChangePromote(rowData);
-                  // handleRemovePromote(rowData);
+                  setshouldOpenDeleteDialog(true);
+                  setEmployeeDelete(rowData);
                 }}
               >
                 <Icon>delete</Icon>
               </IconButton>
             </Tooltip>
-            {/* <Tooltip title="Lưu">
-              <IconButton
-                color="primary"
-                onClick={() => {
-                  // setPromoteDataDialog({ ...employeeData, "listPromote": [rowData] })
-                  setPromoteDataDialog(rowData)
-                  setShouldOpenDialog(true)
-                }}
-              >
-                <Icon>save</Icon>
-              </IconButton>
-            </Tooltip> */}
           </>
         );
       },
     },
 
-    { title: "Chức vụ cũ", field: "oldPosition" },
-    { title: "Chực vụ hiện tại", field: "currentPosition" },
+    { title: "Chực vụ hiện tại", field: "newPosition" },
     { title: "Lý do", field: "reason" },
 
-    { title: "Ngày", field: "date" },
+    {
+      title: "Ngày",
+      field: "date",
+      render: (rowdata) => moment(rowdata?.date).format("DD-MM-YYYY"),
+    },
     { title: "Ghi chú", field: "note" },
-    { title: "Trạng thái", field: "status" },
+    { title: "Số lần", field: "count" },
   ];
   return (
     <>
-      {shouldOpenConfirmationDeleteDialog && (
+      {shouldOpenDeleteDialog && (
         <ConfirmDialog
           onConfirmDialogClose={() => {
-            setshouldOpenConfirmationDeleteDialog(false);
+            setshouldOpenDeleteDialog(false);
           }}
           onYesClick={() => {
-            handleRemovePromote()
+            handleDeletePromote();
           }}
           title="Xóa thăng chức"
         />
@@ -224,7 +210,7 @@ function Promote(props) {
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} pt={1}>
           <Grid container item xs={12} spacing={2}>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <TextField
                 size="small"
                 label="Ngày tăng chức"
@@ -234,63 +220,35 @@ function Promote(props) {
                   shrink: true,
                 }}
                 name="date"
-                value={formik.values.date}
+                value={formik?.values?.date}
                 onChange={formik.handleChange}
                 error={formik.errors.date && formik.touched.date}
-                helperText={formik.errors.date}
+                // helperText={formik.errors.date}
+                helperText={
+                  formik.touched.date && formik.errors.date ? (
+                    <div>{formik.errors.date}</div>
+                  ) : null
+                }
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <TextField
                 size="small"
                 fullWidth
-                label="Lần thứ"
-                name="time"
-                value={formik.values.time}
+                label="Chức vụ mới"
+                name="newPosition"
+                value={formik.values.newPosition}
                 onChange={formik.handleChange}
-                error={formik.errors.time && formik.touched.time}
-                helperText={formik.errors.time}
+                error={formik.errors.newPosition && formik.touched.newPosition}
+                // helperText={formik.errors.newPosition}
+                helperText={
+                  formik.touched.newPosition && formik.errors.newPosition ? (
+                    <div>{formik.errors.newPosition}</div>
+                  ) : null
+                }
               />
             </Grid>
-            <Grid item xs={3}>
-              <TextField
-                size="small"
-                fullWidth
-                label="Chức vụ cũ"
-                name="oldPosition"
-                value={formik.values.oldPosition}
-                onChange={formik.handleChange}
-                error={formik.errors.oldPosition && formik.touched.oldPosition}
-                helperText={formik.errors.oldPosition}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextField
-                size="small"
-                fullWidth
-                label="Chức vụ hiện tại"
-                name="currentPosition"
-                value={formik.values.currentPosition}
-                onChange={formik.handleChange}
-                error={formik.errors.currentPosition && formik.touched.currentPosition}
-                helperText={formik.errors.currentPosition}
-              />
-            </Grid>
-          </Grid>
-          <Grid container item xs={12} spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                size="small"
-                fullWidth
-                label="Lý do"
-                name="reason"
-                value={formik.values.reason}
-                onChange={formik.handleChange}
-                error={formik.errors.reason && formik.touched.reason}
-                helperText={formik.errors.reason}
-              />
-            </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <TextField
                 size="small"
                 fullWidth
@@ -299,12 +257,41 @@ function Promote(props) {
                 value={formik.values.note}
                 onChange={formik.handleChange}
                 error={formik.errors.note && formik.touched.note}
-                helperText={formik.errors.note}
+                // helperText={formik.errors.note}
+                helperText={
+                  formik.touched.note && formik.errors.note ? (
+                    <div>{formik.errors.note}</div>
+                  ) : null
+                }
               />
             </Grid>
+          </Grid>
+          <Grid container item xs={12} spacing={2}>
+            <Grid item xs={8}>
+              <TextField
+                size="small"
+                fullWidth
+                label="Lý do"
+                name="reason"
+                value={formik.values.reason}
+                onChange={formik.handleChange}
+                error={formik.errors.reason && formik.touched.reason}
+                // helperText={formik.errors.reason}
+                helperText={
+                  formik.touched.reason && formik.errors.reason ? (
+                    <div>{formik.errors.reason}</div>
+                  ) : null
+                }
+              />
+            </Grid>
+
             <Grid container item xs={3} spacing={1}>
               <Grid item>
-                <Button variant="contained" sx={{ background: "#FF9E43" }} onClick={() => { handleClose() }}>
+                <Button
+                  variant="contained"
+                  sx={{ background: "#FF9E43" }}
+                  onClick={() => formik.resetForm()}
+                >
                   Hủy
                 </Button>
               </Grid>
@@ -313,18 +300,13 @@ function Promote(props) {
                   Lưu
                 </Button>
               </Grid>
-              {/* <Grid item>
-                <Button variant="contained" color="primary" onClick={handleSavePromote}>
-                  Lưu
-                </Button>
-              </Grid> */}
             </Grid>
           </Grid>
           <Grid item xs={12}>
             <MaterialTable
               title={""}
               // data={listPromote}
-              data={employeeData?.listPromote || employeeData?.status}
+              data={promoteData}
               columns={columns}
               options={{
                 pageSize: 5,
@@ -340,10 +322,9 @@ function Promote(props) {
                   backgroundColor: "#262e49",
                   color: "#fff",
                 },
-                // padding: 'dense',
+
                 padding: "default",
-                // search: false,
-                // exportButton: true,
+
                 toolbar: false,
               }}
             />
@@ -354,8 +335,12 @@ function Promote(props) {
       {shouldOpenDialog && (
         <PromoteDialog
           promoteDataDialog={promoteDataDialog}
+          handleReloadPro={handleReloadPro}
           handleClose={() => setShouldOpenDialog(false)}
           handleCloseAll={handleClose}
+          status={false}
+          idPromoteDialog={idPromoteDialog}
+          handleAllGet={handleAllGet}
         />
       )}
 
@@ -363,20 +348,16 @@ function Promote(props) {
         <MoreInfoDialog
           rowDataInfo={rowDataInfo}
           rowData={rowData}
-
           handleClose={() => {
             setShouldOpenRequestDialog(false);
           }}
           handleEditPromote={handleEditPromote}
           openEditDialog={() => {
-            // setShouldOpenDialog(true);
-            setShouldOpenRequestDialog(false)
-            handleEditPromote(rowData)
-            // handleEditPromote()
+            setShouldOpenRequestDialog(false);
+            handleEditPromote(rowData);
           }}
         />
       )}
-
     </>
   );
 }

@@ -2,37 +2,37 @@ import { ActionTypes } from "../actions/actionTypes";
 
 const initialState = {
   objStatus: {
-    "1": "Lưu mới",
+    1: "Lưu mới",
     // "2": "Chờ xử lý",
-    "3": "Chờ xử lý",
-    "4": "Yêu cầu bổ sung",
-    "5": "Đã duyệt",
-    "6": "Đã từ chối",
-    "8": "Chờ duyệt kết thúc",
-    "9": "Yêu cầu bổ sung đối với kết thúc",
-    "10": "Đã duyệt kết thúc",
-    "11": "Đã từ chối kết thúc",
-    "13": "Đã lưu hồ sơ",
-    "14": "Đã xóa",
-    "15": "Lưu mới",
-    "16": "Chờ duyệt",
-    "17": "Yêu cầu bổ sung",
-    "18": "Đã duyệt",
-    "19": "Đã từ chối",
+    3: "Chờ xử lý",
+    4: "Yêu cầu bổ sung",
+    5: "Đã duyệt",
+    6: "Đã từ chối",
+    8: "Chờ duyệt kết thúc",
+    9: "Yêu cầu bổ sung đối với kết thúc",
+    10: "Đã duyệt kết thúc",
+    11: "Đã từ chối kết thúc",
+    13: "Đã lưu hồ sơ",
+    14: "Đã xóa",
+    15: "Lưu mới",
+    16: "Chờ duyệt",
+    17: "Yêu cầu bổ sung",
+    18: "Đã duyệt",
+    19: "Đã từ chối",
   },
-  otherFeature:[
+  otherFeature: [
     {
-      "id": 1,
-      "name": "Back-End"
+      id: 1,
+      name: "Back-End",
     },
     {
-      "id": 2,
-      "name": "Front-End"
+      id: 2,
+      name: "Front-End",
     },
     {
-      "id": 3,
-      "name": "Design"
-    }
+      id: 3,
+      name: "Design",
+    },
   ],
   Gender: [
     {
@@ -42,32 +42,35 @@ const initialState = {
     {
       value: "1",
       gender: "Nữ",
-    }
+    },
   ],
   leader: [
     {
       name: "Nguyen Giam Doc",
-      position: "Giám Đốc"
+      position: "Giám Đốc",
     },
     {
       name: "Nguyen Truong Phong",
-      position: "Trưởng phòng"
+      position: "Trưởng phòng",
     },
     {
       name: "Nguyen Quan Li",
-      position: "Quản lí"
-    }
+      position: "Quản lí",
+    },
   ],
   total: null,
   listEmployeeData: [],
   employeeData: {},
-  formData:{},
-  regist:{}
+  formData: {},
+  regist: {},
+  //
+  listPromoteHistory: [],
+  salaryIncreaseHistory: [],
+  proposalConsulHistory: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    
     case ActionTypes.GET_TOTAL_SUCCESS: {
       return { ...state, total: action.payload };
     }
@@ -95,10 +98,25 @@ export default (state = initialState, action) => {
     case ActionTypes.GET_FORM_DATA_SUCCESS: {
       return { ...state, formData: action.payload };
     }
+    //
 
+    case ActionTypes.GET_PROMOTE_HISTORY_DATA_SUCCESS: {
+      // console.log("proto histoey : ", action.payload);
+      return { ...state, listPromoteHistory: action.payload };
+    }
 
-
-
+    case ActionTypes.RESET_EMPLOYEE_DATA_SUCCESS: {
+      return { ...state, employeeData: action.payload };
+    }
+    case ActionTypes.GET_SALARY_INCREASE_HISTORY_SUCCESS: {
+      return { ...state, salaryIncreaseHistory: action.payload };
+    }
+    case ActionTypes.GET_PROPOSAL_CONSULTATION_SUCCESS: {
+      return {
+        ...state,
+        proposalConsulHistory: action.payload,
+      };
+    }
     default:
       return state;
   }

@@ -1,81 +1,117 @@
-import React from "react";
-import { TextField, Grid, Button, Icon, Tooltip, IconButton } from "@mui/material";
+import React, { useEffect } from "react";
+import {
+  TextField,
+  Grid,
+  Button,
+  Icon,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import MaterialTable from "@material-table/core";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { ToastContainer, toast } from "react-toastify";
+
 import SalaryIncreaseDialog from "./SalaryIncreaseDialog";
-import { updateEmployee, getEmployeeData } from "app/redux/actions/actions";
+import {
+  getSalaryIncreaseHistoryAction,
+  addSalaryIncreaseAction,
+  deleteSalaryIncreaseAction,
+  updateSalaryIncreaseAction,
+} from "app/redux/actions/actions";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-
+import moment from "moment";
+import { async } from "regenerator-runtime";
 function SalaryIncrease(props) {
-  const employee = useSelector((state) => state.Employee.employeeData);
-  const [shouldOpenSalaryIncreaseDialog, setShouldOpenSalaryIncreaseDialog] = useState(false);
-  const [dataIncrease, setDataIncrease] = useState({})
-  const [employeeData, setEmployee] = useState(employee);
-  const [listIncrease, setListIncrease] = useState({})
+  const { handleClose, ID } = props;
   const dispatch = useDispatch();
-  const [shouldOpenConfirmationDeleteDialog, setShouldOpenConfirmationDeleteDialog] = useState(false)
-  const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
-  const [rowDataInfo, setRowDataInfo] = useState()
 
+  const listSalarydata = useSelector(
+    (state) => state.Employee.salaryIncreaseHistory
+  );
+  const [salaryDialog, setSalaryDialog] = useState({});
+  const [deleteSalary, setDeleteSalary] = useState({});
+  const [updateSalary, setUpdateSalary] = useState({});
+  const [iDSalary, setIdSalary] = useState({});
+
+  const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
+  const [rowDataInfo, setRowDataInfo] = useState();
+  const [shouldOpenDeleteDialog, setshouldOpenDeleteDialog] = useState(false);
+  const [shouldOpenSalaryIncreaseDialog, setShouldOpenSalaryIncreaseDialog] =
+    useState(false);
+  useEffect(() => {
+    handleGetSalary();
+  }, [ID]);
+
+  const handleAllGet = async () => {
+    handleGetSalary();
+    handleGetSalary();
+    console.log("a");
+  };
+  const handleGetSalary = async () => {
+    dispatch(getSalaryIncreaseHistoryAction(ID));
+    console.log("b");
+  };
+  const handleRemoveSalary = async () => {
+    dispatch(deleteSalaryIncreaseAction(deleteSalary?.salaryId));
+    handleAllGet();
+
+    setshouldOpenDeleteDialog(false);
+  };
+
+  const handleEditSalary = async (rowData) => {
+    setUpdateSalary(rowData);
+    formik.setValues({
+      salary: rowData?.salary,
+      salaryScale: rowData?.salaryScale,
+      date: moment(rowData?.date).format("YYYY-MM-DD"),
+      reason: rowData?.reason,
+      note: rowData?.note,
+    });
+  };
+  // api
 
   const formik = useFormik({
     initialValues: {
-      time: "",
-      reason: "",
-      rank: "",
-      note: "",
+      salary: "",
+      salaryScale: "",
       date: "",
+      reason: "",
+      note: "",
     },
     validationSchema: Yup.object({
-      reason: Yup.string().required("Không được bỏ trống"),
-      rank: Yup.string().required("Không được bỏ trống"),
-      note: Yup.string().required("Không được bỏ trống"),
-      time: Yup.string().required("Không được bỏ trống"),
+      salary: Yup.number()
+        .typeError("Vui lòng nhập lương")
+        .required("Không được bỏ trống"),
+      salaryScale: Yup.number()
+        .typeError("Vui lòng nhập số lương")
+        .required("Không được bỏ trống"),
       date: Yup.date().required("Vui lòng nhập ngày"),
+      reason: Yup.string().required("Không được bỏ trống"),
+      note: Yup.string().required("Không được bỏ trống"),
     }),
-    onSubmit: (values, { resetForm }) => {
-      delete employeeData.releaseRequest
-      setDataIncrease(values)
-      setShouldOpenSalaryIncreaseDialog(true)
-      if (!values.id) {
-        values.id = uuidv4();
-        setEmployee({ ...employeeData, "listIncreaseSalary": [...employeeData.listIncreaseSalary, { ...values, "status": "Lưu mới" }] })
-        const data = { ...employeeData, "listIncreaseSalary": [...employeeData.listIncreaseSalary, { ...values, "status": "Lưu mới" }] }
-        dispatch(updateEmployee(data))
-        toast.success("Thêm thành công");
+    onSubmit: async (values, { resetForm }) => {
+      setSalaryDialog(values);
+
+      console.log(" them luong ", updateSalary);
+      if (!updateSalary?.employeeId) {
+        dispatch(addSalaryIncreaseAction(ID, values));
+        handleAllGet();
       } else {
-        const newListFilter = employeeData.listIncreaseSalary.filter((Salary) => Salary.id !== values.id);
-        employeeData.listIncreaseSalary = newListFilter
-        employeeData.listIncreaseSalary.push({ ...values, "status": "Lưu mới" })
-        dispatch(updateEmployee(employeeData))
-        toast.success("Sửa thành công");
+        setIdSalary(updateSalary?.salaryId);
+        dispatch(updateSalaryIncreaseAction(updateSalary?.salaryId, values));
+
+        handleAllGet();
+        setUpdateSalary({});
       }
-
-      resetForm()
-    }
+      setShouldOpenSalaryIncreaseDialog(true);
+      resetForm();
+    },
   });
-  const [listSalary, setListSalary] = useState([]);
 
-  const handleEditSalary = (rowData) => {
-    formik.setValues(rowData);
-  };
-  const handleRemoveSalary = (rowData) => {
-    employeeData.listIncreaseSalary = employeeData.listIncreaseSalary.filter((Salary) => Salary.id !== listIncrease.id);
-    setEmployee(employeeData)
-    dispatch(updateEmployee(employeeData))
-    setShouldOpenConfirmationDeleteDialog(false)
-    toast.success("Xóa thành công");
-  };
-  const handleSave = () => {
-
-  };
-  const { handleClose } = props;
   const columns = [
     {
       title: "Hành động",
@@ -84,29 +120,38 @@ function SalaryIncrease(props) {
           <>
             <Tooltip title="Thông tin">
               <IconButton
-                disabled={ rowData.status !=="Lưu mới" && (rowData.additionInfo || rowData.refuseInfo) ? false : true}
+                disabled={
+                  rowData.status !== "Lưu mới" &&
+                  (rowData.additionInfo || rowData.refuseInfo)
+                    ? false
+                    : true
+                }
                 onClick={() => {
-
                   if (rowData.additionInfo) {
-                    // setRowDataInfo(rowData.additionInfo?.content)
-                    setRowDataInfo({ ...rowData.additionInfo, status: "Yêu cầu bổ sung" })
-
+                    setRowDataInfo({
+                      ...rowData.additionInfo,
+                      status: "Yêu cầu bổ sung",
+                    });
                   }
                   if (rowData.refuseInfo) {
-                    // setRowDataInfo(rowData.refuseInfo?.content)
-                    setRowDataInfo({ ...rowData.refuseInfo, status: "Từ chối" })
-                    console.log("hai")
-                    console.log({ ...rowData.refuseInfo, status: "Từ chối" })
-
+                    setRowDataInfo({
+                      ...rowData.refuseInfo,
+                      status: "Từ chối",
+                    });
+                    console.log("hai");
+                    console.log({ ...rowData.refuseInfo, status: "Từ chối" });
                   }
-                  // setRowDataInfo(rowData);
-                  console.log('ROW DATA:', rowData);
+                  console.log("ROW DATA:", rowData);
                   setShouldOpenRequestDialog(true);
-                  
                 }}
               >
                 <Icon
-                  color={rowData.status !=="Lưu mới" &&(rowData.additionInfo || rowData.refuseInfo) ? "primary" : "disabled"}
+                  color={
+                    rowData.status !== "Lưu mới" &&
+                    (rowData.additionInfo || rowData.refuseInfo)
+                      ? "primary"
+                      : "disabled"
+                  }
                 >
                   report
                 </Icon>
@@ -126,8 +171,8 @@ function SalaryIncrease(props) {
               <IconButton
                 color="error"
                 onClick={() => {
-                  setShouldOpenConfirmationDeleteDialog(true)
-                  setListIncrease(rowData)
+                  setshouldOpenDeleteDialog(true);
+                  setDeleteSalary(rowData);
                 }}
               >
                 <Icon>delete</Icon>
@@ -137,16 +182,17 @@ function SalaryIncrease(props) {
         );
       },
     },
-    { title: "Lần", field: "time" },
-    { title: "Bậc", field: "rank" },
+    { title: "Lương", field: "salary" },
+    { title: "Bảng lương", field: "salaryScale" },
+    {
+      title: "Ngày",
+      field: "date",
+      render: (rowdata) => moment(rowdata?.date).format("DD-MM-YYYY"),
+    },
     { title: "Lý do", field: "reason" },
-    { title: "Ngày", field: "date" },
     { title: "Ghi chú", field: "note" },
-    { title: "Trạng thái", field: "status" },
-
   ];
   return (
-
     <>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} pt={1}>
@@ -161,34 +207,51 @@ function SalaryIncrease(props) {
                   shrink: true,
                 }}
                 name="date"
-                value={formik.values.date}
+                value={formik?.values?.date}
                 onChange={formik.handleChange}
-                error={formik.errors.date && formik.touched.date}
-                helperText={formik.errors.date}
+                error={formik?.errors?.date && formik?.touched?.date}
+                // helperText={formik?.errors?.date}
+                helperText={
+                  formik.touched.date && formik.errors.date ? (
+                    <div>{formik.errors.date}</div>
+                  ) : null
+                }
               />
             </Grid>
             <Grid item xs={4}>
               <TextField
                 size="small"
                 fullWidth
-                label="Lần thứ"
-                name="time"
-                value={formik.values.time}
+                label="Bảng lương"
+                name="salaryScale"
+                value={formik?.values?.salaryScale}
                 onChange={formik.handleChange}
-                error={formik.errors.time && formik.touched.time}
-                helperText={formik.errors.time}
+                error={
+                  formik?.errors?.salaryScale && formik?.touched?.salaryScale
+                }
+                // helperText={formik?.errors?.salaryScale}
+                helperText={
+                  formik.touched.salaryScale && formik.errors.salaryScale ? (
+                    <div>{formik.errors.salaryScale}</div>
+                  ) : null
+                }
               />
             </Grid>
             <Grid item xs={3}>
               <TextField
                 size="small"
                 fullWidth
-                label="Bậc"
-                name="rank"
-                value={formik.values.rank}
+                label="Lương"
+                name="salary"
+                value={formik?.values?.salary}
                 onChange={formik.handleChange}
-                error={formik.errors.rank && formik.touched.rank}
-                helperText={formik.errors.rank}
+                error={formik?.errors?.salary && formik?.touched?.salary}
+                // helperText={formik?.errors?.salary}
+                helperText={
+                  formik.touched.salary && formik.errors.salary ? (
+                    <div>{formik.errors.salary}</div>
+                  ) : null
+                }
               />
             </Grid>
           </Grid>
@@ -199,10 +262,15 @@ function SalaryIncrease(props) {
                 fullWidth
                 label="Lý do tăng lương"
                 name="reason"
-                value={formik.values.reason}
+                value={formik?.values?.reason}
                 onChange={formik.handleChange}
-                error={formik.errors.reason && formik.touched.reason}
-                helperText={formik.errors.reason}
+                error={formik?.errors?.reason && formik?.touched?.reason}
+                // helperText={formik?.errors?.reason}
+                helperText={
+                  formik.touched.reason && formik.errors.reason ? (
+                    <div>{formik.errors.reason}</div>
+                  ) : null
+                }
               />
             </Grid>
             <Grid item xs={4}>
@@ -211,20 +279,29 @@ function SalaryIncrease(props) {
                 fullWidth
                 label="Ghi chú"
                 name="note"
-                value={formik.values.note}
+                value={formik?.values?.note}
                 onChange={formik.handleChange}
-                error={formik.errors.note && formik.touched.note}
-                helperText={formik.errors.note}
+                error={formik?.errors?.note && formik?.touched?.note}
+                // helperText={formik?.errors?.note}
+                helperText={
+                  formik.touched.note && formik.errors.note ? (
+                    <div>{formik.errors.note}</div>
+                  ) : null
+                }
               />
             </Grid>
             <Grid container item xs={3} spacing={1}>
               <Grid item>
-                <Button variant="contained" sx={{ background: "#FF9E43" }} onClick={handleClose}>
+                <Button
+                  variant="contained"
+                  sx={{ background: "#FF9E43" }}
+                  onClick={() => formik.resetForm()}
+                >
                   Hủy
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary" type="submit" >
+                <Button variant="contained" color="primary" type="submit">
                   Lưu
                 </Button>
               </Grid>
@@ -237,8 +314,7 @@ function SalaryIncrease(props) {
           </Grid>
           <Grid item xs={12}>
             <MaterialTable
-              title={""}
-              data={employeeData?.listIncreaseSalary}
+              data={listSalarydata}
               columns={columns}
               options={{
                 pageSize: 5,
@@ -266,20 +342,24 @@ function SalaryIncrease(props) {
       </form>
       {shouldOpenSalaryIncreaseDialog && (
         <SalaryIncreaseDialog
-          dataIncrease={dataIncrease}
+          dataIncreaseDialog={salaryDialog}
           handleClose={() => setShouldOpenSalaryIncreaseDialog(false)}
           handleCloseAll={handleClose}
+          iDSalary={iDSalary}
+          handleAllGet={handleAllGet}
         />
       )}
 
-      {shouldOpenConfirmationDeleteDialog && (
+      {shouldOpenDeleteDialog && (
         <ConfirmDialog
-          onConfirmDialogClose={() => setShouldOpenConfirmationDeleteDialog(false)}
-          onYesClick={() => { handleRemoveSalary() }}
+          onConfirmDialogClose={() => setshouldOpenDeleteDialog(false)}
+          onYesClick={() => {
+            handleRemoveSalary();
+          }}
           title="Xóa tăng lương"
         />
       )}
-       {shouldOpenRequestDialog && (
+      {shouldOpenRequestDialog && (
         <MoreInfoDialog
           rowDataInfo={rowDataInfo}
           handleClose={() => {

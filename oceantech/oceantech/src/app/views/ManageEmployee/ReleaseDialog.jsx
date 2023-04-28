@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -15,6 +15,7 @@ import {
   MenuItem,
   TextareaAutosize,
 } from "@mui/material";
+import SendToLeadershipDialog from "./SendToLeadershipDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
@@ -24,40 +25,53 @@ import { Close } from "@mui/icons-material";
 import { updateEmployee } from "app/redux/actions/actions";
 
 function ReleaseDialog(props) {
-  const { handleClose, handleCloseAll, display } = props;
+  const { handleClose, handleCloseAll, handleChangeReload } = props;
+  const [shouldSenToLeader, setShouldSenToLeader] = useState(false);
   const employeeData = useSelector((state) => state.Employee.employeeData);
-  var options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+  const otherFeature = useSelector((state) => state.Employee.otherFeature);
+  var options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  console.log("dâtta", employeeData);
   var today = new Date();
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      reason: employeeData.releaseRequest?.reason || "",
+      terminateRequestDetail: "",
       date: employeeData.releaseRequest?.date || "",
     },
     validationSchema: Yup.object({
-      reason: Yup.string().required("Không được bỏ trống"),
+      terminateRequestDetail: Yup.string().required("Không được bỏ trống"),
       date: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: (values) => {
-      employeeData.releaseRequest = values;
-      employeeData.status = "Chờ duyệt";
-      dispatch(updateEmployee(employeeData));
-      handleCloseAll();
-      toast.success("Gửi lãnh đạo thành công");
+      // employeeData.releaseRequest = values;
+      // employeeData.status = "Chờ duyệt";
+      // dispatch(updateEmployee(employeeData));
+      // handleCloseAll();
+      // toast.success("Gửi lãnh đạo thành công");
     },
   });
   return (
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>
         <DialogTitle
-          sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
         >
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>
         </DialogTitle>
-        <form onSubmit={formik.handleSubmit}>
-          <DialogContent>
+
+        <DialogContent>
+          <form onSubmit={formik.handleSubmit}>
             <Grid
               container
               spacing={2}
@@ -68,18 +82,38 @@ function ReleaseDialog(props) {
             >
               <Grid container>
                 <Grid container item sm={12} xs={12} justifyContent="center">
-                  <Typography variant="h5" textTransform="uppercase">
-                    Cộng hòa xã hội Việt Nam
+                  <Typography
+                    variant="h5"
+                    textTransform="uppercase"
+                    fontFamily={"Times New Roman"}
+                    fontWeight="600"
+                  >
+                    Cộng hòa xã hội chủ nghĩa Việt Nam
                   </Typography>
                 </Grid>
                 <Grid container item sm={12} xs={12} justifyContent="center">
-                  <Typography variant="h6">Độc lập - Tự do - Hạnh phúc</Typography>
+                  <Typography variant="h6">
+                    Độc lập - Tự do - Hạnh phúc
+                  </Typography>
                 </Grid>
                 <Grid container item sm={12} xs={12} justifyContent="center">
                   <Typography>-------------------------------------</Typography>
                 </Grid>
-                <Grid sx={{ pt: 8, pb: 8 }} container item sm={12} xs={12} justifyContent="center">
-                  <Typography variant="h5">ĐƠN XIN NGHỈ VIỆC</Typography>
+                <Grid
+                  sx={{ pt: 8, pb: 8 }}
+                  container
+                  item
+                  sm={12}
+                  xs={12}
+                  justifyContent="center"
+                >
+                  <Typography
+                    variant="h3"
+                    fontWeight={"700"}
+                    fontFamily={"Times New Roman"}
+                  >
+                    ĐƠN XIN NGHỈ VIỆC
+                  </Typography>
                 </Grid>
                 <Grid
                   container
@@ -89,8 +123,14 @@ function ReleaseDialog(props) {
                   className=" container-form"
                   sx={{ pl: 10, pr: 10, pb: 2 }}
                 >
-                  <Grid item sm={12} xs={12}>
-                    <Typography>Kính gửi: Ban giám đốc công ty OceanTech</Typography>
+                  <Grid item sm={12} xs={12} sx={{ pl: 10 }}>
+                    <Typography
+                      variant="h6"
+                      fontWeight="600"
+                      fontFamily={"Times New Roman"}
+                    >
+                      Kính gửi: Ban giám đốc công ty OceanTech
+                    </Typography>
                   </Grid>
                 </Grid>
                 <Grid
@@ -101,16 +141,21 @@ function ReleaseDialog(props) {
                   sx={{ pl: 10, pr: 10, pb: 2 }}
                   justifyContent="flex-start"
                 >
-                  <Grid item sm={1.5} xs={1.5}>
+                  <Grid item sm={2.0} xs={2.0} sx={{ pl: 10 }}>
                     <Typography>Tôi tên là:</Typography>
                   </Grid>
-                  <Grid item sm={10.5} xs={10.5}>
+                  <Grid style={{}} item sm={5.5} xs={5.5}>
                     <TextField
-                      fullWidth
-                      value={employeeData.fullName}
-                      variant="standard"
+                      className="luan"
+                      value={employeeData?.employeeInfo?.fullName}
                       InputProps={{
                         readOnly: true,
+                        style: { padding: 0 },
+                      }}
+                      id="standard-adornment-mount"
+                      fullWidth
+                      sx={{
+                        "& fieldset": { border: "none", padding: 0 },
                       }}
                     />
                   </Grid>
@@ -123,16 +168,23 @@ function ReleaseDialog(props) {
                   sx={{ pl: 10, pr: 10, pb: 2 }}
                   justifyContent="flex-start"
                 >
-                  <Grid item sm={3.5} xs={3.5}>
+                  <Grid item sm={2.6} xs={2.6}>
                     <Typography>Hiện đang công tác tại vị trí:</Typography>
                   </Grid>
-                  <Grid item sm={8.5} xs={8.5}>
+                  <Grid item sm={5.5} xs={8.5}>
                     <TextField
-                      fullWidth
-                      value={employeeData.position}
-                      variant="standard"
+                      className="luan"
+                      value={
+                        otherFeature[employeeData?.employeeInfo?.teamId]?.name
+                      }
                       InputProps={{
                         readOnly: true,
+                        style: { padding: 0 },
+                      }}
+                      id="standard-adornment-mount"
+                      fullWidth
+                      sx={{
+                        "& fieldset": { border: "none", padding: 0 },
                       }}
                     />
                   </Grid>
@@ -145,19 +197,22 @@ function ReleaseDialog(props) {
                   sx={{ pl: 10, pr: 10, mt: 1 }}
                   justifyContent="flex-start"
                 >
-                  <Grid item sm={4} xs={4}>
+                  <Grid item sm={3.4} xs={3.4}>
                     <Typography>Tôi xin được phép nghỉ làm từ ngày:</Typography>
                   </Grid>
-                  <Grid item sm={8} xs={8}>
+                  <Grid item sm={5.5} xs={8}>
                     <TextField
-                      type="date"
+                      className="luan"
+                      InputProps={{
+                        readOnly: true,
+                        style: { padding: 0 },
+                      }}
+                      id="standard-adornment-mount"
                       fullWidth
-                      variant="standard"
-                      name="date"
-                      value={formik.values.date}
-                      onChange={formik.handleChange}
-                      error={formik.errors.date && formik.touched.date}
-                      helperText={formik.errors.date}
+                      sx={{
+                        "& fieldset": { border: "none", padding: 0 },
+                      }}
+                      value={"22/11/2003"}
                     />
                   </Grid>
                 </Grid>
@@ -173,28 +228,38 @@ function ReleaseDialog(props) {
                     <Grid item container>
                       <Grid item xs={12}>
                         <Typography>
-                          Tôi làm đơn này đề nghị ban giám đốc cho tôi xin nghỉ việc vì lí do:
+                          Tôi làm đơn này đề nghị ban giám đốc cho tôi xin nghỉ
+                          việc vì lí do:
                         </Typography>
                       </Grid>
                       <Grid xs={12} item>
                         <TextField
+                          className="luan"
+                          InputProps={{
+                            readOnly: true,
+                            style: { padding: 0 },
+                          }}
+                          id="standard-adornment-mount"
                           fullWidth
-                          multiline
-                          variant="standard"
-                          name="reason"
-                          value={formik.values.reason}
+                          sx={{
+                            "& fieldset": { border: "none", padding: 0 },
+                          }}
+                          value={"Vợ tôi bắt tôi nghỉ việc "}
+                          // value={formik.values.terminateRequestDetail || ""}
                           onChange={formik.handleChange}
-                          error={formik.errors.reason && formik.touched.reason}
-                          helperText={formik.errors.reason}
                         />
                       </Grid>
                     </Grid>
 
                     <Grid item>
                       <Typography lineHeight={2}>
-                        Trong khi chờ đợi sự chấp thuật của Ban Giám đốc Công ty, tôi sẽ tiếp tục
-                        làm việc nghiêm túc và tiến hành bàn giao công việc cũng như tài sản cho
-                        người quản lý trực tiếp của tôi.
+                        Trong quá trình làm việc ở đây, tôi đã học hỏi được rất
+                        nhiều điều từ quản lý cũng như đồng nghiệp. Tôi cảm thấy
+                        thực sự may mắn khi được làm việc trong môi trường hòa
+                        đồng và chuyên nghiệp. Tôi xin chân thành cảm ơn Công ty
+                        đã tin tưởng tôi trong suốt thời gian vừa qua và chúc
+                        cho Công ty chúng ta sẽ đạt được những thành công như
+                        mong muốn.
                       </Typography>
                     </Grid>
                   </Grid>
@@ -229,23 +294,28 @@ function ReleaseDialog(props) {
                   spacing={1}
                 >
                   <Grid item>
-                    <Typography>{`Hà Nội, ${today.toLocaleDateString(
-                      "vi-VN",
-                      options
-                    )}`}</Typography>
-                    {/* <Typography>{`Hà Nội, ngay ${today.getDate()} thang ${today.getMonth() + 1} nam ${today.getFullYear()}`}</Typography> */}
+                    {/* <Typography>{`Hà Nội , 20-11-2002`}</Typography> */}
+                    <Typography>{`Hà Nội, Ngày ${today.getDate()} tháng ${
+                      today.getMonth() + 1
+                    } năm ${today.getFullYear()}`}</Typography>
                   </Grid>
                   <Grid item>
-                    <Typography style={{ fontWeight: "bold" }}>Người làm đơn</Typography>
-                  </Grid>
-                  <Grid item>
-                    {" "}
                     <Typography style={{ fontWeight: "bold" }}>
-                      {employeeData.fullName.split(" ").pop()}
+                      Người làm đơn
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <Typography style={{ fontWeight: "bold" }}>{employeeData.fullName}</Typography>
+                    {" "}
+                    <Typography
+                      style={{ fontWeight: "bold", fontStyle: "italic" }}
+                    >
+                      {employeeData?.employeeInfo?.fullName.split(" ").pop()}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography style={{ fontWeight: "bold" }}>
+                      {employeeData?.employeeInfo?.fullName}
+                    </Typography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -265,28 +335,36 @@ function ReleaseDialog(props) {
                 </Grid>
               </Grid>
             </Grid>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              className="button-cancel"
-              variant="contained"
-              sx={{ mb: 2, background: "#FF9E43" }}
-              onClick={handleClose}
-            >
-              Hủy
-            </Button>
-            <Button
-              className="button-confirm1"
-              variant="contained"
-              type="submit"
-              sx={{ mb: 2 }}
-              color="primary"
-            >
-              Trình lãnh đạo
-            </Button>
-          </DialogActions>
-        </form>
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            className="button-cancel"
+            variant="contained"
+            sx={{ mb: 2, background: "#FF9E43" }}
+            onClick={handleClose}
+          >
+            Hủy
+          </Button>
+          <Button
+            className="button-confirm1"
+            variant="contained"
+            type="submit"
+            sx={{ mb: 2 }}
+            color="primary"
+            onClick={() => setShouldSenToLeader(true)}
+          >
+            Trình lãnh đạo
+          </Button>
+        </DialogActions>
       </Dialog>
+      {shouldSenToLeader && (
+        <SendToLeadershipDialog
+          handleClose={handleCloseAll}
+          employeeId={employeeData?.employeeInfo?.employeeId}
+          handleChangeReload={handleChangeReload}
+        />
+      )}
     </>
   );
 }

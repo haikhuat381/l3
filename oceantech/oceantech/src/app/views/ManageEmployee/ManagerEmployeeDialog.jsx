@@ -21,14 +21,19 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-
+import moment from "moment";
 import CustomAvatar from "app/components/Avatar/Avatar";
 import ReleaseDialog from "./ReleaseDialog";
 import UpdateOptions from "./UpdateOptions";
 import { useSelector, useDispatch } from "react-redux";
 
-function ManagerEmployeeDialog({ handleClose }) {
-  const employeeData = useSelector((state) => state.Employee.employeeData);
+function ManagerEmployeeDialog(props) {
+  const employeeData = useSelector(
+    (state) => state.Employee.employeeData?.employeeInfo
+  );
+  const { handleChangeReload, handleClose } = props;
+  const otherFeature = useSelector((state) => state.Employee.otherFeature);
+  const Gender = useSelector((state) => state.Employee.Gender);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
 
   return (
@@ -36,7 +41,11 @@ function ManagerEmployeeDialog({ handleClose }) {
       {" "}
       <Dialog open={true} onClose={handleClose} maxWidth="lg" fullWidth>
         <DialogTitle
-          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
           Cập nhật diễn biến
           <IconButton onClick={() => handleClose()}>
@@ -48,12 +57,20 @@ function ManagerEmployeeDialog({ handleClose }) {
           <Grid container xs={12} spacing={4}>
             <Grid item container xs={4} spacing={2}>
               <Grid item xs={12}>
-                <CustomAvatar image={employeeData.image} displayButton="none" />
-                <Typography variant="h5" textAlign={"center"} textTransform={"uppercase"}>
-                  {employeeData.fullName}
+                <CustomAvatar
+                  image={employeeData?.employeeInfo?.photoUrl}
+                  displayButton={"none"}
+                  isNoneBorder={true}
+                />
+                <Typography
+                  variant="h5"
+                  textAlign={"center"}
+                  textTransform={"uppercase"}
+                >
+                  {employeeData?.fullName}
                 </Typography>
                 <Typography variant="subtitle1" textAlign={"center"}>
-                  {employeeData.team}
+                  {otherFeature[employeeData?.teamId]?.name || ""}
                 </Typography>
               </Grid>
             </Grid>
@@ -65,70 +82,74 @@ function ManagerEmployeeDialog({ handleClose }) {
                   <Grid container spacing={3}>
                     <Grid item md={6} xs={12}>
                       <TextField
+                        autoFocus
                         fullWidth
                         InputProps={{
                           readOnly: true,
                         }}
                         label="Họ và tên"
                         variant="outlined"
-                        value={employeeData.fullName}
+                        value={employeeData?.fullName}
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
+                        autoFocus
                         fullWidth
                         InputProps={{
                           readOnly: true,
                         }}
                         label="Mã nhân viên"
                         variant="outlined"
-                        value={employeeData.code}
+                        value={employeeData?.code}
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
+                        autoFocus
+                        fullWidth
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        label="Số CMND"
+                        value={employeeData?.citizenId}
+                        variant="outlined"
+                      ></TextField>
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                      <TextField
+                        autoFocus
                         fullWidth
                         InputProps={{
                           readOnly: true,
                         }}
                         label="Email"
                         variant="outlined"
-                        value={employeeData.email}
+                        value={employeeData?.email}
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
+                        autoFocus
                         fullWidth
                         InputProps={{
                           readOnly: true,
                         }}
                         label="Số điện thoại"
                         variant="outlined"
-                        value={employeeData.phone}
+                        value={employeeData?.phone}
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        type={"date"}
+                        autoFocus
                         fullWidth
-                        InputProps={{
-                          readOnly: true,
-                        }}
                         label="Ngày sinh"
                         variant="outlined"
-                        value={employeeData.birthday}
+                        value={moment(employeeData?.dateOfBirth).format(
+                          "DD/MM/YYYY"
+                        )}
                       />
-                    </Grid>
-                    <Grid item md={6} xs={12}>
-                      <TextField
-                        fullWidth
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        label="Vị trí"
-                        value={employeeData.position}
-                        variant="outlined"
-                      ></TextField>
                     </Grid>
                   </Grid>
                 </CardContent>
@@ -143,12 +164,16 @@ function ManagerEmployeeDialog({ handleClose }) {
               </Card>
             </Grid>
             <Grid item container xs={12}>
-              <UpdateOptions />
+              <UpdateOptions EmployeeId={employeeData?.employeeId} />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" sx={{ mb: 2, background: "#FF9E43" }} onClick={handleClose}>
+          <Button
+            variant="contained"
+            sx={{ mb: 2, background: "#FF9E43" }}
+            onClick={handleClose}
+          >
             Hủy
           </Button>
           <Button
@@ -164,6 +189,7 @@ function ManagerEmployeeDialog({ handleClose }) {
         <ReleaseDialog
           handleClose={() => setShouldOpenDialog(false)}
           handleCloseAll={handleClose}
+          handleChangeReload={handleChangeReload}
         />
       )}
     </>
