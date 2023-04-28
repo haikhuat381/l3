@@ -294,7 +294,7 @@ function SalaryIncrease(props) {
               <Grid item>
                 <Button
                   variant="contained"
-                  color="warning"
+                  color="error"
                   onClick={() => formik.resetForm()}
                 >
                   Hủy

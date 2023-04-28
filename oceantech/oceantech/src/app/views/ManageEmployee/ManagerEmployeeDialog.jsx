@@ -189,12 +189,12 @@ function ManagerEmployeeDialog(props) {
             justifyContent: "center",
           }}
         >
-          <Button variant="contained" color="warning" onClick={handleClose}>
+          <Button variant="contained" color="error" onClick={handleClose}>
             Hủy
           </Button>
           <Button
             variant="contained"
-            color="error"
+            color="warning"
             onClick={() => setShouldOpenDialog(true)}
           >
             Kết thúc

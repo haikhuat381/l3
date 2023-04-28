@@ -92,11 +92,25 @@ function ProposeAdvisoryDialog(props) {
       <Dialog open={true} maxWidth={"lg"} fullWidth>
         <DialogTitle
           sx={{
+            zIndex: 10,
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
+            boxShadow:
+              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+            padding: "12px 24px",
           }}
         >
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            Biểu Mẫu Đề Xuẩ Tham Mưu
+          </div>
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>

@@ -273,11 +273,7 @@ function RegisterDocument(props) {
             </Grid>
             <Grid container item xs={3} spacing={1}>
               <Grid item>
-                <Button
-                  variant="contained"
-                  color="warning"
-                  onClick={handleClose}
-                >
+                <Button variant="contained" color="error" onClick={handleClose}>
                   Hủy
                 </Button>
               </Grid>
