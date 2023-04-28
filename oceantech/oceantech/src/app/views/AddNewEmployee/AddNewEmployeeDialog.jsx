@@ -23,14 +23,12 @@ import {
   addNewEmployeeAction,
   updateEmployeeAction,
   getEmployeeDataAction,
-  getFormDataAction
+  getFormDataAction,
 } from "app/redux/actions/actions";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
-
-
 
 function AddNewEmployeeDialog(props) {
   const { handleClose, handleChangeReload, employeeUpdate } = props;
@@ -40,51 +38,70 @@ function AddNewEmployeeDialog(props) {
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [saved, setSaved] = useState("none");
 
-  const employeeDataReducer = useSelector((state) => state?.Employee?.employeeData);
+  const employeeDataReducer = useSelector(
+    (state) => state?.Employee?.employeeData
+  );
 
-  const [employeeData, setEmployeeData] = useState(employeeDataReducer.employeeInfo);
-  const [listDiploma, setListDiploma] = useState([])
-  const [listRelationship, setListRelationship] = useState([])
-
+  const [employeeData, setEmployeeData] = useState(
+    employeeDataReducer.employeeInfo
+  );
+  const [listDiploma, setListDiploma] = useState([]);
+  const [listRelationship, setListRelationship] = useState([]);
 
   useEffect(() => {
     setEmployeeData(employeeDataReducer?.employeeInfo);
-    setListDiploma(()=> employeeDataReducer?.certificates?.reduce((arr, data) => {
-      return [...arr, {
-        certificateId: data.certificateId,
-        name: data.name,
-        field: data.field,
-        educationalOrg: data.educationalOrg,
-        content: data.content,
-        issuanceDate: moment(data.issuanceDate).format("YYYY-MM-DD"),
-      }]
-    }, []) || [])
-    setListRelationship(employeeDataReducer?.familyRelations?.reduce((arr, data) => {
-      return [...arr, {
-        familyId: data.familyId,
-        name: data.name,
-        gender: data.gender,
-        relation: data.relation,
-        citizenId: data.citizenId,
-        address: data.address,
-        dateOfBirth: moment(data.dateOfBirth).format("YYYY-MM-DD"),
-      }]
-    }, []) || [])
+    setListDiploma(
+      () =>
+        employeeDataReducer?.certificates?.reduce((arr, data) => {
+          return [
+            ...arr,
+            {
+              certificateId: data.certificateId,
+              name: data.name,
+              field: data.field,
+              educationalOrg: data.educationalOrg,
+              content: data.content,
+              issuanceDate: moment(data.issuanceDate).format("YYYY-MM-DD"),
+            },
+          ];
+        }, []) || []
+    );
+    setListRelationship(
+      employeeDataReducer?.familyRelations?.reduce((arr, data) => {
+        return [
+          ...arr,
+          {
+            familyId: data.familyId,
+            name: data.name,
+            gender: data.gender,
+            relation: data.relation,
+            citizenId: data.citizenId,
+            address: data.address,
+            dateOfBirth: moment(data.dateOfBirth).format("YYYY-MM-DD"),
+          },
+        ];
+      }, []) || []
+    );
   }, [employeeDataReducer]);
 
   const handleAddToList = (data, method) => {
-    method === "listDiploma" ? setListDiploma([...data]) : setListRelationship([...data])
+    method === "listDiploma"
+      ? setListDiploma([...data])
+      : setListRelationship([...data]);
   };
 
   const [value, setValue] = React.useState("1");
-  
+
   const handleChange = (event, newValue) => {
-    const valueCheck = {...formik.values}
-    delete valueCheck.photoUrl
-    if (Object.keys(formik.errors).length === 0 && Object.values(valueCheck).every(value => value !== '')) {
+    const valueCheck = { ...formik.values };
+    delete valueCheck.photoUrl;
+    if (
+      Object.keys(formik.errors).length === 0 &&
+      Object.values(valueCheck).every((value) => value !== "")
+    ) {
       setValue(newValue);
     } else {
-      formik.handleSubmit()
+      formik.handleSubmit();
     }
   };
 
@@ -94,11 +111,13 @@ function AddNewEmployeeDialog(props) {
       email: employeeUpdate?.email || "",
       code: employeeUpdate?.code || "",
       phone: employeeUpdate?.phone || "",
-      dateOfBirth: !employeeUpdate?.dateOfBirth ? "" : moment(employeeUpdate?.dateOfBirth).format("YYYY-MM-DD"),
+      dateOfBirth: !employeeUpdate?.dateOfBirth
+        ? ""
+        : moment(employeeUpdate?.dateOfBirth).format("YYYY-MM-DD"),
       teamId: employeeUpdate?.teamId || "",
       citizenId: employeeUpdate?.citizenId || "",
       address: employeeUpdate?.address || "",
-      gender:  employeeUpdate?.gender?.toString() || "",
+      gender: employeeUpdate?.gender?.toString() || "",
       photoUrl: employeeUpdate?.photoUrl || "",
     },
     validationSchema: Yup.object({
@@ -107,7 +126,9 @@ function AddNewEmployeeDialog(props) {
         .min(5, "Hãy nhập đầy đủ họ và tên")
         .max(32, "Nhập họ tên đúng định dạng")
         .required("Không được bỏ trống"),
-      email: Yup.string().email("Email sai định dạng").required("Không được bỏ trống"),
+      email: Yup.string()
+        .email("Email sai định dạng")
+        .required("Không được bỏ trống"),
       gender: Yup.string().required("Không được bỏ trống").nullable(),
       code: Yup.string()
         .min(6, "Nhập tối thiểu 6 kí tự")
@@ -127,50 +148,46 @@ function AddNewEmployeeDialog(props) {
       address: Yup.string().required("Không được bỏ trống"),
     }),
     onSubmit: (values) => {
-      const numberGender = +values.gender
+      const numberGender = +values.gender;
       if (!employeeUpdate?.employeeId) {
         values.id = uuidv4();
         values.status = "Lưu mới";
-        const dataInfo = { ...values, gender: numberGender}
+        const dataInfo = { ...values, gender: numberGender };
         const dataCreate = {
           employeeInfo: dataInfo,
           certificates: listDiploma,
-          familyRelations: listRelationship
-        }
-        if(dataCreate.certificates.length === 0) {
+          familyRelations: listRelationship,
+        };
+        if (dataCreate.certificates.length === 0) {
           toast.success("Vui lòng nhập Thông tin văn bằng");
-        } else if(dataCreate.familyRelations.length === 0) {
+        } else if (dataCreate.familyRelations.length === 0) {
           toast.success("Vui lòng nhập Quan hệ gia đình");
         } else {
-
           dispatch(addNewEmployeeAction(dataCreate));
           // toast.success("Lưu mới thành công");
-
         }
       } else {
-        const dataInfo = { ...values, gender: numberGender}
+        const dataInfo = { ...values, gender: numberGender };
         const updateData = {
           employeeInfo: dataInfo,
           certificates: listDiploma,
           familyRelations: listRelationship.reduce((arr, data) => {
-            if(data.familyId) {
-              data.familyRelationId = data.familyId
+            if (data.familyId) {
+              data.familyRelationId = data.familyId;
             }
-            delete data.familyId
-            return [...arr, {...data}]
-          },[])
-        }
-        
-        dispatch(updateEmployeeAction(employeeUpdate?.employeeId,updateData))
-        // toast.success("Cập nhật thành công");
+            delete data.familyId;
+            return [...arr, { ...data }];
+          }, []),
+        };
 
+        dispatch(updateEmployeeAction(employeeUpdate?.employeeId, updateData));
+        // toast.success("Cập nhật thành công");
       }
-      handleChangeReload(employeeUpdate?.gender)
+      handleChangeReload(employeeUpdate?.gender);
       setSaved("block");
       setShouldOpenDialog(false);
     },
   });
-
 
   return (
     <>
@@ -192,8 +209,9 @@ function AddNewEmployeeDialog(props) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
-            padding: "12px 24px"
+            boxShadow:
+              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+            padding: "12px 24px",
           }}
         >
           {!employeeData?.employeeId ? "Thêm mới nhân viên" : "Sửa nhân viên"}
@@ -202,7 +220,7 @@ function AddNewEmployeeDialog(props) {
           </Box>
         </DialogTitle>
 
-        <DialogContent style={{ overflow: "hidden", marginTop: 16, padding: "0 24px" }}>
+        <DialogContent>
           <form onSubmit={formik.handleSubmit}>
             <TabContext value={value}>
               <Box
@@ -221,23 +239,19 @@ function AddNewEmployeeDialog(props) {
                 </TabList>
               </Box>
               <TabPanel value="1" sx={{ p: "0 0 20px 0" }}>
-                <EmployeeInfo 
-                  formikRoot={formik}
-                  dataUp 
-
-                />
+                <EmployeeInfo formikRoot={formik} dataUp />
               </TabPanel>
               <TabPanel value="2" sx={{ p: "20px 0" }}>
                 <EmployeeDiploma
                   employeeData={employeeData}
-                  listDiploma = {listDiploma}
+                  listDiploma={listDiploma}
                   handleAddDiploma={handleAddToList}
                 />
               </TabPanel>
               <TabPanel value="3" sx={{ p: "20px 0" }}>
                 <EmployeeRelation
                   employeeData={employeeData}
-                  listRelationship= {listRelationship}
+                  listRelationship={listRelationship}
                   handleAddRelation={handleAddToList}
                 />
               </TabPanel>
@@ -247,8 +261,9 @@ function AddNewEmployeeDialog(props) {
 
         <DialogActions
           style={{
-            boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
-            justifyContent: 'center',
+            boxShadow:
+              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+            justifyContent: "center",
           }}
         >
           <Button
@@ -256,8 +271,8 @@ function AddNewEmployeeDialog(props) {
             color="success"
             sx={{ display: saved }}
             onClick={() => {
-              dispatch(getFormDataAction(employeeData?.employeeId))
-              dispatch(getEmployeeDataAction(employeeData?.employeeId))
+              dispatch(getFormDataAction(employeeData?.employeeId));
+              dispatch(getEmployeeDataAction(employeeData?.employeeId));
               setShouldOpenDialog("true");
             }}
           >

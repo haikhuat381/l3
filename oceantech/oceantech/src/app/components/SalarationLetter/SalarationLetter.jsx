@@ -46,7 +46,7 @@ function SalarationLetter(props) {
       >
         <Grid container>
           <Grid
-            sx={{ border: 1, BorderColor: "grey.500" }}
+            sx={{ border: 1, BorderColor: "grey.500", mt: 1 }}
             container
             item
             sm={12}

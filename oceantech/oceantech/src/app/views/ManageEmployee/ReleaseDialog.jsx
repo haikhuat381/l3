@@ -89,7 +89,6 @@ function ReleaseDialog(props) {
             className="button-cancel"
             variant="contained"
             color="error"
-            sx={{ mb: 2 }}
             onClick={handleClose}
           >
             Hủy
@@ -99,7 +98,6 @@ function ReleaseDialog(props) {
             variant="contained"
             color="success"
             type="submit"
-            sx={{ mb: 2 }}
             onClick={() => setShouldSenToLeader(true)}
           >
             Trình lãnh đạo

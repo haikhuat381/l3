@@ -121,23 +121,18 @@ function ProposeAdvisoryDialog(props) {
             className="button-cancel"
             variant="contained"
             color="error"
-            sx={{ mb: 2 }}
             onClick={handleClose}
           >
             Hủy
           </Button>
-          <Button
-            variant="contained"
-            color="success"
-            sx={{ mb: 2, display: saved }}
-          >
+          <Button variant="contained" color="success" sx={{ display: saved }}>
             Trình lãnh đạo
           </Button>
           <Button
             variant="contained"
             type="submit"
             color="primary"
-            sx={{ display: saved === "none" ? "block" : "none", mb: 2 }}
+            sx={{ display: saved === "none" ? "block" : "none" }}
             onClick={() => {
               setSaved("block"), handleSubmit();
             }}

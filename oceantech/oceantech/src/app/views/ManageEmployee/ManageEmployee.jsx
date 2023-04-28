@@ -6,6 +6,7 @@ import Breadcrumb from "app/components/Breadcrumb";
 import {
   getListEmployeeAction,
   getEmployeeDataAction,
+  getTotalAction,
 } from "app/redux/actions/actions";
 import MaterialTable from "@material-table/core";
 import moment from "moment";
@@ -48,6 +49,7 @@ function ManagerEmployee() {
   };
 
   useEffect(() => {
+    dispatch(getTotalAction("5"));
     dispatch(getListEmployeeAction("5", page, pageSize));
   }, [page, pageSize, reloadRef.current]);
 
@@ -64,11 +66,11 @@ function ManagerEmployee() {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Thông tin">
+            {/* <Tooltip title="Thông tin">
               <IconButton>
                 <Icon>report</Icon>
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
 
             <Tooltip title="Cập nhật diễn biến">
               <IconButton

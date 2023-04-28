@@ -42,9 +42,13 @@ function ManagerEmployeeDialog(props) {
       <Dialog open={true} onClose={handleClose} maxWidth="lg" fullWidth>
         <DialogTitle
           sx={{
+            zIndex: 10,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            boxShadow:
+              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+            padding: "12px 24px",
           }}
         >
           Cập nhật diễn biến
@@ -54,13 +58,13 @@ function ManagerEmployeeDialog(props) {
         </DialogTitle>
 
         <DialogContent>
-          <Grid container xs={12} spacing={4}>
+          <Grid container xs={12} spacing={4} sx={{ mt: 1 }}>
             <Grid item container xs={4} spacing={2}>
               <Grid
                 item
                 xs={12}
                 sx={{
-                  marginTop: 5,
+                  marginTop: 10,
                   display: "flex",
                   alignItems: "center",
                   flexDirection: "column",
