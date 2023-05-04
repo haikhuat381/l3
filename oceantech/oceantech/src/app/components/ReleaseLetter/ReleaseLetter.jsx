@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 function ReleaseLetter(props) {
-  const { employeeData, otherFeature } = props;
+  const { employeeData, otherFeature, handleValues, status } = props;
   //   const otherFeature = useSelector((state) => state.Employee.otherFeature);
   var options = {
     weekday: "long",
@@ -27,7 +27,18 @@ function ReleaseLetter(props) {
   };
   // console.log("dâtta", employeeData);
   var today = new Date();
+  const [dataRelease, setDataRelease] = useState({
+    status: "8",
+    terminateRequestDetail: employeeData?.terminateRequestDetail || "",
+  });
 
+  const handlechangeValuse = (event, method) => {
+    const data = { ...dataRelease };
+    data[method] = event.target.value;
+    setDataRelease(data);
+    handleValues(data);
+  };
+  console.log("asdasd", dataRelease);
   return (
     <>
       <Grid
@@ -130,7 +141,7 @@ function ReleaseLetter(props) {
             <Grid item sm={5.5} xs={8.5}>
               <TextField
                 className="luan"
-                // value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
+                value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
@@ -166,7 +177,9 @@ function ReleaseLetter(props) {
                 sx={{
                   "& fieldset": { border: "none", padding: 0 },
                 }}
-                value={"22/11/2003"}
+                value={`${today.getDate()} - ${
+                  today.getMonth() + 1
+                } - ${today.getFullYear()}`}
               />
             </Grid>
           </Grid>
@@ -190,7 +203,7 @@ function ReleaseLetter(props) {
                   <TextField
                     className="luan"
                     InputProps={{
-                      readOnly: true,
+                      readOnly: status,
                       style: { padding: 0 },
                     }}
                     id="standard-adornment-mount"
@@ -198,9 +211,10 @@ function ReleaseLetter(props) {
                     sx={{
                       "& fieldset": { border: "none", padding: 0 },
                     }}
-                    value={"Vợ tôi bắt tôi nghỉ việc "}
-                    // value={formik.values.terminateRequestDetail || ""}
-                    // onChange={formik.handleChange}
+                    value={dataRelease?.terminateRequestDetail}
+                    onChange={(event) => {
+                      handlechangeValuse(event, "terminateRequestDetail");
+                    }}
                   />
                 </Grid>
               </Grid>

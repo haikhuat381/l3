@@ -15,46 +15,36 @@ import {
   MenuItem,
   TextareaAutosize,
 } from "@mui/material";
-import SendToLeadershipDialog from "./SendToLeadershipDialog";
+import SendToLeadershipDialog from "../AddNewEmployee/SendToLeadershipDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
-import { updateEmployee } from "app/redux/actions/actions";
+
+import { ReleaseManageAction } from "app/redux/actions/actions";
 import ReleaseLetter from "app/components/ReleaseLetter/ReleaseLetter";
+import { async } from "regenerator-runtime";
 function ReleaseDialog(props) {
-  const { handleClose, handleCloseAll, handleChangeReload } = props;
+  const { handleClose, handleCloseAll } = props;
+  const dispatch = useDispatch();
   const [shouldSenToLeader, setShouldSenToLeader] = useState(false);
   const employeeData = useSelector((state) => state.Employee.employeeData);
   const otherFeature = useSelector((state) => state.Employee.otherFeature);
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  const [dataReleaseDialog, setDataReleaseDialog] = useState({});
+  const handleValues = (data) => {
+    setDataReleaseDialog(data);
   };
-  // console.log("dâtta", employeeData);
-  var today = new Date();
-  const dispatch = useDispatch();
-  const formik = useFormik({
-    initialValues: {
-      terminateRequestDetail: "",
-      date: employeeData.releaseRequest?.date || "",
-    },
-    validationSchema: Yup.object({
-      terminateRequestDetail: Yup.string().required("Không được bỏ trống"),
-      date: Yup.date().required("Vui lòng nhập ngày"),
-    }),
-    onSubmit: (values) => {
-      // employeeData.releaseRequest = values;
-      // employeeData.status = "Chờ duyệt";
-      // dispatch(updateEmployee(employeeData));
-      // handleCloseAll();
-      // toast.success("Gửi lãnh đạo thành công");
-    },
-  });
+  console.log("chao bn ", dataReleaseDialog);
+  const id = employeeData?.employeeInfo?.employeeId;
+  const handlesubmit = async () => {
+    dispatch(
+      ReleaseManageAction(
+        employeeData?.employeeInfo?.employeeId,
+        dataReleaseDialog
+      )
+    );
+    handleChangeReload(id);
+  };
   return (
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>
@@ -85,12 +75,12 @@ function ReleaseDialog(props) {
         </DialogTitle>
 
         <DialogContent>
-          <form onSubmit={formik.handleSubmit}>
-            <ReleaseLetter
-              employeeData={employeeData}
-              otherFeature={otherFeature}
-            />
-          </form>
+          <ReleaseLetter
+            employeeData={employeeData}
+            otherFeature={otherFeature}
+            handleValues={handleValues}
+            status={false}
+          />
         </DialogContent>
         <DialogActions
           style={{
@@ -112,7 +102,10 @@ function ReleaseDialog(props) {
             variant="contained"
             color="success"
             type="submit"
-            onClick={() => setShouldSenToLeader(true)}
+            onClick={async () => {
+              handlesubmit();
+              // setShouldSenToLeader(true);
+            }}
           >
             Trình lãnh đạo
           </Button>
@@ -120,9 +113,13 @@ function ReleaseDialog(props) {
       </Dialog>
       {shouldSenToLeader && (
         <SendToLeadershipDialog
-          handleClose={handleCloseAll}
+          handleCloseAll={handleCloseAll}
+          handleClose={() => {
+            setShouldSenToLeader(false);
+          }}
           employeeId={employeeData?.employeeInfo?.employeeId}
-          handleChangeReload={handleChangeReload}
+          // status={employeeData?.employeeInfo?.status}
+          status="8"
         />
       )}
     </>

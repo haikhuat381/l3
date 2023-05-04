@@ -70,3 +70,8 @@ export const deleteProposalConsultation = (id) => {
   const url = `http://em-dev.oceantech.com.vn/em/employees/propose-consult/${id}`;
   return axios.delete(url, headers);
 };
+// Release
+export const ReleaseManage = (id, data) => {
+  const url = `http://em-dev.oceantech.com.vn/em/employees/${id}/status`;
+  return axios.put(url, data, headers);
+};

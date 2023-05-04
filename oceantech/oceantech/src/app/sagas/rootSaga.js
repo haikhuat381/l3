@@ -25,6 +25,7 @@ import {
   addProposalConsultsaga,
   updateProposalConsultsaga,
   deleteProposalConsultsaga,
+  ReleaseManagesaga,
 } from "./EmployeeSaga";
 import { addNewEmployeeSaga } from "./EmployeeSaga";
 export default function* rootSaga() {
@@ -72,4 +73,5 @@ export default function* rootSaga() {
     ActionTypes.DELETE_PROPOSACONSULT,
     deleteProposalConsultsaga
   );
+  yield takeLatest(ActionTypes.RELEASE_MANAGE, ReleaseManagesaga);
 }
