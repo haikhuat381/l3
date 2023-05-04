@@ -66,7 +66,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
         endDate: null
       }]
     }
-    // console.log("newValues",newValues);
     setTextFieldValues(newValues)
   };
 
@@ -88,7 +87,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   };
 
   return (
-    <div ref={ref} style={{ height: 500, overflowY: "scroll", overflowX: "hidden" }}>
+    <div ref={ref} className="container-cv">
       <Grid container className="resume-container" xs={12} spacing={2} marginLeft={3}>
         <Grid container direction={"column"} xs={4} rowSpacing={2} className="resume-left">
           <Grid item sx={{ pt: 0, mb: 2 }}>
@@ -145,7 +144,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={7.5} className="resume-right" sx={{ mb: 0, height: 600, overflowY: "scroll", overflowX: "hidden" }}>
+        <Grid item xs={7.5} className="resume-right" sx={{ mb: 0}}>
           <Grid item container direction={"column"} spacing={2} sx={{pt: 2}}>
             <Grid item display={"flex"} gap={1} alignItems="center" color={"#373E58"}>
               <Icon sx={{ fontSize: "32px" }}>crisis_alert</Icon>
@@ -264,7 +263,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   <div className="workExperiences" style={{ display: "flex", alignItems: "start", justifyContent: "space-between", padding: index === 0 ? "0 0 20px" : "20px 0", borderBottom: index !== textFieldValues?.workExperiences?.length - 1 ? "1px solid #E5E5E5" : "" }} key={index}>
                     <Grid item container xs={12} fullWidth spacing={2}>
                       <Grid item container xs={12} fullWidth justifyContent="space-between" sx={{display: !status ? "flex" : "none"}}>
-                        <Grid item container xs={5.4} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                        <Grid item container xs={5.4} className="workExperiences-items">
                           <Typography item xs={2}>Ngày bắt đầu:</Typography>
                           <Grid item xs={6.5}>
                             <TextField
@@ -290,7 +289,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                             </TextField>
                           </Grid>
                         </Grid>
-                        <Grid item container xs={5.4} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                        <Grid item container xs={5.4} className="workExperiences-items">
                           <Typography item xs={2}>Ngày kết thúc:</Typography>
                           <Grid item xs={6.3}>
                             <TextField
@@ -317,7 +316,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                      <Grid item container xs={12} className="workExperiences-items">
                         <Typography item xs={2} sx={{display: !status ? "flex" : "none"}}>Tên công ty:</Typography>
                         <Grid item xs={!status ? 9.7 : 7.5} fullWidth>
                           <TextField
@@ -348,7 +347,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                           { !value.startDate || !value.endDate || `${moment(value.startDate).format("DD/MM/YYYY")} - ${moment(value.endDate).format("DD/MM/YYYY")}`}
                         </Typography>
                       </Grid>
-                      <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                      <Grid item container xs={12} className="workExperiences-items">
                         <Typography item xs={1} sx={{display: !status ? "flex" : "none"}}>Vị trí:</Typography>
                         <Grid item xs={!status ? 10.9 : 12} fullWidth>
                           <TextField
@@ -373,7 +372,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                           </TextField>
                         </Grid>
                       </Grid>
-                      <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
+                      <Grid item container xs={12} className="workExperiences-items">
                         <Typography item xs={2.2} sx={{display: !status ? "flex" : "none"}}>Mô tả công việc:</Typography>
                         <Grid item xs={!status ? 9 : 12} fullWidth>
                           <TextField

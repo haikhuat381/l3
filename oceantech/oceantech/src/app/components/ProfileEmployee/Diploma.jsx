@@ -24,7 +24,7 @@ const Diploma = React.forwardRef((props, ref) => {
   ];
 
   return (
-    <div ref={ref} style={{height: "500px", paddingLeft: "30px"}}>
+    <div ref={ref} className="container-diploma">
       <MaterialTable
         title={""}
         data={!listDiploma ? [] : listDiploma}
