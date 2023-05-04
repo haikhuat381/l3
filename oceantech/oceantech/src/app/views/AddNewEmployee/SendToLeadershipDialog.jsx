@@ -44,7 +44,8 @@ function SendToLeadershipDialog(props) {
     }),
     onSubmit: (values) => {
       values.registerPosition = position
-      values.status = status === 1 || status === 4 || status === 6 ? 3 : null
+      // values.status = status === 1 || status === 4 || status === 6 ? 3 : null
+      values.status = status
       console.log("status dong 50", status)
       dispatch(addRegistAction(employeeId,values))
 

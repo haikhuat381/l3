@@ -1,0 +1,17 @@
+.container-cv {
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.resume-right {
+    height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.workExperiences-items {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}

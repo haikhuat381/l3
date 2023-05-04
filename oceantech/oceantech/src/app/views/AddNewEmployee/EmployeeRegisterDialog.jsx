@@ -229,7 +229,8 @@ export default function EmployeeRegisterDialog({
             setshouldOpenSendToLeadershipDialog(false);
           }}
           employeeId={employeeData?.employeeInfo?.employeeId}
-          status={employeeData?.employeeInfo?.status}
+          // status={employeeData?.employeeInfo?.status}
+          status="3"
         />
       )}
       {shouldOpenConfirmPrint && (

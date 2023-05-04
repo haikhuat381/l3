@@ -220,7 +220,7 @@ function AddNewEmployeeDialog(props) {
           </Box>
         </DialogTitle>
 
-        <DialogContent>
+        <DialogContent sx={{padding: "0 24px", marginTop: "20px"}}>
           <form onSubmit={formik.handleSubmit}>
             <TabContext value={value}>
               <Box
@@ -239,7 +239,7 @@ function AddNewEmployeeDialog(props) {
                 </TabList>
               </Box>
               <TabPanel value="1" sx={{ p: "0 0 20px 0" }}>
-                <EmployeeInfo formikRoot={formik} dataUp />
+                <EmployeeInfo formikRoot={formik} />
               </TabPanel>
               <TabPanel value="2" sx={{ p: "20px 0" }}>
                 <EmployeeDiploma
