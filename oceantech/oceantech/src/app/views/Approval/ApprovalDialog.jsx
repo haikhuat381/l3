@@ -26,6 +26,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PromotionLetter from "app/components/PromotionLetter/PromotionLetter";
 import PropostionLetter from "app/components/PropostionLetter/PropostionLetter";
 import IncreaseDialogLetter from "app/components/IncreaseLetter/IncreaseDialogLetter"
+import ReleaseLetter from "app/components/ReleaseLetter/ReleaseLetter";
 import moment from "moment";
 import Diploma from "app/components/ProfileEmployee/Diploma";
 
@@ -85,10 +86,12 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
         </DialogTitle>
         
         <DialogContent sx={{padding: '0 24px', mt: 1}}>
-          {employeeData.releaseRequest  ? (
-            <ResignationLetter />
-          ) : employeeData.promoteRequest ? (<PromotionLetter/>) : employeeData.proposeRequest ? (<PropostionLetter/>) 
-          : employeeData.increaseRequest ? <IncreaseDialogLetter /> : (
+          {employeeData?.employeeInfo?.status === 8  ? (
+            <ReleaseLetter 
+              employeeData={employeeData?.employeeInfo}
+              status={true}
+            />
+          )  : (
             <Box sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex" }}>
               <Tabs
                 orientation="vertical"
@@ -158,7 +161,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           <Button
             variant="contained"
             color="error"
-            onClick={() => handleClose()}
+            onClick={handleClose}
           >
             Hủy
           </Button>

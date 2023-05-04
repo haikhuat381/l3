@@ -149,6 +149,14 @@ export function* updateFormSaga(action) {
   });
 }
 
+export function* resetFormDataSaga(action) {
+  yield put({
+    type: ActionTypes.RESET_FORM_DATA_SUCCESS,
+    payload: action.payload,
+  });
+}
+
+
 export function* addRegistSaga(action) {
   const res = yield call(addRegist, action.payload.id, action.payload.data);
   if (res.status === 200) {

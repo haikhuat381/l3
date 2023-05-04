@@ -66,6 +66,10 @@ export const updateFormAction = (id, data) => {
   return { type: ActionTypes.UPDATE_FORM, payload: { id, data } };
 };
 
+export const resetFormDataAction = (payload) => {
+  return { type: ActionTypes.RESET_FORM_DATA, payload: payload };
+};
+
 export const addRegistAction = (id, data) => {
   return { type: ActionTypes.ADD_REGIST, payload: { id, data } };
 };

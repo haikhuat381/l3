@@ -9,6 +9,7 @@ import {
   resetEmployeeDataSaga,
   getFormDataSaga,
   updateFormSaga,
+  resetFormDataSaga,
   getTotalSaga,
   addRegistSaga,
   leaderActionSaga,
@@ -39,6 +40,8 @@ export default function* rootSaga() {
 
   yield takeLatest(ActionTypes.GET_FORM_DATA, getFormDataSaga);
   yield takeLatest(ActionTypes.UPDATE_FORM, updateFormSaga);
+  yield takeLatest(ActionTypes.RESET_FORM_DATA, resetFormDataSaga);
+
   yield takeLatest(ActionTypes.ADD_REGIST, addRegistSaga);
   yield takeLatest(ActionTypes.LEADER_ACTION, leaderActionSaga);
   // Employee management

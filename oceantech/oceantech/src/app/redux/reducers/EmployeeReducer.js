@@ -98,6 +98,11 @@ export default (state = initialState, action) => {
     case ActionTypes.GET_FORM_DATA_SUCCESS: {
       return { ...state, formData: action.payload };
     }
+
+    case ActionTypes.RESET_FORM_DATA_SUCCESS: {
+      console.log("okkkkkkkkk")
+      return { ...state, formData: action.payload };
+    }
     //
 
     case ActionTypes.GET_PROMOTE_HISTORY_DATA_SUCCESS: {
