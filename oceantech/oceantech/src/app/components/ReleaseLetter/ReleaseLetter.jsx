@@ -130,7 +130,7 @@ function ReleaseLetter(props) {
             <Grid item sm={5.5} xs={8.5}>
               <TextField
                 className="luan"
-                // value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
+                value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
@@ -166,7 +166,9 @@ function ReleaseLetter(props) {
                 sx={{
                   "& fieldset": { border: "none", padding: 0 },
                 }}
-                value={"22/11/2003"}
+                value={`${today.getDate()} - ${
+                  today.getMonth() + 1
+                } - ${today.getFullYear()}`}
               />
             </Grid>
           </Grid>
