@@ -64,19 +64,13 @@ export default function ApprovedDialog({ handleClose }) {
   return (
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>
-        <DialogTitle
-          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 24px",
-            boxShadow: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
-            zIndex: 10000
-           }}
-        >
+        <DialogTitle className="dialog-title" >
           Hồ sơ nhân viên
           <IconButton onClick={() => handleClose()}>
             <Icon color="error">close</Icon>
           </IconButton>
         </DialogTitle>
-        <DialogContent
-          sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex", mt: 1, padding: '0 24px' }}
+        <DialogContent className="dialog-content"
           id="dialog"
         >
           <Tabs
@@ -91,13 +85,13 @@ export default function ApprovedDialog({ handleClose }) {
             <Tab label="Sơ yếu lý lịch" {...a11yProps(2)} />
             <Tab label="Danh sách văn bằng" {...a11yProps(1)} />
           </Tabs>
-          <TabPanel value={value} index={0} style={{ width: "100%" }}>
+          <TabPanel value={value} index={0} className="tab-items">
             <CurriculumVitae
               status={true}
               employee={employeeData?.employeeInfo}
             />
           </TabPanel>
-          <TabPanel value={value} index={1} style={{ width: "100%" }}>
+          <TabPanel value={value} index={1} className="tab-items">
             <Resume
               listRelationship={employeeData?.familyRelations}
               employee={employeeData?.employeeInfo}
@@ -106,14 +100,14 @@ export default function ApprovedDialog({ handleClose }) {
             />
 
           </TabPanel>
-          <TabPanel value={value} index={2} style={{ width: "100%" }}>
+          <TabPanel value={value} index={2} className="tab-items">
             <Diploma
               listDiploma={employeeData?.certificates}
             />
             
           </TabPanel>
         </DialogContent>
-        <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
+        <DialogActions className="dialog-action">
           <Button variant="contained" onClick={handleClose} color="error">
             Hủy
           </Button>

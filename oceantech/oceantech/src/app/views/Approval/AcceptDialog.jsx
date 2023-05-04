@@ -12,6 +12,8 @@ import {
   TextField,
   Checkbox,
   FormControlLabel,
+  Icon,
+  IconButton
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -49,13 +51,11 @@ function AcceptDialog(props) {
     <>
       {" "}
       <Dialog open={open} maxWidth="sm" fullWidth>
-        <DialogTitle
-          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding:"9px 24px", boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px' }}
-        >
+        <DialogTitle className="dialog-title">
           Xác nhận phê duyệt
-          <Box onClick={handleClose}>
-            <Close color="error"></Close>
-          </Box>
+          <IconButton onClick={handleClose}>
+            <Icon color="error">close</Icon>
+          </IconButton>
         </DialogTitle>
         <form onSubmit={formik.handleSubmit}>
           <DialogContent style={{ paddingTop: "32px" }}>
@@ -86,7 +86,7 @@ function AcceptDialog(props) {
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
+          <DialogActions className="dialog-action">
             <Button variant="contained" color="primary" type="submit">
               Xác nhận
             </Button>

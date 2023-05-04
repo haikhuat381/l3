@@ -19,7 +19,7 @@ function EmployeeInfo(props) {
               container
               xs={12}
               spacing={4}
-              style={{ marginBottom: "20px" }}
+              sx={{ marginBottom: "20px" }}
             >
               <Grid item xs={6}>
                 <TextField
@@ -57,7 +57,7 @@ function EmployeeInfo(props) {
               container
               xs={12}
               spacing={4}
-              style={{ marginBottom: "20px" }}
+              sx={{ marginBottom: "20px" }}
             >
               <Grid item xs={6}>
                 <TextField
@@ -106,7 +106,7 @@ function EmployeeInfo(props) {
               container
               xs={12}
               spacing={4}
-              style={{ marginBottom: "20px" }}
+              sx={{ marginBottom: "20px" }}
             >
               <Grid item xs={6}>
                 <TextField
@@ -140,7 +140,7 @@ function EmployeeInfo(props) {
               container
               xs={12}
               spacing={4}
-              style={{ marginBottom: "20px" }}
+              sx={{ marginBottom: "20px" }}
             >
               <Grid item xs={6}>
                 <TextField

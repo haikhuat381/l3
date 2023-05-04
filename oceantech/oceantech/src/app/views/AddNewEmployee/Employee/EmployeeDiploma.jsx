@@ -147,7 +147,7 @@ function EmployeeDiploma(props) {
       )}
 
       <form>
-        <Grid container spacing={2} style={{ paddingBottom: "12px" }}>
+        <Grid container spacing={2} sx={{ paddingBottom: "12px" }}>
           <Grid item sm={4} xs={12}>
             <TextField
               label="Tên văn bằng"
