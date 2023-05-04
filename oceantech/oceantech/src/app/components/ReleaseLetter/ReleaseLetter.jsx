@@ -20,7 +20,7 @@ function ReleaseLetter(props) {
   const { handleValues, status, employeeData } = props;
   //   const otherFeature = useSelector((state) => state.Employee.otherFeature);
 
-  // console.log("dâtta", employeeData);
+  console.log("dâtta", employeeData);
   var today = new Date();
   const otherFeature = useSelector((state) => state.Employee.otherFeature);
   const [dataRelease, setDataRelease] = useState({
@@ -110,7 +110,9 @@ function ReleaseLetter(props) {
             <Grid style={{}} item sm={5.5} xs={5.5}>
               <TextField
                 className="luan"
-                value={employeeData?.employeeInfo?.fullName}
+                value={
+                  employeeData?.employeeInfo?.fullName || employeeData?.fullName
+                }
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
@@ -137,7 +139,10 @@ function ReleaseLetter(props) {
             <Grid item sm={5.5} xs={8.5}>
               <TextField
                 className="luan"
-                value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
+                value={
+                  otherFeature[employeeData?.employeeInfo?.teamId]?.name ||
+                  otherFeature[employeeData?.teamId]?.name
+                }
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
