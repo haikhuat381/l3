@@ -124,7 +124,7 @@ function ManagerEmployee() {
       </Box>
       <MaterialTable
         columns={columns}
-        data={listEmployee}
+        data={listEmployee || []}
         options={{
           paging: false,
 

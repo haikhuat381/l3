@@ -116,3 +116,7 @@ export const updateProposalConsult = (id, data) => {
 export const deleteProposalConsult = (id) => {
   return { type: ActionTypes.DELETE_PROPOSACONSULT, payload: id };
 };
+//Release
+export const ReleaseManageAction = (id, data) => {
+  return { type: ActionTypes.RELEASE_MANAGE, payload: { id, data } };
+};

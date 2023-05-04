@@ -25,6 +25,7 @@ import {
   addProposalConsultation,
   updateProposalConsultation,
   deleteProposalConsultation,
+  ReleaseManage,
 } from "app/views/ManageEmployee/ManageEmployeeServices";
 
 import { call, put } from "redux-saga/effects";
@@ -330,6 +331,19 @@ export function* updateProposalConsultsaga(action) {
     if (res?.status == 200) {
       toast.success("sua thanh cong ");
     }
+  } catch (error) {
+    console.log(err);
+  }
+}
+
+// Release
+export function* ReleaseManagesaga(action) {
+  try {
+    const res = yield call(
+      ReleaseManage,
+      action?.payload?.id,
+      action?.payload?.data
+    );
   } catch (error) {
     console.log(err);
   }

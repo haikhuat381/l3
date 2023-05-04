@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 function ReleaseLetter(props) {
-  const { employeeData, otherFeature } = props;
+  const { employeeData, otherFeature, handleValues, status } = props;
   //   const otherFeature = useSelector((state) => state.Employee.otherFeature);
   var options = {
     weekday: "long",
@@ -27,7 +27,18 @@ function ReleaseLetter(props) {
   };
   // console.log("dâtta", employeeData);
   var today = new Date();
+  const [dataRelease, setDataRelease] = useState({
+    status: "8",
+    terminateRequestDetail: employeeData?.terminateRequestDetail || "",
+  });
 
+  const handlechangeValuse = (event, method) => {
+    const data = { ...dataRelease };
+    data[method] = event.target.value;
+    setDataRelease(data);
+    handleValues(data);
+  };
+  console.log("asdasd", dataRelease);
   return (
     <>
       <Grid
@@ -192,7 +203,7 @@ function ReleaseLetter(props) {
                   <TextField
                     className="luan"
                     InputProps={{
-                      readOnly: true,
+                      readOnly: status,
                       style: { padding: 0 },
                     }}
                     id="standard-adornment-mount"
@@ -200,9 +211,10 @@ function ReleaseLetter(props) {
                     sx={{
                       "& fieldset": { border: "none", padding: 0 },
                     }}
-                    value={"Vợ tôi bắt tôi nghỉ việc "}
-                    // value={formik.values.terminateRequestDetail || ""}
-                    // onChange={formik.handleChange}
+                    value={dataRelease?.terminateRequestDetail}
+                    onChange={(event) => {
+                      handlechangeValuse(event, "terminateRequestDetail");
+                    }}
                   />
                 </Grid>
               </Grid>
