@@ -17,16 +17,12 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 function ReleaseLetter(props) {
-  const { employeeData, otherFeature, handleValues, status } = props;
+  const { handleValues, status, employeeData } = props;
   //   const otherFeature = useSelector((state) => state.Employee.otherFeature);
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+
   // console.log("dâtta", employeeData);
   var today = new Date();
+  const otherFeature = useSelector((state) => state.Employee.otherFeature);
   const [dataRelease, setDataRelease] = useState({
     status: "8",
     terminateRequestDetail: employeeData?.terminateRequestDetail || "",

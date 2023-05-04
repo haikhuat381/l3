@@ -29,7 +29,7 @@ function ReleaseDialog(props) {
   const dispatch = useDispatch();
   const [shouldSenToLeader, setShouldSenToLeader] = useState(false);
   const employeeData = useSelector((state) => state.Employee.employeeData);
-  const otherFeature = useSelector((state) => state.Employee.otherFeature);
+
   const [dataReleaseDialog, setDataReleaseDialog] = useState({});
   const handleValues = (data) => {
     setDataReleaseDialog(data);
@@ -77,7 +77,6 @@ function ReleaseDialog(props) {
         <DialogContent>
           <ReleaseLetter
             employeeData={employeeData}
-            otherFeature={otherFeature}
             handleValues={handleValues}
             status={false}
           />
