@@ -74,8 +74,8 @@ const Resume = React.forwardRef((props, ref) => {
   ];
 
   return (
-    <div ref={ref} style={{padding:"0 50px", height: 500, overflowY: "scroll"}} className="form-resume">
-      <Grid item container xs={12} sx={{mb: 6, display:"flex", justifyContent: "space-between"}} spacing={0}>
+    <div ref={ref} className="form-resume">
+      <Grid item container xs={12} className="resum-container" spacing={0}>
         <Grid item xs={3}>
           <CustomAvatar image={employeeData?.resume?.photoUrl} displayButton={"none"} isNoneBorder={true} />
         </Grid>
@@ -99,13 +99,13 @@ const Resume = React.forwardRef((props, ref) => {
       </Grid>
       <Grid container spacing={2}>
         <Grid container item xs={12} spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{mt: 2}}>
             <Typography variant="h6" fontWeight={"600"}>
               I. BẢN THÂN
             </Typography>
           </Grid>
           <Grid item container xs={12} justifyContent="space-between">
-            <Grid item container xs={5.8} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }} >
+            <Grid item container xs={5.8} className="self-items" >
               <Typography item xs={2}>Họ và tên:</Typography>
               <Grid item fullWidth xs={9.7}>
                 <TextField
@@ -129,7 +129,7 @@ const Resume = React.forwardRef((props, ref) => {
                 </TextField>
               </Grid>
             </Grid>
-            <Grid item container xs={6} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+            <Grid item container xs={6} className="self-items">
               <Typography item xs={2}>Giới tính:</Typography>
               <Grid item xs={9.9}>
                 <TextField
@@ -154,7 +154,7 @@ const Resume = React.forwardRef((props, ref) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+          <Grid item container xs={12} className="self-items">
             <Typography item xs={2}>Sinh ngày:</Typography>
             <Grid item xs={10.9} fullWidth>
               <TextField
@@ -178,7 +178,7 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
           </Grid>
           <Grid item container xs={12} justifyContent="space-between">
-            <Grid item container xs={5.8} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+            <Grid item container xs={5.8} className="self-items">
               <Typography item xs={2}>Điện thoại:</Typography>
               <Grid item xs={9.6}>
                 <TextField
@@ -202,7 +202,7 @@ const Resume = React.forwardRef((props, ref) => {
                 </TextField>
               </Grid>
             </Grid>
-            <Grid item container xs={6} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+            <Grid item container xs={6} className="self-items">
               <Typography item xs={1}>Email:</Typography>
               <Grid item xs={10.6}>
                 <TextField
@@ -228,7 +228,7 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
           </Grid>
 
-          <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+          <Grid item container xs={12} className="self-items">
             <Typography item xs={2}>Chỗ ở hiện nay:</Typography>
             <Grid item xs={10.4} fullWidth>
               <TextField
@@ -252,7 +252,7 @@ const Resume = React.forwardRef((props, ref) => {
           </Grid>
 
           <Grid item container xs={12} justifyContent="space-between">
-            <Grid item container xs={5.8} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+            <Grid item container xs={5.8} className="self-items">
               <Typography item xs={2}>Dân tộc:</Typography>
               <Grid item xs={10}>
                 <TextField
@@ -276,7 +276,7 @@ const Resume = React.forwardRef((props, ref) => {
                 </TextField>
               </Grid>
             </Grid>
-            <Grid item container xs={6} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+            <Grid item container xs={6} className="self-items">
               <Typography item xs={2}>Tôn giáo:</Typography>
               <Grid item xs={9.9}>
                 <TextField
@@ -302,7 +302,7 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
           </Grid>
           <Grid item container xs={12} justifyContent="space-between">
-            <Grid item container xs={5.8} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+            <Grid item container xs={5.8} className="self-items">
               <Typography item xs={2}>Số CCCD:</Typography>
               <Grid item xs={9.6}>
                 <TextField
@@ -326,7 +326,7 @@ const Resume = React.forwardRef((props, ref) => {
                 </TextField>
               </Grid>
             </Grid>
-            <Grid item container xs={6} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+            <Grid item container xs={6} className="self-items">
               <Typography item xs={2}>Cấp ngày:</Typography>
               <Grid item xs={9.8}>
                 <TextField
@@ -352,7 +352,7 @@ const Resume = React.forwardRef((props, ref) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={12} sx={{ position: "relative", display: "flex", justifyContent:"space-between" }}>
+          <Grid item container xs={12} className="self-items">
             <Typography item xs={1.1}>Nơi cấp:</Typography>
             <Grid item xs={11} fullWidth>
               <TextField
@@ -386,10 +386,10 @@ const Resume = React.forwardRef((props, ref) => {
             </Typography>
           </Grid>
           <Grid>
-            <Typography style={{ fontStyle: "italic", fontSize: "16px"}}>Ghi rõ họ tên, năm sinh, nghề nghiệp, nơi công tác của bố mẹ đẻ, anh chị em ruột, vợ(hoặc chồng), con</Typography>
+            <Typography className="note-relation">Ghi rõ họ tên, năm sinh, nghề nghiệp, nơi công tác của bố mẹ đẻ, anh chị em ruột, vợ(hoặc chồng), con</Typography>
 
           </Grid>
-          <Grid item xs={12} style={{ margin: "10px 0 20px 0" }} className="table-resume">
+          <Grid item xs={12} className="table-resume">
             <MaterialTable
               title={""}
               data={!listRelationship ? [] : listRelationship}
@@ -449,21 +449,21 @@ const Resume = React.forwardRef((props, ref) => {
               spacing={1}
             >
               <Grid item >
-                <Typography style={{ fontStyle: "italic"}}>{`Hà Nội, ngày ${today.getDate()} tháng ${today.getMonth() + 1} năm ${today.getFullYear()}`}</Typography>
+                <Typography className="date-signatune">{`Hà Nội, ngày ${today.getDate()} tháng ${today.getMonth() + 1} năm ${today.getFullYear()}`}</Typography>
               </Grid>
               <Grid item>
-                <Typography style={{ fontWeight: "bold" }}>Người khai ký tên</Typography>
-                <Typography style={{ fontStyle: "italic", fontSize:14 }}>(Ký, ghi rõ họ tên)</Typography>
+                <Typography className="title-name-signatune">Người khai ký tên</Typography>
+                <Typography className="note-signatune">(Ký, ghi rõ họ tên)</Typography>
               </Grid>
               
               <Grid item>
                 {" "}
-                <Typography style={{ fontWeight: "bold", fontStyle: "italic" }}>
+                <Typography className="name-signatune">
                   {employeeData?.resume?.fullName.split(" ").pop()}
                 </Typography>
               </Grid>
               <Grid item sx={{paddingBottom: "10px"}}>
-                <Typography style={{ fontWeight: "bold", fontStyle: "italic" }}>{employeeData?.resume?.fullName}</Typography>
+                <Typography className="name-signatune">{employeeData?.resume?.fullName}</Typography>
               </Grid>
             </Grid>
           </Grid>

@@ -7,6 +7,8 @@ import {
   Button,
   DialogActions,
   DialogContent,
+  Icon, 
+  IconButton
 } from "@mui/material";
 import EmployeeRegisterDialog from "./EmployeeRegisterDialog";
 import { Close } from "@mui/icons-material";
@@ -204,32 +206,21 @@ function AddNewEmployeeDialog(props) {
         theme="colored"
       />
       <Dialog open={true} maxWidth={"lg"} fullWidth={true}>
-        <DialogTitle
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            padding: "12px 24px",
-          }}
+        <DialogTitle className="dialog-title-employeeDialog"
         >
           {!employeeData?.employeeId ? "Thêm mới nhân viên" : "Sửa nhân viên"}
-          <Box onClick={() => handleClose()}>
-            <Close color="error"></Close>
-          </Box>
+          <IconButton onClick={handleClose}>
+            <Icon color="error">close</Icon>
+          </IconButton>
         </DialogTitle>
 
-        <DialogContent sx={{padding: "0 24px", marginTop: "20px"}}>
+        <DialogContent className="dialog-content-employeeDialog">
           <form onSubmit={formik.handleSubmit}>
             <TabContext value={value}>
               <Box
                 sx={{
-                  // borderBottom: 1,
-                  // borderColor: "divider",
                   background: "#ddd",
                   overflow: "hidden",
-                  // borderRadius: "4px"
                 }}
               >
                 <TabList onChange={handleChange}>
@@ -238,17 +229,17 @@ function AddNewEmployeeDialog(props) {
                   <Tab label="Thông tin quan hệ gia đình" value="3" />
                 </TabList>
               </Box>
-              <TabPanel value="1" sx={{ p: "0 0 20px 0" }}>
+              <TabPanel value="1" className="tab-info-employeeDialog">
                 <EmployeeInfo formikRoot={formik} />
               </TabPanel>
-              <TabPanel value="2" sx={{ p: "20px 0" }}>
+              <TabPanel value="2" className="tab-diploma-employeeDialog">
                 <EmployeeDiploma
                   employeeData={employeeData}
                   listDiploma={listDiploma}
                   handleAddDiploma={handleAddToList}
                 />
               </TabPanel>
-              <TabPanel value="3" sx={{ p: "20px 0" }}>
+              <TabPanel value="3" className="tab-relation-employeeDialog">
                 <EmployeeRelation
                   employeeData={employeeData}
                   listRelationship={listRelationship}
@@ -259,12 +250,7 @@ function AddNewEmployeeDialog(props) {
           </form>
         </DialogContent>
 
-        <DialogActions
-          style={{
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            justifyContent: "center",
-          }}
+        <DialogActions className="dialog-action-employeeDialog"
         >
           <Button
             variant="contained"

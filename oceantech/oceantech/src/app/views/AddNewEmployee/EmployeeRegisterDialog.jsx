@@ -112,24 +112,14 @@ export default function EmployeeRegisterDialog({
   return (
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>
-        <DialogTitle
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "9px 24px",
-            boxShadow: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
-            zIndex: 10000
-          }}
+        <DialogTitle className="dialog-title"
         >
           Hồ sơ nhân viên
-          <IconButton onClick={() => handleClose()}>
+          <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>
         </DialogTitle>
-        <DialogContent
-          sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex", padding: '0 24px', mt: 1 }}
-        >
+        <DialogContent className="dialog-content">
           <Tabs
             orientation="vertical"
             variant="scrollable"
@@ -142,7 +132,7 @@ export default function EmployeeRegisterDialog({
             <Tab label="Sơ yếu lý lịch" {...a11yProps(1)} />
             <Tab label="Danh sách văn bằng" {...a11yProps(2)} />
           </Tabs>
-          <TabPanel value={value} index={0} style={{ width: "100%" }}>
+          <TabPanel value={value} index={0} className="tab-items">
             <CurriculumVitae
               // ref={componentRef}
               status={false}
@@ -155,7 +145,7 @@ export default function EmployeeRegisterDialog({
               handleAddRelation={handleAddToList}
             />
           </TabPanel>
-          <TabPanel value={value} index={1} style={{ width: "100%" }}>
+          <TabPanel value={value} index={1} className="tab-items">
 
             <Resume
               listRelationship={employeeData?.familyRelations}
@@ -168,14 +158,14 @@ export default function EmployeeRegisterDialog({
               display={display}
             />
           </TabPanel>
-          <TabPanel value={value} index={2} style={{ width: "100%" }}>
+          <TabPanel value={value} index={2} className="tab-items">
               <Diploma
                 ref={componentRef}
                 listDiploma={employeeData?.certificates}
               />
           </TabPanel>
         </DialogContent>
-        <DialogActions style={{justifyContent: 'center', boxShadow:'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px'}}>
+        <DialogActions className="dialog-action">
           <Button
             variant="contained"
             color="primary"

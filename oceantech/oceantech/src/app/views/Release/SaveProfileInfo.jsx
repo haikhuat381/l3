@@ -10,6 +10,8 @@ import {
   DialogContent,
   Grid,
   Typography,
+  Icon, 
+  IconButton
 } from "@mui/material";
 function SaveProfileInfo(props) {
   const { handleClose, openEditDialog, openViewDialog } = props;
@@ -22,9 +24,9 @@ function SaveProfileInfo(props) {
             zIndex: 10000
              }}>
         Thông tin nộp lưu
-        <Box onClick={handleClose}>
-          <Close color="error"></Close>
-        </Box>
+        <IconButton onClick={handleClose}>
+          <Icon color="error">close</Icon>
+        </IconButton>
       </DialogTitle>
 
       <DialogContent style={{ paddingTop: 20 }}>
