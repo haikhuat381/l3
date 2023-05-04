@@ -74,7 +74,6 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
     setValue(newValue);
   };
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
-  console.log("employeeDatabbbbb", employeeData)
 
   return (
     <>
@@ -87,7 +86,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
         </DialogTitle>
         
         <DialogContent sx={{padding: '0 24px', mt: 1}}>
-          {employeeData?.employeeInfo.status === 8  ? (
+          {employeeData?.employeeInfo?.status === 8  ? (
             <ReleaseLetter 
               employeeData={employeeData?.employeeInfo}
               status={true}
@@ -162,7 +161,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
           <Button
             variant="contained"
             color="error"
-            onClick={() => handleClose()}
+            onClick={handleClose}
           >
             Hủy
           </Button>
