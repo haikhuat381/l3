@@ -173,9 +173,9 @@ function ReleaseLetter(props) {
                 sx={{
                   "& fieldset": { border: "none", padding: 0 },
                 }}
-                value={`${today.getDate()} - ${
+                value={`${today.getDate()} / ${
                   today.getMonth() + 1
-                } - ${today.getFullYear()}`}
+                } / ${today.getFullYear()}`}
               />
             </Grid>
           </Grid>

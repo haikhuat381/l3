@@ -25,7 +25,7 @@ import { ReleaseManageAction } from "app/redux/actions/actions";
 import ReleaseLetter from "app/components/ReleaseLetter/ReleaseLetter";
 import { async } from "regenerator-runtime";
 function ReleaseDialog(props) {
-  const { handleClose, handleCloseAll } = props;
+  const { handleClose, handleCloseAll, handleChangeReload } = props;
   const dispatch = useDispatch();
   const [shouldSenToLeader, setShouldSenToLeader] = useState(false);
   const employeeData = useSelector((state) => state.Employee.employeeData);
@@ -37,13 +37,7 @@ function ReleaseDialog(props) {
   console.log("chao bn ", dataReleaseDialog);
   const id = employeeData?.employeeInfo?.employeeId;
   const handlesubmit = async () => {
-    dispatch(
-      ReleaseManageAction(
-        employeeData?.employeeInfo?.employeeId,
-        dataReleaseDialog
-      )
-    );
-    handleChangeReload(id);
+    dispatch(ReleaseManageAction(id, dataReleaseDialog));
   };
   return (
     <>
@@ -103,6 +97,9 @@ function ReleaseDialog(props) {
             type="submit"
             onClick={async () => {
               handlesubmit();
+              handleChangeReload(id);
+              // handleClose();
+              handleCloseAll();
               // setShouldSenToLeader(true);
             }}
           >
