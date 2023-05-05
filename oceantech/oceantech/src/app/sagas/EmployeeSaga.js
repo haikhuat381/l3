@@ -348,6 +348,8 @@ export function* ReleaseManagesaga(action) {
       action?.payload?.id,
       action?.payload?.data
     );
+    if (res?.status == 200) {
+    }
   } catch (error) {
     console.log(err);
   }

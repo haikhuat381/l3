@@ -37,6 +37,7 @@ function ReleaseDialog(props) {
   const id = employeeData?.employeeInfo?.employeeId;
   const handlesubmit = async () => {
     dispatch(ReleaseManageAction(id, dataReleaseDialog));
+    // toast.success("Gửi lãnh đạo");
     handleChangeReload(id);
   };
   return (
