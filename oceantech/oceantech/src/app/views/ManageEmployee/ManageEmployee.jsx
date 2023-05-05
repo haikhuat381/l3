@@ -41,11 +41,14 @@ function ManagerEmployee() {
   const [pageSize, setPageSize] = useState(5);
   const reloadRef = useRef();
   const [shouldDialogManage, setShouldDialogManage] = useState(false);
+  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
+  const [dataReport, setDataReport] = useState();
+  const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
   const listEmployee = useSelector((state) => state.Employee.listEmployeeData);
   const objStatus = useSelector((state) => state?.Employee?.objStatus);
   const handleChangeReload = (value) => {
-    console.log(" reof", value);
     reloadRef.current = value;
+    console.log(" cjao bn ", reloadRef.current);
   };
 
   useEffect(() => {
@@ -60,6 +63,10 @@ function ManagerEmployee() {
   const handleClose = () => {
     setShouldDialogManage(false);
   };
+  const handleCloseMoreInfoDialog = () => {
+    setShouldOpenRequestDialog(false);
+    setShouldOpenDialog(false);
+  };
   const columns = [
     {
       title: "Hành động",
@@ -69,7 +76,13 @@ function ManagerEmployee() {
             {rowData.status === 9 && (
               <Tooltip title="Thông tin">
                 <span>
-                  <IconButton>
+                  <IconButton
+                    onClick={() => {
+                      dispatch(getEmployeeDataAction(rowData?.employeeId));
+                      setDataReport(rowData);
+                      setShouldOpenRequestDialog(true);
+                    }}
+                  >
                     <Icon
                       // color="warning"
                       style={{ color: "#EED370" }}
@@ -152,10 +165,28 @@ function ManagerEmployee() {
           toolbar: false,
         }}
       />
+
       <PaginationCustom onHandleChange={onHandleChange} />
       {shouldDialogManage && (
         <ManagerEmployeeDialog
           handleClose={handleClose}
+          handleChangeReload={handleChangeReload}
+        />
+      )}
+      {shouldOpenRequestDialog && (
+        <MoreInfoDialog
+          handleClose={() => {
+            setShouldOpenRequestDialog(false);
+          }}
+          openEditDialog={() => {
+            setShouldOpenDialog(true);
+          }}
+        />
+      )}
+      {shouldOpenDialog && (
+        <ReleaseDialog
+          handleClose={() => setShouldOpenDialog(false)}
+          handleCloseAll={handleCloseMoreInfoDialog}
           handleChangeReload={handleChangeReload}
         />
       )}
