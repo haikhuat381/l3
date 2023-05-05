@@ -21,7 +21,7 @@ import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
 
 const Container = styled("div")(() => ({
-  margin: "30px",
+  margin: "30px 30px 0",
   "& .breadcrumb": {
     marginBottom: "20px",
   },
@@ -223,6 +223,8 @@ function AddNewEmployee() {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
               };
             },
+            maxBodyHeight: "460px",
+            minBodyHeight: "460px",
             headerStyle: {
               backgroundColor: "#262e49",
               color: "#fff",

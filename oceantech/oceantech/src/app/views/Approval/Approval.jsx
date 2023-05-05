@@ -18,7 +18,7 @@ import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import moment from "moment";
 
 const Container = styled("div")(({ theme }) => ({
-  margin: "30px",
+  margin: "30px 30px 0",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
   "& .breadcrumb": {
     marginBottom: "0px",
@@ -130,6 +130,8 @@ function Approval() {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
               };
             },
+            maxBodyHeight: "470px",
+            minBodyHeight: "470px",
             headerStyle: {
               backgroundColor: "#222943",
               color: "#fff",

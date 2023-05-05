@@ -27,10 +27,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Container = styled("div")(({ theme }) => ({
-  margin: "30px",
+  margin: "30px 30px 0",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
   "& .breadcrumb": {
-    marginBottom: "30px",
+    marginBottom: "0",
     [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
   },
 }));
@@ -70,6 +70,9 @@ function ManagerEmployee() {
   const columns = [
     {
       title: "Hành động",
+      headerStyle: {
+        borderTopLeftRadius: "4px",
+      },
       render: (rowData) => {
         return (
           <>
@@ -119,6 +122,7 @@ function ManagerEmployee() {
     {
       title: "Trạng thái",
       field: "status",
+      headerStyle: { borderTopRightRadius: "4px" },
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];

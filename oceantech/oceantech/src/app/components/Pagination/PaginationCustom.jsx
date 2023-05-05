@@ -59,17 +59,20 @@ function PaginationCustom({ onHandleChange }) {
           renderInput={(params) => <TextField {...params} label="" size="small" value={pageSize} />}
         />
       </div>
-      <Pagination
-        shape="rounded"
-        variant="outlined"
-        showFirstButton
-        showLastButton
-        count={total}
-        page={page}
-        onChange={(e, value) => {
-          setPage(value)
-        }}
-      />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <p style={{ marginRight: 16 }}>{`Tổng bản ghi: ${totalData}`}</p>
+        <Pagination
+          shape="rounded"
+          variant="outlined"
+          showFirstButton
+          showLastButton
+          count={total}
+          page={page}
+          onChange={(e, value) => {
+            setPage(value)
+          }}
+        />
+      </div>
     </div>
   )
 
