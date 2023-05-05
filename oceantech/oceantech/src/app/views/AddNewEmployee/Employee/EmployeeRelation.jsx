@@ -252,7 +252,7 @@ function EmployeeRelation(props) {
             />
           </Grid>
 
-          <Grid item sm={6} xs={6} className="input-dialog">
+          <Grid item sm={5} xs={5} className="input-dialog">
             <TextField
               label="Địa chỉ cụ thể"
               type="text"
@@ -266,7 +266,7 @@ function EmployeeRelation(props) {
               helperText={formik.touched.address && formik.errors.address ? <div>{formik.errors.address}</div> : null}
             />
           </Grid>
-          <Grid item sm={3} xs={3} className="input-dialog">
+          <Grid item sm={4} xs={4} className="input-dialog">
             {" "}
             <Button
               variant="contained"
@@ -299,6 +299,8 @@ function EmployeeRelation(props) {
           rowStyle: (rowData, index) => {
             return {
               backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+              fontSize: 14,
+              // padding: "6px 10px !important"
             };
           },
           maxBodyHeight: "215px",
@@ -306,7 +308,8 @@ function EmployeeRelation(props) {
           headerStyle: {
             backgroundColor: "#262e49",
             color: "#fff",
-            position: 'sticky', top: 0, zIndex: 99
+            position: 'sticky', top: 0, zIndex: 99,
+            padding: "14px 11px"
           },
           padding: "default",
           toolbar: false,

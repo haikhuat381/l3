@@ -19,7 +19,7 @@ const Container = styled("div")(({ theme }) => ({
   margin: "30px",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
   "& .breadcrumb": {
-    marginBottom: "30px",
+    marginBottom: "0px",
     [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
   },
 }));

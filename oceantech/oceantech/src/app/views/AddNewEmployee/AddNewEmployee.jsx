@@ -24,7 +24,7 @@ import PaginationCustom from "app/components/Pagination/PaginationCustom";
 const Container = styled("div")(() => ({
   margin: "30px",
   "& .breadcrumb": {
-    marginBottom: "30px",
+    marginBottom: "20px",
   },
 }));
 
@@ -218,11 +218,11 @@ function AddNewEmployee() {
           ]}
         />
       </Box>
-      <Box>
+      <Box className="toolbar-table-addnewemployee">
         <Button
           variant="contained"
           color="primary"
-          sx={{ mb: 2 }}
+          sx={{ mb: 2}}
           onClick={() => setShouldOpenDialog(true)}
         >
           Thêm mới
@@ -246,7 +246,7 @@ function AddNewEmployee() {
               color: "#fff",
             },
             padding: "default",
-            toolbar: false,
+            toolbar: true,
           }}
         />
         <PaginationCustom

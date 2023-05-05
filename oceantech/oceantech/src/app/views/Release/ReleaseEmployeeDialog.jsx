@@ -83,10 +83,16 @@ export default function ReleaseEmployeeDialog({ handleClose,handleChangeReload }
   ];
   return (
     <>
-      <Dialog open={true} maxWidth={"lg"} fullWidth>
+      <Dialog open={true} maxWidth={"lg"} fullWidth
+        sx={{
+          '& .MuiDialog-paper': {
+            minHeight: '680px',
+          },
+        }}
+      >
         <DialogTitle className="dialog-title"
         >
-          Hồ sơ nhân viên
+          Thông tin hồ sơ
           <IconButton onClick={() => handleClose()}>
             <Icon color="error">close</Icon>
           </IconButton>
