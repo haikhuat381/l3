@@ -156,7 +156,6 @@ export function* resetFormDataSaga(action) {
   });
 }
 
-
 export function* addRegistSaga(action) {
   const res = yield call(addRegist, action.payload.id, action.payload.data);
   if (res.status === 200) {
@@ -212,9 +211,10 @@ export function* addPromotesaga(action) {
       action?.payload?.data
     );
     if (res?.status === 200) {
-      toast.success(" them thanh cong ");
+      // yield put({
+      //   type: ActionTypes.GET_PROMOTE_HISTORY_DATA,
+      // });
     }
-    console.log(res);
   } catch (error) {
     console.log(error);
   }

@@ -49,8 +49,8 @@ function ManagerEmployee() {
   };
 
   useEffect(() => {
-    dispatch(getTotalAction("5"));
-    dispatch(getListEmployeeAction("5", page, pageSize));
+    dispatch(getTotalAction("5,9"));
+    dispatch(getListEmployeeAction("5,9", page, pageSize));
   }, [page, pageSize, reloadRef.current]);
 
   const onHandleChange = (page, pageSize) => {
@@ -66,11 +66,20 @@ function ManagerEmployee() {
       render: (rowData) => {
         return (
           <>
-            {/* <Tooltip title="Thông tin">
-              <IconButton>
-                <Icon>report</Icon>
-              </IconButton>
-            </Tooltip> */}
+            {rowData.status === 9 && (
+              <Tooltip title="Thông tin">
+                <span>
+                  <IconButton>
+                    <Icon
+                      // color="warning"
+                      style={{ color: "#EED370" }}
+                    >
+                      report
+                    </Icon>
+                  </IconButton>
+                </span>
+              </Tooltip>
+            )}
 
             <Tooltip title="Cập nhật diễn biến">
               <IconButton

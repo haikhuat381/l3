@@ -46,7 +46,7 @@ function SalarationLetter(props) {
       >
         <Grid container>
           <Grid
-            sx={{ border: 1, BorderColor: "grey.500", mt: 1 }}
+            sx={{ mt: 1 }}
             container
             item
             sm={12}
@@ -54,106 +54,6 @@ function SalarationLetter(props) {
             justifyContent="center"
             display="flex"
           >
-            <Grid
-              container
-              item
-              sm={5}
-              xs={5}
-              justifyContent="center"
-              display="flex"
-              sx={{
-                pt: 2,
-                pb: 2,
-                pl: 2,
-                pr: 2,
-                borderRight: 1,
-                BorderColor: "grey.500",
-              }}
-            >
-              <Grid item sm={12} xs={12} display="flex" sx={{ mb: 1 }}>
-                <Grid sm={5} xs={5} sx={{ mt: 2 }}>
-                  <Typography
-                    variant="h5"
-                    sm={12}
-                    xs={12}
-                    value={"1"}
-                    fontFamily={"Times New Roman"}
-                  >
-                    CƠ QUAN:
-                  </Typography>
-                </Grid>
-                <TextField
-                  fontFamily={"Times New Roman"}
-                  className=" luan2"
-                  InputProps={{
-                    readOnly: true,
-                    style: { padding: 0 },
-                  }}
-                  id="standard-adornment-mount"
-                  fullWidth
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
-                  value={"Thẩm Quyền Thành Phố Hà Nội "}
-                />
-              </Grid>
-
-              <Grid item sm={12} xs={12} display="flex" sx={{ mb: 1 }}>
-                <Grid sx={{ mt: 2 }} sm={5} xs={5}>
-                  <Typography
-                    variant="h6"
-                    sm={12}
-                    xs={12}
-                    fontFamily={"Times New Roman"}
-                  >
-                    CÔNG TY:
-                  </Typography>
-                </Grid>
-                <TextField
-                  fontFamily={"Times New Roman"}
-                  // multiline
-                  className=" luan2"
-                  InputProps={{
-                    readOnly: true,
-                    style: { padding: 0 },
-                  }}
-                  id="standard-adornment-mount"
-                  fullWidth
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
-                  value={"Oceantech"}
-                />
-              </Grid>
-
-              <Grid item sm={12} xs={12} display="flex" sx={{ mb: 1 }}>
-                <Grid sx={{ mt: 2 }} sm={5} xs={5}>
-                  <Typography
-                    variant="h6"
-                    sm={12}
-                    xs={12}
-                    fontFamily={"Times New Roman"}
-                  >
-                    Số:
-                  </Typography>
-                </Grid>
-                <TextField
-                  fontFamily={"Times New Roman"}
-                  // multiline
-                  className=" luan2"
-                  InputProps={{
-                    readOnly: true,
-                    style: { padding: 0 },
-                  }}
-                  id="standard-adornment-mount"
-                  fullWidth
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
-                  value={"12-Bộ luật hình sự "}
-                />
-              </Grid>
-            </Grid>
             <Grid container item sm={7} xs={7} sx={{ pt: 2, pb: 2 }}>
               <Grid
                 variant="h5"
@@ -211,7 +111,7 @@ function SalarationLetter(props) {
             </Typography>
           </Grid>
           <Grid
-            sx={{ pt: 1, pb: 1 }}
+            sx={{ pt: 1, pb: 3, mb: 2 }}
             container
             item
             sm={12}
@@ -235,13 +135,19 @@ function SalarationLetter(props) {
             className=" container-form"
             sx={{ pl: 10, pr: 10, pb: 2 }}
           >
-            <Grid sx={{ mb: 2 }} item sm={3.75} xs={3.75}>
-              <Typography sx={{ mt: 1 }} xs={2} sm={3}>
+            <Grid sx={{ mb: 2 }} item sm={3.2} xs={3.2}>
+              <Typography
+                sx={{ mt: 1 }}
+                xs={2}
+                sm={3}
+                fontFamily={"Times New Roman"}
+              >
                 - Căn cứ tại quy chế, Điều lệ công ty:
               </Typography>
             </Grid>
             <Grid xs={8} item>
               <TextField
+                fontFamily={"Times New Roman"}
                 className="luan3"
                 InputProps={{
                   readOnly: true,
@@ -256,16 +162,16 @@ function SalarationLetter(props) {
               />
             </Grid>
             <Grid item sm={12} xs={12}>
-              <Typography sx={{ mb: 2 }}>
+              <Typography sx={{ mb: 2 }} fontFamily={"Times New Roman"}>
                 - Căn cứ vào hợp đồng lao động với người lao động
               </Typography>
-              <Typography>
+              <Typography fontFamily={"Times New Roman"}>
                 - Xét những đóng góp của người lao động và đề nghị của trưởng
                 phòng nhân sự
               </Typography>
             </Grid>
             <Grid
-              sx={{ pt: 1, mt: 4 }}
+              sx={{ pt: 1, mt: 4, mb: 3 }}
               container
               item
               sm={12}
@@ -289,11 +195,14 @@ function SalarationLetter(props) {
             sx={{ pl: 10, pr: 10, pb: 2 }}
             justifyContent="flex-start"
           >
-            <Grid item sm={2} xs={2} sx={{ mt: 1 }}>
-              <Typography>Điều 1: Kể từ ngày</Typography>
+            <Grid item sm={1.6} xs={1.6} sx={{ mt: 1 }}>
+              <Typography fontFamily={"Times New Roman"}>
+                Điều 1: Kể từ ngày
+              </Typography>
             </Grid>
             <Grid item sm={1.5} xs={2}>
               <TextField
+                fontFamily={"Times New Roman"}
                 className="luan3"
                 InputProps={{
                   readOnly: status,
@@ -310,11 +219,14 @@ function SalarationLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={3.5} xs={3.5} sx={{ pl: 1, mt: 1 }}>
-              <Typography>điều chỉnh mức lương của Ông/Bà</Typography>
+            <Grid item sm={3} xs={3} sx={{ pl: 1, mt: 1 }}>
+              <Typography fontFamily={"Times New Roman"}>
+                điều chỉnh mức lương của Ông/Bà
+              </Typography>
             </Grid>
             <Grid item sm={2} xs={2}>
               <TextField
+                fontFamily={"Times New Roman"}
                 className="luan3"
                 InputProps={{
                   readOnly: true,
@@ -329,10 +241,13 @@ function SalarationLetter(props) {
               />
             </Grid>
             <Grid item sm={1} xs={1} sx={{ mt: 1 }}>
-              <Typography>sẽ tăng lên</Typography>
+              <Typography fontFamily={"Times New Roman"}>
+                sẽ tăng lên
+              </Typography>
             </Grid>
             <Grid item sm={1.5} xs={1}>
               <TextField
+                fontFamily={"Times New Roman"}
                 className="luan3  "
                 InputProps={{
                   readOnly: status,
@@ -358,7 +273,7 @@ function SalarationLetter(props) {
             sx={{ pl: 10, pr: 10, pb: 2 }}
             justifyContent="flex-start"
           >
-            <Typography>
+            <Typography fontFamily={"Times New Roman"}>
               Điều 2: Các ông/bà Phòng Nhân Sự, Phòng Tài Chính kế toán căn cứ
               quyết định thi hành
             </Typography>
@@ -366,112 +281,64 @@ function SalarationLetter(props) {
         </Grid>
         <Grid
           container
+          item
           sm={12}
           xs={12}
-          sx={{ mt: 4, border: 1, BorderColor: "grey.500" }}
-          display="flex"
-          flexDirection="row"
-          justifyContent="center"
+          sx={{ pl: 10, pr: 10, mt: 1 }}
+          justifyContent="flex-end"
+        ></Grid>
+      </Grid>
+      <Grid
+        container
+        item
+        sm={12}
+        xs={12}
+        sx={{ pl: 10, pr: 10, pb: 5 }}
+        justifyContent="flex-end"
+      >
+        <Grid
+          item
+          sm={4}
+          xs={4}
+          container
+          direction="column"
+          textAlign="center"
+          spacing={1}
         >
-          <Grid
-            item
-            sm={6}
-            xs={6}
-            sx={{
-              pl: 10,
-              pr: 10,
-              borderRight: 1,
-              BorderColor: "grey.500",
-            }}
-          >
-            <Grid
-              item
-              sm={12}
-              xs={12}
-              container
-              direction="column"
-              textAlign="center"
-              spacing={1}
-            >
-              <Grid item>
-                <Typography
-                  style={{ fontWeight: "bold" }}
-                  fontFamily={"Times New Roman"}
-                >
-                  Nơi nhận đơn
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  style={{ fontWeight: "bold" }}
-                  fontFamily={"Times New Roman"}
-                >
-                  TỔNG GIÁM ĐỐC
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  style={{ fontWeight: "bold" }}
-                  fontFamily={"Times New Roman"}
-                >
-                  Như điều 2
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  style={{ fontWeight: "bold" }}
-                  fontFamily={"Times New Roman"}
-                >
-                  Lưu HS, HC
-                </Typography>
-              </Grid>
-            </Grid>
+          <Grid item>
+            <Typography fontFamily={"Times New Roman"}>
+              {`Hà Nội, Ngày ${today.getDate()} tháng ${
+                today.getMonth() + 1
+              } năm ${today.getFullYear()}`}
+            </Typography>
           </Grid>
-          <Grid item sm={6} xs={6} sx={{ pl: 10, pr: 10 }}>
-            <Grid
-              item
-              sm={12}
-              xs={12}
-              container
-              direction="column"
-              textAlign="center"
-              spacing={1}
+          <Grid item>
+            <Typography
+              style={{ fontWeight: "bold" }}
+              fontFamily={"Times New Roman"}
             >
-              <Grid item>
-                <Typography fontFamily={"Times New Roman"}>
-                  {`Hà Nội, Ngày ${today.getDate()} tháng ${
-                    today.getMonth() + 1
-                  } năm ${today.getFullYear()}`}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  style={{ fontWeight: "bold" }}
-                  fontFamily={"Times New Roman"}
-                >
-                  Người làm đơn 2
-                </Typography>
-              </Grid>
-              <Grid item>
-                {" "}
-                <Typography
-                  style={{ fontWeight: "bold" }}
-                  fontFamily={"Times New Roman"}
-                >
-                  {employeeData?.employeeInfo?.fullName.split(" ").pop()}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  style={{ fontWeight: "bold" }}
-                  fontFamily={"Times New Roman"}
-                >
-                  {employeeData?.employeeInfo?.fullName}
-                </Typography>
-              </Grid>
-            </Grid>
+              Người làm đơn
+            </Typography>
+          </Grid>
+          <Grid item>
+            {" "}
+            <Typography
+              style={{ fontWeight: "bold" }}
+              fontFamily={"Times New Roman"}
+            >
+              {employeeData?.employeeInfo?.fullName.split(" ").pop()}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography
+              style={{ fontWeight: "bold" }}
+              fontFamily={"Times New Roman"}
+            >
+              {employeeData?.employeeInfo?.fullName}
+            </Typography>
           </Grid>
         </Grid>
+
         {/* <Grid
                                 container
                                 item

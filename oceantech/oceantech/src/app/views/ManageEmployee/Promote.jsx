@@ -25,7 +25,6 @@ import PromoteDialog from "./PromoteDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 
 import moment from "moment";
-import { async } from "regenerator-runtime";
 function Promote(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -95,6 +94,8 @@ function Promote(props) {
 
       if (!updatePromote?.employeeId) {
         dispatch(addPromoteHistoryAction(ID, values));
+        console.log(" cho bn");
+        toast.success("Thêm thành công");
         handleAllGet();
       } else {
         setIdPromoteDialog(updatePromote?.promotionId);
