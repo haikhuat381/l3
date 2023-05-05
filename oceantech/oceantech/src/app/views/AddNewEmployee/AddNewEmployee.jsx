@@ -43,7 +43,7 @@ function AddNewEmployee() {
   const handleChangeReload = (value) => {
     reloadRef.current = value;
   };
-
+  
   useEffect(() => {
     handleGetListEmployee(page, pagesize);
   }, [page, pagesize, reloadRef.current]);
@@ -73,7 +73,8 @@ function AddNewEmployee() {
       setShouldOpenDialog(true);
     }
     if (method === 0) {
-      handleChangeReload(rowdata.employeeId);
+      // handleChangeReload(rowdata.employeeId);
+      handleChangeReload(Math.random().toString(36).slice(-5));
       setshouldOpenConfirmationDeleteDialog(false);
       // toast.success("Xóa nhân viên thành công");
     }

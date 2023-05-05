@@ -43,7 +43,8 @@ function RefuseDialog(props) {
       console.log(values)
       // isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
       isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, rejectedReason: values.rejectedReason }, "Từ chối")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status}, "Từ chối"))
-      handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      handleChangeReload(Math.random().toString(36).slice(-5))
 
       // employee.status = "Từ chối";
       // dispatch(updateEmployee(employee));

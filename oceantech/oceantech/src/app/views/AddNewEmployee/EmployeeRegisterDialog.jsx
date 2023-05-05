@@ -181,7 +181,8 @@ export default function EmployeeRegisterDialog({
                 resume: formDataResumeUpdate,
                 cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate?.workExperiences?.filter(data => data.startDate !== null && data.endDate !== null) }
               }))
-              handleChangeReload(employeeData?.employeeInfo?.employeeId)
+              // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+              handleChangeReload(Math.random().toString(36).slice(-5))
               setSaved(false);
             }}
           >
@@ -193,7 +194,8 @@ export default function EmployeeRegisterDialog({
             disabled={saved}
             onClick={() => {
               setshouldOpenSendToLeadershipDialog(true);
-              handleChangeReload(employeeData?.employeeInfo?.employeeId)
+              // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+              handleChangeReload(Math.random().toString(36).slice(-5))
             }}
           >
             Gửi lãnh đạo

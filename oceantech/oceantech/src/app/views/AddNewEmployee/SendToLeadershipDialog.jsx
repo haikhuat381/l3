@@ -124,7 +124,7 @@ function SendToLeadershipDialog(props) {
                 label="Nội dung"
                 name="registerContent"
                 multiline
-                minRows={3}
+                minRows={4}
                 onChange={formik.handleChange}
                 value={formik.values.registerContent}
                 error={formik.errors.registerContent && formik.touched.registerContent}

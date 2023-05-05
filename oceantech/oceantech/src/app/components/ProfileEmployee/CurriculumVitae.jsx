@@ -114,7 +114,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
               <Box className="item-box">
                 <Icon>cakeIcon</Icon>
                 <Typography variant="body2">
-                  {moment(employeeData?.resume?.dateOfBirth).format("YYYY-MM-DD")}
+                  {moment(employeeData?.resume?.dateOfBirth).format("DD-MM-YYYY")}
                 </Typography>
               </Box>
             </Grid>

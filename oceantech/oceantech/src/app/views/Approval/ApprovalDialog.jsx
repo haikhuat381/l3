@@ -85,7 +85,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
         }}
       >
         <DialogTitle className="dialog-title">
-          Thông tin hồ sơ
+        {employeeData?.employeeInfo?.status === 8 ? "Thông tin" : "Thông tin hồ sơ"}
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>
