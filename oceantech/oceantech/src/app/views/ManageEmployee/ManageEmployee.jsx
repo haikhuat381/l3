@@ -27,10 +27,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Container = styled("div")(({ theme }) => ({
-  margin: "30px",
+  margin: "30px 30px 0",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
   "& .breadcrumb": {
-    marginBottom: "30px",
+    marginBottom: "0",
     [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
   },
 }));
@@ -63,6 +63,9 @@ function ManagerEmployee() {
   const columns = [
     {
       title: "Hành động",
+      headerStyle: { 
+        borderTopLeftRadius: "4px"
+      },
       render: (rowData) => {
         return (
           <>
@@ -97,6 +100,7 @@ function ManagerEmployee() {
     {
       title: "Trạng thái",
       field: "status",
+      headerStyle: {borderTopRightRadius: "4px"},
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];
@@ -122,28 +126,30 @@ function ManagerEmployee() {
           ]}
         />
       </Box>
-      <MaterialTable
-        columns={columns}
-        data={listEmployee || []}
-        options={{
-          paging: false,
-
-          rowStyle: (rowData, index) => {
-            return {
-              backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-            };
-          },
-          maxBodyHeight: "1000px",
-          minBodyHeight: "370px",
-          headerStyle: {
-            backgroundColor: "#262e49",
-            color: "#fff",
-          },
-          padding: "default",
-          toolbar: false,
-        }}
-      />
-      <PaginationCustom onHandleChange={onHandleChange} />
+      <Box width="100%" overflow="auto">
+        <MaterialTable
+          title={""}
+          columns={columns}
+          data={listEmployee || []}
+          options={{
+            paging: false,
+            rowStyle: (rowData, index) => {
+              return {
+                backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+              };
+            },
+            maxBodyHeight: "470px",
+            minBodyHeight: "470px",
+            headerStyle: {
+              backgroundColor: "#262e49",
+              color: "#fff",
+            },
+            padding: "default",
+            toolbar: true,
+          }}
+        />
+        <PaginationCustom onHandleChange={onHandleChange} />
+      </Box>
       {shouldDialogManage && (
         <ManagerEmployeeDialog
           handleClose={handleClose}

@@ -100,7 +100,6 @@ export default (state = initialState, action) => {
     }
 
     case ActionTypes.RESET_FORM_DATA_SUCCESS: {
-      console.log("okkkkkkkkk")
       return { ...state, formData: action.payload };
     }
     //

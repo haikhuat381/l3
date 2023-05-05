@@ -61,7 +61,7 @@ export function* getListEmployeeDataSaga(data) {
     );
     yield put({
       type: ActionTypes.GET_LIST_EMPLOYEE_DATA_SUCCESS,
-      payload: res.data.data,
+      payload: res?.data?.data,
     });
   } catch (err) {
     console.log(err);
