@@ -135,6 +135,9 @@ function Approval() {
             headerStyle: {
               backgroundColor: "#222943",
               color: "#fff",
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
             },
 
             padding: "default",

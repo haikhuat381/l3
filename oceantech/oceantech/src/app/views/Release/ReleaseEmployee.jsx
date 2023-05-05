@@ -155,11 +155,11 @@ function ReleaseEmployee() {
             headerStyle: {
               backgroundColor: "#222943",
               color: "#fff",
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
             },
-            // padding: 'dense',
             padding: "default",
-            // search: false,
-            // exportButton: true,
             toolbar: true,
           }}
         />

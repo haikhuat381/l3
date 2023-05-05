@@ -295,7 +295,6 @@ function EmployeeRelation(props) {
           paging: false,
           pageSize: 10,
           pageSizeOptions: [10, 20, 50],
-          stickyHeader: true,
           rowStyle: (rowData, index) => {
             return {
               backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
@@ -308,7 +307,9 @@ function EmployeeRelation(props) {
           headerStyle: {
             backgroundColor: "#262e49",
             color: "#fff",
-            position: 'sticky', top: 0, zIndex: 99,
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
             padding: "14px 11px"
           },
           padding: "default",
