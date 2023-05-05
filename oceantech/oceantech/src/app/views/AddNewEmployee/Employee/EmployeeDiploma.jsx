@@ -258,8 +258,6 @@ function EmployeeDiploma(props) {
             paging: false,
             pageSize: 10,
             pageSizeOptions: [10, 20, 50],
-            // paginationType: 'stepped',
-            stickyHeader: true,
             rowStyle: (rowData, index) => {
               return {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
@@ -271,8 +269,10 @@ function EmployeeDiploma(props) {
             headerStyle: {
               backgroundColor: "#262e49",
               color: "#fff",
-              position: 'sticky', top: 0, zIndex: 99,
-              padding: 14
+              padding: 14,
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
             },
             padding: "default",
             toolbar: false,
