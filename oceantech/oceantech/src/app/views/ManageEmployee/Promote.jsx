@@ -25,6 +25,7 @@ import PromoteDialog from "./PromoteDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 
 import moment from "moment";
+import { async } from "regenerator-runtime";
 function Promote(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -89,13 +90,13 @@ function Promote(props) {
       newPosition: Yup.string().required("Không được bỏ trống"),
       date: Yup.date().required("Vui lòng nhập ngày"),
     }),
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       setPromoteDataDialog(values);
 
       if (!updatePromote?.employeeId) {
         dispatch(addPromoteHistoryAction(ID, values));
-        console.log(" cho bn");
-        toast.success("Thêm thành công");
+        console.log("  ban dang thang chuc ");
+
         handleAllGet();
       } else {
         setIdPromoteDialog(updatePromote?.promotionId);
@@ -196,6 +197,18 @@ function Promote(props) {
   ];
   return (
     <>
+      {/* <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      /> */}
       {shouldOpenDeleteDialog && (
         <ConfirmDialog
           onConfirmDialogClose={() => {

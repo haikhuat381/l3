@@ -30,7 +30,7 @@ import {
 
 import { call, put } from "redux-saga/effects";
 import { ActionTypes } from "app/redux/actions/actionTypes";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // export function* getListEmployeeSaga() {
@@ -191,14 +191,12 @@ export function* deletePromotesaga(action) {
 }
 
 export function* getPromoteHistorysaga(action) {
-  console.log(" nah tuong dsz", action);
   try {
     const res = yield call(getPromoteHistory, action?.payload);
-    console.log("getPromoteHistorysaga", res?.data?.data),
-      yield put({
-        type: ActionTypes.GET_PROMOTE_HISTORY_DATA_SUCCESS,
-        payload: res?.data?.data,
-      });
+    yield put({
+      type: ActionTypes.GET_PROMOTE_HISTORY_DATA_SUCCESS,
+      payload: res?.data?.data,
+    });
   } catch (err) {
     console.log(err);
   }
@@ -211,9 +209,7 @@ export function* addPromotesaga(action) {
       action?.payload?.data
     );
     if (res?.status === 200) {
-      // yield put({
-      //   type: ActionTypes.GET_PROMOTE_HISTORY_DATA,
-      // });
+      toast.success("them moi ");
     }
   } catch (error) {
     console.log(error);

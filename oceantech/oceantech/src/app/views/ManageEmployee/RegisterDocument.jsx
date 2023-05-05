@@ -80,7 +80,7 @@ function RegisterDocument(props) {
         // console.log("hai");
         // console.log(dataUpdate);
         dispatch(updateEmployee(dataUpdate));
-        toast.success("Thêm thành công");
+        // toast.success("Thêm thành công");
       } else {
         // console.log("sua");
         // const newListFilter = listPromote.filter((Promote) => Promote.id != values.id);

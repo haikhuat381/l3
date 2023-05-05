@@ -17,8 +17,8 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 function ReleaseLetter(props) {
-  const { employeeData, otherFeature, status } = props;
-  //   const otherFeature = useSelector((state) => state.Employee.otherFeature);
+  const { employeeData, status } = props;
+  const otherFeature = useSelector((state) => state.Employee.otherFeature);
   var options = {
     weekday: "long",
     year: "numeric",
@@ -130,7 +130,7 @@ function ReleaseLetter(props) {
             <Grid item sm={5.5} xs={8.5}>
               <TextField
                 className="luan"
-                // value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
+                value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
