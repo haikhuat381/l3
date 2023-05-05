@@ -226,8 +226,8 @@ function EmployeeDiploma(props) {
             />
           </Grid>
 
-          <Grid container item xs={3} spacing={1}>
-            <Grid item>
+          <Grid container item sm={4} xs={12} spacing={1}>
+            <Grid item xs={6.5}>
               <Button
                 variant="contained"
                 color="primary"
@@ -237,7 +237,7 @@ function EmployeeDiploma(props) {
                 Lưu văn bằng
               </Button>
             </Grid>
-            <Grid item>
+            <Grid item xs={5.5}>
               <Button
                 variant="contained"
                 color="error"
@@ -263,6 +263,7 @@ function EmployeeDiploma(props) {
             rowStyle: (rowData, index) => {
               return {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+                fontSize: 14
               };
             },
             maxBodyHeight: "215px",
@@ -270,7 +271,8 @@ function EmployeeDiploma(props) {
             headerStyle: {
               backgroundColor: "#262e49",
               color: "#fff",
-              position: 'sticky', top: 0, zIndex: 99
+              position: 'sticky', top: 0, zIndex: 99,
+              padding: 14
             },
             padding: "default",
             toolbar: false,

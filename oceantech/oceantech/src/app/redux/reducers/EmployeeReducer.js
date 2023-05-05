@@ -46,16 +46,16 @@ const initialState = {
   ],
   leader: [
     {
-      name: "Nguyen Giam Doc",
+      name: "Nguyen Van A",
       position: "Giám Đốc",
     },
     {
-      name: "Nguyen Truong Phong",
-      position: "Trưởng phòng",
+      name: "Nguyen Van B",
+      position: "Quản lí",
     },
     {
-      name: "Nguyen Quan Li",
-      position: "Quản lí",
+      name: "Nguyen Van C",
+      position: "Nhân viên",
     },
   ],
   total: null,

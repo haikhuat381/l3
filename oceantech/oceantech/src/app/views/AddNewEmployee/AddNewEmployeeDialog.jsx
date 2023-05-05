@@ -38,7 +38,7 @@ function AddNewEmployeeDialog(props) {
   const dispatch = useDispatch();
 
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  const [saved, setSaved] = useState("none");
+  const [saved, setSaved] = useState(true);
 
   const employeeDataReducer = useSelector(
     (state) => state?.Employee?.employeeData
@@ -186,7 +186,7 @@ function AddNewEmployeeDialog(props) {
         // toast.success("Cập nhật thành công");
       }
       handleChangeReload(employeeUpdate?.gender);
-      setSaved("block");
+      setSaved(false);
       setShouldOpenDialog(false);
     },
   });
@@ -205,7 +205,7 @@ function AddNewEmployeeDialog(props) {
         pauseOnHover
         theme="colored"
       />
-      <Dialog open={true} maxWidth={"lg"} fullWidth={true}>
+      <Dialog open={true} maxWidth={"md"} fullWidth={true}>
         <DialogTitle className="dialog-title-employeeDialog"
         >
           {!employeeData?.employeeId ? "Thêm mới nhân viên" : "Sửa nhân viên"}
@@ -254,8 +254,17 @@ function AddNewEmployeeDialog(props) {
         >
           <Button
             variant="contained"
+            type="submit"
+            color="primary"
+            disabled={!saved}
+            onClick={() => formik.submitForm()}
+          >
+            Lưu
+          </Button>
+          <Button
+            variant="contained"
             color="success"
-            sx={{ display: saved }}
+            disabled={saved}
             onClick={() => {
               dispatch(getFormDataAction(employeeData?.employeeId));
               dispatch(getEmployeeDataAction(employeeData?.employeeId));
@@ -263,15 +272,6 @@ function AddNewEmployeeDialog(props) {
             }}
           >
             Đăng kí
-          </Button>
-          <Button
-            variant="contained"
-            type="submit"
-            color="primary"
-            sx={{ display: saved === "none" ? "block" : "none" }}
-            onClick={() => formik.submitForm()}
-          >
-            Lưu
           </Button>
           <Button
             variant="contained"

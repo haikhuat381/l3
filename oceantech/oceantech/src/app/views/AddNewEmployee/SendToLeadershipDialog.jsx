@@ -21,7 +21,7 @@ function SendToLeadershipDialog(props) {
   const dispatch = useDispatch();
   // const employee = useSelector((state) => state.Employee.employeeData);
   const leader = useSelector((state) => state?.Employee?.leader);
-  const [position,setPosition] = useState()
+  const [position, setPosition] = useState()
 
 
   const formik = useFormik({
@@ -47,7 +47,7 @@ function SendToLeadershipDialog(props) {
       values.registerPosition = position
       // values.status = status === 1 || status === 4 || status === 6 ? 3 : null
       values.status = status
-      dispatch(addRegistAction(employeeId,values))
+      dispatch(addRegistAction(employeeId, values))
 
       handleCloseAll();
       toast.success("Gửi lãnh đạo thành công");
@@ -64,24 +64,26 @@ function SendToLeadershipDialog(props) {
       <form onSubmit={formik.handleSubmit}>
         <DialogContent style={{ paddingTop: 20 }}>
           <Grid container spacing={2}>
-            <Grid item container>
-              <TextField
-                fullWidth
-                name="registerDate"
-                label="Ngày gửi"
-                type="date"
-                onChange={formik.handleChange}
-                value={formik.values.registerDate}
-                error={formik.errors.registerDate && formik.touched.registerDate}
-                helperText={formik.touched.registerDate && formik.errors.registerDate ? <div>{formik.errors.registerDate}</div> : null}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
             <Grid item container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <TextField
+                  size="small"
+                  fullWidth
+                  name="registerDate"
+                  label="Ngày gửi"
+                  type="date"
+                  onChange={formik.handleChange}
+                  value={formik.values.registerDate}
+                  error={formik.errors.registerDate && formik.touched.registerDate}
+                  helperText={formik.touched.registerDate && formik.errors.registerDate ? <div>{formik.errors.registerDate}</div> : null}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  size="small"
                   select
                   fullWidth
                   name="registerName"
@@ -96,8 +98,8 @@ function SendToLeadershipDialog(props) {
                   helperText={formik.touched.registerName && formik.errors.registerName ? <div>{formik.errors.registerName}</div> : null}
                 >
                   {leader?.map((item, index) => (
-                    <MenuItem 
-                      key={index} 
+                    <MenuItem
+                      key={index}
                       value={item.name}
                     >
                       {item.name}
@@ -105,15 +107,16 @@ function SendToLeadershipDialog(props) {
                   ))}
                 </TextField>
               </Grid>
-              <Grid item xs={6}>
-              <TextField
+              <Grid item xs={4}>
+                <TextField
+                  size="small"
                   fullWidth
                   label="Chức Vụ"
                   name="registerPosition"
                   value={position || ""}
                   onChange={formik.handleChange}
                 />
-                </Grid>
+              </Grid>
             </Grid>
             <Grid item container>
               <TextField

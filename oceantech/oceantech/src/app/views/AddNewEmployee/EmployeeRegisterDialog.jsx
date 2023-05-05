@@ -74,7 +74,7 @@ export default function EmployeeRegisterDialog({
     shouldOpenSendToLeadershipDialog,
     setshouldOpenSendToLeadershipDialog,
   ] = useState(false);
-  const [saved, setSaved] = useState("none");
+  const [saved, setSaved] = useState(true);
 
   useEffect(() => {
     setEmployeeData(employee);
@@ -111,10 +111,16 @@ export default function EmployeeRegisterDialog({
 
   return (
     <>
-      <Dialog open={true} maxWidth={"lg"} fullWidth>
+      <Dialog open={true} maxWidth={"lg"} fullWidth 
+        sx={{
+          '& .MuiDialog-paper': {
+            minHeight: '680px',
+          },
+        }}
+      >
         <DialogTitle className="dialog-title"
         >
-          Hồ sơ nhân viên
+          Thông tin hồ sơ
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>
@@ -169,14 +175,14 @@ export default function EmployeeRegisterDialog({
           <Button
             variant="contained"
             color="primary"
-            sx={{display: saved === "none" ? "block" : "none" }}
+            disabled={!saved}
             onClick={() => {
               dispatch(updateFormAction(employeeData?.employeeInfo?.employeeId, {
                 resume: formDataResumeUpdate,
-                cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate.workExperiences.filter(data => data.startDate !== null && data.endDate !== null) }
+                cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate?.workExperiences?.filter(data => data.startDate !== null && data.endDate !== null) }
               }))
               handleChangeReload(employeeData?.employeeInfo?.employeeId)
-              setSaved("block");
+              setSaved(false);
             }}
           >
             Lưu
@@ -184,7 +190,7 @@ export default function EmployeeRegisterDialog({
           <Button
             variant="contained"
             color="success"
-            sx={{display: saved }}
+            disabled={saved}
             onClick={() => {
               setshouldOpenSendToLeadershipDialog(true);
               handleChangeReload(employeeData?.employeeInfo?.employeeId)
@@ -192,7 +198,7 @@ export default function EmployeeRegisterDialog({
           >
             Gửi lãnh đạo
           </Button>
-          <Button
+          {/* <Button
             variant="contained"
             color="secondary"
             onClick={() => {
@@ -201,7 +207,7 @@ export default function EmployeeRegisterDialog({
             }}
           >
             In
-          </Button>
+          </Button> */}
 
           <Button
             variant="contained"

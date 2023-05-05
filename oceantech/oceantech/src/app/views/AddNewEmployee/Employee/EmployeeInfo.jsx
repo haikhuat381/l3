@@ -13,7 +13,7 @@ function EmployeeInfo(props) {
     <>
       <Grid container>
         <Grid item container xs={12}>
-          <Grid item container xs={9} sx={{padding:"33px 0 30px"}}>
+          <Grid item container xs={8} sx={{padding:"33px 0 30px"}}>
             <Grid
               item
               container
@@ -194,7 +194,7 @@ function EmployeeInfo(props) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={3} spacing={0} justifyContent={"center"}>
+          <Grid item container xs={4} spacing={0} justifyContent={"center"}>
             <Grid item xs={12}>
               <CustomAvatar
                 formikRoot={formikRoot}

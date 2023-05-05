@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function PaginationCustom({ onHandleChange }) {
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState("5")
+  const [pageSize, setPageSize] = useState("10")
 
   const totalData = useSelector((state) => state?.Employee?.total);
   const [total, setTotal] = useState(Math.ceil(totalData / pageSize))
