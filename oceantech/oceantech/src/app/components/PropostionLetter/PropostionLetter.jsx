@@ -160,12 +160,12 @@ function PropostionLetter(props) {
             sx={{ pl: 10, pr: 10, mt: 1 }}
             justifyContent="flex-start"
           >
-            <Grid item sm={5.8} xs={12}>
+            <Grid item sm={5.7} xs={12}>
               <Typography>
                 Tôi viết đơn này đề nghị Công ty xem xét và giải quyết vấn đề:
               </Typography>
             </Grid>
-            <Grid item sm={6.2} xs={12}>
+            <Grid item sm={6.3} xs={12}>
               <TextField
                 className="luan"
                 value={proposeData?.content}
@@ -194,10 +194,10 @@ function PropostionLetter(props) {
           >
             <Grid item container sm={12} xs={12} spacing={2}>
               <Grid item container>
-                <Grid item xs={12} sx={{ pb: 1 }}>
+                <Grid item sm={1.8} xs={12} sx={{ pb: 1 }}>
                   <Typography>Nội dung như sau:</Typography>
                 </Grid>
-                <Grid xs={12} item>
+                <Grid item xs={12} sm={10.2}>
                   <TextField
                     className="luan"
                     value={proposeData?.note}
@@ -302,14 +302,7 @@ function PropostionLetter(props) {
           xs={12}
           sx={{ pl: 10, pr: 10, mt: 3 }}
           justifyContent="flex-end"
-        >
-          <Grid item sm={3} xs={3}>
-            <Typography
-              className="font-15"
-              style={{ fontWeight: "bold", textDecoration: "uppercase" }}
-            ></Typography>
-          </Grid>
-        </Grid>
+        ></Grid>
       </Grid>
     </div>
   );

@@ -17,24 +17,17 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 function ReleaseLetter(props) {
-  const { handleValues, status, employeeData } = props;
-  //   const otherFeature = useSelector((state) => state.Employee.otherFeature);
-
-  console.log("dâtta", employeeData);
-  var today = new Date();
+  const { employeeData, status } = props;
   const otherFeature = useSelector((state) => state.Employee.otherFeature);
-  const [dataRelease, setDataRelease] = useState({
-    status: "8",
-    terminateRequestDetail: employeeData?.terminateRequestDetail || "",
-  });
-
-  const handlechangeValuse = (event, method) => {
-    const data = { ...dataRelease };
-    data[method] = event.target.value;
-    setDataRelease(data);
-    handleValues(data);
+  var options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   };
-  console.log("asdasd", dataRelease);
+  // console.log("dâtta", employeeData);
+  var today = new Date();
+
   return (
     <>
       <Grid
@@ -110,9 +103,7 @@ function ReleaseLetter(props) {
             <Grid style={{}} item sm={5.5} xs={5.5}>
               <TextField
                 className="luan"
-                value={
-                  employeeData?.employeeInfo?.fullName || employeeData?.fullName
-                }
+                value={employeeData?.employeeInfo?.fullName}
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
@@ -139,10 +130,7 @@ function ReleaseLetter(props) {
             <Grid item sm={5.5} xs={8.5}>
               <TextField
                 className="luan"
-                value={
-                  otherFeature[employeeData?.employeeInfo?.teamId]?.name ||
-                  otherFeature[employeeData?.teamId]?.name
-                }
+                value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
@@ -178,9 +166,7 @@ function ReleaseLetter(props) {
                 sx={{
                   "& fieldset": { border: "none", padding: 0 },
                 }}
-                value={`${today.getDate()} / ${
-                  today.getMonth() + 1
-                } / ${today.getFullYear()}`}
+                value={"22/11/2003"}
               />
             </Grid>
           </Grid>
@@ -204,7 +190,7 @@ function ReleaseLetter(props) {
                   <TextField
                     className="luan"
                     InputProps={{
-                      readOnly: status,
+                      readOnly: false,
                       style: { padding: 0 },
                     }}
                     id="standard-adornment-mount"
@@ -212,10 +198,9 @@ function ReleaseLetter(props) {
                     sx={{
                       "& fieldset": { border: "none", padding: 0 },
                     }}
-                    value={dataRelease?.terminateRequestDetail}
-                    onChange={(event) => {
-                      handlechangeValuse(event, "terminateRequestDetail");
-                    }}
+                    value={"Vợ tôi bắt tôi nghỉ việc "}
+                    // value={formik.values.terminateRequestDetail || ""}
+                    // onChange={formik.handleChange}
                   />
                 </Grid>
               </Grid>

@@ -90,11 +90,13 @@ function Promote(props) {
       newPosition: Yup.string().required("Không được bỏ trống"),
       date: Yup.date().required("Vui lòng nhập ngày"),
     }),
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       setPromoteDataDialog(values);
 
       if (!updatePromote?.employeeId) {
         dispatch(addPromoteHistoryAction(ID, values));
+        console.log("  ban dang thang chuc ");
+
         handleAllGet();
       } else {
         setIdPromoteDialog(updatePromote?.promotionId);
@@ -195,6 +197,18 @@ function Promote(props) {
   ];
   return (
     <>
+      {/* <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      /> */}
       {shouldOpenDeleteDialog && (
         <ConfirmDialog
           onConfirmDialogClose={() => {

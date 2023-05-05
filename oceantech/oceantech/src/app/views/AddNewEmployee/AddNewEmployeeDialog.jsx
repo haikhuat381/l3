@@ -7,8 +7,8 @@ import {
   Button,
   DialogActions,
   DialogContent,
-  Icon, 
-  IconButton
+  Icon,
+  IconButton,
 } from "@mui/material";
 import EmployeeRegisterDialog from "./EmployeeRegisterDialog";
 import { Close } from "@mui/icons-material";
@@ -193,7 +193,7 @@ function AddNewEmployeeDialog(props) {
 
   return (
     <>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -204,10 +204,9 @@ function AddNewEmployeeDialog(props) {
         draggable
         pauseOnHover
         theme="colored"
-      />
+      /> */}
       <Dialog open={true} maxWidth={"md"} fullWidth={true}>
-        <DialogTitle className="dialog-title-employeeDialog"
-        >
+        <DialogTitle className="dialog-title-employeeDialog">
           {!employeeData?.employeeId ? "Thêm mới nhân viên" : "Sửa nhân viên"}
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
@@ -250,8 +249,7 @@ function AddNewEmployeeDialog(props) {
           </form>
         </DialogContent>
 
-        <DialogActions className="dialog-action-employeeDialog"
-        >
+        <DialogActions className="dialog-action-employeeDialog">
           <Button
             variant="contained"
             type="submit"

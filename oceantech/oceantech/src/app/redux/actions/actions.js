@@ -86,7 +86,6 @@ export const deletePromoteHistoryAction = (id) => {
   return { type: ActionTypes.DELETE_PROMOTE, payload: id };
 };
 export const addPromoteHistoryAction = (id, data) => {
-  console.log("chao bn ");
   return { type: ActionTypes.ADD_PROMOTE, payload: { id, data } };
 };
 export const updatePromoteHistoryAction = (id, data) => {
