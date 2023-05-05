@@ -104,7 +104,7 @@ function ManagerEmployee() {
                   dispatch(getEmployeeDataAction(rowData?.employeeId));
                 }}
               >
-                <Icon color="primary">edit</Icon>
+                <Icon color="success">visibilityIcon</Icon>
               </IconButton>
             </Tooltip>
           </>
@@ -148,33 +148,35 @@ function ManagerEmployee() {
           ]}
         />
       </Box>
-      <MaterialTable
-        title={""}
-        columns={columns}
-        data={listEmployee || []}
-        options={{
-          paging: false,
-          rowStyle: (rowData, index) => {
-            return {
-              backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-            };
-          },
-          maxBodyHeight: "470px",
-          minBodyHeight: "470px",
-          headerStyle: {
-            position: "sticky",
-            top: 0,
-            zIndex: 1,
+      <Box width="100%" overflow="auto">
+        <MaterialTable
+          title={""}
+          columns={columns}
+          data={listEmployee || []}
+          options={{
+            paging: false,
+            rowStyle: (rowData, index) => {
+              return {
+                backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+              };
+            },
+            maxBodyHeight: "470px",
+            minBodyHeight: "470px",
+            headerStyle: {
+              position: "sticky",
+              top: 0,
+              zIndex: 1,
 
-            backgroundColor: "#262e49",
-            color: "#fff",
-          },
-          padding: "default",
-          toolbar: true,
-        }}
-      />
+              backgroundColor: "#262e49",
+              color: "#fff",
+            },
+            padding: "default",
+            toolbar: true,
+          }}
+        />
 
-      <PaginationCustom onHandleChange={onHandleChange} />
+        <PaginationCustom onHandleChange={onHandleChange} />
+      </Box>
       {shouldDialogManage && (
         <ManagerEmployeeDialog
           handleClose={handleClose}
