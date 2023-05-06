@@ -6,14 +6,21 @@ import {
   getTotalAction,
   getListEmployeeAction,
   getEmployeeDataAction,
-  getFormDataAction
+  getFormDataAction,
 } from "app/redux/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
 import ApprovedDialog from "./ApprovedDialog";
-import { Button, Box, Icon, IconButton, styled, Table, Tooltip } from "@mui/material";
+import {
+  Button,
+  Box,
+  Icon,
+  IconButton,
+  styled,
+  Table,
+  Tooltip,
+} from "@mui/material";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import moment from "moment";
-
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
@@ -27,32 +34,32 @@ const Container = styled("div")(({ theme }) => ({
 function Approved() {
   const dispatch = useDispatch();
 
-
   const [page, setPage] = useState(1);
-  const [pagesize, setPageSize] = useState(5)
+  const [pagesize, setPageSize] = useState(5);
 
- 
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
-  const objStatus = useSelector(state => state?.Employee?.objStatus)
-  const employeeData = useSelector(state => state?.Employee?.employeeData)
-  const reloadRef = useRef()
+  const listEmployeeDataReducer = useSelector(
+    (state) => state?.Employee?.listEmployeeData
+  );
+  const objStatus = useSelector((state) => state?.Employee?.objStatus);
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  const reloadRef = useRef();
   const handleChangeReload = (value) => {
-    reloadRef.current = value
-  }
-  
+    reloadRef.current = value;
+  };
+
   const handleGetListEmployee = () => {
-    const status = "5,6,10,11,18"
-    dispatch(getTotalAction(status))
-    dispatch(getListEmployeeAction(status, page, pagesize))
-  }
+    const status = "5,6,10,11,18";
+    dispatch(getTotalAction(status));
+    dispatch(getListEmployeeAction(status, page, pagesize));
+  };
   useEffect(() => {
-    handleGetListEmployee(page, pagesize)
-  }, [page, pagesize, reloadRef.current])
+    handleGetListEmployee(page, pagesize);
+  }, [page, pagesize, reloadRef.current]);
   const onHandleChange = (page, pageSize) => {
-    setPage(page)
-    setPageSize(pageSize)
-  }
+    setPage(page);
+    setPageSize(pageSize);
+  };
   const handleClose = () => {
     setShouldOpenDialog(false);
   };
@@ -62,8 +69,8 @@ function Approved() {
       title: "Hành động",
       width: 150,
       // cellStyle: { textAlign: 'center' },
-      headerStyle: { 
-        borderTopLeftRadius: "4px"
+      headerStyle: {
+        borderTopLeftRadius: "4px",
       },
       render: (rowdata) => {
         return (
@@ -71,8 +78,8 @@ function Approved() {
             <Tooltip title="Xem chi tiết">
               <IconButton
                 onClick={() => {
-                  dispatch(getFormDataAction(rowdata.employeeId))
-                  dispatch(getEmployeeDataAction(rowdata.employeeId))
+                  dispatch(getFormDataAction(rowdata.employeeId));
+                  dispatch(getEmployeeDataAction(rowdata.employeeId));
                   setShouldOpenDialog(true);
                 }}
               >
@@ -84,22 +91,26 @@ function Approved() {
       },
     },
     { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName"},
+    { title: "Họ và tên", field: "fullName" },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     {
       title: "Trạng thái",
       field: "status",
-      headerStyle: {borderTopRightRadius: "4px"},
+      headerStyle: { borderTopRightRadius: "4px" },
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];
 
-
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Lãnh đạo", path: "/" }, { name: "Đã duyệt" }]} />
+        <Breadcrumb
+          routeSegments={[
+            { name: "Lãnh đạo", path: "/" },
+            { name: "Đã duyệt" },
+          ]}
+        />
       </Box>
 
       <Box width="100%" overflow="auto">
@@ -119,7 +130,7 @@ function Approved() {
             headerStyle: {
               backgroundColor: "#222943",
               color: "#fff",
-              position: 'sticky',
+              position: "sticky",
               top: 0,
               zIndex: 1,
             },
@@ -127,9 +138,7 @@ function Approved() {
             toolbar: true,
           }}
         />
-        <PaginationCustom
-          onHandleChange={onHandleChange}
-        />
+        <PaginationCustom onHandleChange={onHandleChange} />
       </Box>
       {shouldOpenDialog && <ApprovedDialog handleClose={handleClose} />}
     </Container>

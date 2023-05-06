@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import Breadcrumb from "app/components/Breadcrumb";
 import MaterialTable from "@material-table/core";
-import { Button, Box, Icon, IconButton, styled, Table, Tooltip } from "@mui/material";
+import {
+  Button,
+  Box,
+  Icon,
+  IconButton,
+  styled,
+  Table,
+  Tooltip,
+} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,7 +19,7 @@ import {
   getListEmployeeAction,
   getEmployeeDataAction,
   getFormDataAction,
-  resetFormDataAction
+  resetFormDataAction,
 } from "app/redux/actions/actions";
 import ApprovalDialog from "./ApprovalDialog";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
@@ -26,47 +34,46 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-
-
 function Approval() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [pagesize, setPageSize] = useState(5)
-  
-  
+  const [pagesize, setPageSize] = useState(5);
+
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
-  const objStatus = useSelector(state => state?.Employee?.objStatus)
-  const employeeData = useSelector(state => state?.Employee?.employeeData)
-  const reloadRef = useRef()
+  const listEmployeeDataReducer = useSelector(
+    (state) => state?.Employee?.listEmployeeData
+  );
+  const objStatus = useSelector((state) => state?.Employee?.objStatus);
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  const reloadRef = useRef();
   const handleChangeReload = (value) => {
-    reloadRef.current = value
-  }
-  
+    reloadRef.current = value;
+  };
+
   const handleGetListEmployee = () => {
-    const status = "3,8"
-    dispatch(getTotalAction(status))
-    dispatch(getListEmployeeAction(status, page, pagesize))
-  }
+    const status = "3,8";
+    dispatch(getTotalAction(status));
+    dispatch(getListEmployeeAction(status, page, pagesize));
+  };
   useEffect(() => {
-    handleGetListEmployee(page, pagesize)
-  }, [page, pagesize, reloadRef.current])
+    handleGetListEmployee(page, pagesize);
+  }, [page, pagesize, reloadRef.current]);
   const onHandleChange = (page, pageSize) => {
-    setPage(page)
-    setPageSize(pageSize)
-  }
-  
+    setPage(page);
+    setPageSize(pageSize);
+  };
+
   const handleClose = () => {
-    dispatch(resetFormDataAction({}))
+    dispatch(resetFormDataAction({}));
     setShouldOpenDialog(false);
   };
   const columns = [
     {
       title: "Hành động",
-      width: 150,
+      width: 130,
       // cellStyle: { textAlign: 'center' },
-      headerStyle: { 
-        borderTopLeftRadius: "4px"
+      headerStyle: {
+        borderTopLeftRadius: "4px",
       },
       render: (rowdata) => {
         return (
@@ -74,8 +81,8 @@ function Approval() {
             <Tooltip title="Xem chi tiết">
               <IconButton
                 onClick={() => {
-                  dispatch(getFormDataAction(rowdata.employeeId))
-                  dispatch(getEmployeeDataAction(rowdata.employeeId))
+                  dispatch(getFormDataAction(rowdata.employeeId));
+                  dispatch(getEmployeeDataAction(rowdata.employeeId));
                   setShouldOpenDialog(true);
                 }}
               >
@@ -86,19 +93,17 @@ function Approval() {
         );
       },
     },
-    { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName",
-    },
+    { title: "Mã nhân viên", width: 150, field: "code" },
+    { title: "Họ và tên", field: "fullName" },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     {
       title: "Trạng thái",
       field: "status",
-      headerStyle: {borderTopRightRadius: "4px"},
+      headerStyle: { borderTopRightRadius: "4px" },
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];
-
 
   return (
     <Container>
@@ -115,7 +120,12 @@ function Approval() {
         theme="colored"
       />
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Lãnh đạo", path: "/" }, { name: "Chờ duyệt" }]} />
+        <Breadcrumb
+          routeSegments={[
+            { name: "Lãnh đạo", path: "/" },
+            { name: "Chờ duyệt" },
+          ]}
+        />
       </Box>
 
       <Box width="100%" overflow="auto">
@@ -135,7 +145,7 @@ function Approval() {
             headerStyle: {
               backgroundColor: "#222943",
               color: "#fff",
-              position: 'sticky',
+              position: "sticky",
               top: 0,
               zIndex: 1,
             },
@@ -145,15 +155,14 @@ function Approval() {
             toolbar: true,
           }}
         />
-        <PaginationCustom
-          onHandleChange={onHandleChange}
-        />
+        <PaginationCustom onHandleChange={onHandleChange} />
       </Box>
-      {shouldOpenDialog && <ApprovalDialog 
-                              handleClose={handleClose} 
-                              handleChangeReload={handleChangeReload}
-                            />
-      }
+      {shouldOpenDialog && (
+        <ApprovalDialog
+          handleClose={handleClose}
+          handleChangeReload={handleChangeReload}
+        />
+      )}
     </Container>
   );
 }
