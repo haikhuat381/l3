@@ -39,7 +39,8 @@ function SaveProfileDialog(props) {
       console.log(values)
       // dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
       dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, storedProfileCode:values.storedProfileCode}, "Lưu hồ sơ"))
-      handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      handleChangeReload(Math.random().toString(36).slice(-5))
       // toast.success("Lưu hồ sơ thành côngg");
       handleCloseAll();
     },

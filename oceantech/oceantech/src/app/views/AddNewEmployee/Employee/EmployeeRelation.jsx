@@ -170,8 +170,8 @@ function EmployeeRelation(props) {
       )}
 
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item sm={3} xs={3} className="input-dialog">
+        <Grid container spacing={2} sx={{ paddingBottom: "12px" }}>
+          <Grid item sm={3} xs={12} >
             <TextField
               label="Họ và Tên"
               type="text"
@@ -185,7 +185,7 @@ function EmployeeRelation(props) {
               helperText={formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
             />
           </Grid>
-          <Grid item sm={3} xs={3} className="input-dialog">
+          <Grid item sm={3} xs={12} >
             <TextField
               fullWidth
               size="small"
@@ -202,7 +202,7 @@ function EmployeeRelation(props) {
               helperText={formik.touched.dateOfBirth && formik.errors.dateOfBirth ? <div>{formik.errors.dateOfBirth}</div> : null}
             />
           </Grid>
-          <Grid item sm={3} xs={3} className="input-dialog">
+          <Grid item sm={3} xs={12} >
             <TextField
                   select
                   fullWidth
@@ -222,7 +222,7 @@ function EmployeeRelation(props) {
                   ))}
                 </TextField>
           </Grid>
-          <Grid item sm={3} xs={3} className="input-dialog">
+          <Grid item sm={3} xs={12} >
             <TextField
               label="Quan hệ gia đình"
               type="text"
@@ -237,7 +237,7 @@ function EmployeeRelation(props) {
             />
           </Grid>
 
-          <Grid item sm={3} xs={3} className="input-dialog">
+          <Grid item sm={3} xs={12} >
             <TextField
               label="Số CMND"
               type="text"
@@ -252,7 +252,7 @@ function EmployeeRelation(props) {
             />
           </Grid>
 
-          <Grid item sm={5} xs={5} className="input-dialog">
+          <Grid item sm={5} xs={12} >
             <TextField
               label="Địa chỉ cụ thể"
               type="text"
@@ -266,7 +266,7 @@ function EmployeeRelation(props) {
               helperText={formik.touched.address && formik.errors.address ? <div>{formik.errors.address}</div> : null}
             />
           </Grid>
-          <Grid item sm={4} xs={4} className="input-dialog">
+          {/* <Grid item sm={4} xs={12} >
             {" "}
             <Button
               variant="contained"
@@ -284,6 +284,27 @@ function EmployeeRelation(props) {
             >
               Hủy
             </Button>
+          </Grid> */}
+          <Grid container item sm={4} xs={12} spacing={1}>
+            <Grid item xs={6.1}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="button"
+                onClick={formik.handleSubmit}
+              >
+                Lưu quan hệ
+              </Button>
+            </Grid>
+            <Grid item xs={5.9}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={formik.resetForm}
+              >
+                Hủy
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </form>

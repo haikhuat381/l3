@@ -41,8 +41,8 @@ function AcceptDialog(props) {
       }
       isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Phê duyệt"))
        : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values,  "Phê duyệt"))
-      handleChangeReload(employeeData?.employeeInfo?.employeeId)
-      
+      // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      handleChangeReload(Math.random().toString(36).slice(-5))
       // toast.success("Phê duyệt thành công");
       handleCloseAll();
     },

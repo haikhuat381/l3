@@ -39,7 +39,8 @@ function AdditionalRequestDialog(props) {
       const isCheck = employeeData?.employeeInfo?.status
       values.status = isCheck === 3 ? 4 : 9
       isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung"))
-      handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      handleChangeReload(Math.random().toString(36).slice(-5))
       handleCloseAll();
       // handleClose();
       // toast.success("Gửi yêu cầu bổ sung thành công");
@@ -67,7 +68,7 @@ function AdditionalRequestDialog(props) {
               onChange={formik.handleChange}
               value={formik.values.statusLog}
               error={formik.errors.statusLog && formik.touched.statusLog}
-              helperText={formik.errors.statusLog}
+              helperText={formik.touched.statusLog && formik.errors.statusLog ? <div>{formik.errors.statusLog}</div> : null}
             />
           </DialogContent>
           <DialogActions className="dialog-action">
