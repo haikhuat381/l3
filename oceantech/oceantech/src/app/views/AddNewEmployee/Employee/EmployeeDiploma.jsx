@@ -124,8 +124,11 @@ function EmployeeDiploma(props) {
       title: "Nội dung ",
       field: "content",
     },
-    { title: "Nơi cấp", field: "educationalOrg" },
-    { title: "Ngày cấp", field: "issuanceDate" },
+    { title: "Nơi cấp", field: "educationalOrg"},
+    { title: "Ngày cấp",
+      field: "issuanceDate",
+      render: (rowData) => moment(rowData?.issuanceDate).format("DD-MM-YYYY"),
+    },
     { title: "Lĩnh Vực", field:"field",
       headerStyle: {borderTopRightRadius: "4px"},
     },
@@ -174,7 +177,7 @@ function EmployeeDiploma(props) {
               label="Ngày cấp"
               variant="outlined"
               name="issuanceDate"
-              value={formik.values.issuanceDate}
+              value={formik.values.issuanceDate || ""}
               onChange={formik.handleChange}
               error={formik.errors.issuanceDate && formik.touched.issuanceDate}
               helperText={formik.touched.issuanceDate && formik.errors.issuanceDate ? <div>{formik.errors.issuanceDate}</div> : null}

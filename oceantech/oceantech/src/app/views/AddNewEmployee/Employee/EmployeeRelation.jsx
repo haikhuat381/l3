@@ -140,6 +140,7 @@ function EmployeeRelation(props) {
     {
       title: "Ngày sinh ",
       field: "dateOfBirth",
+      render: (rowData) => moment(rowData?.dateOfBirth).format("DD-MM-YYYY"),
     },
     { title: "Giới tính", field: "gender",
       render: (rowData) => Gender[rowData.gender]?.gender
