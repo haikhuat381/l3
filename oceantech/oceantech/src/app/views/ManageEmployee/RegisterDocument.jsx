@@ -124,7 +124,7 @@ function RegisterDocument(props) {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Thông tin">
+            {/* <Tooltip title="Thông tin">
               <IconButton
                 disabled={
                   (rowData.additionalRequest || rowData.refuseInfo) &&
@@ -164,7 +164,7 @@ function RegisterDocument(props) {
                   report
                 </Icon>
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
                 disabled={rowData.status === "Đã duyệt" ? true : false}
@@ -198,8 +198,11 @@ function RegisterDocument(props) {
     { title: "Nội dung", field: "content" },
     { title: "Ngày", field: "date" },
     { title: "Ghi chú", field: "note" },
-    { title: "Trạng thái", field: "status",
-    headerStyle: { borderTopRightRadius: "4px" }, },
+    {
+      title: "Trạng thái",
+      field: "status",
+      headerStyle: { borderTopRightRadius: "4px" },
+    },
   ];
 
   return (
@@ -311,7 +314,7 @@ function RegisterDocument(props) {
                 headerStyle: {
                   backgroundColor: "#262e49",
                   color: "#fff",
-                  position: 'sticky',
+                  position: "sticky",
                   top: 0,
                   zIndex: 1,
                 },

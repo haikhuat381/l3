@@ -1,20 +1,5 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  Box,
-  Button,
-  styled,
-  DialogActions,
-  DialogContent,
-  Grid,
-  TextField,
-  IconButton,
-  Icon,
-  Typography,
-  MenuItem,
-  TextareaAutosize,
-} from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 function ReleaseLetter(props) {
   const { employeeData, handleValues, status, dataReleaseDialog } = props;
@@ -46,6 +31,7 @@ function ReleaseLetter(props) {
         style={{
           fontFamily: '"Times New Roman", Times, serif',
           padding: 15,
+          marginTop: 30,
         }}
       >
         <Grid container>
@@ -60,7 +46,9 @@ function ReleaseLetter(props) {
             </Typography>
           </Grid>
           <Grid container item sm={12} xs={12} justifyContent="center">
-            <Typography variant="h6">Độc lập - Tự do - Hạnh phúc</Typography>
+            <Typography fontFamily={"Times New Roman"} variant="h6">
+              Độc lập - Tự do - Hạnh phúc
+            </Typography>
           </Grid>
           <Grid container item sm={12} xs={12} justifyContent="center">
             <Typography>-------------------------------------</Typography>
@@ -89,7 +77,7 @@ function ReleaseLetter(props) {
             className=" container-form"
             sx={{ pl: 10, pr: 10, pb: 2 }}
           >
-            <Grid item sm={12} xs={12} sx={{ pl: 10 }}>
+            <Grid item sm={12} xs={12}>
               <Typography
                 variant="h6"
                 fontWeight="600"
@@ -107,10 +95,10 @@ function ReleaseLetter(props) {
             sx={{ pl: 10, pr: 10, pb: 2 }}
             justifyContent="flex-start"
           >
-            <Grid item sm={2.0} xs={2.0} sx={{ pl: 10 }}>
+            <Grid item sm={1} xs={1.0}>
               <Typography>Tôi tên là:</Typography>
             </Grid>
-            <Grid style={{}} item sm={5.5} xs={5.5}>
+            <Grid sm={11} xs={11}>
               <TextField
                 className="luan"
                 value={
@@ -136,10 +124,10 @@ function ReleaseLetter(props) {
             sx={{ pl: 10, pr: 10, pb: 2 }}
             justifyContent="flex-start"
           >
-            <Grid item sm={2.6} xs={2.6}>
+            <Grid item sm={2.7} xs={2.7}>
               <Typography>Hiện đang công tác tại vị trí:</Typography>
             </Grid>
-            <Grid item sm={5.5} xs={8.5}>
+            <Grid item sm={9.3} xs={9.3}>
               <TextField
                 className="luan"
                 value={
@@ -169,7 +157,7 @@ function ReleaseLetter(props) {
             <Grid item sm={3.4} xs={3.4}>
               <Typography>Tôi xin được phép nghỉ làm từ ngày:</Typography>
             </Grid>
-            <Grid item sm={5.5} xs={8}>
+            <Grid item sm={8.6} xs={8.6}>
               <TextField
                 className="luan"
                 InputProps={{
@@ -195,13 +183,13 @@ function ReleaseLetter(props) {
           >
             <Grid item container sm={12} xs={12} spacing={2}>
               <Grid item container>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={12}>
                   <Typography>
                     Tôi làm đơn này đề nghị ban giám đốc cho tôi xin nghỉ việc
                     vì lí do:
                   </Typography>
                 </Grid>
-                <Grid xs={12} item>
+                <Grid item xs={12} sm={12}>
                   <TextField
                     className="luan"
                     InputProps={{
@@ -265,7 +253,9 @@ function ReleaseLetter(props) {
           >
             <Grid item>
               {/* <Typography>{`Hà Nội , 20-11-2002`}</Typography> */}
-              <Typography>{`Hà Nội, Ngày ${today.getDate()} tháng ${
+              <Typography
+                style={{ fontStyle: "italic" }}
+              >{`Hà Nội, ngày ${today.getDate()} tháng ${
                 today.getMonth() + 1
               } năm ${today.getFullYear()}`}</Typography>
             </Grid>

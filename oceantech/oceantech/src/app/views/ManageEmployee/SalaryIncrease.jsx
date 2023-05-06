@@ -123,7 +123,7 @@ function SalaryIncrease(props) {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Thông tin">
+            {/* <Tooltip title="Thông tin">
               <IconButton
                 disabled={
                   rowData.status !== "Lưu mới" &&
@@ -161,7 +161,7 @@ function SalaryIncrease(props) {
                   report
                 </Icon>
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
                 color="primary"
@@ -195,8 +195,11 @@ function SalaryIncrease(props) {
       render: (rowdata) => moment(rowdata?.date).format("DD-MM-YYYY"),
     },
     { title: "Lý do", field: "reason" },
-    { title: "Ghi chú", field: "note",
-    headerStyle: { borderTopRightRadius: "4px" }, },
+    {
+      title: "Ghi chú",
+      field: "note",
+      headerStyle: { borderTopRightRadius: "4px" },
+    },
   ];
   return (
     <>
@@ -336,7 +339,7 @@ function SalaryIncrease(props) {
                 headerStyle: {
                   backgroundColor: "#262e49",
                   color: "#fff",
-                  position: 'sticky',
+                  position: "sticky",
                   top: 0,
                   zIndex: 1,
                 },

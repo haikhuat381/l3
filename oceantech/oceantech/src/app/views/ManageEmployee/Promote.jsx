@@ -123,7 +123,7 @@ function Promote(props) {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Thông tin">
+            {/* <Tooltip title="Thông tin">
               <IconButton
                 disabled={
                   (rowData.additionalRequest || rowData.refuseInfo) &&
@@ -161,7 +161,7 @@ function Promote(props) {
                   report
                 </Icon>
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
                 disabled={rowData.status === "Đã duyệt" ? true : false}
@@ -199,8 +199,11 @@ function Promote(props) {
       render: (rowdata) => moment(rowdata?.date).format("DD-MM-YYYY"),
     },
     { title: "Ghi chú", field: "note" },
-    { title: "Số lần", field: "count",
-    headerStyle: { borderTopRightRadius: "4px" }, },
+    {
+      title: "Số lần",
+      field: "count",
+      headerStyle: { borderTopRightRadius: "4px" },
+    },
   ];
   return (
     <>
@@ -344,7 +347,7 @@ function Promote(props) {
                 headerStyle: {
                   backgroundColor: "#262e49",
                   color: "#fff",
-                  position: 'sticky',
+                  position: "sticky",
                   top: 0,
                   zIndex: 1,
                 },

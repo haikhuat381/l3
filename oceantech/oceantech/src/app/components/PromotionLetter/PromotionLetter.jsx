@@ -36,6 +36,7 @@ function PromotionLetter(props) {
         style={{
           fontFamily: '"Times New Roman", Times, serif',
           padding: 15,
+          marginTop: 30,
         }}
       >
         <Grid container>
@@ -74,7 +75,6 @@ function PromotionLetter(props) {
                   variant="h6"
                   sm={12}
                   xs={12}
-                  sx={{ fontWeight: "bold" }}
                   fontFamily={"Times New Roman"}
                 >
                   Độc lập - Tự do - Hạnh phúc
@@ -133,7 +133,7 @@ function PromotionLetter(props) {
           >
             <Grid item sm={8} xs={8}>
               <Typography>
-                Căn cứ tại quy chế, điều lệ của Công ty OceanTech
+                - Căn cứ tại quy chế, điều lệ của Công ty OceanTech
               </Typography>
             </Grid>
           </Grid>
@@ -147,7 +147,7 @@ function PromotionLetter(props) {
           >
             <Grid item sm={12} xs={12}>
               <Typography>
-                Căn cứ vào hợp đồng lao động với người lao động
+                - Căn cứ vào hợp đồng lao động với người lao động
               </Typography>
             </Grid>
           </Grid>
@@ -161,7 +161,7 @@ function PromotionLetter(props) {
           >
             <Grid item sm={12} xs={12}>
               <Typography>
-                Xét những đóng góp của người lao động và đề nghị của trưởng
+                - Xét những đóng góp của người lao động và đề nghị của trưởng
                 phòng nhân sự
               </Typography>
             </Grid>
@@ -215,7 +215,7 @@ function PromotionLetter(props) {
             <Grid item sm={2.2} xs={2.2} sx={{ paddingLeft: "15px" }}>
               <Typography>, quyết định ông (bà):</Typography>
             </Grid>
-            <Grid item sm={2.2} xs={2.2}>
+            <Grid item sm={2} xs={2}>
               <TextField
                 className="luan "
                 value={employeeData?.employeeInfo?.fullName}
@@ -234,7 +234,7 @@ function PromotionLetter(props) {
               <Typography>, sẽ thăng chức lên: </Typography>
             </Grid>
 
-            <Grid item sm={2} xs={12}>
+            <Grid item sm={1.9} xs={12}>
               <TextField
                 className="luan "
                 value={promoteData?.newPosition}
@@ -252,10 +252,13 @@ function PromotionLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={1} xs={1.1}>
-              <Typography>, với lí do: </Typography>
+            <Grid item sm={0.2} xs={1.1}>
+              <Typography>, </Typography>
             </Grid>
-            <Grid item sm={5} xs={5}>
+            <Grid item sm={0.9} xs={1}>
+              <Typography>với lí do: </Typography>
+            </Grid>
+            <Grid item sm={10.1} xs={10.1}>
               <TextField
                 className="luan"
                 value={promoteData?.reason}
@@ -284,12 +287,12 @@ function PromotionLetter(props) {
             sx={{ pl: 10, pr: 10, pb: 2 }}
             lineHeight={2}
           >
-            <Grid item sm={5} xs={12}>
+            <Grid item sm={5} xs={5}>
               <Typography>
                 Điều 2: Bộ phận nhân sự, phòng kế toán và ông (bà):{" "}
               </Typography>
             </Grid>
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={2} xs={2}>
               <TextField
                 className="luan"
                 value={employeeData?.employeeInfo?.fullName}
@@ -304,11 +307,8 @@ function PromotionLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={2} xs={12} sx={{ paddingLeft: "10px" }}>
-              <Typography>thi hành thực hiện</Typography>
-            </Grid>
-            <Grid item sm={4} xs={12}>
-              <Typography>quyết định này.</Typography>
+            <Grid item sm={5} xs={5} sx={{ paddingLeft: "10px" }}>
+              <Typography>thi hành thực hiện quyết định này.</Typography>
             </Grid>
           </Grid>
           <Grid
@@ -329,7 +329,7 @@ function PromotionLetter(props) {
               spacing={1}
             >
               <Grid item>
-                <Typography fontFamily={"Times New Roman"}>
+                <Typography style={{ fontStyle: "italic" }}>
                   {`Hà Nội, Ngày ${today.getDate()} tháng ${
                     today.getMonth() + 1
                   } năm ${today.getFullYear()}`}
@@ -346,7 +346,7 @@ function PromotionLetter(props) {
               <Grid item>
                 {" "}
                 <Typography
-                  style={{ fontWeight: "bold" }}
+                  style={{ fontWeight: "bold", fontStyle: "italic" }}
                   fontFamily={"Times New Roman"}
                 >
                   {employeeData?.employeeInfo?.fullName.split(" ").pop()}

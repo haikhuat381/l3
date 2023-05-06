@@ -126,7 +126,7 @@ function ProposeAdvisory(props) {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Thông tin">
+            {/* <Tooltip title="Thông tin">
               <IconButton
                 disabled={
                   (rowData.additionalRequest || rowData.refuseInfo) &&
@@ -162,7 +162,7 @@ function ProposeAdvisory(props) {
                   report
                 </Icon>
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
                 disabled={rowData.status === "Đã duyệt" ? true : false}
@@ -199,8 +199,11 @@ function ProposeAdvisory(props) {
       field: "date",
       render: (rowdata) => moment(rowdata?.date).format("DD/MM/YYYY"),
     },
-    { title: "Ghi chú", field: "note",
-    headerStyle: { borderTopRightRadius: "4px" }, },
+    {
+      title: "Ghi chú",
+      field: "note",
+      headerStyle: { borderTopRightRadius: "4px" },
+    },
   ];
 
   return (
@@ -335,7 +338,7 @@ function ProposeAdvisory(props) {
                 headerStyle: {
                   backgroundColor: "#262e49",
                   color: "#fff",
-                  position: 'sticky',
+                  position: "sticky",
                   top: 0,
                   zIndex: 1,
                 },

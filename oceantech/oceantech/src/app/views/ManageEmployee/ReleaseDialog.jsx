@@ -39,7 +39,7 @@ function ReleaseDialog(props) {
   function setShouldOpenTime() {
     setTimeout(() => {
       handleCloseAll();
-    }, 1000); // thời gian chờ 2 giây (2000 miliseconds)
+    }, 1500); // thời gian chờ 2 giây (2000 miliseconds)
   }
   return (
     <>

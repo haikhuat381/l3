@@ -42,6 +42,7 @@ function PropostionLetter(props) {
         style={{
           fontFamily: '"Times New Roman", Times, serif',
           padding: 15,
+          marginTop: 30,
         }}
       >
         <Grid container>
@@ -56,11 +57,7 @@ function PropostionLetter(props) {
             </Typography>
           </Grid>
           <Grid container item sm={12} xs={12} justifyContent="center">
-            <Typography
-              variant="h6"
-              style={{ fontWeight: "bold" }}
-              fontFamily={"Times New Roman"}
-            >
+            <Typography variant="h6" fontFamily={"Times New Roman"}>
               Độc lập - Tự do - Hạnh phúc
             </Typography>
           </Grid>
@@ -157,7 +154,7 @@ function PropostionLetter(props) {
             item
             sm={12}
             xs={12}
-            sx={{ pl: 10, pr: 10, mt: 1 }}
+            sx={{ pl: 10, pr: 10 }}
             justifyContent="flex-start"
           >
             <Grid item sm={5.7} xs={12}>
@@ -262,7 +259,7 @@ function PropostionLetter(props) {
             spacing={1}
           >
             <Grid item>
-              <Typography fontFamily={"Times New Roman"}>
+              <Typography style={{ fontStyle: "italic" }}>
                 {`Hà Nội, Ngày ${today.getDate()} tháng ${
                   today.getMonth() + 1
                 } năm ${today.getFullYear()}`}
@@ -279,7 +276,7 @@ function PropostionLetter(props) {
             <Grid item>
               {" "}
               <Typography
-                style={{ fontWeight: "bold" }}
+                style={{ fontWeight: "bold", fontStyle: "italic" }}
                 fontFamily={"Times New Roman"}
               >
                 {employeeData?.employeeInfo?.fullName.split(" ").pop()}
