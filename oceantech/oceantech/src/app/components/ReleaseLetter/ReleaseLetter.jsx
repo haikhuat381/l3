@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 function ReleaseLetter(props) {
-  const { employeeData, handleValues, status } = props;
+  const { employeeData, handleValues, status, dataReleaseDialog } = props;
   var today = new Date();
   const otherFeature = useSelector((state) => state.Employee.otherFeature);
   console.log("chao bn ", employeeData);
@@ -205,7 +205,7 @@ function ReleaseLetter(props) {
                   <TextField
                     className="luan"
                     InputProps={{
-                      readOnly: false,
+                      readOnly: status,
                       style: { padding: 0 },
                     }}
                     id="standard-adornment-mount"
@@ -277,12 +277,13 @@ function ReleaseLetter(props) {
             <Grid item>
               {" "}
               <Typography style={{ fontWeight: "bold", fontStyle: "italic" }}>
-                {employeeData?.employeeInfo?.fullName.split(" ").pop()}
+                {employeeData?.employeeInfo?.fullName.split(" ").pop() ||
+                  employeeData?.fullName.split(" ").pop()}
               </Typography>
             </Grid>
             <Grid item>
               <Typography style={{ fontWeight: "bold" }}>
-                {employeeData?.employeeInfo?.fullName}
+                {employeeData?.employeeInfo?.fullName || employeeData?.fullName}
               </Typography>
             </Grid>
           </Grid>

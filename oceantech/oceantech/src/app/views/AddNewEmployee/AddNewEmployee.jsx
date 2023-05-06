@@ -228,7 +228,7 @@ function AddNewEmployee() {
             headerStyle: {
               backgroundColor: "#262e49",
               color: "#fff",
-              position: 'sticky',
+              position: "sticky",
               top: 0,
               zIndex: 1,
             },

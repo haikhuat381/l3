@@ -25,7 +25,6 @@ import ReleaseDialog from "./ReleaseDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
@@ -159,15 +158,14 @@ function ManagerEmployee() {
               backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
             };
           },
-          maxBodyHeight: "470px",
-          minBodyHeight: "470px",
+          maxBodyHeight: "460px",
+          minBodyHeight: "460px",
           headerStyle: {
+            backgroundColor: "#262e49",
+            color: "#fff",
             position: "sticky",
             top: 0,
             zIndex: 1,
-
-            backgroundColor: "#262e49",
-            color: "#fff",
           },
           padding: "default",
           toolbar: true,

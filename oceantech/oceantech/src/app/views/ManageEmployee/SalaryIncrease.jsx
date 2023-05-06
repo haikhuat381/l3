@@ -73,7 +73,11 @@ function SalaryIncrease(props) {
     });
   };
   // api
-
+  function setShouldOpenTime() {
+    setTimeout(() => {
+      setShouldOpenSalaryIncreaseDialog(true);
+    }, 500); // thời gian chờ 2 giây (2000 miliseconds)
+  }
   const formik = useFormik({
     initialValues: {
       salary: "",
@@ -107,7 +111,7 @@ function SalaryIncrease(props) {
         handleAllGet();
         setUpdateSalary({});
       }
-      setShouldOpenSalaryIncreaseDialog(true);
+      setShouldOpenTime();
       resetForm();
     },
   });
