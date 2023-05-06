@@ -50,7 +50,7 @@ function CustomAvatar({ formikRoot, image, displayButton, isNoneBorder, isPaddin
           <Button
             className="button-add-image"
             variant="contained"
-            style={{ display: displayButton, marginTop: "21px" }}
+            style={{ display: displayButton, marginTop: "18px" }}
             endIcon={<Icon>camera_alt</Icon>}
           >
             Chọn ảnh đại diện

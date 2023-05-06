@@ -20,7 +20,7 @@ import { useFormik } from "formik";
 
 function EmployeeRelation(props) {
   const dispatch = useDispatch();
-  const { handleAddRelation,listRelationship } = props;
+  const { handleAddRelation, listRelationship } = props;
   // const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [relationship, setRelationship] = useState({});
   const [listRelationshipData, setListRelationshipData] = useState(listRelationship);
@@ -30,8 +30,8 @@ function EmployeeRelation(props) {
   ] = useState(false);
 
   const Gender = useSelector((state) => state?.Employee?.Gender);
-  
-  
+
+
   const handleClose = () => {
     // setShouldOpenDialog(false);
     setRelationship({});
@@ -50,8 +50,8 @@ function EmployeeRelation(props) {
   };
   const handleDeleteRelationship = () => {
     setListRelationshipData(listRelationshipData => {
-      const newListRelationshipData = listRelationshipData.filter(value => 
-        !relationship?.familyId ? value.id !== relationship.id : value.familyId !==  relationship.familyId)
+      const newListRelationshipData = listRelationshipData.filter(value =>
+        !relationship?.familyId ? value.id !== relationship.id : value.familyId !== relationship.familyId)
 
       handleAddRelation(newListRelationshipData, "listRelationship");
       return newListRelationshipData
@@ -89,16 +89,16 @@ function EmployeeRelation(props) {
       const isCheck = !relationship?.familyId ? values.id : relationship.familyId
       if (!isCheck) {
         values.id = uuidv4()
-        handleAddRelation([...listRelationshipData, {...values, gender: numberGender}], "listRelationship");
-        setListRelationshipData([...listRelationshipData, {...values, gender: numberGender}])
+        handleAddRelation([...listRelationshipData, { ...values, gender: numberGender }], "listRelationship");
+        setListRelationshipData([...listRelationshipData, { ...values, gender: numberGender }])
 
       } else {
         setListRelationshipData(listRelationshipData => {
-          const newListRelationshipData = listRelationshipData.filter(value => 
-            !relationship?.familyId ? value.id !== values.id : value.familyId !==  relationship.familyId)
-          newListRelationshipData.push({...values, gender: numberGender})
+          const newListRelationshipData = listRelationshipData.filter(value =>
+            !relationship?.familyId ? value.id !== values.id : value.familyId !== relationship.familyId)
+          newListRelationshipData.push({ ...values, gender: numberGender })
           newListRelationshipData.familyRelationId = newListRelationshipData.familyId
-          handleAddRelation( newListRelationshipData, "listRelationship");
+          handleAddRelation(newListRelationshipData, "listRelationship");
           return newListRelationshipData
         })
       }
@@ -111,7 +111,7 @@ function EmployeeRelation(props) {
     {
       title: "Hành động",
       width: 130,
-      headerStyle: { 
+      headerStyle: {
         borderTopLeftRadius: "4px"
       },
       render: (rowData) => {
@@ -127,7 +127,7 @@ function EmployeeRelation(props) {
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                onClick={() =>  handleChangeEmployee(rowData, 0)}
+                onClick={() => handleChangeEmployee(rowData, 0)}
               >
                 <Icon color={"error"}>delete</Icon>
               </IconButton>
@@ -142,7 +142,8 @@ function EmployeeRelation(props) {
       field: "dateOfBirth",
       render: (rowData) => moment(rowData?.dateOfBirth).format("DD-MM-YYYY"),
     },
-    { title: "Giới tính", field: "gender",
+    {
+      title: "Giới tính", field: "gender",
       render: (rowData) => Gender[rowData.gender]?.gender
     },
     {
@@ -150,8 +151,9 @@ function EmployeeRelation(props) {
       field: "relation",
     },
     { title: "Địa chỉ", field: "address" },
-    { title: "Số CMND", field: "citizenId",
-      headerStyle: {borderTopRightRadius: "4px"},
+    {
+      title: "Số CMND", field: "citizenId",
+      headerStyle: { borderTopRightRadius: "4px" },
     },
   ];
 
@@ -166,8 +168,8 @@ function EmployeeRelation(props) {
           onYesClick={() => {
             handleDeleteRelationship();
           }}
-          title= "Xóa bản ghi"
-          content= "Bạn có chhắc chắn muốn xóa Quan hệ này?"
+          title="Xóa bản ghi"
+          content="Bạn có chhắc chắn muốn xóa Quan hệ này?"
         />
       )}
 
@@ -206,23 +208,28 @@ function EmployeeRelation(props) {
           </Grid>
           <Grid item sm={3} xs={12} >
             <TextField
-                  select
-                  fullWidth
-                  size="small"
-                  label="Giới tính"
-                  variant="outlined"
-                  name="gender"
-                  value={formik.values.gender || ""}
-                  onChange={formik.handleChange}
-                  error={formik.errors.gender && formik.touched.gender}
-                  helperText={formik.touched.gender && formik.errors.gender ? <div>{formik.errors.gender}</div> : null}
-                >
-                  {Gender?.map((item) => (
-                    <MenuItem key={item.id} value={item.value}>
-                      {item.gender}
-                    </MenuItem>
-                  ))}
-                </TextField>
+              select
+              fullWidth
+              size="small"
+              label="Giới tính"
+              variant="outlined"
+              name="gender"
+              value={formik.values.gender || ""}
+              onChange={formik.handleChange}
+              error={formik.errors.gender && formik.touched.gender}
+              helperText={formik.touched.gender && formik.errors.gender ? <div>{formik.errors.gender}</div> : null}
+              sx={{
+                '& .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input': {
+                  padding: "7px 32px 7px 14px"
+                }
+              }}
+            >
+              {Gender?.map((item) => (
+                <MenuItem key={item.id} value={item.value}>
+                  {item.gender}
+                </MenuItem>
+              ))}
+            </TextField>
           </Grid>
           <Grid item sm={3} xs={12} >
             <TextField

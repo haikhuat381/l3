@@ -13,7 +13,7 @@ function EmployeeInfo(props) {
     <>
       <Grid container>
         <Grid item container xs={12}>
-          <Grid item container xs={8} sx={{padding:"33px 0 30px"}}>
+          <Grid item container xs={8} sx={{padding:"36px 0 30px"}}>
             <Grid
               item
               container
