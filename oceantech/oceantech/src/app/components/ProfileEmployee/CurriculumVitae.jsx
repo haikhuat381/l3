@@ -25,12 +25,12 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
         data.workExperiences = data?.workExperiences?.length !== 0 ? data?.workExperiences?.reduce((arr, data) => {
           return [...arr,
           {
-            workExperienceId: data.workExpId,
-            company: data.company,
-            position: data.position,
-            detail: data.detail,
-            startDate: moment(data.startDate).format("YYYY-MM-DD"),
-            endDate: moment(data.endDate).format("YYYY-MM-DD")
+            workExperienceId: data?.workExpId,
+            company: data?.company,
+            position: data?.position,
+            detail: data?.detail,
+            startDate: moment(data?.startDate).format("YYYY-MM-DD"),
+            endDate: moment(data?.endDate).format("YYYY-MM-DD")
           }
           ]
         }, []) : [

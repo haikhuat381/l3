@@ -110,6 +110,7 @@ function EmployeeRelation(props) {
   const columns = [
     {
       title: "Hành động",
+      width: 130,
       headerStyle: { 
         borderTopLeftRadius: "4px"
       },

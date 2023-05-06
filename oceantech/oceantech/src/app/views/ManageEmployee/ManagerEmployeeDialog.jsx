@@ -47,7 +47,8 @@ function ManagerEmployeeDialog(props) {
             justifyContent: "space-between",
             boxShadow:
               "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            padding: "12px 24px",
+            padding: "9px 24px",
+            fontSize: 24
           }}
         >
           Cập nhật diễn biến
@@ -95,7 +96,7 @@ function ManagerEmployeeDialog(props) {
                   <Grid container spacing={3}>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        autoFocus
+                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -107,7 +108,7 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        autoFocus
+                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -119,7 +120,7 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        autoFocus
+                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -131,7 +132,7 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        autoFocus
+                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -143,7 +144,7 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        autoFocus
+                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -155,7 +156,7 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        autoFocus
+                        
                         fullWidth
                         label="Ngày sinh"
                         variant="outlined"
@@ -186,6 +187,7 @@ function ManagerEmployeeDialog(props) {
             boxShadow:
               "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
             justifyContent: "center",
+            zIndex: 9,
           }}
         >
           <Button variant="contained" color="error" onClick={handleClose}>

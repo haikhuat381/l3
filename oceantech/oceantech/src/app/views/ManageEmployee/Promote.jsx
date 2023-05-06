@@ -119,6 +119,7 @@ function Promote(props) {
   const columns = [
     {
       title: "Hành động",
+      headerStyle: { borderTopLeftRadius: "4px" },
       render: (rowData) => {
         return (
           <>
@@ -198,7 +199,8 @@ function Promote(props) {
       render: (rowdata) => moment(rowdata?.date).format("DD-MM-YYYY"),
     },
     { title: "Ghi chú", field: "note" },
-    { title: "Số lần", field: "count" },
+    { title: "Số lần", field: "count",
+    headerStyle: { borderTopRightRadius: "4px" }, },
   ];
   return (
     <>
@@ -328,6 +330,7 @@ function Promote(props) {
               data={promoteData}
               columns={columns}
               options={{
+                paging: false,
                 pageSize: 5,
                 pageSizeOptions: [5, 10, 15, 20],
                 rowStyle: (rowData, index) => {
@@ -335,11 +338,14 @@ function Promote(props) {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
                   };
                 },
-                maxBodyHeight: "1000px",
-                minBodyHeight: "370px",
+                maxBodyHeight: "215px",
+                minBodyHeight: "215px",
                 headerStyle: {
                   backgroundColor: "#262e49",
                   color: "#fff",
+                  position: 'sticky',
+                  top: 0,
+                  zIndex: 1,
                 },
 
                 padding: "default",

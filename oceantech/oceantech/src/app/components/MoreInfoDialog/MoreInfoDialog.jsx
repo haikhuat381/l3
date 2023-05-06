@@ -28,14 +28,11 @@ function MoreInfoDialog(props) {
   const employeeData = useSelector(
     (state) => state?.Employee?.employeeData?.employeeInfo
   );
-
-  console.log("haikhuat");
-  console.log(employeeData);
-  console.log("rowDataInfo", rowDataInfo);
+  
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle className="dialog-title">
-        {employeeData?.status === 6 || 9 ? "Yêu cầu bổ sung" : "Từ chối"}
+        {employeeData?.status === 6 || employeeData?.status === 11 ? "Từ chối" : "Yêu cầu bổ sung"}
 
         <IconButton onClick={handleClose}>
           <Icon color="error">close</Icon>

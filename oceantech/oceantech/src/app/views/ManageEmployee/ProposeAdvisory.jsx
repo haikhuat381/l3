@@ -122,6 +122,7 @@ function ProposeAdvisory(props) {
   const columns = [
     {
       title: "Hành động",
+      headerStyle: { borderTopLeftRadius: "4px" },
       render: (rowData) => {
         return (
           <>
@@ -198,7 +199,8 @@ function ProposeAdvisory(props) {
       field: "date",
       render: (rowdata) => moment(rowdata?.date).format("DD/MM/YYYY"),
     },
-    { title: "Ghi chú", field: "note" },
+    { title: "Ghi chú", field: "note",
+    headerStyle: { borderTopRightRadius: "4px" }, },
   ];
 
   return (
@@ -320,6 +322,7 @@ function ProposeAdvisory(props) {
               data={listPropose}
               columns={columns}
               options={{
+                paging: false,
                 pageSize: 5,
                 pageSizeOptions: [5, 10, 15, 20],
                 rowStyle: (rowData, index) => {
@@ -327,11 +330,14 @@ function ProposeAdvisory(props) {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
                   };
                 },
-                maxBodyHeight: "1000px",
-                minBodyHeight: "370px",
+                maxBodyHeight: "215px",
+                minBodyHeight: "215px",
                 headerStyle: {
                   backgroundColor: "#262e49",
                   color: "#fff",
+                  position: 'sticky',
+                  top: 0,
+                  zIndex: 1,
                 },
                 // padding: 'dense',
                 padding: "default",
