@@ -179,7 +179,7 @@ export default function EmployeeRegisterDialog({
             onClick={() => {
               dispatch(updateFormAction(employeeData?.employeeInfo?.employeeId, {
                 resume: formDataResumeUpdate,
-                cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate?.workExperiences?.filter(data => data.startDate !== null && data.endDate !== null) }
+                cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate?.workExperiences?.filter(data => data.startDate !== null && data.endDate !== null && data.startDate !== "Invalid date" && data.endDate !== "Invalid date") }
               }))
               // handleChangeReload(employeeData?.employeeInfo?.employeeId)
               handleChangeReload(Math.random().toString(36).slice(-5))

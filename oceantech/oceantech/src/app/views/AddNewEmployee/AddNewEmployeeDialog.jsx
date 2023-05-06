@@ -54,35 +54,29 @@ function AddNewEmployeeDialog(props) {
     setEmployeeData(employeeDataReducer?.employeeInfo);
     setListDiploma(
       () =>
-        employeeDataReducer?.certificates?.reduce((arr, data) => {
-          return [
-            ...arr,
-            {
-              certificateId: data.certificateId,
-              name: data.name,
-              field: data.field,
-              educationalOrg: data.educationalOrg,
-              content: data.content,
-              issuanceDate: moment(data.issuanceDate).format("YYYY-MM-DD"),
-            },
-          ];
-        }, []) || []
+        employeeDataReducer?.certificates?.map((data) => {
+          return {
+              certificateId: data?.certificateId,
+              name: data?.name,
+              field: data?.field,
+              educationalOrg: data?.educationalOrg,
+              content: data?.content,
+              issuanceDate: moment(data?.issuanceDate).format("YYYY-MM-DD"),
+            }
+        }) || []
     );
     setListRelationship(
-      employeeDataReducer?.familyRelations?.reduce((arr, data) => {
-        return [
-          ...arr,
-          {
-            familyId: data.familyId,
-            name: data.name,
-            gender: data.gender,
-            relation: data.relation,
-            citizenId: data.citizenId,
-            address: data.address,
-            dateOfBirth: moment(data.dateOfBirth).format("YYYY-MM-DD"),
-          },
-        ];
-      }, []) || []
+      employeeDataReducer?.familyRelations?.map((data) => {
+        return  {
+            familyId: data?.familyId,
+            name: data?.name,
+            gender: data?.gender,
+            relation: data?.relation,
+            citizenId: data?.citizenId,
+            address: data?.address,
+            dateOfBirth: moment(data?.dateOfBirth).format("YYYY-MM-DD"),
+          }
+      }) || []
     );
   }, [employeeDataReducer]);
 
@@ -193,18 +187,6 @@ function AddNewEmployeeDialog(props) {
 
   return (
     <>
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      /> */}
       <Dialog open={true} maxWidth={"md"} fullWidth={true}>
         <DialogTitle className="dialog-title-employeeDialog">
           {!employeeData?.employeeId ? "Thêm mới nhân viên" : "Sửa nhân viên"}
