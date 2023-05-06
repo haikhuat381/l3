@@ -120,6 +120,7 @@ function RegisterDocument(props) {
   const columns = [
     {
       title: "Hành động",
+      headerStyle: { borderTopLeftRadius: "4px" },
       render: (rowData) => {
         return (
           <>
@@ -197,7 +198,8 @@ function RegisterDocument(props) {
     { title: "Nội dung", field: "content" },
     { title: "Ngày", field: "date" },
     { title: "Ghi chú", field: "note" },
-    { title: "Trạng thái", field: "status" },
+    { title: "Trạng thái", field: "status",
+    headerStyle: { borderTopRightRadius: "4px" }, },
   ];
 
   return (
@@ -296,6 +298,7 @@ function RegisterDocument(props) {
               data={employeeData?.listRegister}
               columns={columns}
               options={{
+                paging: false,
                 pageSize: 5,
                 pageSizeOptions: [5, 10, 15, 20],
                 rowStyle: (rowData, index) => {
@@ -303,11 +306,14 @@ function RegisterDocument(props) {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
                   };
                 },
-                maxBodyHeight: "1000px",
-                minBodyHeight: "370px",
+                maxBodyHeight: "215px",
+                minBodyHeight: "215px",
                 headerStyle: {
                   backgroundColor: "#262e49",
                   color: "#fff",
+                  position: 'sticky',
+                  top: 0,
+                  zIndex: 1,
                 },
                 // padding: 'dense',
                 padding: "default",

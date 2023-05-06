@@ -22,10 +22,10 @@ const Resume = React.forwardRef((props, ref) => {
     if (formDataResumeUpdate === undefined) {
       setResumeData(() => {
         return {
-          ethnicity: employeeData.ethnicity,
-          religion: employeeData.religion,
-          citizenIdIssuingAuthority: employeeData.citizenIdIssuingAuthority,
-          citizenIdIssuanceDate: employeeData.citizenIdIssuanceDate,
+          ethnicity: employeeData?.ethnicity,
+          religion: employeeData?.religion,
+          citizenIdIssuingAuthority: employeeData?.citizenIdIssuingAuthority,
+          citizenIdIssuanceDate: employeeData?.citizenIdIssuanceDate,
         };
       });
     } else {
@@ -51,17 +51,17 @@ const Resume = React.forwardRef((props, ref) => {
     //   width: 50,
     //   render: (rowData) => rowData.tableData.index + 1
     // },
-    { title: "Họ và tên", field: "name", width: 200 },
+    { title: "Họ và tên", field: "name", width: 150 },
     {
       title: "Ngày sinh ",
       field: "dateOfBirth",
-      width: 180,
-      render: (rowData) => moment(rowData.dateOfBirth).format("YYYY-MM-DD"),
+      width: 150,
+      render: (rowData) => moment(rowData.dateOfBirth).format("DD-MM-YYYY"),
     },
     {
       title: "Giới tính",
       field: "gender",
-      width: 160,
+      width: 150,
       render: (rowData) => Gender[rowData.gender]?.gender,
     },
     {
@@ -70,7 +70,7 @@ const Resume = React.forwardRef((props, ref) => {
       width: 140,
     },
     { title: "Địa chỉ", field: "address", width: 200 },
-    { title: "Số CMND/CMT", field: "citizenId" },
+    { title: "Số CMND/CMT", width: 170, field: "citizenId" },
   ];
 
   return (

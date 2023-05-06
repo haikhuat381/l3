@@ -94,8 +94,7 @@ function AddNewEmployee() {
   const columns = [
     {
       title: "Hành động",
-      width: 150,
-      // cellStyle: { textAlign: 'center' },
+      width: 140,
       headerStyle: {
         borderTopLeftRadius: "4px",
       },

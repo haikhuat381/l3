@@ -33,7 +33,7 @@ function PaginationCustom({ onHandleChange }) {
   }, [pageSize])
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 20px 10px" }}>
+    <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 20px 8px" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <p style={{ marginRight: 8 }}>Số bản ghi/trang</p>
         <Autocomplete

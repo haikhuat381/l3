@@ -95,6 +95,7 @@ function EmployeeDiploma(props) {
   const columns = [
     {
       title: "Hành động",
+      width: 130,
       headerStyle: { 
         borderTopLeftRadius: "4px"
       },
@@ -118,7 +119,7 @@ function EmployeeDiploma(props) {
         );
       },
     },
-    { title: "Tên văn bằng", field: "name" },
+    { title: "Tên văn bằng", width: 150, field: "name" },
     {
       title: "Nội dung ",
       field: "content",

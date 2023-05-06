@@ -22,18 +22,16 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
     if (formDataCVUpdate === undefined) {
       setTextFieldValues(() => {
         const data = { ...employeeData?.cv }
-        data.workExperiences = data?.workExperiences?.length !== 0 ? data?.workExperiences?.reduce((arr, data) => {
-          return [...arr,
-          {
-            workExperienceId: data.workExpId,
-            company: data.company,
-            position: data.position,
-            detail: data.detail,
-            startDate: moment(data.startDate).format("YYYY-MM-DD"),
-            endDate: moment(data.endDate).format("YYYY-MM-DD")
+        data.workExperiences = data?.workExperiences?.length !== 0 ? data?.workExperiences?.map((data) => {
+          return {
+              workExperienceId: data?.workExpId,
+              company: data?.company,
+              position: data?.position,
+              detail: data?.detail,
+              startDate: moment(data?.startDate).format("YYYY-MM-DD"),
+              endDate: moment(data?.endDate).format("YYYY-MM-DD")
           }
-          ]
-        }, []) : [
+        }) : [
           {
             company: "",
             position: "",

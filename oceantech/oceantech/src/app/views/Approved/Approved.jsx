@@ -49,10 +49,10 @@ function Approved() {
   };
 
   const handleGetListEmployee = () => {
-    const status = "5,6,10,11,18";
-    dispatch(getTotalAction(status));
-    dispatch(getListEmployeeAction(status, page, pagesize));
-  };
+    const status = "5,6,10,11"
+    dispatch(getTotalAction(status))
+    dispatch(getListEmployeeAction(status, page, pagesize))
+  }
   useEffect(() => {
     handleGetListEmployee(page, pagesize);
   }, [page, pagesize, reloadRef.current]);
@@ -67,7 +67,7 @@ function Approved() {
   const columns = [
     {
       title: "Hành động",
-      width: 150,
+      width: 130,
       // cellStyle: { textAlign: 'center' },
       headerStyle: {
         borderTopLeftRadius: "4px",
@@ -90,7 +90,7 @@ function Approved() {
         );
       },
     },
-    { title: "Mã nhân viên", field: "code" },
+    { title: "Mã nhân viên", width: 150, field: "code" },
     { title: "Họ và tên", field: "fullName" },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },

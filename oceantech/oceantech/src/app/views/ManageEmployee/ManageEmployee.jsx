@@ -69,7 +69,7 @@ function ManagerEmployee() {
   const columns = [
     {
       title: "Hành động",
-      width: 150,
+      width: 130,
       headerStyle: {
         borderTopLeftRadius: "4px",
       },
@@ -111,6 +111,7 @@ function ManagerEmployee() {
         );
       },
     },
+    // { title: "Mã nhân viên", width: 160, field: "code" },
     { title: "Họ và tên", field: "fullName", width: 220 },
     {
       title: "Ngày sinh",
