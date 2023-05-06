@@ -62,7 +62,7 @@ function ReleaseLetter(props) {
             justifyContent="center"
           >
             <Typography
-              variant="h3"
+              variant="h4"
               fontWeight={"700"}
               fontFamily={"Times New Roman"}
             >
