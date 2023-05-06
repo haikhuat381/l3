@@ -2,34 +2,31 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
-  Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
-  Grid,
-  TextField,
   IconButton,
   Icon,
-  Typography,
-  MenuItem,
-  TextareaAutosize,
 } from "@mui/material";
 import SendToLeadershipDialog from "../AddNewEmployee/SendToLeadershipDialog";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import { ReleaseManageAction } from "app/redux/actions/actions";
 import ReleaseLetter from "app/components/ReleaseLetter/ReleaseLetter";
-import { async } from "regenerator-runtime";
 function ReleaseDialog(props) {
   const { handleClose, handleCloseAll, handleChangeReload } = props;
   const dispatch = useDispatch();
   const [shouldSenToLeader, setShouldSenToLeader] = useState(false);
   const employeeData = useSelector((state) => state.Employee.employeeData);
 
-  const [dataReleaseDialog, setDataReleaseDialog] = useState({});
+  const [dataReleaseDialog, setDataReleaseDialog] = useState({
+    status: "8",
+    terminateRequestDetail:
+      employeeData?.employeeInfo?.terminateRequestDetail ||
+      employeeData?.terminateRequestDetail ||
+      "",
+  });
   const handleValues = (data) => {
     setDataReleaseDialog(data);
   };
@@ -37,11 +34,27 @@ function ReleaseDialog(props) {
   const id = employeeData?.employeeInfo?.employeeId;
   const handlesubmit = async () => {
     dispatch(ReleaseManageAction(id, dataReleaseDialog));
-    // toast.success("Gửi lãnh đạo");
-    handleChangeReload(id);
+    setShouldOpenTime();
   };
+  function setShouldOpenTime() {
+    setTimeout(() => {
+      handleCloseAll();
+    }, 1000); // thời gian chờ 2 giây (2000 miliseconds)
+  }
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <Dialog open={true} maxWidth={"lg"} fullWidth>
         <DialogTitle
           sx={{
@@ -62,7 +75,7 @@ function ReleaseDialog(props) {
               justifyContent: "center",
             }}
           >
-            Biểu Mẫu Đơn Xin Thôi Việc
+            {/* Biểu Mẫu Đơn Xin Thôi Việc */}
           </div>
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
@@ -71,6 +84,7 @@ function ReleaseDialog(props) {
 
         <DialogContent>
           <ReleaseLetter
+            dataReleaseDialog={dataReleaseDialog}
             employeeData={employeeData}
             handleValues={handleValues}
             status={false}
@@ -99,9 +113,6 @@ function ReleaseDialog(props) {
             onClick={async () => {
               handlesubmit();
               handleChangeReload(id);
-              // handleClose();
-              handleCloseAll();
-              // setShouldSenToLeader(true);
             }}
           >
             Trình lãnh đạo

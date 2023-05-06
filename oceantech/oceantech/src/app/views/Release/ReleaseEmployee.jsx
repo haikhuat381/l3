@@ -6,11 +6,19 @@ import {
   getTotalAction,
   getListEmployeeAction,
   getEmployeeDataAction,
-  getFormDataAction
+  getFormDataAction,
 } from "app/redux/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
 import ReleaseEmployeeDialog from "./ReleaseEmployeeDialog";
-import { Button, Box, Icon, IconButton, styled, Table, Tooltip } from "@mui/material";
+import {
+  Button,
+  Box,
+  Icon,
+  IconButton,
+  styled,
+  Table,
+  Tooltip,
+} from "@mui/material";
 import SaveProfileInfo from "./SaveProfileInfo";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import { ToastContainer, toast } from "react-toastify";
@@ -26,39 +34,39 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-
-
 function ReleaseEmployee() {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1);
-  const [pagesize, setPageSize] = useState(5)
+  const [pagesize, setPageSize] = useState(5);
 
   const [shouldOpenReleaseDialog, setShouldOpenReleaseDialog] = useState(false);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  const [idView, setIdview] = useState()
+  const [idView, setIdview] = useState();
 
-  const listEmployeeDataReducer = useSelector(state => state?.Employee?.listEmployeeData)
-  const objStatus = useSelector(state => state?.Employee?.objStatus)
-  const employeeData = useSelector(state => state?.Employee?.employeeData)
-  const reloadRef = useRef()
+  const listEmployeeDataReducer = useSelector(
+    (state) => state?.Employee?.listEmployeeData
+  );
+  const objStatus = useSelector((state) => state?.Employee?.objStatus);
+  const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  const reloadRef = useRef();
   const handleChangeReload = (value) => {
-    reloadRef.current = value
-  }
-  
+    reloadRef.current = value;
+  };
+
   const handleGetListEmployee = () => {
-    const status = "10,13"
-    dispatch(getTotalAction(status))
-    dispatch(getListEmployeeAction(status, page, pagesize))
-  }
+    const status = "10,13";
+    dispatch(getTotalAction(status));
+    dispatch(getListEmployeeAction(status, page, pagesize));
+  };
   useEffect(() => {
-    handleGetListEmployee(page, pagesize)
-  }, [page, pagesize, reloadRef.current])
+    handleGetListEmployee(page, pagesize);
+  }, [page, pagesize, reloadRef.current]);
 
   const onHandleChange = (page, pageSize) => {
-    setPage(page)
-    setPageSize(pageSize)
-  }
+    setPage(page);
+    setPageSize(pageSize);
+  };
   const handleClose = () => {
     setShouldOpenReleaseDialog(false);
   };
@@ -68,55 +76,54 @@ function ReleaseEmployee() {
       title: "Hành động",
       width: 150,
       // cellStyle: { textAlign: 'center' },
-      headerStyle: { 
-        borderTopLeftRadius: "4px"
+      headerStyle: {
+        borderTopLeftRadius: "4px",
       },
       render: (rowdata) => {
         return (
           <>
-            { rowdata.status === 13 &&
+            {rowdata.status === 13 && (
               <Tooltip title="Thông tin">
                 <IconButton
                   onClick={() => {
-                    dispatch(getFormDataAction(rowdata.employeeId))
-                    dispatch(getEmployeeDataAction(rowdata.employeeId))
+                    dispatch(getFormDataAction(rowdata.employeeId));
+                    dispatch(getEmployeeDataAction(rowdata.employeeId));
                     setShouldOpenDialog(true);
-                    setIdview(rowdata.employeeId)
+                    setIdview(rowdata.employeeId);
                   }}
                   // disabled={rowdata.status !== 10 ? false : true}
                 >
                   {/* <Icon color={rowdata.status !== 10 ? "primary" : "disabled"}>report</Icon> */}
                   {/* <Icon style={{color: rowdata.status !== 10 ? "#EED370" : "disabled"}}>report</Icon> */}
-                  <Icon style={{color: "#EED370"}}>report</Icon>
+                  <Icon style={{ color: "#EED370" }}>report</Icon>
                 </IconButton>
               </Tooltip>
-            }
-            {
-              rowdata.status === 10 &&
+            )}
+            {rowdata.status === 10 && (
               <Tooltip title="Xem chi tiết">
                 <IconButton
                   onClick={() => {
-                    dispatch(getFormDataAction(rowdata.employeeId))
-                    dispatch(getEmployeeDataAction(rowdata.employeeId))
+                    dispatch(getFormDataAction(rowdata.employeeId));
+                    dispatch(getEmployeeDataAction(rowdata.employeeId));
                     setShouldOpenReleaseDialog(true);
                   }}
                 >
                   <Icon color="success">visibilityIcon</Icon>
                 </IconButton>
               </Tooltip>
-            }
+            )}
           </>
         );
       },
     },
     { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName"},
+    { title: "Họ và tên", field: "fullName" },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     {
       title: "Trạng thái",
       field: "status",
-      headerStyle: {borderTopRightRadius: "4px"},
+      headerStyle: { borderTopRightRadius: "4px" },
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];
@@ -135,7 +142,12 @@ function ReleaseEmployee() {
         theme="colored"
       />
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Lãnh đạo", path: "/" }, { name: "Kết thúc" }]} />
+        <Breadcrumb
+          routeSegments={[
+            { name: "Lãnh đạo", path: "/" },
+            { name: "Kết thúc" },
+          ]}
+        />
       </Box>
 
       <Box width="100%" overflow="auto">
@@ -155,7 +167,7 @@ function ReleaseEmployee() {
             headerStyle: {
               backgroundColor: "#222943",
               color: "#fff",
-              position: 'sticky',
+              position: "sticky",
               top: 0,
               zIndex: 1,
             },
@@ -163,21 +175,24 @@ function ReleaseEmployee() {
             toolbar: true,
           }}
         />
-        <PaginationCustom
-          onHandleChange={onHandleChange}
-        />
+        <PaginationCustom onHandleChange={onHandleChange} />
       </Box>
-      {shouldOpenReleaseDialog && <ReleaseEmployeeDialog handleClose={handleClose} handleChangeReload={handleChangeReload} />}
+      {shouldOpenReleaseDialog && (
+        <ReleaseEmployeeDialog
+          handleClose={handleClose}
+          handleChangeReload={handleChangeReload}
+        />
+      )}
       {shouldOpenDialog && (
         <SaveProfileInfo
           handleClose={() => {
             setShouldOpenDialog(false);
           }}
           openViewDialog={() => {
-                  dispatch(getFormDataAction(idView))
-                  dispatch(getEmployeeDataAction(idView))
-                  setShouldOpenReleaseDialog(true);
-                }}
+            dispatch(getFormDataAction(idView));
+            dispatch(getEmployeeDataAction(idView));
+            setShouldOpenReleaseDialog(true);
+          }}
         />
       )}
     </Container>

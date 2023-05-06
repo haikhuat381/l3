@@ -66,7 +66,7 @@ function SalaryIncreaseDialog(props) {
               justifyContent: "center",
             }}
           >
-            Biểu Mẫu Tăng Lương
+            {/* Biểu Mẫu Tăng Lương */}
           </div>
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>

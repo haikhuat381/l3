@@ -109,7 +109,7 @@ function ProposeAdvisoryDialog(props) {
               justifyContent: "center",
             }}
           >
-            Biểu Mẫu Đề Xuẩ Tham Mưu
+            {/* Biểu Mẫu Đề Xuẩ Tham Mưu */}
           </div>
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>

@@ -25,7 +25,6 @@ import ReleaseDialog from "./ReleaseDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
@@ -70,6 +69,7 @@ function ManagerEmployee() {
   const columns = [
     {
       title: "Hành động",
+      width: 150,
       headerStyle: {
         borderTopLeftRadius: "4px",
       },
@@ -111,16 +111,18 @@ function ManagerEmployee() {
         );
       },
     },
-    { title: "Họ tên", field: "fullName" },
+    { title: "Họ và tên", field: "fullName", width: 220 },
     {
       title: "Ngày sinh",
       field: "dateOfBirth",
+      width: 150,
       render: (rowdata) => moment(rowdata).format("DD/MM/YYYY"),
     },
     { title: "Email", field: "email" },
-    { title: "Số điện thoại", field: "phone" },
+    { title: "Số điện thoại", width: 150, field: "phone" },
     {
       title: "Trạng thái",
+      width: 300,
       field: "status",
       headerStyle: { borderTopRightRadius: "4px" },
       render: (rowdata) => objStatus[rowdata.status],

@@ -26,7 +26,8 @@ import CustomAvatar from "app/components/Avatar/Avatar";
 import ReleaseDialog from "./ReleaseDialog";
 import UpdateOptions from "./UpdateOptions";
 import { useSelector, useDispatch } from "react-redux";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function ManagerEmployeeDialog(props) {
   const employeeData = useSelector(
     (state) => state.Employee.employeeData?.employeeInfo
@@ -35,10 +36,8 @@ function ManagerEmployeeDialog(props) {
   const otherFeature = useSelector((state) => state.Employee.otherFeature);
   const Gender = useSelector((state) => state.Employee.Gender);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  console.log(" chao bn ", employeeData?.photoUrl);
   return (
     <>
-      {" "}
       <Dialog open={true} onClose={handleClose} maxWidth="lg" fullWidth>
         <DialogTitle
           sx={{

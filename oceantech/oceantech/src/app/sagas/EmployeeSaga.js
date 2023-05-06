@@ -332,7 +332,7 @@ export function* updateProposalConsultsaga(action) {
       action?.payload?.id,
       action?.payload?.data
     );
-    if (res?.status == 200) {
+    if (res?.status === 200) {
       toast.success("sua thanh cong ");
     }
   } catch (error) {
@@ -348,7 +348,8 @@ export function* ReleaseManagesaga(action) {
       action?.payload?.id,
       action?.payload?.data
     );
-    if (res?.status == 200) {
+    if (res?.status === 200) {
+      toast.success("Gui  lanh dao");
     }
   } catch (error) {
     console.log(err);

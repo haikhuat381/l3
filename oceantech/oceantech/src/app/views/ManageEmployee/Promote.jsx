@@ -74,6 +74,12 @@ function Promote(props) {
   };
 
   // fake-api
+  // showSuccessMessage
+  function setShouldOpenTime() {
+    setTimeout(() => {
+      setShouldOpenDialog(true);
+    }, 500); // thời gian chờ 2 giây (2000 miliseconds)
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -91,12 +97,9 @@ function Promote(props) {
       date: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: async (values, { resetForm }) => {
-      setPromoteDataDialog(values);
-
       if (!updatePromote?.employeeId) {
         dispatch(addPromoteHistoryAction(ID, values));
-        console.log("  ban dang thang chuc ");
-
+        // toast.success("them moi");
         handleAllGet();
       } else {
         setIdPromoteDialog(updatePromote?.promotionId);
@@ -106,7 +109,9 @@ function Promote(props) {
         handleAllGet();
         setUpdatePromote({});
       }
-      setShouldOpenDialog(true);
+
+      setPromoteDataDialog(values);
+      setShouldOpenTime();
       resetForm();
     },
   });

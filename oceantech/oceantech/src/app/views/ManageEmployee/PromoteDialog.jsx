@@ -95,7 +95,7 @@ function PromoteDialog(props) {
               justifyContent: "center",
             }}
           >
-            Biểu Mẫu Thăng Chức
+            {/* Biểu Mẫu Thăng Chức */}
           </div>
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>

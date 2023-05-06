@@ -78,6 +78,11 @@ function ProposeAdvisory(props) {
   const [rowDataInfo, setRowDataInfo] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
 
+  function setShouldOpenTime() {
+    setTimeout(() => {
+      setShouldOpenDialog(true);
+    }, 500); // thời gian chờ 2 giây (2000 miliseconds)
+  }
   const formik = useFormik({
     initialValues: {
       type: "",
@@ -102,10 +107,11 @@ function ProposeAdvisory(props) {
         dispatch(
           updateProposalConsult(updateProposal?.proposalConsultationId, values)
         );
+
         setUpdateProposal({});
         handleAllGet();
       }
-      setShouldOpenDialog(true);
+      setShouldOpenTime();
       resetForm();
     },
   });

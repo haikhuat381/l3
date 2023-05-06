@@ -43,7 +43,7 @@ function AddNewEmployee() {
   const handleChangeReload = (value) => {
     reloadRef.current = value;
   };
-  
+
   useEffect(() => {
     handleGetListEmployee(page, pagesize);
   }, [page, pagesize, reloadRef.current]);
@@ -166,8 +166,8 @@ function AddNewEmployee() {
         );
       },
     },
-    { title: "Mã nhân viên", field: "code" },
-    { title: "Họ tên", field: "fullName" },
+    { title: "Mã nhân viên", width: 150, field: "code" },
+    { title: "Họ và tên", field: "fullName" },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", field: "phone" },
     { title: "Mã CCCD/CMT", field: "citizenId" },
@@ -229,7 +229,7 @@ function AddNewEmployee() {
             headerStyle: {
               backgroundColor: "#262e49",
               color: "#fff",
-              position: 'sticky',
+              position: "sticky",
               top: 0,
               zIndex: 1,
             },
