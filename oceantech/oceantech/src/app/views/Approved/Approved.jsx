@@ -42,7 +42,7 @@ function Approved() {
   }
   
   const handleGetListEmployee = () => {
-    const status = "5,6,10,11,18"
+    const status = "5,6,10,11"
     dispatch(getTotalAction(status))
     dispatch(getListEmployeeAction(status, page, pagesize))
   }

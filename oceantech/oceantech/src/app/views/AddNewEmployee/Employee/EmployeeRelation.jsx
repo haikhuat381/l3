@@ -266,25 +266,6 @@ function EmployeeRelation(props) {
               helperText={formik.touched.address && formik.errors.address ? <div>{formik.errors.address}</div> : null}
             />
           </Grid>
-          {/* <Grid item sm={4} xs={12} >
-            {" "}
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ mb: 2, mr: 1}}
-              onClick={() => formik.submitForm()}
-            >
-              Lưu quan hệ
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ mb: 2}}
-              onClick={formik.resetForm}
-            >
-              Hủy
-            </Button>
-          </Grid> */}
           <Grid container item sm={4} xs={12} spacing={1}>
             <Grid item xs={6.1}>
               <Button
