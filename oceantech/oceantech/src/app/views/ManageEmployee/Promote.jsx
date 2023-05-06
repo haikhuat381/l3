@@ -312,17 +312,17 @@ function Promote(props) {
 
             <Grid container item xs={3} spacing={1}>
               <Grid item>
+                <Button variant="contained" color="primary" type="submit">
+                  Lưu
+                </Button>
+              </Grid>
+              <Grid item>
                 <Button
                   variant="contained"
                   color="error"
                   onClick={() => formik.resetForm()}
                 >
                   Hủy
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="contained" color="primary" type="submit">
-                  Lưu
                 </Button>
               </Grid>
             </Grid>

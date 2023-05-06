@@ -301,6 +301,11 @@ function SalaryIncrease(props) {
             </Grid>
             <Grid container item xs={3} spacing={1}>
               <Grid item>
+                <Button variant="contained" color="primary" type="submit">
+                  Lưu
+                </Button>
+              </Grid>
+              <Grid item>
                 <Button
                   variant="contained"
                   color="error"
@@ -309,16 +314,6 @@ function SalaryIncrease(props) {
                   Hủy
                 </Button>
               </Grid>
-              <Grid item>
-                <Button variant="contained" color="primary" type="submit">
-                  Lưu
-                </Button>
-              </Grid>
-              {/* <Grid item>
-              <Button variant="contained" color="primary" onClick={handleSave}>
-                Lưu
-              </Button>
-            </Grid> */}
             </Grid>
           </Grid>
           <Grid item xs={12}>

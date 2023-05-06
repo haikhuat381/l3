@@ -48,7 +48,7 @@ function ManagerEmployeeDialog(props) {
             boxShadow:
               "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
             padding: "9px 24px",
-            fontSize: 24
+            fontSize: 24,
           }}
         >
           Cập nhật diễn biến
@@ -64,7 +64,7 @@ function ManagerEmployeeDialog(props) {
                 item
                 xs={12}
                 sx={{
-                  marginTop: 10,
+                  marginTop: 2,
                   display: "flex",
                   alignItems: "center",
                   flexDirection: "column",
@@ -76,10 +76,10 @@ function ManagerEmployeeDialog(props) {
                   isNoneBorder={true}
                 />
                 <Typography
+                  mt={2}
                   variant="h5"
                   textAlign={"center"}
                   textTransform={"uppercase"}
-                  mt={2}
                 >
                   {employeeData?.fullName}
                 </Typography>
@@ -96,7 +96,6 @@ function ManagerEmployeeDialog(props) {
                   <Grid container spacing={3}>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -108,7 +107,6 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -120,7 +118,6 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -132,7 +129,6 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -144,7 +140,6 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        
                         fullWidth
                         InputProps={{
                           readOnly: true,
@@ -156,7 +151,6 @@ function ManagerEmployeeDialog(props) {
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <TextField
-                        
                         fullWidth
                         label="Ngày sinh"
                         variant="outlined"
@@ -190,15 +184,15 @@ function ManagerEmployeeDialog(props) {
             zIndex: 9,
           }}
         >
-          <Button variant="contained" color="error" onClick={handleClose}>
-            Hủy
-          </Button>
           <Button
             variant="contained"
             color="warning"
             onClick={() => setShouldOpenDialog(true)}
           >
             Kết thúc
+          </Button>
+          <Button variant="contained" color="error" onClick={handleClose}>
+            Hủy
           </Button>
         </DialogActions>
       </Dialog>

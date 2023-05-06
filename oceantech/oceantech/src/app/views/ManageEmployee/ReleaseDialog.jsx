@@ -98,14 +98,6 @@ function ReleaseDialog(props) {
           }}
         >
           <Button
-            className="button-cancel"
-            variant="contained"
-            color="error"
-            onClick={handleClose}
-          >
-            Hủy
-          </Button>
-          <Button
             className="button-confirm1"
             variant="contained"
             color="success"
@@ -116,6 +108,14 @@ function ReleaseDialog(props) {
             }}
           >
             Trình lãnh đạo
+          </Button>
+          <Button
+            className="button-cancel"
+            variant="contained"
+            color="error"
+            onClick={handleClose}
+          >
+            Hủy
           </Button>
         </DialogActions>
       </Dialog>
