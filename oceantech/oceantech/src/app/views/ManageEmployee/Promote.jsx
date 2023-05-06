@@ -231,6 +231,7 @@ function Promote(props) {
           <Grid container item xs={12} spacing={2}>
             <Grid item xs={4}>
               <TextField
+                style={{ height: 5 }}
                 size="small"
                 label="Ngày tăng chức"
                 type="date"
