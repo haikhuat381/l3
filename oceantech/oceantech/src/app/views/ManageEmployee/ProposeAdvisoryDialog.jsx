@@ -16,8 +16,7 @@ import {
   TextareaAutosize,
 } from "@mui/material";
 import { updateProposalConsult } from "app/redux/actions/actions";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,13 +26,7 @@ import PropostionLetter from "app/components/PropostionLetter/PropostionLetter";
 
 function ProposeAdvisoryDialog(props) {
   const dispatch = useDispatch();
-  const {
-    handleClose,
-    proposeDataDialog,
-    handleReloadPro,
-    idProposal,
-    handleAllGet,
-  } = props;
+  const { handleClose, proposeDataDialog, handleReloadPro, idProposal } = props;
   const listPropose = useSelector(
     (state) => state.Employee.proposalConsulHistory
   );
@@ -52,8 +45,7 @@ function ProposeAdvisoryDialog(props) {
         proposeData
       )
     );
-    // handleReloadPro("gui lanh dao ");
-    handleAllGet();
+    handleReloadPro(Math.random().toString(36).slice(-5));
   };
   const formik = useFormik({
     initialValues: {

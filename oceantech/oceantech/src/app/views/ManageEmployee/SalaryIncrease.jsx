@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   TextField,
   Grid,
@@ -36,15 +36,18 @@ function SalaryIncrease(props) {
   const [deleteSalary, setDeleteSalary] = useState({});
   const [updateSalary, setUpdateSalary] = useState({});
   const [iDSalary, setIdSalary] = useState({});
-
+  const refSalary = useRef();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
   const [rowDataInfo, setRowDataInfo] = useState();
   const [shouldOpenDeleteDialog, setshouldOpenDeleteDialog] = useState(false);
   const [shouldOpenSalaryIncreaseDialog, setShouldOpenSalaryIncreaseDialog] =
     useState(false);
+  const handleReloadPro = (values) => {
+    refSalary.current = values;
+  };
   useEffect(() => {
-    handleGetSalary();
-  }, [ID]);
+    dispatch(getSalaryIncreaseHistoryAction(ID));
+  }, [ID, refSalary.current]);
 
   const handleAllGet = async () => {
     handleGetSalary();
@@ -57,8 +60,7 @@ function SalaryIncrease(props) {
   };
   const handleRemoveSalary = async () => {
     dispatch(deleteSalaryIncreaseAction(deleteSalary?.salaryId));
-    handleAllGet();
-
+    handleReloadPro(Math.random().toString(36).slice(-5));
     setshouldOpenDeleteDialog(false);
   };
 
@@ -73,11 +75,7 @@ function SalaryIncrease(props) {
     });
   };
   // api
-  function setShouldOpenTime() {
-    setTimeout(() => {
-      setShouldOpenSalaryIncreaseDialog(true);
-    }, 500); // thời gian chờ 2 giây (2000 miliseconds)
-  }
+
   const formik = useFormik({
     initialValues: {
       salary: "",
@@ -103,15 +101,14 @@ function SalaryIncrease(props) {
       // console.log(" them luong ", updateSalary);
       if (!updateSalary?.employeeId) {
         dispatch(addSalaryIncreaseAction(ID, values));
-        handleAllGet();
       } else {
         setIdSalary(updateSalary?.salaryId);
         dispatch(updateSalaryIncreaseAction(updateSalary?.salaryId, values));
 
-        handleAllGet();
         setUpdateSalary({});
       }
-      setShouldOpenTime();
+      handleReloadPro(Math.random().toString(36).slice(-5));
+      setShouldOpenSalaryIncreaseDialog(true);
       resetForm();
     },
   });
@@ -354,7 +351,7 @@ function SalaryIncrease(props) {
           handleClose={() => setShouldOpenSalaryIncreaseDialog(false)}
           handleCloseAll={handleClose}
           iDSalary={iDSalary}
-          handleAllGet={handleAllGet}
+          handleReloadPro={handleReloadPro}
         />
       )}
 

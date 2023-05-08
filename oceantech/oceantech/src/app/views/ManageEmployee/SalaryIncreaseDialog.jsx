@@ -16,19 +16,16 @@ import {
   TextareaAutosize,
 } from "@mui/material";
 import SalarationLetter from "app/components/SalarationLetter/SalarationLetter";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { useSelector, useDispatch } from "react-redux";
 
 import { updateSalaryIncreaseAction } from "app/redux/actions/actions";
 function SalaryIncreaseDialog(props) {
   const dispatch = useDispatch();
-  const { handleClose, dataIncreaseDialog, iDSalary, handleAllGet } = props;
+  const { handleClose, dataIncreaseDialog, iDSalary, handleReloadPro } = props;
   const listSalaryElment = useSelector(
     (state) => state.Employee.salaryIncreaseHistory
   );
-  // console.log(" data cân gui", listSalaryElment[0]?.salaryId);
   const [saved, setSaved] = useState("none");
   const [salaryData, setSalaryData] = useState(dataIncreaseDialog);
   const handleValues = (data) => {
@@ -41,8 +38,7 @@ function SalaryIncreaseDialog(props) {
         salaryData
       )
     );
-    // handleReloadPro("gui lanh dao ");
-    handleAllGet();
+    handleReloadPro(Math.random().toString(36).slice(-5));
   };
   return (
     <>

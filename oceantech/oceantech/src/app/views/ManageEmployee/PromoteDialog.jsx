@@ -15,8 +15,7 @@ import {
   MenuItem,
   TextareaAutosize,
 } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
@@ -69,8 +68,7 @@ function PromoteDialog(props) {
       )
     );
     toast;
-    // handleReloadPro("gui lanh dao ");
-    handleAllGet();
+    handleReloadPro(Math.random().toString(36).slice(-5));
   };
 
   return (
