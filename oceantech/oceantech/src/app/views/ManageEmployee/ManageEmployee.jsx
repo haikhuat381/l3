@@ -117,7 +117,7 @@ function ManagerEmployee() {
       title: "Ngày sinh",
       field: "dateOfBirth",
       width: 150,
-      render: (rowdata) => moment(rowdata).format("DD/MM/YYYY"),
+      render: (rowdata) => moment(rowdata?.dateOfBirth).format("DD/MM/YYYY"),
     },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", width: 150, field: "phone" },
