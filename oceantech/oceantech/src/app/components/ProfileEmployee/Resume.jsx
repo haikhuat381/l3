@@ -70,7 +70,7 @@ const Resume = React.forwardRef((props, ref) => {
       width: 140,
     },
     { title: "Địa chỉ", field: "address", width: 200 },
-    { title: "Số CMND/CMT", width: 170, field: "citizenId" },
+    { title: "Số CMND/CMT", width: 180, field: "citizenId" },
   ];
 
   return (

@@ -18,7 +18,7 @@ const Diploma = React.forwardRef((props, ref) => {
     {
       title: "Ngày cấp",
       field: "issuanceDate",
-      render: (rowData) => moment(rowData?.issuanceDate).format("YYYY-MM-DD"),
+      render: (rowData) => moment(rowData?.issuanceDate).format("DD-MM-YYYY"),
     },
     { title: "Lĩnh Vực", field: "field", headerStyle: {borderTopRightRadius: "4px"} },
   ];
