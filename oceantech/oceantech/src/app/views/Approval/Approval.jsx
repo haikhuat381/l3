@@ -96,7 +96,7 @@ function Approval() {
     { title: "Mã nhân viên", width: 150, field: "code" },
     { title: "Họ và tên", field: "fullName" },
     { title: "Email", field: "email" },
-    { title: "Số điện thoại", field: "phone" },
+    { title: "Số điện thoại", field: "phone", width: 170 },
     {
       title: "Trạng thái",
       field: "status",
