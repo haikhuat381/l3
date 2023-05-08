@@ -175,7 +175,7 @@ function SalarationLetter(props) {
             justifyContent="flex-start"
           >
             <Grid item sm={1.8} xs={1.8} sx={{ mt: 1 }}>
-              <Typography>Điều 1: Kể từ ngày</Typography>
+              <Typography>Điều 1: Kể từ ngày:</Typography>
             </Grid>
             <Grid item sm={2} xs={2}>
               <TextField
@@ -196,7 +196,7 @@ function SalarationLetter(props) {
               />
             </Grid>
             <Grid item sm={3.4} xs={3.4} sx={{ pl: 1, mt: 1 }}>
-              <Typography>điều chỉnh mức lương của Ông/Bà</Typography>
+              <Typography>,điều chỉnh mức lương của Ông/Bà:</Typography>
             </Grid>
             <Grid item sm={2} xs={2}>
               <TextField
@@ -213,8 +213,8 @@ function SalarationLetter(props) {
                 value={employeeData?.employeeInfo?.fullName}
               />
             </Grid>
-            <Grid item sm={1.1} xs={1.1} sx={{ mt: 1, ml: 1 }}>
-              <Typography>sẽ tăng lên</Typography>
+            <Grid item sm={1.2} xs={1.2} sx={{ mt: 1, ml: 1 }}>
+              <Typography>,sẽ tăng lên:</Typography>
             </Grid>
             <Grid item sm={1.5} xs={1.5}>
               <TextField
@@ -245,7 +245,7 @@ function SalarationLetter(props) {
           >
             <Typography>
               Điều 2: Các ông/bà Phòng Nhân Sự, Phòng Tài Chính kế toán căn cứ
-              quyết định thi hành
+              quyết định thi hành.
             </Typography>
           </Grid>
         </Grid>

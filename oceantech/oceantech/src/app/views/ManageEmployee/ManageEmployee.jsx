@@ -51,8 +51,8 @@ function ManagerEmployee() {
   };
 
   useEffect(() => {
-    dispatch(getTotalAction("5,9"));
-    dispatch(getListEmployeeAction("5,9", page, pageSize));
+    dispatch(getTotalAction("5,8,9"));
+    dispatch(getListEmployeeAction("5,8,9", page, pageSize));
   }, [page, pageSize, reloadRef.current]);
 
   const onHandleChange = (page, pageSize) => {

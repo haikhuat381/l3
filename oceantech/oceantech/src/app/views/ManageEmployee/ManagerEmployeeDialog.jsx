@@ -36,6 +36,8 @@ function ManagerEmployeeDialog(props) {
   const otherFeature = useSelector((state) => state.Employee.otherFeature);
   const Gender = useSelector((state) => state.Employee.Gender);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
+  console.log("chao bn ", employeeData?.photoUrl);
+  // console.log("dm asdasd", employeeData);
   return (
     <>
       <Dialog open={true} onClose={handleClose} maxWidth="lg" fullWidth>
@@ -71,7 +73,7 @@ function ManagerEmployeeDialog(props) {
                 }}
               >
                 <CustomAvatar
-                  image={employeeData?.employeeInfo?.photoUrl}
+                  image={employeeData?.photoUrl}
                   displayButton={"none"}
                   isNoneBorder={true}
                 />

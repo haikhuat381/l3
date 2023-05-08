@@ -68,6 +68,7 @@ function PromoteDialog(props) {
         promoteData
       )
     );
+    toast;
     // handleReloadPro("gui lanh dao ");
     handleAllGet();
   };
