@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Grid, TextField, Typography } from "@mui/material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
-import { updateEmployee } from "app/redux/actions/actions";
+
 import moment from "moment";
 function PromotionLetter(props) {
   const dispatch = useDispatch();
@@ -192,7 +190,7 @@ function PromotionLetter(props) {
             lineHeight={2}
           >
             <Grid item sm={1.5} xs={1.5}>
-              <Typography>Điều 1: Tính từ</Typography>
+              <Typography>Điều 1: Tính từ:</Typography>
             </Grid>
             <Grid item sm={1.5} xs={1.5}>
               <TextField
@@ -212,7 +210,7 @@ function PromotionLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={2.2} xs={2.2} sx={{ paddingLeft: "15px" }}>
+            <Grid item sm={1.97} xs={1.97} sx={{ paddingLeft: "1px" }}>
               <Typography>, quyết định ông (bà):</Typography>
             </Grid>
             <Grid item sm={2} xs={2}>
@@ -230,11 +228,11 @@ function PromotionLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={1.9} xs={1.9}>
+            <Grid item sm={1.8} xs={1.8}>
               <Typography>, sẽ thăng chức lên: </Typography>
             </Grid>
 
-            <Grid item sm={1.9} xs={12}>
+            <Grid item sm={1.9} xs={1.9}>
               <TextField
                 className="luan "
                 value={promoteData?.newPosition}
@@ -252,7 +250,7 @@ function PromotionLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={0.2} xs={1.1}>
+            <Grid item sm={0.1} xs={0.1}>
               <Typography>, </Typography>
             </Grid>
             <Grid item sm={0.9} xs={1}>
@@ -276,6 +274,9 @@ function PromotionLetter(props) {
                 }}
               />
             </Grid>
+            <Grid item sm={0.1} xs={0.1} sx={{ paddingLeft: "1px" }}>
+              <Typography>.</Typography>
+            </Grid>
           </Grid>
 
           <Grid
@@ -284,10 +285,10 @@ function PromotionLetter(props) {
             sm={12}
             xs={12}
             className=" container-form"
-            sx={{ pl: 10, pr: 10, pb: 2 }}
+            sx={{ pl: 10, pr: 5, pb: 2 }}
             lineHeight={2}
           >
-            <Grid item sm={5} xs={5}>
+            <Grid item sm={4.65} xs={4.65}>
               <Typography>
                 Điều 2: Bộ phận nhân sự, phòng kế toán và ông (bà):{" "}
               </Typography>
