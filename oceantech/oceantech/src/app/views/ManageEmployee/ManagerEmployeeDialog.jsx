@@ -26,8 +26,7 @@ import CustomAvatar from "app/components/Avatar/Avatar";
 import ReleaseDialog from "./ReleaseDialog";
 import UpdateOptions from "./UpdateOptions";
 import { useSelector, useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 function ManagerEmployeeDialog(props) {
   const employeeData = useSelector(
     (state) => state.Employee.employeeData?.employeeInfo

@@ -39,23 +39,13 @@ function ProposeAdvisory(props) {
   const [shouldOpenDeleteDialog, setshouldOpenDeleteDialog] = useState(false);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [proposeDataDialog, setProposeDataDialog] = useState({});
-  const handleReloadPro = async (values) => {
-    // console.log(" lam moi lai bang  ", values);
-    reloadProposal.current(values);
+  const handleReloadPro = (values) => {
+    reloadProposal.current = values;
   };
   useEffect(() => {
-    handleGetPropose();
-  }, [ID]);
-  useEffect(() => {
-    handleAllGet();
-  }, [reloadProposal.current]);
-  const handleAllGet = async () => {
-    handleGetPropose();
-    handleGetPropose();
-  };
-  const handleGetPropose = async () => {
     dispatch(getProposalConsultationAction(ID));
-  };
+  }, [ID, reloadProposal.current]);
+
   const handleEditPropose = (rowData) => {
     setUpdateProposal(rowData);
     formik.setValues({
@@ -68,7 +58,7 @@ function ProposeAdvisory(props) {
 
   const handleRemovePropose = () => {
     dispatch(deleteProposalConsult(deleteProposal?.proposalConsultationId));
-    handleAllGet();
+    handleReloadPro(Math.random().toString(36).slice(-5));
     setshouldOpenDeleteDialog(false);
   };
   // api
@@ -78,11 +68,6 @@ function ProposeAdvisory(props) {
   const [rowDataInfo, setRowDataInfo] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
 
-  function setShouldOpenTime() {
-    setTimeout(() => {
-      setShouldOpenDialog(true);
-    }, 500); // thời gian chờ 2 giây (2000 miliseconds)
-  }
   const formik = useFormik({
     initialValues: {
       type: "",
@@ -100,7 +85,6 @@ function ProposeAdvisory(props) {
       setProposeDataDialog(values);
       if (!updateProposal?.employeeId) {
         dispatch(addProposalConsult(ID, values));
-        handleAllGet();
       } else {
         SetIdProposal(updateProposal?.proposalConsultationId);
 
@@ -109,9 +93,9 @@ function ProposeAdvisory(props) {
         );
 
         setUpdateProposal({});
-        handleAllGet();
       }
-      setShouldOpenTime();
+      handleReloadPro(Math.random().toString(36).slice(-5));
+      setShouldOpenDialog(true);
       resetForm();
     },
   });
@@ -355,7 +339,6 @@ function ProposeAdvisory(props) {
           handleReloadPro={handleReloadPro}
           handleCloseAll={handleClose}
           idProposal={idProposal}
-          handleAllGet={handleAllGet}
         />
       )}
       {shouldOpenRequestDialog && (

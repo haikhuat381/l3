@@ -195,8 +195,8 @@ function SalarationLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={3.4} xs={3.4} sx={{ pl: 1, mt: 1 }}>
-              <Typography>,điều chỉnh mức lương của Ông/Bà:</Typography>
+            <Grid item sm={3.4} xs={3.4} sx={{ pl: 0, mt: 1 }}>
+              <Typography>, điều chỉnh mức lương của Ông/Bà:</Typography>
             </Grid>
             <Grid item sm={2} xs={2}>
               <TextField
@@ -213,8 +213,8 @@ function SalarationLetter(props) {
                 value={employeeData?.employeeInfo?.fullName}
               />
             </Grid>
-            <Grid item sm={1.2} xs={1.2} sx={{ mt: 1, ml: 1 }}>
-              <Typography>,sẽ tăng lên:</Typography>
+            <Grid item sm={1.2} xs={1.2} sx={{ mt: 1, ml: 0 }}>
+              <Typography>, sẽ tăng lên:</Typography>
             </Grid>
             <Grid item sm={1.5} xs={1.5}>
               <TextField
@@ -308,22 +308,6 @@ function SalarationLetter(props) {
             </Typography>
           </Grid>
         </Grid>
-
-        {/* <Grid
-                                container
-                                item
-                                sm={12}
-                                xs={12}
-                                sx={{ pl: 10, pr: 10, mt: 3 }}
-                                justifyContent="flex-end"
-                            >
-                                <Grid item sm={3} xs={3}>
-                                    <Typography
-                                        className="font-15"
-                                        style={{ fontWeight: "bold", textDecoration: "uppercase" }}
-                                    ></Typography>
-                                </Grid>
-                            </Grid> */}
       </Grid>
     </>
   );

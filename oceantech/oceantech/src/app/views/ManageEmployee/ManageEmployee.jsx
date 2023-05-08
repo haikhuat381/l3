@@ -117,7 +117,7 @@ function ManagerEmployee() {
       title: "Ngày sinh",
       field: "dateOfBirth",
       width: 150,
-      render: (rowdata) => moment(rowdata).format("DD/MM/YYYY"),
+      render: (rowdata) => moment(rowdata?.dateOfBirth).format("DD/MM/YYYY"),
     },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", width: 150, field: "phone" },
@@ -131,7 +131,7 @@ function ManagerEmployee() {
   ];
   return (
     <Container>
-      {/* <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -142,7 +142,7 @@ function ManagerEmployee() {
         draggable
         pauseOnHover
         theme="colored"
-      /> */}
+      />
       <Box className="breadcrumb">
         <Breadcrumb
           routeSegments={[

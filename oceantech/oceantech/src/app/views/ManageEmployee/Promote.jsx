@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+
 import {
   updatePromoteHistoryAction,
   getPromoteHistoryAction,
@@ -40,27 +40,18 @@ function Promote(props) {
   const [rowDataInfo, setRowDataInfo] = useState();
   const [rowData, setRowData] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
-  useEffect(() => {
-    handleGetPromote();
-  }, [ID]);
-  const handleReloadPro = async (values) => {
-    reloadPro.current(values);
+  const handleReloadPro = (values) => {
+    reloadPro.current = values;
   };
+
   useEffect(() => {
-    handleAllGet();
-  }, [reloadPro.current]);
-  const handleAllGet = async () => {
-    handleGetPromote();
-    handleGetPromote();
-  };
-  const handleGetPromote = async () => {
     dispatch(getPromoteHistoryAction(ID));
-  };
+  }, [ID, reloadPro.current]);
 
   const handleDeletePromote = () => {
     dispatch(deletePromoteHistoryAction(employeeDelete?.promotionId));
 
-    handleAllGet();
+    handleReloadPro(Math.random().toString(36).slice(-5));
     setshouldOpenDeleteDialog(false);
   };
   const handleEditPromote = (rowData) => {
@@ -75,11 +66,6 @@ function Promote(props) {
 
   // fake-api
   // showSuccessMessage
-  function setShouldOpenTime() {
-    setTimeout(() => {
-      setShouldOpenDialog(true);
-    }, 500); // thời gian chờ 2 giây (2000 miliseconds)
-  }
 
   const formik = useFormik({
     initialValues: {
@@ -99,19 +85,16 @@ function Promote(props) {
     onSubmit: async (values, { resetForm }) => {
       if (!updatePromote?.employeeId) {
         dispatch(addPromoteHistoryAction(ID, values));
-        // toast.success("them moi");
-        handleAllGet();
       } else {
         setIdPromoteDialog(updatePromote?.promotionId);
         dispatch(
           updatePromoteHistoryAction(updatePromote?.promotionId, values)
         );
-        handleAllGet();
         setUpdatePromote({});
       }
-
+      handleReloadPro(Math.random().toString(36).slice(-5));
+      setShouldOpenDialog(true);
       setPromoteDataDialog(values);
-      setShouldOpenTime();
       resetForm();
     },
   });
@@ -207,18 +190,6 @@ function Promote(props) {
   ];
   return (
     <>
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      /> */}
       {shouldOpenDeleteDialog && (
         <ConfirmDialog
           onConfirmDialogClose={() => {
@@ -369,7 +340,6 @@ function Promote(props) {
           handleCloseAll={handleClose}
           status={false}
           idPromoteDialog={idPromoteDialog}
-          handleAllGet={handleAllGet}
         />
       )}
 

@@ -28,8 +28,6 @@ import ProposeAdvisory from "./ProposeAdvisory";
 import Promote from "./Promote";
 import { useRef, useEffect } from "react";
 import { color } from "echarts";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import {
   addNewEmployee,
@@ -83,18 +81,6 @@ function UpdateOptions({ EmployeeId }) {
 
   return (
     <div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Accordion

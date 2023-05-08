@@ -210,7 +210,7 @@ function PromotionLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={1.97} xs={1.97} sx={{ paddingLeft: "1px" }}>
+            <Grid item sm={2} xs={2} sx={{ paddingLeft: "1px" }}>
               <Typography>, quyết định ông (bà):</Typography>
             </Grid>
             <Grid item sm={2} xs={2}>
@@ -228,7 +228,7 @@ function PromotionLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={1.8} xs={1.8}>
+            <Grid item sm={1.9} xs={1.9}>
               <Typography>, sẽ thăng chức lên: </Typography>
             </Grid>
 
