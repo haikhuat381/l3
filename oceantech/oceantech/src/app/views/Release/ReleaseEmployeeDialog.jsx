@@ -67,20 +67,7 @@ export default function ReleaseEmployeeDialog({ handleClose,handleChangeReload }
     setValue(newValue);
   };
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
-  // const columns = [
-  //   { title: "Tên văn bằng", field: "name" },
-  //   {
-  //     title: "Nội dung ",
-  //     field: "content",
-  //   },
-  //   { title: "Nơi cấp", field: "educationalOrg" },
-  //   {
-  //     title: "Ngày cấp",
-  //     field: "issuanceDate",
-  //     render: (rowData) => moment(rowData.issuanceDate).format("YYYY-MM-DD"),
-  //   },
-  //   { title: "Lĩnh Vực", field: "field" },
-  // ];
+  
   return (
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth
@@ -93,7 +80,7 @@ export default function ReleaseEmployeeDialog({ handleClose,handleChangeReload }
         <DialogTitle className="dialog-title"
         >
           Thông tin hồ sơ
-          <IconButton onClick={() => handleClose()}>
+          <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>
         </DialogTitle>

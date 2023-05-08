@@ -161,6 +161,7 @@ function AddNewEmployeeDialog(props) {
         } else {
           dispatch(addNewEmployeeAction(dataCreate));
           // toast.success("Lưu mới thành công");
+          setSaved(false);
         }
       } else {
         const dataInfo = { ...values, gender: numberGender };
@@ -178,9 +179,11 @@ function AddNewEmployeeDialog(props) {
 
         dispatch(updateEmployeeAction(employeeUpdate?.employeeId, updateData));
         // toast.success("Cập nhật thành công");
+        setSaved(false);
       }
-      handleChangeReload(employeeUpdate?.gender);
-      setSaved(false);
+      // handleChangeReload(employeeUpdate?.gender);
+      handleChangeReload(Math.random().toString(36).slice(-5))
+      // setSaved(false);
       setShouldOpenDialog(false);
     },
   });
@@ -237,7 +240,7 @@ function AddNewEmployeeDialog(props) {
             type="submit"
             color="primary"
             disabled={!saved}
-            onClick={() => formik.submitForm()}
+            onClick={formik.submitForm}
           >
             Lưu
           </Button>
@@ -256,7 +259,7 @@ function AddNewEmployeeDialog(props) {
           <Button
             variant="contained"
             color="error"
-            onClick={() => handleClose()}
+            onClick={handleClose}
           >
             Hủy
           </Button>

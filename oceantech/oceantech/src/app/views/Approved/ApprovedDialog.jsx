@@ -72,7 +72,7 @@ export default function ApprovedDialog({ handleClose }) {
       >
         <DialogTitle className="dialog-title" >
           Thông tin hồ sơ
-          <IconButton onClick={() => handleClose()}>
+          <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>
         </DialogTitle>

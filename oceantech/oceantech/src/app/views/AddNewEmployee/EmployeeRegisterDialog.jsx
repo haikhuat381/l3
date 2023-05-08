@@ -214,7 +214,7 @@ export default function EmployeeRegisterDialog({
           <Button
             variant="contained"
             color="error"
-            onClick={() => handleClose()}
+            onClick={handleClose}
           >
             Hủy
           </Button>

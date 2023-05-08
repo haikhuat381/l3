@@ -45,6 +45,7 @@ function AddNewEmployee() {
   };
 
   useEffect(() => {
+    // dispatch(resetEmployeeDataAction({}));
     handleGetListEmployee(page, pagesize);
   }, [page, pagesize, reloadRef.current]);
 
@@ -76,7 +77,6 @@ function AddNewEmployee() {
       // handleChangeReload(rowdata.employeeId);
       handleChangeReload(Math.random().toString(36).slice(-5));
       setshouldOpenConfirmationDeleteDialog(false);
-      // toast.success("Xóa nhân viên thành công");
     }
   };
   const handleClose = () => {
@@ -112,7 +112,6 @@ function AddNewEmployee() {
                     }}
                   >
                     <Icon
-                      // color="warning"
                       style={{ color: "#EED370" }}
                     >
                       report

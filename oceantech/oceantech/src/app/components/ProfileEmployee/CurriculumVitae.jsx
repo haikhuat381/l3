@@ -100,7 +100,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Typography>
           </Grid>
 
-          <Grid item container direction={"column"} rowSpacing={2}>
+          <Grid item container direction={"column"} rowSpacing={3}>
             <Grid item>
               <Box className="title-info">
                 <Typography textTransform={"uppercase"} variant="subtitle1">
