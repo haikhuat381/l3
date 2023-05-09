@@ -114,7 +114,7 @@
   position: absolute;
   content: "";
   width: 100%;
-  bottom: 4px;
+  bottom: 3px;
   height: 1px;
   border-bottom: 1px dotted black;
 }
@@ -123,7 +123,10 @@
 .rs-readonly .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input{
   padding: 1px;
 }
-
+.rs-noReadonly .css-1d3z3hw-MuiOutlinedInput-notchedOutline,
+.rs-readonly .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
 
 .cv-noReadonly,
 .cv-readonly {
@@ -135,10 +138,8 @@
     position: absolute;
     content: "";
     width: 100%;
-    // bottom: 20px;
     bottom: 16px;
     left: 14px;
-    // right: -14px;
     height: 1px;
     border-bottom: 2px dotted black;
 }

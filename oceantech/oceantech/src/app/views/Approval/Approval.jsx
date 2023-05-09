@@ -20,6 +20,7 @@ import {
   getEmployeeDataAction,
   getFormDataAction,
   resetFormDataAction,
+  resetEmployeeDataAction,
 } from "app/redux/actions/actions";
 import ApprovalDialog from "./ApprovalDialog";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
@@ -65,6 +66,7 @@ function Approval() {
 
   const handleClose = () => {
     dispatch(resetFormDataAction({}));
+    dispatch(resetEmployeeDataAction({}))
     setShouldOpenDialog(false);
   };
   const columns = [

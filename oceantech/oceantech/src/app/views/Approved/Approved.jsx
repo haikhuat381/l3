@@ -7,6 +7,7 @@ import {
   getListEmployeeAction,
   getEmployeeDataAction,
   getFormDataAction,
+  resetEmployeeDataAction,
 } from "app/redux/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
 import ApprovedDialog from "./ApprovedDialog";
@@ -62,6 +63,7 @@ function Approved() {
   };
   const handleClose = () => {
     setShouldOpenDialog(false);
+    dispatch(resetEmployeeDataAction({}))
   };
 
   const columns = [

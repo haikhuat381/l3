@@ -49,7 +49,7 @@ function AddNewEmployeeDialog(props) {
   );
   const [listDiploma, setListDiploma] = useState([]);
   const [listRelationship, setListRelationship] = useState([]);
-
+  console.log("employeeDataabb", employeeData)
   useEffect(() => {
     setEmployeeData(employeeDataReducer?.employeeInfo);
     setListDiploma(
