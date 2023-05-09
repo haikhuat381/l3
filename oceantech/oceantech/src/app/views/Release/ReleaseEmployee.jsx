@@ -25,6 +25,7 @@ import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
 import "react-toastify/dist/ReactToastify.css";
+import { objStatus, approvedEndStatus , savedStatus } from "app/constant";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
@@ -48,7 +49,7 @@ function ReleaseEmployee() {
   const listEmployeeDataReducer = useSelector(
     (state) => state?.Employee?.listEmployeeData
   );
-  const objStatus = useSelector((state) => state?.Employee?.objStatus);
+  // const objStatus = useSelector((state) => state?.Employee?.objStatus);
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
   const reloadRef = useRef();
   const handleChangeReload = (value) => {
@@ -84,7 +85,7 @@ function ReleaseEmployee() {
       render: (rowdata) => {
         return (
           <>
-            {rowdata.status === 13 && (
+            {rowdata.status === savedStatus  && (
               <Tooltip title="Thông tin">
                 <IconButton
                   onClick={() => {
@@ -101,7 +102,7 @@ function ReleaseEmployee() {
                 </IconButton>
               </Tooltip>
             )}
-            {rowdata.status === 10 && (
+            {rowdata.status === approvedEndStatus && (
               <Tooltip title="Xem chi tiết">
                 <IconButton
                   onClick={() => {

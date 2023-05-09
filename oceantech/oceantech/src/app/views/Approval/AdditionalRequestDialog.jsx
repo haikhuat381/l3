@@ -17,7 +17,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
-
+import { pendingStatus, needMoreInfoStatus , moreInfoEndingStatus  } from "app/constant";
 
 
 function AdditionalRequestDialog(props) {
@@ -37,8 +37,8 @@ function AdditionalRequestDialog(props) {
     }),
     onSubmit: (values) => {
       const isCheck = employeeData?.employeeInfo?.status
-      values.status = isCheck === 3 ? 4 : 9
-      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung"))
+      values.status = isCheck === pendingStatus ? needMoreInfoStatus : moreInfoEndingStatus 
+      isCheck === pendingStatus ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung"))
       // handleChangeReload(employeeData?.employeeInfo?.employeeId)
       handleChangeReload(Math.random().toString(36).slice(-5))
       handleCloseAll();

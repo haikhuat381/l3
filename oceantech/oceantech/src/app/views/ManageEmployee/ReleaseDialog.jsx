@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { ReleaseManageAction } from "app/redux/actions/actions";
 import ReleaseLetter from "app/components/ReleaseLetter/ReleaseLetter";
+import { pendingEndStatus } from "app/constant";
+
 function ReleaseDialog(props) {
   const { handleClose, handleCloseAll, handleChangeReload } = props;
   const dispatch = useDispatch();
@@ -127,7 +129,7 @@ function ReleaseDialog(props) {
           }}
           employeeId={employeeData?.employeeInfo?.employeeId}
           // status={employeeData?.employeeInfo?.status}
-          status="8"
+          status= {pendingEndStatus} 
         />
       )}
     </>

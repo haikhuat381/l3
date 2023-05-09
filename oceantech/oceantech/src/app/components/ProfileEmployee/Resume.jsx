@@ -4,6 +4,8 @@ import MaterialTable from "@material-table/core";
 import CustomAvatar from "../Avatar/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import { Gender } from "app/constant";
+import { formatDateSend, formatDateView } from "app/constant/formatDate";
 
 const Resume = React.forwardRef((props, ref) => {
   const {
@@ -14,7 +16,6 @@ const Resume = React.forwardRef((props, ref) => {
   } = props;
   const dispatch = useDispatch();
   var today = new Date();
-  const Gender = useSelector((state) => state?.Employee?.Gender);
   const employeeData = useSelector((state) => state?.Employee?.formData);
   //
   const [resumeData, setResumeData] = useState();
@@ -56,7 +57,7 @@ const Resume = React.forwardRef((props, ref) => {
       title: "Ngày sinh ",
       field: "dateOfBirth",
       width: 150,
-      render: (rowData) => moment(rowData.dateOfBirth).format("DD-MM-YYYY"),
+      render: (rowData) =>formatDateView(rowData?.dateOfBirth),
     },
     {
       title: "Giới tính",
@@ -185,10 +186,8 @@ const Resume = React.forwardRef((props, ref) => {
                 id="standard-adornment-mount"
                 fullWidth
                 size="small"
-                value={
-                  moment(employeeData?.resume?.dateOfBirth).format(
-                    "YYYY-MM-DD"
-                  ) || ""
+                value={ formatDateSend(employeeData?.resume?.dateOfBirth)
+                   || ""
                 }
                 name="birthday"
               ></TextField>
@@ -348,12 +347,10 @@ const Resume = React.forwardRef((props, ref) => {
                   size="small"
                   value={
                     !resumeData?.citizenIdIssuanceDate
-                      ? moment(
+                      ? formatDateSend(
                           employeeData?.resume?.citizenIdIssuanceDate
-                        ).format("YYYY-MM-DD")
-                      : moment(resumeData?.citizenIdIssuanceDate).format(
-                          "YYYY-MM-DD"
                         )
+                      : formatDateSend(resumeData?.citizenIdIssuanceDate)
                   }
                   name="citizenIdIssuanceDate"
                   onChange={(event) => {

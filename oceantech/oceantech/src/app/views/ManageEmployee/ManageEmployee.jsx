@@ -25,6 +25,9 @@ import ReleaseDialog from "./ReleaseDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { objStatus, moreInfoEndingStatus } from "app/constant";
+import { formatDateView } from "app/constant/formatDate";
+
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
@@ -44,7 +47,6 @@ function ManagerEmployee() {
   const [dataReport, setDataReport] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
   const listEmployee = useSelector((state) => state.Employee.listEmployeeData);
-  const objStatus = useSelector((state) => state?.Employee?.objStatus);
   const handleChangeReload = (value) => {
     reloadRef.current = value;
     console.log(" cjao bn ", reloadRef.current);
@@ -76,7 +78,7 @@ function ManagerEmployee() {
       render: (rowData) => {
         return (
           <>
-            {rowData.status === 9 && (
+            {rowData.status === moreInfoEndingStatus && (
               <Tooltip title="Thông tin">
                 <span>
                   <IconButton
@@ -117,7 +119,7 @@ function ManagerEmployee() {
       title: "Ngày sinh",
       field: "dateOfBirth",
       width: 150,
-      render: (rowdata) => moment(rowdata?.dateOfBirth).format("DD/MM/YYYY"),
+      render: (rowdata) => formatDateView(rowdata?.dateOfBirth),
     },
     { title: "Email", field: "email" },
     { title: "Số điện thoại", width: 150, field: "phone" },

@@ -4,6 +4,7 @@ import { Grid, TextField, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
 import moment from "moment";
+import { formatDateView } from "app/constant/formatDate";
 function PromotionLetter(props) {
   const dispatch = useDispatch();
   const { promoteDataDialog, status, handleValues } = props;
@@ -204,7 +205,7 @@ function PromotionLetter(props) {
                 sx={{
                   "& fieldset": { border: "none", padding: 0 },
                 }}
-                value={moment(promoteData?.date).format("DD-MM-YYYY")}
+                value={formatDateView(promoteData?.date)}
                 onChange={(event) => {
                   handlechangeValuse(event, "date");
                 }}

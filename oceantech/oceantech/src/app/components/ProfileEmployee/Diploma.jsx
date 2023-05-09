@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import MaterialTable from "@material-table/core";
 import moment from "moment";
+import { formatDateView } from "app/constant/formatDate";
 
 const Diploma = React.forwardRef((props, ref) => {
   const { listDiploma } = props
@@ -18,7 +19,7 @@ const Diploma = React.forwardRef((props, ref) => {
     {
       title: "Ngày cấp",
       field: "issuanceDate",
-      render: (rowData) => moment(rowData?.issuanceDate).format("DD-MM-YYYY"),
+      render: (rowData) => formatDateView(rowData?.issuanceDate),
     },
     { title: "Lĩnh Vực", field: "field", headerStyle: {borderTopRightRadius: "4px"} },
   ];

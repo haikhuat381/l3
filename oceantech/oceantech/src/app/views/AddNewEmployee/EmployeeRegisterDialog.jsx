@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import { updateFormAction } from "app/redux/actions/actions";
 import ConfirmPrintDialog from "./PrintDIalog";
+import { pendingStatus } from "app/constant";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -181,7 +182,6 @@ export default function EmployeeRegisterDialog({
                 resume: formDataResumeUpdate,
                 cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate?.workExperiences?.filter(data => data.startDate !== null && data.endDate !== null && data.startDate !== "Invalid date" && data.endDate !== "Invalid date") }
               }))
-              // handleChangeReload(employeeData?.employeeInfo?.employeeId)
               handleChangeReload(Math.random().toString(36).slice(-5))
               setSaved(false);
             }}
@@ -194,7 +194,6 @@ export default function EmployeeRegisterDialog({
             disabled={saved}
             onClick={() => {
               setshouldOpenSendToLeadershipDialog(true);
-              // handleChangeReload(employeeData?.employeeInfo?.employeeId)
               handleChangeReload(Math.random().toString(36).slice(-5))
             }}
           >
@@ -228,7 +227,7 @@ export default function EmployeeRegisterDialog({
           }}
           employeeId={employeeData?.employeeInfo?.employeeId}
           // status={employeeData?.employeeInfo?.status}
-          status="3"
+          status= {pendingStatus}
         />
       )}
       {shouldOpenConfirmPrint && (

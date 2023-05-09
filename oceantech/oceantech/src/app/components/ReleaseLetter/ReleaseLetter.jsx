@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Grid, TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
+import { otherFeature } from "app/constant";
+
 function ReleaseLetter(props) {
   const { employeeData, handleValues, status, dataReleaseDialog } = props;
   var today = new Date();
-  const otherFeature = useSelector((state) => state.Employee.otherFeature);
   console.log("chao bn ", employeeData);
   const [dataRelease, setDataRelease] = useState({
     status: "8",

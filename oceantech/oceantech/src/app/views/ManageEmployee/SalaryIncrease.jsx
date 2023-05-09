@@ -25,6 +25,7 @@ import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import moment from "moment";
 import { async } from "regenerator-runtime";
+import { formatDateSend, formatDateView } from "app/constant/formatDate";
 function SalaryIncrease(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ function SalaryIncrease(props) {
     formik.setValues({
       salary: rowData?.salary,
       salaryScale: rowData?.salaryScale,
-      date: moment(rowData?.date).format("YYYY-MM-DD"),
+      date: formatDateSend(rowData?.date),
       reason: rowData?.reason,
       note: rowData?.note,
     });
@@ -189,7 +190,7 @@ function SalaryIncrease(props) {
     {
       title: "Ngày",
       field: "date",
-      render: (rowdata) => moment(rowdata?.date).format("DD-MM-YYYY"),
+      render: (rowdata) => formatDateView(rowdata?.date),
     },
     { title: "Lý do", field: "reason" },
     {
