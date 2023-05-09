@@ -71,7 +71,6 @@ function Approved() {
     {
       title: "Hành động",
       width: 130,
-      // cellStyle: { textAlign: 'center' },
       headerStyle: {
         borderTopLeftRadius: "4px",
       },

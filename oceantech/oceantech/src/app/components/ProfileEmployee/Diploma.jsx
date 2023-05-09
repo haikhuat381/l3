@@ -7,6 +7,7 @@ import { formatDateView } from "app/constant/formatDate";
 const Diploma = React.forwardRef((props, ref) => {
   const { listDiploma } = props
   const employeeData = useSelector((state) => state.Employee.employeeData);
+  
   const columns = [
     { title: "Tên văn bằng", field: "name",
       headerStyle: {borderTopLeftRadius: "4px"},

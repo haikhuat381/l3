@@ -57,26 +57,26 @@ function AddNewEmployeeDialog(props) {
       () =>
         employeeDataReducer?.certificates?.map((data) => {
           return {
-              certificateId: data?.certificateId,
-              name: data?.name,
-              field: data?.field,
-              educationalOrg: data?.educationalOrg,
-              content: data?.content,
-              issuanceDate: formatDateSend(data?.issuanceDate),
-            }
+            certificateId: data?.certificateId,
+            name: data?.name,
+            field: data?.field,
+            educationalOrg: data?.educationalOrg,
+            content: data?.content,
+            issuanceDate: formatDateSend(data?.issuanceDate),
+          }
         }) || []
     );
     setListRelationship(
       employeeDataReducer?.familyRelations?.map((data) => {
-        return  {
-            familyId: data?.familyId,
-            name: data?.name,
-            gender: data?.gender,
-            relation: data?.relation,
-            citizenId: data?.citizenId,
-            address: data?.address,
-            dateOfBirth: formatDateSend(data?.dateOfBirth),
-          }
+        return {
+          familyId: data?.familyId,
+          name: data?.name,
+          gender: data?.gender,
+          relation: data?.relation,
+          citizenId: data?.citizenId,
+          address: data?.address,
+          dateOfBirth: formatDateSend(data?.dateOfBirth),
+        }
       }) || []
     );
   }, [employeeDataReducer]);
@@ -145,46 +145,44 @@ function AddNewEmployeeDialog(props) {
       address: Yup.string().required("Không được bỏ trống"),
     }),
     onSubmit: (values) => {
-      const numberGender = +values.gender;
-      if (!employeeUpdate?.employeeId) {
-        values.id = uuidv4();
-        values.status = "Lưu mới";
-        const dataInfo = { ...values, gender: numberGender };
-        const dataCreate = {
-          employeeInfo: dataInfo,
-          certificates: listDiploma,
-          familyRelations: listRelationship,
-        };
-        if (dataCreate.certificates.length === 0) {
-          toast.warning("Vui lòng nhập Thông tin văn bằng");
-        } else if (dataCreate.familyRelations.length === 0) {
-          toast.warning("Vui lòng nhập Quan hệ gia đình");
-        } else {
-          dispatch(addNewEmployeeAction(dataCreate));
-          // toast.success("Lưu mới thành công");
-          setSaved(false);
-        }
+      if (listDiploma.length === 0) {
+        toast.warning("Vui lòng nhập Thông tin văn bằng");
+      } else if (listRelationship.length === 0) {
+        toast.warning("Vui lòng nhập Quan hệ gia đình");
       } else {
-        const dataInfo = { ...values, gender: numberGender };
-        const updateData = {
-          employeeInfo: dataInfo,
-          certificates: listDiploma,
-          familyRelations: listRelationship.reduce((arr, data) => {
-            if (data.familyId) {
-              data.familyRelationId = data.familyId;
-            }
-            delete data.familyId;
-            return [...arr, { ...data }];
-          }, []),
-        };
 
-        dispatch(updateEmployeeAction(employeeUpdate?.employeeId, updateData));
-        // toast.success("Cập nhật thành công");
+        const numberGender = +values.gender;
+        const dataInfo = { ...values, gender: numberGender };
+
+        if (!employeeUpdate?.employeeId) {
+          dataInfo.id = uuidv4();
+          const dataCreate = {
+            employeeInfo: dataInfo,
+            certificates: listDiploma,
+            familyRelations: listRelationship,
+          };
+          dispatch(addNewEmployeeAction(dataCreate));
+        } else {
+          const updateData = {
+            employeeInfo: dataInfo,
+            certificates: listDiploma,
+            familyRelations: listRelationship?.reduce((arr, data) => {
+              if (data.familyId) {
+                data.familyRelationId = data.familyId;
+              }
+              delete data.familyId;
+              return [...arr, { ...data }];
+            }, []),
+          };
+
+          dispatch(updateEmployeeAction(employeeUpdate?.employeeId, updateData));
+        }
+        handleChangeReload(Math.random().toString(36).slice(-5))
         setSaved(false);
+        setShouldOpenDialog(false);
+
       }
-      handleChangeReload(Math.random().toString(36).slice(-5))
-      // setSaved(false);
-      setShouldOpenDialog(false);
+
     },
   });
 

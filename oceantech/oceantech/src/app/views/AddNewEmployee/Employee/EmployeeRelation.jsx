@@ -305,8 +305,6 @@ function EmployeeRelation(props) {
         columns={columns}
         options={{
           paging: false,
-          pageSize: 10,
-          pageSizeOptions: [10, 20, 50],
           rowStyle: (rowData, index) => {
             return {
               backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",

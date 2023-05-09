@@ -35,7 +35,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box className="haitesttt" sx={{ padding: "0 24px !important" , paddingBottom: 0 }}>
+        <Box sx={{ padding: "0 24px !important"}}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -141,7 +141,6 @@ export default function EmployeeRegisterDialog({
           </Tabs>
           <TabPanel value={value} index={0} className="tab-items">
             <CurriculumVitae
-              // ref={componentRef}
               status={false}
               IdEmployeeData={employeeData?.employeeInfo?.employeeId}
               handleChangeFormCV={handleChangeFormCV}

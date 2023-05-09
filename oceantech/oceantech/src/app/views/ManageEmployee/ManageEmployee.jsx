@@ -89,7 +89,6 @@ function ManagerEmployee() {
                     }}
                   >
                     <Icon
-                      // color="warning"
                       style={{ color: "#EED370" }}
                     >
                       report

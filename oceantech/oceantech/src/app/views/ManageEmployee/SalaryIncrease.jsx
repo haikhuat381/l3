@@ -320,8 +320,6 @@ function SalaryIncrease(props) {
               columns={columns}
               options={{
                 paging: false,
-                pageSize: 5,
-                pageSizeOptions: [5, 10, 15, 20],
                 rowStyle: (rowData, index) => {
                   return {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
@@ -336,10 +334,7 @@ function SalaryIncrease(props) {
                   top: 0,
                   zIndex: 1,
                 },
-                // padding: 'dense',
                 padding: "default",
-                // search: false,
-                // exportButton: true,
                 toolbar: false,
               }}
             />

@@ -78,7 +78,6 @@ function ReleaseEmployee() {
     {
       title: "Hành động",
       width: 130,
-      // cellStyle: { textAlign: 'center' },
       headerStyle: {
         borderTopLeftRadius: "4px",
       },
@@ -94,10 +93,7 @@ function ReleaseEmployee() {
                     setShouldOpenDialog(true);
                     setIdview(rowdata.employeeId);
                   }}
-                  // disabled={rowdata.status !== 10 ? false : true}
                 >
-                  {/* <Icon color={rowdata.status !== 10 ? "primary" : "disabled"}>report</Icon> */}
-                  {/* <Icon style={{color: rowdata.status !== 10 ? "#EED370" : "disabled"}}>report</Icon> */}
                   <Icon style={{ color: "#EED370" }}>report</Icon>
                 </IconButton>
               </Tooltip>
