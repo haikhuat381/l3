@@ -5,6 +5,8 @@ import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import CustomAvatar from "../Avatar/Avatar";
 import moment from "moment";
+import { otherFeature, Gender } from "app/constant";
+import { formatDateSend, formatDateView } from "app/constant/formatDate";
 
 const CurriculumVitae = React.forwardRef((props, ref) => {
   const MyButton = styled(IconButton)({
@@ -12,8 +14,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   });
   const { employee, handleChangeFormCV, formDataCVUpdate, status } = props;
 
-  const otherFeature = useSelector((state) => state?.Employee?.otherFeature);
-  const Gender = useSelector((state) => state?.Employee?.Gender);
   const employeeData = useSelector((state) => state?.Employee?.formData);
   const teamId = useSelector((state) => state?.Employee?.employeeData?.employeeInfo?.teamId);
 
@@ -29,8 +29,8 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             company: data?.company,
             position: data?.position,
             detail: data?.detail,
-            startDate: moment(data?.startDate).format("YYYY-MM-DD"),
-            endDate: moment(data?.endDate).format("YYYY-MM-DD")
+            startDate: formatDateSend(data?.startDate),
+            endDate: formatDateSend(data?.endDate)
           }
         }) : [
           {
@@ -113,7 +113,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
               <Box className="item-box">
                 <Icon>cakeIcon</Icon>
                 <Typography variant="body2">
-                  {moment(employeeData?.resume?.dateOfBirth).format("DD-MM-YYYY")}
+                  {formatDateView(employeeData?.resume?.dateOfBirth)}
                 </Typography>
               </Box>
             </Grid>

@@ -33,14 +33,6 @@ import { ActionTypes } from "app/redux/actions/actionTypes";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// export function* getListEmployeeSaga() {
-//   try {
-//     const listEmployee = yield call(GetListEmployee);
-//     yield put({ type: ActionTypes.GET_LIST_EMPLOYEE_SUCCESS, payload: listEmployee.data });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 
 export function* getTotalSaga(data) {
   try {

@@ -25,6 +25,7 @@ import {
 import ApprovalDialog from "./ApprovalDialog";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import moment from "moment";
+import { objStatus } from "app/constant";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
@@ -44,7 +45,7 @@ function Approval() {
   const listEmployeeDataReducer = useSelector(
     (state) => state?.Employee?.listEmployeeData
   );
-  const objStatus = useSelector((state) => state?.Employee?.objStatus);
+  // const objStatus = useSelector((state) => state?.Employee?.objStatus);
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
   const reloadRef = useRef();
   const handleChangeReload = (value) => {

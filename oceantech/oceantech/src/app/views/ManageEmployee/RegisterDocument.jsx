@@ -167,7 +167,7 @@ function RegisterDocument(props) {
             </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
+                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="primary"
                 onClick={() => {
                   handleEditPropose(rowData);
@@ -178,7 +178,7 @@ function RegisterDocument(props) {
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
+                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="error"
                 onClick={() => {
                   // handleRemovePropose(rowData);

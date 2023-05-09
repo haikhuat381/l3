@@ -31,6 +31,7 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import { formatDateSend } from "app/constant/formatDate";
 
 function AddNewEmployeeDialog(props) {
   const { handleClose, handleChangeReload, employeeUpdate } = props;
@@ -49,7 +50,7 @@ function AddNewEmployeeDialog(props) {
   );
   const [listDiploma, setListDiploma] = useState([]);
   const [listRelationship, setListRelationship] = useState([]);
-  console.log("employeeDataabb", employeeData)
+
   useEffect(() => {
     setEmployeeData(employeeDataReducer?.employeeInfo);
     setListDiploma(
@@ -61,7 +62,7 @@ function AddNewEmployeeDialog(props) {
               field: data?.field,
               educationalOrg: data?.educationalOrg,
               content: data?.content,
-              issuanceDate: moment(data?.issuanceDate).format("YYYY-MM-DD"),
+              issuanceDate: formatDateSend(data?.issuanceDate),
             }
         }) || []
     );
@@ -74,7 +75,7 @@ function AddNewEmployeeDialog(props) {
             relation: data?.relation,
             citizenId: data?.citizenId,
             address: data?.address,
-            dateOfBirth: moment(data?.dateOfBirth).format("YYYY-MM-DD"),
+            dateOfBirth: formatDateSend(data?.dateOfBirth),
           }
       }) || []
     );
@@ -109,7 +110,7 @@ function AddNewEmployeeDialog(props) {
       phone: employeeUpdate?.phone || "",
       dateOfBirth: !employeeUpdate?.dateOfBirth
         ? ""
-        : moment(employeeUpdate?.dateOfBirth).format("YYYY-MM-DD"),
+        : formatDateSend(employeeUpdate?.dateOfBirth),
       teamId: employeeUpdate?.teamId || "",
       citizenId: employeeUpdate?.citizenId || "",
       address: employeeUpdate?.address || "",
@@ -155,9 +156,9 @@ function AddNewEmployeeDialog(props) {
           familyRelations: listRelationship,
         };
         if (dataCreate.certificates.length === 0) {
-          toast.success("Vui lòng nhập Thông tin văn bằng");
+          toast.warning("Vui lòng nhập Thông tin văn bằng");
         } else if (dataCreate.familyRelations.length === 0) {
-          toast.success("Vui lòng nhập Quan hệ gia đình");
+          toast.warning("Vui lòng nhập Quan hệ gia đình");
         } else {
           dispatch(addNewEmployeeAction(dataCreate));
           // toast.success("Lưu mới thành công");
@@ -181,7 +182,6 @@ function AddNewEmployeeDialog(props) {
         // toast.success("Cập nhật thành công");
         setSaved(false);
       }
-      // handleChangeReload(employeeUpdate?.gender);
       handleChangeReload(Math.random().toString(36).slice(-5))
       // setSaved(false);
       setShouldOpenDialog(false);

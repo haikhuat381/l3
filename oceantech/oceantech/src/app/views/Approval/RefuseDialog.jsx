@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
+import { pendingStatus, rejectedStatus, rejectedEndStatus } from "app/constant";
 
 
 function RefuseDialog(props) {
@@ -37,17 +38,14 @@ function RefuseDialog(props) {
     }),
     onSubmit: (values) => {
       const isCheck = employeeData?.employeeInfo?.status
-      values.status = isCheck === 3 ? 6 : 11
+      values.status = isCheck === pendingStatus ? rejectedStatus : rejectedEndStatus
       console.log("hai tu choi")
       console.log(employeeData?.employeeInfo?.employeeId)
       console.log(values)
-      // isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values)) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
-      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, rejectedReason: values.rejectedReason }, "Từ chối")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status}, "Từ chối"))
-      // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+
+      isCheck === pendingStatus ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, rejectedReason: values.rejectedReason }, "Từ chối")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status}, "Từ chối"))
       handleChangeReload(Math.random().toString(36).slice(-5))
 
-      // employee.status = "Từ chối";
-      // dispatch(updateEmployee(employee));
       handleCloseAll();
       // toast.success("Từ chối thành công");
     },

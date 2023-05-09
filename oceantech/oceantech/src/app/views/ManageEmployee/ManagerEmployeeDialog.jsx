@@ -26,14 +26,14 @@ import CustomAvatar from "app/components/Avatar/Avatar";
 import ReleaseDialog from "./ReleaseDialog";
 import UpdateOptions from "./UpdateOptions";
 import { useSelector, useDispatch } from "react-redux";
+import { otherFeature, Gender } from "app/constant";
+import { formatDateView } from "app/constant/formatDate";
 
 function ManagerEmployeeDialog(props) {
   const employeeData = useSelector(
     (state) => state.Employee.employeeData?.employeeInfo
   );
   const { handleChangeReload, handleClose } = props;
-  const otherFeature = useSelector((state) => state.Employee.otherFeature);
-  const Gender = useSelector((state) => state.Employee.Gender);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   console.log("chao bn ", employeeData?.photoUrl);
   // console.log("dm asdasd", employeeData);
@@ -155,9 +155,7 @@ function ManagerEmployeeDialog(props) {
                         fullWidth
                         label="Ngày sinh"
                         variant="outlined"
-                        value={moment(employeeData?.dateOfBirth).format(
-                          "DD/MM/YYYY"
-                        )}
+                        value={formatDateView(employeeData?.dateOfBirth)}
                       />
                     </Grid>
                   </Grid>

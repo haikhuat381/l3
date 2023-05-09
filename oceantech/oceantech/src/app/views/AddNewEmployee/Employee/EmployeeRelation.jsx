@@ -15,6 +15,8 @@ import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import { useFormik } from "formik";
+import { Gender } from "app/constant";
+import { formatDateSend, formatDateView } from "app/constant/formatDate";
 
 
 
@@ -29,7 +31,6 @@ function EmployeeRelation(props) {
     setshouldOpenConfirmationDeleteDialog,
   ] = useState(false);
 
-  const Gender = useSelector((state) => state?.Employee?.Gender);
 
 
   const handleClose = () => {
@@ -37,13 +38,12 @@ function EmployeeRelation(props) {
     setRelationship({});
   };
   const handleChangeEmployee = (rowdata, method) => {
-    if (method == 1) {
+    if (method === "edit") {
       rowdata.gender = rowdata.gender.toString()
-      rowdata.dateOfBirth = moment(rowdata.dateOfBirth).format("YYYY-MM-DD")
+      rowdata.dateOfBirth = formatDateSend(rowdata?.dateOfBirth)
       formik.setValues(rowdata);
       // handleClose()
-    }
-    if (method == 0) {
+    } else {
       setRelationship(rowdata);
       setshouldOpenConfirmationDeleteDialog(true);
     }
@@ -120,14 +120,14 @@ function EmployeeRelation(props) {
             <Tooltip title="Sửa">
               <IconButton onClick={() => {
                 setRelationship(rowData)
-                return handleChangeEmployee(rowData, 1)
+                return handleChangeEmployee(rowData, "edit")
               }}>
                 <Icon color="primary">edit</Icon>
               </IconButton>
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                onClick={() => handleChangeEmployee(rowData, 0)}
+                onClick={() => handleChangeEmployee(rowData, "delete")}
               >
                 <Icon color={"error"}>delete</Icon>
               </IconButton>
@@ -140,10 +140,11 @@ function EmployeeRelation(props) {
     {
       title: "Ngày sinh ",
       field: "dateOfBirth",
-      render: (rowData) => moment(rowData?.dateOfBirth).format("DD-MM-YYYY"),
+      width: 130,
+      render: (rowData) => formatDateView(rowData?.dateOfBirth),
     },
     {
-      title: "Giới tính", field: "gender",
+      title: "Giới tính", field: "gender", width: 120,
       render: (rowData) => Gender[rowData.gender]?.gender
     },
     {
@@ -321,7 +322,7 @@ function EmployeeRelation(props) {
             position: 'sticky',
             top: 0,
             zIndex: 1,
-            padding: "14px 11px"
+            padding: 14
           },
           padding: "default",
           toolbar: false,

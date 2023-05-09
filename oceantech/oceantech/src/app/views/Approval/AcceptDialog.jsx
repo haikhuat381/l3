@@ -19,6 +19,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
+import { pendingStatus, approvedStatus, pendingEndStatus , approvedEndStatus  } from "app/constant";
 
 
 function AcceptDialog(props) {
@@ -34,12 +35,12 @@ function AcceptDialog(props) {
     }),
     onSubmit: (values) => {
       const isCheck = employeeData?.employeeInfo?.status
-      values.status = isCheck === 3 ? 5 : 10
-      if(isCheck === 8) {
+      values.status = isCheck === pendingStatus ? approvedStatus : approvedEndStatus
+      if(isCheck === pendingEndStatus) {
         values.terminatedDate = values.appointmentDate
         delete values.appointmentDate
       }
-      isCheck === 3 ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Phê duyệt"))
+      isCheck === pendingStatus ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Phê duyệt"))
        : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values,  "Phê duyệt"))
       // handleChangeReload(employeeData?.employeeInfo?.employeeId)
       handleChangeReload(Math.random().toString(36).slice(-5))

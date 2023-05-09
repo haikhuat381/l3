@@ -22,6 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BorderColor, Close } from "@mui/icons-material";
 import { updateEmployee } from "app/redux/actions/actions";
 import moment from "moment/moment";
+import { formatDateView } from "app/constant/formatDate";
 function SalarationLetter(props) {
   const { handleClose, dataIncreaseDialog, handleValues, status } = props;
   const employeeData = useSelector((state) => state.Employee.employeeData);
@@ -189,7 +190,7 @@ function SalarationLetter(props) {
                 sx={{
                   "& fieldset": { border: "none", padding: 0 },
                 }}
-                value={moment(dataIncrease?.date).format("DD-MM-YYYY")}
+                value={formatDateView(dataIncrease?.date)}
                 onChange={(event) => {
                   handlechangeValuse(event, "date");
                 }}
