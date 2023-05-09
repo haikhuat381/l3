@@ -36,14 +36,13 @@ function AdditionalRequestDialog(props) {
         .required("Không được bỏ trống"),
     }),
     onSubmit: (values) => {
-      const isCheck = employeeData?.employeeInfo?.status
-      values.status = isCheck === pendingStatus ? needMoreInfoStatus : moreInfoEndingStatus 
-      isCheck === pendingStatus ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung"))
-      // handleChangeReload(employeeData?.employeeInfo?.employeeId)
+      const employeeStatus = employeeData?.employeeInfo?.status
+      values.status = employeeStatus === pendingStatus ? needMoreInfoStatus : moreInfoEndingStatus 
+
+      dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung"))
       handleChangeReload(Math.random().toString(36).slice(-5))
       handleCloseAll();
       // handleClose();
-      // toast.success("Gửi yêu cầu bổ sung thành công");
     },
   });
   return (

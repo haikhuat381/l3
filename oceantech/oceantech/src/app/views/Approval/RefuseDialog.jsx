@@ -37,13 +37,13 @@ function RefuseDialog(props) {
         .required("Không được bỏ trống"),
     }),
     onSubmit: (values) => {
-      const isCheck = employeeData?.employeeInfo?.status
-      values.status = isCheck === pendingStatus ? rejectedStatus : rejectedEndStatus
-      console.log("hai tu choi")
-      console.log(employeeData?.employeeInfo?.employeeId)
-      console.log(values)
+      const employeeStatus = employeeData?.employeeInfo?.status
+      values.status = employeeStatus === pendingStatus ? rejectedStatus : rejectedEndStatus
+      const rejectedStatusData = {status: values.status, rejectedReason: values.rejectedReason }
+      const rejectedEndStatusData = {status: values.status}
 
-      isCheck === pendingStatus ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, rejectedReason: values.rejectedReason }, "Từ chối")) : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status}, "Từ chối"))
+      employeeStatus === pendingStatus ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, rejectedStatusData, "Từ chối"))
+       : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, rejectedEndStatusData, "Từ chối"))
       handleChangeReload(Math.random().toString(36).slice(-5))
 
       handleCloseAll();

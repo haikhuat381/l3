@@ -59,7 +59,6 @@ function TabsCustom({ employeeData }) {
     };
 
 
-
     return (
         <>
             <Tabs
