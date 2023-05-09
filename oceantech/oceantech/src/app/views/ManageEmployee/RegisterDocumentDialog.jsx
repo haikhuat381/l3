@@ -21,7 +21,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { Close } from "@mui/icons-material";
-import { updateEmployee } from "app/redux/actions/actions";
+// import { updateEmployee } from "app/redux/actions/actions";
 import PropostionLetter from "app/components/PropostionLetter/PropostionLetter";
 function RegisterDocumentDialog(props) {
   const { handleClose, registerDataDialog } = props;
@@ -61,7 +61,7 @@ function RegisterDocumentDialog(props) {
       });
       employeeData.status = "Chờ duyệt";
       employeeData.releaseRequest = null;
-      dispatch(updateEmployee(employeeData));
+      // dispatch(updateEmployee(employeeData));
       // handleCloseAll();
       handleClose();
       toast.success("Gửi lãnh đạo thành công");

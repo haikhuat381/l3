@@ -14,24 +14,14 @@ const Resume = React.forwardRef((props, ref) => {
     formDataResumeUpdate,
     status,
   } = props;
+
   const dispatch = useDispatch();
   var today = new Date();
   const employeeData = useSelector((state) => state?.Employee?.formData);
-  //
+  
   const [resumeData, setResumeData] = useState();
   useEffect(() => {
-    if (formDataResumeUpdate === undefined) {
-      setResumeData(() => {
-        return {
-          ethnicity: employeeData?.ethnicity,
-          religion: employeeData?.religion,
-          citizenIdIssuingAuthority: employeeData?.citizenIdIssuingAuthority,
-          citizenIdIssuanceDate: employeeData?.citizenIdIssuanceDate,
-        };
-      });
-    } else {
-      setResumeData(formDataResumeUpdate);
-    }
+    setResumeData(formDataResumeUpdate);
   }, [employeeData]);
 
   useEffect(() => {
@@ -176,7 +166,6 @@ const Resume = React.forwardRef((props, ref) => {
             </Typography>
             <Grid item xs={10.95} fullWidth>
               <TextField
-                // className= { !status ? "rs-noReadonly" : "rs-readonly"}
                 className="rs-noReadonly"
                 type="date"
                 InputProps={{
@@ -246,7 +235,6 @@ const Resume = React.forwardRef((props, ref) => {
             </Typography>
             <Grid item xs={10.45} fullWidth>
               <TextField
-                // className= { !status ? "rs-noReadonly" : "rs-readonly"}
                 className="rs-noReadonly"
                 InputProps={{
                   readOnly: status,
@@ -366,7 +354,6 @@ const Resume = React.forwardRef((props, ref) => {
             </Typography>
             <Grid item xs={11.1} fullWidth>
               <TextField
-                // className= { !status ? "rs-noReadonly" : "rs-readonly"}
                 className="rs-noReadonly"
                 InputProps={{
                   readOnly: status,

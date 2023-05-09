@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import ApprovedDialog from "../Approved/ApprovedDialog";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  deleteEmployee,
   getListEmployeeAction,
   getEmployeeDataAction,
   getFormDataAction,

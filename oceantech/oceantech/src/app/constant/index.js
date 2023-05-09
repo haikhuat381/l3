@@ -10,7 +10,9 @@ export const rejectedEndStatus = 11;
 export const savedStatus = 13;
 export const deletedStatus = 14;
 
-
+export const pageSizeDefault= "10"
+export const pageSizeOptionsDefault= ["5", "10", "20"]
+export const statusSuccess = 200
 export const objStatus = {
     "1": "Lưu mới",
     // "2": "Chờ xử lý",

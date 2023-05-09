@@ -12,18 +12,18 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
   const MyButton = styled(IconButton)({
     display: props.display,
   });
-  const { employee, handleChangeFormCV, formDataCVUpdate, status } = props;
+  const { handleChangeFormCV, formDataCVUpdate, status } = props;
 
   const employeeData = useSelector((state) => state?.Employee?.formData);
   const teamId = useSelector((state) => state?.Employee?.employeeData?.employeeInfo?.teamId);
 
 
-  const [textFieldValues, setTextFieldValues] = useState();
+  const [cvData, setCvData] = useState();
   useEffect(() => {
     if (formDataCVUpdate === undefined) {
-      setTextFieldValues(() => {
-        const data = { ...employeeData?.cv }
-        data.workExperiences = data?.workExperiences?.length !== 0 ? data?.workExperiences?.map((data) => {
+      setCvData(() => {
+        const dataCV = { ...employeeData?.cv }
+        dataCV.workExperiences = dataCV?.workExperiences?.length !== 0 ? dataCV?.workExperiences?.map((data) => {
           return {
             workExperienceId: data?.workExpId,
             company: data?.company,
@@ -41,22 +41,22 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             endDate: null
           }
         ]
-        return data
+        return dataCV
       })
     } else {
-      setTextFieldValues(formDataCVUpdate)
+      setCvData(formDataCVUpdate)
     }
   }, [employeeData])
 
   useEffect(() => {
     if (!status) {
-      handleChangeFormCV(textFieldValues)
+      handleChangeFormCV(cvData)
     }
-  }, [textFieldValues])
+  }, [cvData])
 
   const handleAddTextField = () => {
-    const newValues = { ...textFieldValues };
-    if (!!newValues?.workExperiences) {
+    const newValues = { ...cvData };
+    if (newValues?.workExperiences) {
       newValues.workExperiences = [...newValues.workExperiences, {
         company: "",
         position: "",
@@ -65,24 +65,24 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
         endDate: null
       }]
     }
-    setTextFieldValues(newValues)
+    setCvData(newValues)
   };
 
   const handleRemoveTextField = (index) => () => {
-    const newValues = { ...textFieldValues };
+    const newValues = { ...cvData };
     newValues.workExperiences.splice(index, 1)
-    setTextFieldValues(newValues);
+    setCvData(newValues);
   };
 
   const handleTextFieldChange = (event, index, method) => {
-    const newValues = { ...textFieldValues };
+    const newValues = { ...cvData };
     newValues["workExperiences"][index][method] = event.target.value;
-    setTextFieldValues(newValues);
+    setCvData(newValues);
   };
   const handleTextFieldChangeChange = (event, method) => {
-    const newValues = { ...textFieldValues };
+    const newValues = { ...cvData };
     newValues[method] = event.target.value;
-    setTextFieldValues(newValues);
+    setCvData(newValues);
   };
 
   return (
@@ -153,7 +153,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item>
               <TextField
-                // className="rs-noReadonly"
                 className={!status ? "rs-noReadonly" : "rs-readonly"}
                 InputProps={{
                   readOnly: status,
@@ -167,7 +166,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   marginLeft: "5px"
                 }}
                 size="small"
-                value={textFieldValues?.careerGoal || (!status ? "" : "Không có thông tin")}
+                value={cvData?.careerGoal || (!status ? "" : "Không có thông tin")}
                 onChange={(event) => {
                   handleTextFieldChangeChange(event, "careerGoal")
                 }}
@@ -184,7 +183,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item>
               <TextField
-                // className="rs-noReadonly"
                 className={!status ? "rs-noReadonly" : "rs-readonly"}
                 InputProps={{
                   readOnly: status,
@@ -198,7 +196,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   marginLeft: "5px"
                 }}
                 size="small"
-                value={textFieldValues?.skill || (!status ? "" : "Không có thông tin")}
+                value={cvData?.skill || (!status ? "" : "Không có thông tin")}
                 onChange={(event) => {
                   handleTextFieldChangeChange(event, "skill")
                 }}
@@ -213,7 +211,6 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item>
               <TextField
-                // className="rs-noReadonly"
                 className={!status ? "rs-noReadonly" : "rs-readonly"}
                 InputProps={{
                   readOnly: status,
@@ -227,7 +224,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
                   marginLeft: "5px"
                 }}
                 size="small"
-                value={textFieldValues?.hobby || (!status ? "" : "Không có thông tin")}
+                value={cvData?.hobby || (!status ? "" : "Không có thông tin")}
                 onChange={(event) => {
                   handleTextFieldChangeChange(event, "hobby")
                 }}
@@ -254,9 +251,9 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             </Grid>
             <Grid item container xs={12}>
               {
-                textFieldValues?.workExperiences?.map((value, index) => (textFieldValues?.workExperiences?.length === 1 && !value.startDate && status) ? "Không có thông tin" :
+                cvData?.workExperiences?.map((value, index) => (cvData?.workExperiences?.length === 1 && !value.startDate && status) ? "Không có thông tin" :
                   (
-                    <div className="workExperiences" style={{ display: "flex", alignItems: "start", justifyContent: "space-between", padding: index === 0 ? "0 0 20px" : "20px 0", borderBottom: index !== textFieldValues?.workExperiences?.length - 1 ? "1px solid #E5E5E5" : "" }} key={index}>
+                    <div className="workExperiences" style={{ display: "flex", alignItems: "start", justifyContent: "space-between", padding: index === 0 ? "0 0 20px" : "20px 0", borderBottom: index !== cvData?.workExperiences?.length - 1 ? "1px solid #E5E5E5" : "" }} key={index}>
                       <Grid item container xs={12} fullWidth spacing={2}>
                         <Grid item container xs={12} fullWidth justifyContent="space-between" sx={{ display: !status ? "flex" : "none" }}>
                           <Grid item container xs={5.4} className="workExperiences-items">

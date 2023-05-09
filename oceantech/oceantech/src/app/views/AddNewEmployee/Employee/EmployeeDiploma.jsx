@@ -86,11 +86,12 @@ function EmployeeDiploma(props) {
           return newListDiplomaData
         })
       }
+      
       resetForm();
       handleClose();
     },
   });
-
+  console.log("listDiplomaData", listDiplomaData)
   const columns = [
     {
       title: "Hành động",

@@ -307,8 +307,6 @@ function Promote(props) {
               columns={columns}
               options={{
                 paging: false,
-                pageSize: 5,
-                pageSizeOptions: [5, 10, 15, 20],
                 rowStyle: (rowData, index) => {
                   return {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
