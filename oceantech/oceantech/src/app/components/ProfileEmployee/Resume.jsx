@@ -128,7 +128,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Typography item xs={2}>
                 Họ và tên:
               </Typography>
-              <Grid item fullWidth xs={9.7}>
+              <Grid item fullWidth xs={9.9}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -138,9 +138,6 @@ const Resume = React.forwardRef((props, ref) => {
                   id="standard-adornment-mount"
                   fullWidth
                   name="fullName"
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
                   size="small"
                   value={employeeData?.resume?.fullName}
                   onChange={(event) => {
@@ -153,7 +150,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Typography item xs={2}>
                 Giới tính:
               </Typography>
-              <Grid item xs={9.9}>
+              <Grid item xs={10.1}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -162,9 +159,6 @@ const Resume = React.forwardRef((props, ref) => {
                   }}
                   id="standard-adornment-mount"
                   fullWidth
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
                   size="small"
                   value={Gender[employeeData?.resume?.gender]?.gender}
                   name="gender"
@@ -179,7 +173,7 @@ const Resume = React.forwardRef((props, ref) => {
             <Typography item xs={2}>
               Sinh ngày:
             </Typography>
-            <Grid item xs={10.9} fullWidth>
+            <Grid item xs={10.95} fullWidth>
               <TextField
                 // className= { !status ? "rs-noReadonly" : "rs-readonly"}
                 className="rs-noReadonly"
@@ -190,9 +184,6 @@ const Resume = React.forwardRef((props, ref) => {
                 }}
                 id="standard-adornment-mount"
                 fullWidth
-                sx={{
-                  "& fieldset": { border: "none", padding: 0 },
-                }}
                 size="small"
                 value={
                   moment(employeeData?.resume?.dateOfBirth).format(
@@ -208,7 +199,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Typography item xs={2}>
                 Điện thoại:
               </Typography>
-              <Grid item xs={9.6}>
+              <Grid item xs={9.8}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -217,9 +208,6 @@ const Resume = React.forwardRef((props, ref) => {
                   }}
                   id="standard-adornment-mount"
                   fullWidth
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
                   size="small"
                   value={employeeData?.resume?.phone}
                   name="phone"
@@ -233,7 +221,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Typography item xs={1}>
                 Email:
               </Typography>
-              <Grid item xs={10.6}>
+              <Grid item xs={10.65}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -242,9 +230,6 @@ const Resume = React.forwardRef((props, ref) => {
                   }}
                   id="standard-adornment-mount"
                   fullWidth
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
                   size="small"
                   name="email"
                   value={employeeData?.resume?.email}
@@ -260,7 +245,7 @@ const Resume = React.forwardRef((props, ref) => {
             <Typography item xs={2}>
               Chỗ ở hiện nay:
             </Typography>
-            <Grid item xs={10.4} fullWidth>
+            <Grid item xs={10.45} fullWidth>
               <TextField
                 // className= { !status ? "rs-noReadonly" : "rs-readonly"}
                 className="rs-noReadonly"
@@ -270,9 +255,6 @@ const Resume = React.forwardRef((props, ref) => {
                 }}
                 id="standard-adornment-mount"
                 fullWidth
-                sx={{
-                  "& fieldset": { border: "none", padding: 0 },
-                }}
                 size="small"
                 value={employeeData?.resume?.address}
                 name="address"
@@ -285,7 +267,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Typography item xs={2}>
                 Dân tộc:
               </Typography>
-              <Grid item xs={10}>
+              <Grid item xs={10.2}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -295,9 +277,6 @@ const Resume = React.forwardRef((props, ref) => {
                   id="standard-adornment-mount"
                   fullWidth
                   name="ethnic"
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
                   size="small"
                   value={
                     resumeData?.ethnicity || employeeData?.resume?.ethnicity
@@ -312,7 +291,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Typography item xs={2}>
                 Tôn giáo:
               </Typography>
-              <Grid item xs={9.9}>
+              <Grid item xs={10.1}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -322,9 +301,6 @@ const Resume = React.forwardRef((props, ref) => {
                   id="standard-adornment-mount"
                   fullWidth
                   name="religion"
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
                   size="small"
                   value={resumeData?.religion || employeeData?.resume?.religion}
                   onChange={(event) => {
@@ -339,7 +315,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Typography item xs={2}>
                 Số CCCD:
               </Typography>
-              <Grid item xs={9.6}>
+              <Grid item xs={9.8}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -348,9 +324,6 @@ const Resume = React.forwardRef((props, ref) => {
                   }}
                   id="standard-adornment-mount"
                   fullWidth
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
                   size="small"
                   name="identityCode"
                   value={employeeData?.resume?.citizenId}
@@ -362,7 +335,7 @@ const Resume = React.forwardRef((props, ref) => {
               <Typography item xs={2}>
                 Cấp ngày:
               </Typography>
-              <Grid item xs={9.8}>
+              <Grid item xs={10}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -372,9 +345,6 @@ const Resume = React.forwardRef((props, ref) => {
                   type="date"
                   id="standard-adornment-mount"
                   fullWidth
-                  sx={{
-                    "& fieldset": { border: "none", padding: 0 },
-                  }}
                   size="small"
                   value={
                     !resumeData?.citizenIdIssuanceDate
@@ -397,7 +367,7 @@ const Resume = React.forwardRef((props, ref) => {
             <Typography item xs={1.1}>
               Nơi cấp:
             </Typography>
-            <Grid item xs={11} fullWidth>
+            <Grid item xs={11.1} fullWidth>
               <TextField
                 // className= { !status ? "rs-noReadonly" : "rs-readonly"}
                 className="rs-noReadonly"
@@ -407,9 +377,6 @@ const Resume = React.forwardRef((props, ref) => {
                 }}
                 id="standard-adornment-mount"
                 fullWidth
-                sx={{
-                  "& fieldset": { border: "none", padding: 0 },
-                }}
                 size="small"
                 name="citizenIdIssuingAuthority"
                 value={

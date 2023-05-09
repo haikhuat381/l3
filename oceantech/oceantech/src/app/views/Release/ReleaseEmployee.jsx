@@ -7,6 +7,7 @@ import {
   getListEmployeeAction,
   getEmployeeDataAction,
   getFormDataAction,
+  resetEmployeeDataAction,
 } from "app/redux/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
 import ReleaseEmployeeDialog from "./ReleaseEmployeeDialog";
@@ -69,6 +70,7 @@ function ReleaseEmployee() {
   };
   const handleClose = () => {
     setShouldOpenReleaseDialog(false);
+    dispatch(resetEmployeeDataAction({}))
   };
 
   const columns = [
