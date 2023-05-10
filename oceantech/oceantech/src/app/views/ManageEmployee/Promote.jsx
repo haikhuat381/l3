@@ -26,6 +26,7 @@ import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 
 import moment from "moment";
 import { async } from "regenerator-runtime";
+import { formatDateSend, formatDateView } from "app/constant/formatDate";
 function Promote(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ function Promote(props) {
       reason: rowData?.reason,
       note: rowData?.note,
       newPosition: rowData?.newPosition,
-      date: moment(rowData?.date).format("YYYY-MM-DD"),
+      date: formatDateSend(rowData?.date),
     });
   };
 
@@ -72,7 +73,7 @@ function Promote(props) {
       reason: updatePromote?.reason || "",
       note: updatePromote?.note || "",
       date: updatePromote?.date
-        ? moment(updatePromote?.date).format("YYYY-MM-DD")
+        ? formatDateSend(updatePromote?.date)
         : "",
       newPosition: updatePromote?.newPosition || "",
     },
@@ -147,7 +148,7 @@ function Promote(props) {
             </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
+                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="primary"
                 onClick={() => {
                   handleEditPromote(rowData);
@@ -158,7 +159,7 @@ function Promote(props) {
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
+                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="error"
                 onClick={() => {
                   setshouldOpenDeleteDialog(true);
@@ -179,7 +180,7 @@ function Promote(props) {
     {
       title: "Ngày",
       field: "date",
-      render: (rowdata) => moment(rowdata?.date).format("DD-MM-YYYY"),
+      render: (rowdata) => formatDateView(rowdata?.date),
     },
     { title: "Ghi chú", field: "note" },
     {
@@ -306,8 +307,6 @@ function Promote(props) {
               columns={columns}
               options={{
                 paging: false,
-                pageSize: 5,
-                pageSizeOptions: [5, 10, 15, 20],
                 rowStyle: (rowData, index) => {
                   return {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",

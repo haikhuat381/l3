@@ -16,11 +16,12 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { addRegistAction } from "app/redux/actions/actions";
+import { leader } from "app/constant";
+
 function SendToLeadershipDialog(props) {
   const { handleClose, employeeId, handleCloseAll, status } = props;
   const dispatch = useDispatch();
   // const employee = useSelector((state) => state.Employee.employeeData);
-  const leader = useSelector((state) => state?.Employee?.leader);
   const [position, setPosition] = useState()
 
 
@@ -45,7 +46,6 @@ function SendToLeadershipDialog(props) {
     }),
     onSubmit: (values) => {
       values.registerPosition = position
-      // values.status = status === 1 || status === 4 || status === 6 ? 3 : null
       values.status = status
       dispatch(addRegistAction(employeeId, values))
 

@@ -32,15 +32,8 @@ import { call, put } from "redux-saga/effects";
 import { ActionTypes } from "app/redux/actions/actionTypes";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { statusSuccess } from "app/constant";
 
-// export function* getListEmployeeSaga() {
-//   try {
-//     const listEmployee = yield call(GetListEmployee);
-//     yield put({ type: ActionTypes.GET_LIST_EMPLOYEE_SUCCESS, payload: listEmployee.data });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 
 export function* getTotalSaga(data) {
   try {
@@ -86,11 +79,10 @@ export function* resetEmployeeDataSaga(action) {
 export function* addNewEmployeeSaga(action) {
   const res = yield call(addNewEmployee, action.payload);
   console.log("resres", res);
-  if (res.status === 200) {
+  if (res.status === statusSuccess) {
     toast.success("Lưu mới thành công");
   } else {
-    console.log("loii", res);
-    // toast.error()
+    console.log("lỗi", res);
   }
   yield put({
     type: ActionTypes.ADD_NEW_EMPLOYEE_SUCCESS,
@@ -104,21 +96,19 @@ export function* updateEmployeeSaga(action) {
     action.payload.id,
     action.payload.data
   );
-  if (res.status === 200) {
+  if (res.status === statusSuccess) {
     toast.success("Cập nhật thành công");
   } else {
-    console.log("loii", res);
-    // toast.error()
+    console.log("lỗi", res);
   }
 }
 
 export function* deleteEmployeeSaga(action) {
   const res = yield call(deleteEmployee, action.payload);
-  if (res.status === 200) {
+  if (res.status === statusSuccess) {
     toast.success("Xóa nhân viên thành công");
   } else {
-    console.log("loii", res);
-    // toast.error()
+    console.log("lỗi", res);
   }
 }
 
@@ -136,11 +126,10 @@ export function* updateFormSaga(action) {
     action.payload.id,
     action.payload.data
   );
-  if (resForm.status === 200) {
+  if (resForm.status === statusSuccess) {
     toast.success("Cập nhật hồ sơ thành công");
   } else {
-    console.log("loii", res);
-    // toast.error()
+    console.log("lỗi", res);
   }
   const res = yield call(getFormData, action.payload.id);
   yield put({
@@ -158,11 +147,10 @@ export function* resetFormDataSaga(action) {
 
 export function* addRegistSaga(action) {
   const res = yield call(addRegist, action.payload.id, action.payload.data);
-  if (res.status === 200) {
+  if (res.status === statusSuccess) {
     toast.success("Gửi lãnh đạo thành công");
   } else {
-    console.log("loii", res);
-    // toast.error()
+    console.log("lỗi", res);
   }
 }
 
@@ -172,11 +160,10 @@ export function* leaderActionSaga(action) {
     action.payload.id,
     action.payload.data
   );
-  if (res.status === 200) {
+  if (res.status === statusSuccess) {
     toast.success(`${action.payload.action} thành công`);
   } else {
-    console.log("loii", res);
-    // toast.error()
+    console.log("lỗi", res);
   }
 }
 
@@ -184,7 +171,7 @@ export function* leaderActionSaga(action) {
 
 export function* deletePromotesaga(action) {
   const res = yield call(deletePromote, action.payload);
-  if (res?.status === 200) {
+  if (res?.status === statusSuccess) {
     console.log("đã xóa thành cong", res?.message);
     toast.success("xóa thành công ");
   }
@@ -208,7 +195,7 @@ export function* addPromotesaga(action) {
       action?.payload?.id,
       action?.payload?.data
     );
-    if (res?.status === 200) {
+    if (res?.status === statusSuccess) {
       toast.success("them moi ");
     }
   } catch (error) {
@@ -223,7 +210,7 @@ export function* UpdatePromotesaga(action) {
       action.payload.id,
       action.payload.data
     );
-    if (res?.status === 200) {
+    if (res?.status === statusSuccess) {
       toast.success("Sua thanh cong ");
     }
   } catch (error) {
@@ -252,7 +239,7 @@ export function* addSalarysaga(action) {
       action?.payload?.id,
       action?.payload?.data
     );
-    if (res?.status === 200) {
+    if (res?.status === statusSuccess) {
       toast.success(" them thanh cong ");
     }
   } catch (error) {
@@ -263,7 +250,7 @@ export function* addSalarysaga(action) {
 export function* deleteSalarysaga(action) {
   console.log("đã xoa tang luong ", action);
   const res = yield call(deleteSalaryIncrease, action.payload);
-  if (res?.status === 200) {
+  if (res?.status === statusSuccess) {
     console.log("đã xóa thành cong", res?.message);
     toast.success("xóa thành công ");
   }
@@ -276,7 +263,7 @@ export function* updateSalarysaga(action) {
       action?.payload?.id,
       action?.payload?.data
     );
-    if (res?.status === 200) {
+    if (res?.status === statusSuccess) {
       console.log("sua thanh cong ");
       toast.success("Sua thanh cong ");
     }
@@ -332,7 +319,7 @@ export function* updateProposalConsultsaga(action) {
       action?.payload?.id,
       action?.payload?.data
     );
-    if (res?.status === 200) {
+    if (res?.status === statusSuccess) {
       toast.success("sua thanh cong ");
     }
   } catch (error) {
@@ -348,7 +335,7 @@ export function* ReleaseManagesaga(action) {
       action?.payload?.id,
       action?.payload?.data
     );
-    if (res?.status === 200) {
+    if (res?.status === statusSuccess) {
       toast.success("Gui  lanh dao");
     }
   } catch (error) {

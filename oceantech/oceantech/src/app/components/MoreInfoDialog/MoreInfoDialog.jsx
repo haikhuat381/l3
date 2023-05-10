@@ -15,6 +15,9 @@ import {
   Icon,
   IconButton,
 } from "@mui/material";
+import { rejectedStatus, rejectedEndStatus  } from "app/constant";
+
+
 function MoreInfoDialog(props) {
   const {
     handleClose,
@@ -32,7 +35,7 @@ function MoreInfoDialog(props) {
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle className="dialog-title">
-        {employeeData?.status === 6 || employeeData?.status === 11 ? "Từ chối" : "Yêu cầu bổ sung"}
+        {employeeData?.status === rejectedStatus  || employeeData?.status === rejectedEndStatus ? "Từ chối" : "Yêu cầu bổ sung"}
 
         <IconButton onClick={handleClose}>
           <Icon color="error">close</Icon>
@@ -41,8 +44,8 @@ function MoreInfoDialog(props) {
 
       <DialogContent style={{ paddingTop: 20 }}>
         <Typography>
-          {employeeData?.status === 6 ? "Lý do:" : "Nội dung:"}{" "}
-          {employeeData?.status === 6
+          {employeeData?.status === rejectedStatus  ? "Lý do:" : "Nội dung:"}{" "}
+          {employeeData?.status === rejectedStatus 
             ? employeeData?.rejectedReason
             : employeeData?.statusLog}
         </Typography>
@@ -52,12 +55,12 @@ function MoreInfoDialog(props) {
         <Button
           variant="contained"
           color="primary"
-          sx={{ display: employeeData?.status === 6 ? "none" : "" }}
+          sx={{ display: employeeData?.status === rejectedStatus  ? "none" : "" }}
           onClick={openEditDialog}
-          // onClick={employeeData?.status === 6 ? openViewDialog : openEditDialog}
+          // onClick={employeeData?.status === rejectedStatus  ? openViewDialog : openEditDialog}
           // onClick={rowDataInfo !== undefined ? handleEditPromote() : openEditDialog }
         >
-          {/* employeeData?.status === 6 ? "Xem hồ sơ" : "Bổ sung thông tin" */}
+          {/* employeeData?.status === rejectedStatus  ? "Xem hồ sơ" : "Bổ sung thông tin" */}
           {"Bổ sung thông tin"}
         </Button>
         <Button variant="contained" onClick={handleClose} color="error">

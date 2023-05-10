@@ -13,12 +13,12 @@ import { v4 as uuidv4 } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
+import { formatDateSend, formatDateView } from "app/constant/formatDate";
 
 
 function EmployeeDiploma(props) {
   const { handleAddDiploma, listDiploma } = props;
 
-  // const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [diplomaData, setDiplomaData] = useState({});
   const [listDiplomaData, setListDiplomaData] = useState(listDiploma);
   const [
@@ -30,11 +30,10 @@ function EmployeeDiploma(props) {
     setDiplomaData({});
   };
   const handleChangeEmployee = (rowdata, method) => {
-    if (method == 1) {
-      rowdata.issuanceDate = moment(rowdata.issuanceDate).format("YYYY-MM-DD")
+    if (method == "edit") {
+      rowdata.issuanceDate = formatDateSend(rowdata.issuanceDate)
       formik.setValues(rowdata);
-    }
-    if (method == 0) {
+    } else {
       setDiplomaData(rowdata);
       setshouldOpenConfirmationDeleteDialog(true);
     }
@@ -87,11 +86,12 @@ function EmployeeDiploma(props) {
           return newListDiplomaData
         })
       }
+      
       resetForm();
       handleClose();
     },
   });
-
+  console.log("listDiplomaData", listDiplomaData)
   const columns = [
     {
       title: "Hành động",
@@ -105,13 +105,13 @@ function EmployeeDiploma(props) {
             <Tooltip title="Sửa">
               <IconButton onClick={() => {
                 setDiplomaData(rowData)
-                return handleChangeEmployee(rowData, 1)
+                return handleChangeEmployee(rowData, "edit")
               }}>
                 <Icon color="primary">edit</Icon>
               </IconButton>
             </Tooltip>
             <Tooltip title="Xóa">
-              <IconButton onClick={() => handleChangeEmployee(rowData, 0)}>
+              <IconButton onClick={() => handleChangeEmployee(rowData, "delete")}>
                 <Icon color={"error"}>delete</Icon>
               </IconButton>
             </Tooltip>
@@ -127,7 +127,7 @@ function EmployeeDiploma(props) {
     { title: "Nơi cấp", field: "educationalOrg"},
     { title: "Ngày cấp",
       field: "issuanceDate",
-      render: (rowData) => moment(rowData?.issuanceDate).format("DD-MM-YYYY"),
+      render: (rowData) => formatDateView(rowData?.issuanceDate),
     },
     { title: "Lĩnh Vực", field:"field",
       headerStyle: {borderTopRightRadius: "4px"},
@@ -260,8 +260,6 @@ function EmployeeDiploma(props) {
           columns={columns}
           options={{
             paging: false,
-            pageSize: 10,
-            pageSizeOptions: [10, 20, 50],
             rowStyle: (rowData, index) => {
               return {
                 backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",

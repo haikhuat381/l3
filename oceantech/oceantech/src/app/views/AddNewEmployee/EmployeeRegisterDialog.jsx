@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import { updateFormAction } from "app/redux/actions/actions";
 import ConfirmPrintDialog from "./PrintDIalog";
+import { pendingStatus } from "app/constant";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -34,7 +35,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box className="haitesttt" sx={{ padding: "0 24px !important" , paddingBottom: 0 }}>
+        <Box sx={{ padding: "0 24px !important"}}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -140,7 +141,6 @@ export default function EmployeeRegisterDialog({
           </Tabs>
           <TabPanel value={value} index={0} className="tab-items">
             <CurriculumVitae
-              // ref={componentRef}
               status={false}
               IdEmployeeData={employeeData?.employeeInfo?.employeeId}
               handleChangeFormCV={handleChangeFormCV}
@@ -181,7 +181,6 @@ export default function EmployeeRegisterDialog({
                 resume: formDataResumeUpdate,
                 cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate?.workExperiences?.filter(data => data.startDate !== null && data.endDate !== null && data.startDate !== "Invalid date" && data.endDate !== "Invalid date") }
               }))
-              // handleChangeReload(employeeData?.employeeInfo?.employeeId)
               handleChangeReload(Math.random().toString(36).slice(-5))
               setSaved(false);
             }}
@@ -194,7 +193,6 @@ export default function EmployeeRegisterDialog({
             disabled={saved}
             onClick={() => {
               setshouldOpenSendToLeadershipDialog(true);
-              // handleChangeReload(employeeData?.employeeInfo?.employeeId)
               handleChangeReload(Math.random().toString(36).slice(-5))
             }}
           >
@@ -228,7 +226,7 @@ export default function EmployeeRegisterDialog({
           }}
           employeeId={employeeData?.employeeInfo?.employeeId}
           // status={employeeData?.employeeInfo?.status}
-          status="3"
+          status= {pendingStatus}
         />
       )}
       {shouldOpenConfirmPrint && (

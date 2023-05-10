@@ -3,17 +3,16 @@ import { Grid, TextField, MenuItem,  } from "@mui/material/";
 import styled from "@emotion/styled";
 import {  useSelector } from "react-redux";
 import CustomAvatar from "app/components/Avatar/Avatar";
-
+import { otherFeature, Gender } from "app/constant";
 
 function EmployeeInfo(props) {
   const { formikRoot } = props;
-  const otherFeature = useSelector((state) => state?.Employee?.otherFeature);
-  const Gender = useSelector((state) => state?.Employee?.Gender);
+
   return (
     <>
       <Grid container>
         <Grid item container xs={12}>
-          <Grid item container xs={8} sx={{padding:"36px 0 30px"}}>
+          <Grid item container xs={8} sx={{padding:"33px 0 30px"}}>
             <Grid
               item
               container

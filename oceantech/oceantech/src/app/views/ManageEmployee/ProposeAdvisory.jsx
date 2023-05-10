@@ -26,6 +26,7 @@ import ProposeAdvisoryDialog from "./ProposeAdvisoryDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import moment from "moment";
 import { async } from "regenerator-runtime";
+import { formatDateSend, formatDateView } from "app/constant/formatDate";
 function ProposeAdvisory(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function ProposeAdvisory(props) {
       type: rowData?.type,
       content: rowData?.content,
       note: rowData?.note,
-      date: moment(rowData?.date).format("YYYY-MM-DD"),
+      date: formatDateSend(rowData?.date),
     });
   };
 
@@ -149,7 +150,7 @@ function ProposeAdvisory(props) {
             </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
+                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="primary"
                 onClick={() => {
                   handleEditPropose(rowData);
@@ -160,7 +161,7 @@ function ProposeAdvisory(props) {
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
+                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="error"
                 onClick={() => {
                   // handleRemovePropose(rowData);
@@ -181,7 +182,7 @@ function ProposeAdvisory(props) {
     {
       title: "Ngày",
       field: "date",
-      render: (rowdata) => moment(rowdata?.date).format("DD/MM/YYYY"),
+      render: (rowdata) =>formatDateView(rowdata?.date),
     },
     {
       title: "Ghi chú",
@@ -305,8 +306,6 @@ function ProposeAdvisory(props) {
               columns={columns}
               options={{
                 paging: false,
-                pageSize: 5,
-                pageSizeOptions: [5, 10, 15, 20],
                 rowStyle: (rowData, index) => {
                   return {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",

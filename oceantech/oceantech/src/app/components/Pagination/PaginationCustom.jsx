@@ -4,10 +4,11 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { pageSizeDefault, pageSizeOptionsDefault } from 'app/constant';
 
 function PaginationCustom({ onHandleChange }) {
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState("10")
+  const [pageSize, setPageSize] = useState(pageSizeDefault)
 
   const totalData = useSelector((state) => state?.Employee?.total);
   const [total, setTotal] = useState(Math.ceil(totalData / pageSize))
@@ -15,11 +16,6 @@ function PaginationCustom({ onHandleChange }) {
   useEffect(() => {
     setTotal(Math.ceil(totalData / pageSize))
   }, [totalData])
-
-  // useEffect(() => {
-  //   setTotal(Math.ceil(totalData/pageSize))
-  //   onHandleChange(page, pageSize)
-  // }, [page, pageSize])
 
   useEffect(() => {
     setTotal(Math.ceil(totalData / pageSize))
@@ -39,8 +35,7 @@ function PaginationCustom({ onHandleChange }) {
         <Autocomplete
           disablePortal
           disableClearable={true}
-          // id="combo-box-demo"
-          options={["5", "10", "20"]}
+          options={pageSizeOptionsDefault}
           onChange={(event, newValue) => {
             event.preventDefault();
             setPageSize(newValue)

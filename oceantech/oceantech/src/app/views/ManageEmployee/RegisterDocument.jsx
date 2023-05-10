@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateEmployee } from "app/redux/actions/actions";
+// import { updateEmployee } from "app/redux/actions/actions";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import RegisterDocumentDialog from "./RegisterDocumentDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
@@ -79,7 +79,7 @@ function RegisterDocument(props) {
         };
         // console.log("hai");
         // console.log(dataUpdate);
-        dispatch(updateEmployee(dataUpdate));
+        // dispatch(updateEmployee(dataUpdate));
         // toast.success("Thêm thành công");
       } else {
         // console.log("sua");
@@ -91,7 +91,7 @@ function RegisterDocument(props) {
         );
         // console.log(employeeData);
         employeeData.listRegister.push({ ...values, status: "Lưu mới" });
-        dispatch(updateEmployee(employeeData));
+        // dispatch(updateEmployee(employeeData));
         toast.success("Sửa thành công");
       }
 
@@ -109,7 +109,7 @@ function RegisterDocument(props) {
     );
     // console.log(employeeData);
     setEmployee(employeeData);
-    dispatch(updateEmployee(employeeData));
+    // dispatch(updateEmployee(employeeData));
     setshouldOpenConfirmationDeleteDialog(false);
     toast.success("Xóa thành công");
   };
@@ -167,7 +167,7 @@ function RegisterDocument(props) {
             </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
+                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="primary"
                 onClick={() => {
                   handleEditPropose(rowData);
@@ -178,7 +178,7 @@ function RegisterDocument(props) {
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                disabled={rowData.status === "Đã duyệt" ? true : false}
+                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="error"
                 onClick={() => {
                   // handleRemovePropose(rowData);
@@ -301,8 +301,6 @@ function RegisterDocument(props) {
               columns={columns}
               options={{
                 paging: false,
-                pageSize: 5,
-                pageSizeOptions: [5, 10, 15, 20],
                 rowStyle: (rowData, index) => {
                   return {
                     backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",

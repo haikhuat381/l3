@@ -31,6 +31,7 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import { formatDateSend } from "app/constant/formatDate";
 
 function AddNewEmployeeDialog(props) {
   const { handleClose, handleChangeReload, employeeUpdate } = props;
@@ -56,26 +57,26 @@ function AddNewEmployeeDialog(props) {
       () =>
         employeeDataReducer?.certificates?.map((data) => {
           return {
-              certificateId: data?.certificateId,
-              name: data?.name,
-              field: data?.field,
-              educationalOrg: data?.educationalOrg,
-              content: data?.content,
-              issuanceDate: moment(data?.issuanceDate).format("YYYY-MM-DD"),
-            }
+            certificateId: data?.certificateId,
+            name: data?.name,
+            field: data?.field,
+            educationalOrg: data?.educationalOrg,
+            content: data?.content,
+            issuanceDate: formatDateSend(data?.issuanceDate),
+          }
         }) || []
     );
     setListRelationship(
       employeeDataReducer?.familyRelations?.map((data) => {
-        return  {
-            familyId: data?.familyId,
-            name: data?.name,
-            gender: data?.gender,
-            relation: data?.relation,
-            citizenId: data?.citizenId,
-            address: data?.address,
-            dateOfBirth: moment(data?.dateOfBirth).format("YYYY-MM-DD"),
-          }
+        return {
+          familyId: data?.familyId,
+          name: data?.name,
+          gender: data?.gender,
+          relation: data?.relation,
+          citizenId: data?.citizenId,
+          address: data?.address,
+          dateOfBirth: formatDateSend(data?.dateOfBirth),
+        }
       }) || []
     );
   }, [employeeDataReducer]);
@@ -109,7 +110,7 @@ function AddNewEmployeeDialog(props) {
       phone: employeeUpdate?.phone || "",
       dateOfBirth: !employeeUpdate?.dateOfBirth
         ? ""
-        : moment(employeeUpdate?.dateOfBirth).format("YYYY-MM-DD"),
+        : formatDateSend(employeeUpdate?.dateOfBirth),
       teamId: employeeUpdate?.teamId || "",
       citizenId: employeeUpdate?.citizenId || "",
       address: employeeUpdate?.address || "",
@@ -144,47 +145,44 @@ function AddNewEmployeeDialog(props) {
       address: Yup.string().required("Không được bỏ trống"),
     }),
     onSubmit: (values) => {
-      const numberGender = +values.gender;
-      if (!employeeUpdate?.employeeId) {
-        values.id = uuidv4();
-        values.status = "Lưu mới";
-        const dataInfo = { ...values, gender: numberGender };
-        const dataCreate = {
-          employeeInfo: dataInfo,
-          certificates: listDiploma,
-          familyRelations: listRelationship,
-        };
-        if (dataCreate.certificates.length === 0) {
-          toast.success("Vui lòng nhập Thông tin văn bằng");
-        } else if (dataCreate.familyRelations.length === 0) {
-          toast.success("Vui lòng nhập Quan hệ gia đình");
-        } else {
-          dispatch(addNewEmployeeAction(dataCreate));
-          // toast.success("Lưu mới thành công");
-          setSaved(false);
-        }
+      if (listDiploma.length === 0) {
+        toast.warning("Vui lòng nhập Thông tin văn bằng");
+      } else if (listRelationship.length === 0) {
+        toast.warning("Vui lòng nhập Quan hệ gia đình");
       } else {
-        const dataInfo = { ...values, gender: numberGender };
-        const updateData = {
-          employeeInfo: dataInfo,
-          certificates: listDiploma,
-          familyRelations: listRelationship.reduce((arr, data) => {
-            if (data.familyId) {
-              data.familyRelationId = data.familyId;
-            }
-            delete data.familyId;
-            return [...arr, { ...data }];
-          }, []),
-        };
 
-        dispatch(updateEmployeeAction(employeeUpdate?.employeeId, updateData));
-        // toast.success("Cập nhật thành công");
+        const numberGender = +values.gender;
+        const dataInfo = { ...values, gender: numberGender };
+
+        if (!employeeUpdate?.employeeId) {
+          dataInfo.id = uuidv4();
+          const dataCreate = {
+            employeeInfo: dataInfo,
+            certificates: listDiploma,
+            familyRelations: listRelationship,
+          };
+          dispatch(addNewEmployeeAction(dataCreate));
+        } else {
+          const updateData = {
+            employeeInfo: dataInfo,
+            certificates: listDiploma,
+            familyRelations: listRelationship?.reduce((arr, data) => {
+              if (data.familyId) {
+                data.familyRelationId = data.familyId;
+              }
+              delete data.familyId;
+              return [...arr, { ...data }];
+            }, []),
+          };
+
+          dispatch(updateEmployeeAction(employeeUpdate?.employeeId, updateData));
+        }
+        handleChangeReload(Math.random().toString(36).slice(-5))
         setSaved(false);
+        setShouldOpenDialog(false);
+
       }
-      // handleChangeReload(employeeUpdate?.gender);
-      handleChangeReload(Math.random().toString(36).slice(-5))
-      // setSaved(false);
-      setShouldOpenDialog(false);
+
     },
   });
 
