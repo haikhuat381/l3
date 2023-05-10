@@ -35,23 +35,11 @@ function ManagerEmployeeDialog(props) {
   );
   const { handleChangeReload, handleClose } = props;
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  console.log("chao bn ", employeeData?.photoUrl);
-  // console.log("dm asdasd", employeeData);
+
   return (
     <>
       <Dialog open={true} onClose={handleClose} maxWidth="lg" fullWidth>
-        <DialogTitle
-          sx={{
-            zIndex: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            padding: "9px 24px",
-            fontSize: 24,
-          }}
-        >
+        <DialogTitle className="dialog-title">
           Cập nhật diễn biến
           <IconButton onClick={() => handleClose()}>
             <Icon color="error">close</Icon>
@@ -175,14 +163,7 @@ function ManagerEmployeeDialog(props) {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions
-          style={{
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            justifyContent: "center",
-            zIndex: 9,
-          }}
-        >
+        <DialogActions className="dialog-action">
           <Button
             variant="contained"
             color="warning"

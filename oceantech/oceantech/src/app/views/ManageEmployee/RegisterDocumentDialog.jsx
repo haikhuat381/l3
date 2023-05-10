@@ -2,52 +2,27 @@ import React from "react";
 import {
   Dialog,
   DialogTitle,
-  Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
-  Grid,
-  TextField,
   IconButton,
   Icon,
-  Typography,
-  MenuItem,
-  TextareaAutosize,
 } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
-// import { updateEmployee } from "app/redux/actions/actions";
-import PropostionLetter from "app/components/PropostionLetter/PropostionLetter";
 function RegisterDocumentDialog(props) {
   const { handleClose, registerDataDialog } = props;
   const employeeData = useSelector((state) => state.Employee.employeeData);
 
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  var day = new Date(registerDataDialog.date);
-  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       id: registerDataDialog.id,
-      // reason: employeeData.promoteRequest?.reason || "",
-      // date: employeeData.promoteRequest?.date || "",
     },
-    validationSchema: Yup.object({
-      // reason: Yup.string().required("Không được bỏ trống"),
-      // date: Yup.date().required("Vui lòng nhập ngày"),
-    }),
+    validationSchema: Yup.object({}),
     onSubmit: (values) => {
-      // console.log("values");
-      // console.log(values);
       employeeData.listRegister = {
         ...values,
         date: registerDataDialog.date,
@@ -61,8 +36,7 @@ function RegisterDocumentDialog(props) {
       });
       employeeData.status = "Chờ duyệt";
       employeeData.releaseRequest = null;
-      // dispatch(updateEmployee(employeeData));
-      // handleCloseAll();
+
       handleClose();
       toast.success("Gửi lãnh đạo thành công");
     },
@@ -82,12 +56,7 @@ function RegisterDocumentDialog(props) {
           </IconButton>
         </DialogTitle>
         <form onSubmit={formik.handleSubmit}>
-          <DialogContent>
-            {/* <PropostionLetter
-              registerDataDialog={registerDataDialog}
-              status={false}
-            /> */}
-          </DialogContent>
+          <DialogContent></DialogContent>
           <DialogActions>
             <Button
               className="button-cancel"

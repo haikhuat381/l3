@@ -2,36 +2,32 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
-  Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
-  Grid,
-  TextField,
   IconButton,
   Icon,
-  Typography,
-  MenuItem,
-  TextareaAutosize,
 } from "@mui/material";
 import SalarationLetter from "app/components/SalarationLetter/SalarationLetter";
 
 import { useSelector, useDispatch } from "react-redux";
-
 import { updateSalaryIncreaseAction } from "app/redux/actions/actions";
+import { processingStatus } from "app/constant";
+import SendToLeadershipDialog from "../AddNewEmployee/SendToLeadershipDialog";
 function SalaryIncreaseDialog(props) {
   const dispatch = useDispatch();
-  const { handleClose, dataIncreaseDialog, iDSalary, handleReloadPro } = props;
+  const { handleClose, dataIncreaseDialog, iDSalary, handleReloadPro, ID } =
+    props;
   const listSalaryElment = useSelector(
     (state) => state.Employee.salaryIncreaseHistory
   );
   const [saved, setSaved] = useState("none");
   const [salaryData, setSalaryData] = useState(dataIncreaseDialog);
+  const [shoulSendLeader, setShoulSendLeader] = useState(false);
   const handleValues = (data) => {
     setSalaryData(data);
   };
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     dispatch(
       updateSalaryIncreaseAction(
         iDSalary ? iDSalary : listSalaryElment[0]?.salaryId,
@@ -40,20 +36,14 @@ function SalaryIncreaseDialog(props) {
     );
     handleReloadPro(Math.random().toString(36).slice(-5));
   };
+  const handleCloseAll = () => {
+    handleClose();
+    setShoulSendLeader(false);
+  };
   return (
     <>
       <Dialog open={true} maxWidth={"lg"} fullWidth>
-        <DialogTitle
-          sx={{
-            zIndex: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            padding: "12px 24px",
-          }}
-        >
+        <DialogTitle className="dialog-title">
           <div
             style={{
               display: "flex",
@@ -61,14 +51,11 @@ function SalaryIncreaseDialog(props) {
               alignItems: "center",
               justifyContent: "center",
             }}
-          >
-            {/* Biểu Mẫu Tăng Lương */}
-          </div>
+          ></div>
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>
         </DialogTitle>
-        {/* <form onSubmit={formik.handleSubmit}> */}
         <DialogContent>
           <SalarationLetter
             dataIncreaseDialog={dataIncreaseDialog}
@@ -76,15 +63,13 @@ function SalaryIncreaseDialog(props) {
             handleValues={handleValues}
           />
         </DialogContent>
-        <DialogActions
-          style={{
-            justifyContent: "center",
-            gap: "-8px",
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-          }}
-        >
-          <Button variant="contained" color="success" sx={{ display: saved }}>
+        <DialogActions className="dialog-action">
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ display: saved }}
+            onClick={() => setShoulSendLeader(true)}
+          >
             Trình lãnh đạo
           </Button>
           <Button
@@ -107,14 +92,17 @@ function SalaryIncreaseDialog(props) {
             Hủy
           </Button>
         </DialogActions>
-        {/* </form> */}
-        {/* {shouldOpenSalaryIncreaseDialog && (
-                    <SalaryIncreaseDialog
-                        handleClose={() => setShouldOpenSalaryIncreaseDialog(false)}
-                        handleCloseAll={handleClose}
-                    />
-                )} */}
       </Dialog>
+      {shoulSendLeader && (
+        <SendToLeadershipDialog
+          handleCloseAll={handleCloseAll}
+          handleClose={() => {
+            setShoulSendLeader(false);
+          }}
+          employeeId={ID}
+          status={processingStatus}
+        />
+      )}
     </>
   );
 }
