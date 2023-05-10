@@ -105,7 +105,7 @@ function PropostionLetter(props) {
             </Grid>
             <Grid item sm={11} xs={12}>
               <TextField
-                className="luan"
+                className="edit-text"
                 value={employeeData?.employeeInfo?.fullName}
                 InputProps={{
                   readOnly: true,
@@ -119,36 +119,7 @@ function PropostionLetter(props) {
               />
             </Grid>
           </Grid>
-          <Grid
-            container
-            item
-            sm={12}
-            xs={12}
-            sx={{ pl: 10, pr: 10, pb: 2 }}
-            justifyContent="flex-start"
-          >
-            {/* <Grid item sm={2.7} xs={12}>
-                    <Typography>Hiện đang công tác tại vị trí:</Typography>
-                  </Grid> */}
-            {/* <Grid item sm={9.3} xs={12}>
-                    <TextField
-                      className="luan"
-                      value={proposeDataDialog?.proposal}
-                      onChange={(event) => {
-                        handlechangeValuse(event, "date");
-                      }}
-                      InputProps={{
-                        readOnly: false,
-                        style: { padding: 0 },
-                      }}
-                      id="standard-adornment-mount"
-                      fullWidth
-                      sx={{
-                        "& fieldset": { border: "none", padding: 0 },
-                      }}
-                    />
-                  </Grid> */}
-          </Grid>
+
           <Grid
             container
             item
@@ -164,7 +135,7 @@ function PropostionLetter(props) {
             </Grid>
             <Grid item sm={6.3} xs={12}>
               <TextField
-                className="luan"
+                className="edit-text"
                 value={proposeData?.content}
                 onChange={(event) => {
                   handlechangeValuse(event, "content");
@@ -196,7 +167,7 @@ function PropostionLetter(props) {
                 </Grid>
                 <Grid item xs={12} sm={10.2}>
                   <TextField
-                    className="luan"
+                    className="edit-text"
                     value={proposeData?.note}
                     onChange={(event) => {
                       handlechangeValuse(event, "note");

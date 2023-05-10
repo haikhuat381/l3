@@ -1,5 +1,5 @@
 import React from "react";
-import { v4 as uuidv4 } from "uuid";
+
 import {
   TextField,
   Grid,
@@ -12,7 +12,6 @@ import MaterialTable from "@material-table/core";
 import { useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -24,8 +23,7 @@ import {
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import ProposeAdvisoryDialog from "./ProposeAdvisoryDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-import moment from "moment";
-import { async } from "regenerator-runtime";
+
 import { formatDateSend, formatDateView } from "app/constant/formatDate";
 function ProposeAdvisory(props) {
   const { handleClose, ID } = props;
@@ -62,9 +60,6 @@ function ProposeAdvisory(props) {
     handleReloadPro(Math.random().toString(36).slice(-5));
     setshouldOpenDeleteDialog(false);
   };
-  // api
-
-  const employee = useSelector((state) => state.Employee.employeeData);
 
   const [rowDataInfo, setRowDataInfo] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
@@ -101,9 +96,6 @@ function ProposeAdvisory(props) {
     },
   });
 
-  const handleSave = () => {
-    toast.success("Lưu thành công");
-  };
   const columns = [
     {
       title: "Hành động",
@@ -111,46 +103,8 @@ function ProposeAdvisory(props) {
       render: (rowData) => {
         return (
           <>
-            {/* <Tooltip title="Thông tin">
-              <IconButton
-                disabled={
-                  (rowData.additionalRequest || rowData.refuseInfo) &&
-                  rowData.status !== "Lưu mới"
-                    ? false
-                    : true
-                }
-                onClick={() => {
-                  if (rowData.additionalRequest) {
-                    setRowDataInfo({
-                      ...rowData.additionalRequest,
-                      status: "Yêu cầu bổ sung",
-                    });
-                  }
-                  if (rowData.refuseInfo) {
-                    setRowDataInfo({
-                      ...rowData.refuseInfo,
-                      status: "Từ chối",
-                    });
-                  }
-
-                  setShouldOpenRequestDialog(true);
-                }}
-              >
-                <Icon
-                  color={
-                    (rowData.additionalRequest || rowData.refuseInfo) &&
-                    rowData.status !== "Lưu mới"
-                      ? "primary"
-                      : "disabled"
-                  }
-                >
-                  report
-                </Icon>
-              </IconButton>
-            </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
-                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="primary"
                 onClick={() => {
                   handleEditPropose(rowData);
@@ -161,10 +115,8 @@ function ProposeAdvisory(props) {
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="error"
                 onClick={() => {
-                  // handleRemovePropose(rowData);
                   setshouldOpenDeleteDialog(true);
                   setDeleteProposal(rowData);
                 }}
@@ -182,7 +134,7 @@ function ProposeAdvisory(props) {
     {
       title: "Ngày",
       field: "date",
-      render: (rowdata) =>formatDateView(rowdata?.date),
+      render: (rowdata) => formatDateView(rowdata?.date),
     },
     {
       title: "Ghi chú",
@@ -221,7 +173,6 @@ function ProposeAdvisory(props) {
                 value={formik.values.date}
                 onChange={formik.handleChange}
                 error={formik.errors.date && formik.touched.date}
-                // helperText={formik.errors.date}
                 helperText={
                   formik.touched.date && formik.errors.date ? (
                     <div>{formik.errors.date}</div>
@@ -238,7 +189,6 @@ function ProposeAdvisory(props) {
                 value={formik.values.type}
                 onChange={formik.handleChange}
                 error={formik.errors.type && formik.touched.type}
-                // helperText={formik.errors.type}
                 helperText={
                   formik.touched.type && formik.errors.type ? (
                     <div>{formik.errors.type}</div>
@@ -257,7 +207,6 @@ function ProposeAdvisory(props) {
                 value={formik.values.content}
                 onChange={formik.handleChange}
                 error={formik.errors.content && formik.touched.content}
-                // helperText={formik.errors.content}
                 helperText={
                   formik.touched.content && formik.errors.content ? (
                     <div>{formik.errors.content}</div>
@@ -274,7 +223,6 @@ function ProposeAdvisory(props) {
                 value={formik.values.note}
                 onChange={formik.handleChange}
                 error={formik.errors.note && formik.touched.note}
-                // helperText={formik.errors.note}
                 helperText={
                   formik.touched.note && formik.errors.note ? (
                     <div>{formik.errors.note}</div>
@@ -320,10 +268,7 @@ function ProposeAdvisory(props) {
                   top: 0,
                   zIndex: 1,
                 },
-                // padding: 'dense',
                 padding: "default",
-                // search: false,
-                // exportButton: true,
                 toolbar: false,
               }}
             />

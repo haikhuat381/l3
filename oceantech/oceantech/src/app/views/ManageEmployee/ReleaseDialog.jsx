@@ -32,7 +32,6 @@ function ReleaseDialog(props) {
   const handleValues = (data) => {
     setDataReleaseDialog(data);
   };
-  console.log("chao bn ", dataReleaseDialog);
   const id = employeeData?.employeeInfo?.employeeId;
   const handlesubmit = async () => {
     dispatch(ReleaseManageAction(id, dataReleaseDialog));
@@ -41,7 +40,7 @@ function ReleaseDialog(props) {
   function setShouldOpenTime() {
     setTimeout(() => {
       handleCloseAll();
-    }, 1500); // thời gian chờ 2 giây (2000 miliseconds)
+    }, 1500);
   }
   return (
     <>
@@ -58,17 +57,7 @@ function ReleaseDialog(props) {
         theme="colored"
       />
       <Dialog open={true} maxWidth={"lg"} fullWidth>
-        <DialogTitle
-          sx={{
-            zIndex: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            padding: "12px 24px",
-          }}
-        >
+        <DialogTitle className="dialog-title">
           <div
             style={{
               display: "flex",
@@ -92,13 +81,7 @@ function ReleaseDialog(props) {
             status={false}
           />
         </DialogContent>
-        <DialogActions
-          style={{
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            justifyContent: "center",
-          }}
-        >
+        <DialogActions className="dialog-action">
           <Button
             className="button-confirm1"
             variant="contained"
@@ -129,7 +112,7 @@ function ReleaseDialog(props) {
           }}
           employeeId={employeeData?.employeeInfo?.employeeId}
           // status={employeeData?.employeeInfo?.status}
-          status= {pendingEndStatus} 
+          status={pendingEndStatus}
         />
       )}
     </>

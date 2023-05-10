@@ -65,16 +65,11 @@ function Promote(props) {
     });
   };
 
-  // fake-api
-  // showSuccessMessage
-
   const formik = useFormik({
     initialValues: {
       reason: updatePromote?.reason || "",
       note: updatePromote?.note || "",
-      date: updatePromote?.date
-        ? formatDateSend(updatePromote?.date)
-        : "",
+      date: updatePromote?.date ? formatDateSend(updatePromote?.date) : "",
       newPosition: updatePromote?.newPosition || "",
     },
     validationSchema: Yup.object({
@@ -83,7 +78,7 @@ function Promote(props) {
       newPosition: Yup.string().required("Không được bỏ trống"),
       date: Yup.date().required("Vui lòng nhập ngày"),
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: (values, { resetForm }) => {
       if (!updatePromote?.employeeId) {
         dispatch(addPromoteHistoryAction(ID, values));
       } else {
@@ -107,48 +102,8 @@ function Promote(props) {
       render: (rowData) => {
         return (
           <>
-            {/* <Tooltip title="Thông tin">
-              <IconButton
-                disabled={
-                  (rowData.additionalRequest || rowData.refuseInfo) &&
-                  rowData.status !== "Lưu mới"
-                    ? false
-                    : true
-                }
-                onClick={() => {
-                  if (rowData.additionalRequest) {
-                    setRowDataInfo({
-                      ...rowData.additionalRequest,
-                      status: "Yêu cầu bổ sung",
-                    });
-                  }
-                  if (rowData.refuseInfo) {
-                    setRowDataInfo({
-                      ...rowData.refuseInfo,
-                      status: "Từ chối",
-                    });
-                    // console.log("hai");
-                    // console.log({ ...rowData.refuseInfo, status: "Từ chối" });
-                  }
-                  setRowData(rowData);
-                  setShouldOpenRequestDialog(true);
-                }}
-              >
-                <Icon
-                  color={
-                    (rowData.additionalRequest || rowData.refuseInfo) &&
-                    rowData.status !== "Lưu mới"
-                      ? "primary"
-                      : "disabled"
-                  }
-                >
-                  report
-                </Icon>
-              </IconButton>
-            </Tooltip> */}
             <Tooltip title="Sửa">
               <IconButton
-                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="primary"
                 onClick={() => {
                   handleEditPromote(rowData);
@@ -159,11 +114,11 @@ function Promote(props) {
             </Tooltip>
             <Tooltip title="Xóa">
               <IconButton
-                // disabled={rowData.status === "Đã duyệt" ? true : false}
                 color="error"
                 onClick={() => {
                   setshouldOpenDeleteDialog(true);
                   setEmployeeDelete(rowData);
+                  formik.resetForm();
                 }}
               >
                 <Icon>delete</Icon>
@@ -220,7 +175,6 @@ function Promote(props) {
                 value={formik?.values?.date}
                 onChange={formik.handleChange}
                 error={formik.errors.date && formik.touched.date}
-                // helperText={formik.errors.date}
                 helperText={
                   formik.touched.date && formik.errors.date ? (
                     <div>{formik.errors.date}</div>
@@ -237,7 +191,6 @@ function Promote(props) {
                 value={formik.values.newPosition}
                 onChange={formik.handleChange}
                 error={formik.errors.newPosition && formik.touched.newPosition}
-                // helperText={formik.errors.newPosition}
                 helperText={
                   formik.touched.newPosition && formik.errors.newPosition ? (
                     <div>{formik.errors.newPosition}</div>
@@ -254,7 +207,6 @@ function Promote(props) {
                 value={formik.values.note}
                 onChange={formik.handleChange}
                 error={formik.errors.note && formik.touched.note}
-                // helperText={formik.errors.note}
                 helperText={
                   formik.touched.note && formik.errors.note ? (
                     <div>{formik.errors.note}</div>
@@ -273,7 +225,6 @@ function Promote(props) {
                 value={formik.values.reason}
                 onChange={formik.handleChange}
                 error={formik.errors.reason && formik.touched.reason}
-                // helperText={formik.errors.reason}
                 helperText={
                   formik.touched.reason && formik.errors.reason ? (
                     <div>{formik.errors.reason}</div>
@@ -339,6 +290,7 @@ function Promote(props) {
           handleCloseAll={handleClose}
           status={false}
           idPromoteDialog={idPromoteDialog}
+          ID={ID}
         />
       )}
 

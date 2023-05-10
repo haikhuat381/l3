@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
-
+import { formatDateView } from "app/constant/formatDate";
 import { useSelector, useDispatch } from "react-redux";
 import Breadcrumb from "app/components/Breadcrumb";
 import {
@@ -26,7 +26,6 @@ import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { objStatus, moreInfoEndingStatus } from "app/constant";
-import { formatDateView } from "app/constant/formatDate";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
@@ -49,12 +48,11 @@ function ManagerEmployee() {
   const listEmployee = useSelector((state) => state.Employee.listEmployeeData);
   const handleChangeReload = (value) => {
     reloadRef.current = value;
-    console.log(" cjao bn ", reloadRef.current);
   };
-
+  const status = "5 , 8, 9";
   useEffect(() => {
-    dispatch(getTotalAction("5,8,9"));
-    dispatch(getListEmployeeAction("5,8,9", page, pageSize));
+    dispatch(getTotalAction(status));
+    dispatch(getListEmployeeAction(status, page, pageSize));
   }, [page, pageSize, reloadRef.current]);
 
   const onHandleChange = (page, pageSize) => {
@@ -88,11 +86,7 @@ function ManagerEmployee() {
                       setShouldOpenRequestDialog(true);
                     }}
                   >
-                    <Icon
-                      style={{ color: "#EED370" }}
-                    >
-                      report
-                    </Icon>
+                    <Icon style={{ color: "#EED370" }}>report</Icon>
                   </IconButton>
                 </span>
               </Tooltip>
@@ -112,7 +106,6 @@ function ManagerEmployee() {
         );
       },
     },
-    // { title: "Mã nhân viên", width: 160, field: "code" },
     { title: "Họ và tên", field: "fullName", width: 220 },
     {
       title: "Ngày sinh",
