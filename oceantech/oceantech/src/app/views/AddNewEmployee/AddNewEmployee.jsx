@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import AddNewEmployeeDialog from "./AddNewEmployeeDialog";
 import Breadcrumb from "app/components/Breadcrumb";
-import { Button, Box, Icon, IconButton, styled, Tooltip } from "@mui/material";
+import { Button, Box, styled } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import { ToastContainer, toast } from "react-toastify";
 import ApprovedDialog from "../Approved/ApprovedDialog";
 import "react-toastify/dist/ReactToastify.css";
 import {
+  deleteEmployeeAction,
   getListEmployeeAction,
   getEmployeeDataAction,
   getFormDataAction,
@@ -15,10 +16,10 @@ import {
   resetEmployeeDataAction,
 } from "app/redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
-import { objStatus, newStatus, pendingStatus, needMoreInfoStatus, rejectedStatus } from "app/constant";
+import { objStatus, newStatus, pendingStatus, needMoreInfoStatus, rejectedStatus, statusOfAddNewEmployee, randomValue } from "app/constant";
+import { InfoIcon, DetailIcon, EditIcon, DeleteIcon } from "app/components/Button";
 
 const Container = styled("div")(() => ({
   margin: "30px 30px 0",
@@ -48,7 +49,6 @@ function AddNewEmployee() {
     (state) => state?.Employee?.listEmployeeData
   );
 
-  const employeeData = useSelector((state) => state?.Employee?.employeeData);
   const reloadRef = useRef();
 
   const handleChangeReload = (value) => {
@@ -61,9 +61,8 @@ function AddNewEmployee() {
   }, [page, pagesize, reloadRef.current]);
 
   const handleGetListEmployee = () => {
-    const status = "1,3,4,6";
-    dispatch(getTotalAction(status));
-    dispatch(getListEmployeeAction(status, page, pagesize));
+    dispatch(getTotalAction(statusOfAddNewEmployee));
+    dispatch(getListEmployeeAction(statusOfAddNewEmployee, page, pagesize));
   };
 
   const handleChangeEmployee = (rowdata, method) => {
@@ -72,7 +71,7 @@ function AddNewEmployee() {
       dispatch(getEmployeeDataAction(rowdata.employeeId));
       setShouldOpenDialog(true);
     } else {
-      handleChangeReload(Math.random().toString(36).slice(-5));
+      handleChangeReload(randomValue());
       setshouldOpenConfirmationDeleteDialog(false);
     }
   };
@@ -99,62 +98,34 @@ function AddNewEmployee() {
         return (
           <>
             {(rowData.status === needMoreInfoStatus || rowData.status === rejectedStatus) && (
-              <Tooltip title="Thông tin">
-                <span>
-                  <IconButton
-                    onClick={() => {
-                      dispatch(getEmployeeDataAction(rowData.employeeId));
-                      setDataReport(rowData);
-                      setShouldOpenRequestDialog(true);
-                    }}
-                  >
-                    <Icon
-                      style={{ color: "#EED370" }}
-                    >
-                      report
-                    </Icon>
-                  </IconButton>
-                </span>
-              </Tooltip>
+              <InfoIcon onClick={() => {
+                dispatch(getEmployeeDataAction(rowData.employeeId));
+                setDataReport(rowData);
+                setShouldOpenRequestDialog(true);
+              }} />
+
             )}
             {(rowData.status === pendingStatus || rowData.status === rejectedStatus) && (
-              <Tooltip title="Xem chi tiết">
-                <span>
-                  <IconButton
-                    onClick={() => {
-                      dispatch(getFormDataAction(rowData.employeeId));
-                      dispatch(getEmployeeDataAction(rowData.employeeId));
-                      setShouldOpenViewDialog(true);
-                    }}
-                  >
-                    <Icon color="success">visibilityIcon</Icon>
-                  </IconButton>
-                </span>
-              </Tooltip>
+
+              <DetailIcon
+                onClick={() => {
+                  dispatch(getFormDataAction(rowData.employeeId));
+                  dispatch(getEmployeeDataAction(rowData.employeeId));
+                  setShouldOpenViewDialog(true);
+                }}
+              />
             )}
 
             {(rowData.status === newStatus || rowData.status === needMoreInfoStatus) && (
-              <Tooltip title="Sửa">
-                <span>
-                  <IconButton onClick={() => handleChangeEmployee(rowData, "edit")}>
-                    <Icon color="primary">edit</Icon>
-                  </IconButton>
-                </span>
-              </Tooltip>
+              <EditIcon onClick={() => handleChangeEmployee(rowData, "edit")} />
             )}
             {rowData.status === newStatus && (
-              <Tooltip title="Xóa">
-                <span>
-                  <IconButton
-                    onClick={() => {
-                      setEmployeeDelete(rowData);
-                      setshouldOpenConfirmationDeleteDialog(true);
-                    }}
-                  >
-                    <Icon color="error">delete</Icon>
-                  </IconButton>
-                </span>
-              </Tooltip>
+              <DeleteIcon
+                onClick={() => {
+                  setEmployeeDelete(rowData);
+                  setshouldOpenConfirmationDeleteDialog(true);
+                }}
+              />
             )}
           </>
         );
@@ -240,7 +211,7 @@ function AddNewEmployee() {
             setEmployeeDelete({});
           }}
           onYesClick={() => {
-            dispatch(deleteEmployee(employeeDelete.employeeId));
+            dispatch(deleteEmployeeAction(employeeDelete.employeeId));
 
             handleChangeEmployee(employeeDelete, "delete");
           }}

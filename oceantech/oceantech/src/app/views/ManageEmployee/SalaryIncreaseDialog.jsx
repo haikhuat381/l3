@@ -12,7 +12,7 @@ import SalarationLetter from "app/components/SalarationLetter/SalarationLetter";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateSalaryIncreaseAction } from "app/redux/actions/actions";
-import { processingStatus } from "app/constant";
+import { processingStatus, randomValue } from "app/constant";
 import SendToLeadershipDialog from "../AddNewEmployee/SendToLeadershipDialog";
 function SalaryIncreaseDialog(props) {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function SalaryIncreaseDialog(props) {
         salaryData
       )
     );
-    handleReloadPro(Math.random().toString(36).slice(-5));
+    handleReloadPro(randomValue());
   };
   const handleCloseAll = () => {
     handleClose();

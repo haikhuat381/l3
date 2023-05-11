@@ -12,17 +12,12 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ApprovedDialog from "./ApprovedDialog";
 import {
-  Button,
   Box,
-  Icon,
-  IconButton,
   styled,
-  Table,
-  Tooltip,
 } from "@mui/material";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
-import moment from "moment";
-import { objStatus } from "app/constant";
+import { objStatus, statusOfApproved } from "app/constant";
+import { DetailIcon } from "app/components/Button";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
@@ -43,17 +38,15 @@ function Approved() {
   const listEmployeeDataReducer = useSelector(
     (state) => state?.Employee?.listEmployeeData
   );
-  // const objStatus = useSelector((state) => state?.Employee?.objStatus);
-  const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  
   const reloadRef = useRef();
   const handleChangeReload = (value) => {
     reloadRef.current = value;
   };
 
   const handleGetListEmployee = () => {
-    const status = "5,6,10,11"
-    dispatch(getTotalAction(status))
-    dispatch(getListEmployeeAction(status, page, pagesize))
+    dispatch(getTotalAction(statusOfApproved))
+    dispatch(getListEmployeeAction(statusOfApproved, page, pagesize))
   }
   useEffect(() => {
     handleGetListEmployee(page, pagesize);
@@ -76,19 +69,13 @@ function Approved() {
       },
       render: (rowdata) => {
         return (
-          <>
-            <Tooltip title="Xem chi tiết">
-              <IconButton
-                onClick={() => {
-                  dispatch(getFormDataAction(rowdata.employeeId));
-                  dispatch(getEmployeeDataAction(rowdata.employeeId));
-                  setShouldOpenDialog(true);
-                }}
-              >
-                <Icon color="success">visibilityIcon</Icon>
-              </IconButton>
-            </Tooltip>
-          </>
+          <DetailIcon
+            onClick={() => {
+              dispatch(getFormDataAction(rowdata.employeeId));
+              dispatch(getEmployeeDataAction(rowdata.employeeId));
+              setShouldOpenDialog(true);
+            }}
+          />
         );
       },
     },

@@ -5,8 +5,7 @@ import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import CustomAvatar from "../Avatar/Avatar";
 import moment from "moment";
-import { otherFeature, Gender } from "app/constant";
-import { formatDateSend, formatDateView } from "app/constant/formatDate";
+import { otherFeature, Gender, formatDateSend, formatDateView } from "app/constant";
 
 const CurriculumVitae = React.forwardRef((props, ref) => {
   const MyButton = styled(IconButton)({
@@ -93,7 +92,7 @@ const CurriculumVitae = React.forwardRef((props, ref) => {
             <CustomAvatar image={employeeData?.resume?.photoUrl} isPadding={true} displayButton={"none"} />
           </Grid>
           <Grid item>
-            <Typography variant="h5" textAlign={"center"} marginTop={-3}>
+            <Typography variant="h5" textAlign={"center"} sx={{margin: "-24px 12px 0"}}>
               {employeeData?.resume?.fullName}
             </Typography>
             <Typography variant="subtitle1" textAlign={"center"} fontSize={18}>

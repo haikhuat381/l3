@@ -4,20 +4,17 @@ import {
   TextField,
   Grid,
   Button,
-  Icon,
-  Tooltip,
-  IconButton,
 } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
-
 import { useSelector, useDispatch } from "react-redux";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import RegisterDocumentDialog from "./RegisterDocumentDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
+import { DeleteIcon, EditIcon } from "app/components/Button";
 
 function RegisterDocument(props) {
   const { handleClose } = props;
@@ -60,7 +57,6 @@ function RegisterDocument(props) {
       setShouldOpenDialog(true);
 
       if (!values.id) {
-        // console.log("them");
         values.id = uuidv4();
         setEmployee({
           ...employeeData,
@@ -80,7 +76,6 @@ function RegisterDocument(props) {
         employeeData.listRegister = employeeData.listRegister.filter(
           (register) => register.id !== values.id
         );
-        // console.log(employeeData);
         employeeData.listRegister.push({ ...values, status: "Lưu mới" });
         // dispatch(updateEmployee(employeeData));
         toast.success("Sửa thành công");
@@ -111,27 +106,17 @@ function RegisterDocument(props) {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Sửa">
-              <IconButton
-                color="primary"
+              <EditIcon
                 onClick={() => {
                   handleEditPropose(rowData);
                 }}
-              >
-                <Icon>edit</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Xóa">
-              <IconButton
-                color="error"
+              />
+              <DeleteIcon
                 onClick={() => {
                   setshouldOpenConfirmationDeleteDialog(true);
                   setRegisterData(rowData);
                 }}
-              >
-                <Icon>delete</Icon>
-              </IconButton>
-            </Tooltip>
+              />
           </>
         );
       },

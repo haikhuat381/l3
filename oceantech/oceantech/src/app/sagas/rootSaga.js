@@ -1,7 +1,7 @@
-import { takeLatest, takeEvery } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import { ActionTypes } from "app/redux/actions/actionTypes";
 import {
-  getListEmployeeSaga,
+  addNewEmployeeSaga,
   deleteEmployeeSaga,
   updateEmployeeSaga,
   getListEmployeeDataSaga,
@@ -28,7 +28,8 @@ import {
   deleteProposalConsultsaga,
   ReleaseManagesaga,
 } from "./EmployeeSaga";
-import { addNewEmployeeSaga } from "./EmployeeSaga";
+
+
 export default function* rootSaga() {
   yield takeLatest(ActionTypes.GET_TOTAL, getTotalSaga);
   yield takeLatest(ActionTypes.GET_LIST_EMPLOYEE_DATA, getListEmployeeDataSaga);

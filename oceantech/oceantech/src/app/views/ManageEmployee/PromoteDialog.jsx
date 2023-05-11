@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PromotionLetter from "app/components/PromotionLetter/PromotionLetter";
 import SendToLeadershipDialog from "../AddNewEmployee/SendToLeadershipDialog";
 import { updatePromoteHistoryAction } from "app/redux/actions/actions";
-import { processingStatus } from "app/constant";
+import { processingStatus, randomValue } from "app/constant";
 function PromoteDialog(props) {
   const dispatch = useDispatch();
   const promote = useSelector((state) => state.Employee.listPromoteHistory);
@@ -41,7 +41,7 @@ function PromoteDialog(props) {
       )
     );
     toast;
-    handleReloadPro(Math.random().toString(36).slice(-5));
+    handleReloadPro(randomValue());
   };
 
   const handleCloseAll = () => {

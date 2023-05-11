@@ -67,9 +67,9 @@ function TabsCustom({ employeeData }) {
                 value={value}
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
-                sx={{ borderRight: 1, borderColor: "divider", padding: 0, overflow: "hidden" }}
+                sx={{ borderRight: 1, borderColor: "divider", padding: 0, overflow: "hidden", position: 'sticky', top: 0}}
             >
-                <Tab label="Hồ sơ" {...a11yProps(0)} />
+                <Tab label="Hồ sơ" {...a11yProps(0)}/>
                 <Tab label="Sơ yếu lý lịch" {...a11yProps(1)} />
                 <Tab label="Danh sách văn bằng" {...a11yProps(2)} />
             </Tabs>

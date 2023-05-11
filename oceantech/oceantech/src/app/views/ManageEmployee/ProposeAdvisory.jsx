@@ -1,18 +1,13 @@
 import React from "react";
-
 import {
   TextField,
   Grid,
   Button,
-  Icon,
-  Tooltip,
-  IconButton,
 } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import { useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   getProposalConsultationAction,
@@ -24,7 +19,8 @@ import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import ProposeAdvisoryDialog from "./ProposeAdvisoryDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 
-import { formatDateSend, formatDateView } from "app/constant/formatDate";
+import { randomValue, formatDateSend, formatDateView } from "app/constant";
+import { DeleteIcon, EditIcon } from "app/components/Button";
 function ProposeAdvisory(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -57,7 +53,7 @@ function ProposeAdvisory(props) {
 
   const handleRemovePropose = () => {
     dispatch(deleteProposalConsult(deleteProposal?.proposalConsultationId));
-    handleReloadPro(Math.random().toString(36).slice(-5));
+    handleReloadPro(randomValue());
     setshouldOpenDeleteDialog(false);
   };
 
@@ -90,7 +86,7 @@ function ProposeAdvisory(props) {
 
         setUpdateProposal({});
       }
-      handleReloadPro(Math.random().toString(36).slice(-5));
+      handleReloadPro(randomValue());
       setShouldOpenDialog(true);
       resetForm();
     },
@@ -103,27 +99,17 @@ function ProposeAdvisory(props) {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Sửa">
-              <IconButton
-                color="primary"
+              <EditIcon
                 onClick={() => {
                   handleEditPropose(rowData);
                 }}
-              >
-                <Icon>edit</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Xóa">
-              <IconButton
-                color="error"
+              />
+              <DeleteIcon
                 onClick={() => {
                   setshouldOpenDeleteDialog(true);
                   setDeleteProposal(rowData);
                 }}
-              >
-                <Icon>delete</Icon>
-              </IconButton>
-            </Tooltip>
+              />
           </>
         );
       },

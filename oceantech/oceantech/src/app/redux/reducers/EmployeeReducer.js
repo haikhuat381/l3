@@ -6,7 +6,7 @@ const initialState = {
   listEmployeeData: [],
   employeeData: {},
   formData: {},
-  regist: {},
+  // regist: {},
   //
   listPromoteHistory: [],
   salaryIncreaseHistory: [],
@@ -46,10 +46,9 @@ export default (state = initialState, action) => {
     case ActionTypes.RESET_FORM_DATA_SUCCESS: {
       return { ...state, formData: action.payload };
     }
-    //
 
+    
     case ActionTypes.GET_PROMOTE_HISTORY_DATA_SUCCESS: {
-      // console.log("proto histoey : ", action.payload);
       return { ...state, listPromoteHistory: action.payload };
     }
 

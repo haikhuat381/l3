@@ -25,7 +25,8 @@ import {
 import ApprovalDialog from "./ApprovalDialog";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import moment from "moment";
-import { objStatus } from "app/constant";
+import { objStatus, statusOfApproval } from "app/constant";
+import { DetailIcon } from "app/components/Button";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
@@ -45,17 +46,15 @@ function Approval() {
   const listEmployeeDataReducer = useSelector(
     (state) => state?.Employee?.listEmployeeData
   );
-  // const objStatus = useSelector((state) => state?.Employee?.objStatus);
-  const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  
   const reloadRef = useRef();
   const handleChangeReload = (value) => {
     reloadRef.current = value;
   };
 
   const handleGetListEmployee = () => {
-    const status = "3,8";
-    dispatch(getTotalAction(status));
-    dispatch(getListEmployeeAction(status, page, pagesize));
+    dispatch(getTotalAction(statusOfApproval));
+    dispatch(getListEmployeeAction(statusOfApproval, page, pagesize));
   };
   useEffect(() => {
     handleGetListEmployee(page, pagesize);
@@ -79,19 +78,13 @@ function Approval() {
       },
       render: (rowdata) => {
         return (
-          <>
-            <Tooltip title="Xem chi tiết">
-              <IconButton
-                onClick={() => {
-                  dispatch(getFormDataAction(rowdata.employeeId));
-                  dispatch(getEmployeeDataAction(rowdata.employeeId));
-                  setShouldOpenDialog(true);
-                }}
-              >
-                <Icon color="success">visibilityIcon</Icon>
-              </IconButton>
-            </Tooltip>
-          </>
+          <DetailIcon
+            onClick={() => {
+              dispatch(getFormDataAction(rowdata.employeeId));
+              dispatch(getEmployeeDataAction(rowdata.employeeId));
+              setShouldOpenDialog(true);
+            }}
+          />
         );
       },
     },

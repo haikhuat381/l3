@@ -5,7 +5,6 @@ import AcceptDialog from "./AcceptDialog";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  Tooltip,
   Dialog,
   DialogContent,
   DialogActions,
@@ -16,7 +15,6 @@ import {
   Icon,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-
 import ReleaseLetter from "app/components/ReleaseLetter/ReleaseLetter";
 import { pendingEndStatus } from "app/constant";
 import TabsCustom from "app/components/TabsCustom/TabsCustom";
@@ -34,11 +32,7 @@ export default function ApprovalDialog({ handleClose, handleChangeReload }) {
         open={true}
         maxWidth={"lg"}
         fullWidth
-        sx={{
-          "& .MuiDialog-paper": {
-            minHeight: "680px",
-          },
-        }}
+        className="form-dialog"
       >
         <DialogTitle className="dialog-title">
           {employeeData?.employeeInfo?.status === pendingEndStatus

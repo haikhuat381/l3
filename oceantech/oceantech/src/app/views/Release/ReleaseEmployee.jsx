@@ -12,20 +12,15 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ReleaseEmployeeDialog from "./ReleaseEmployeeDialog";
 import {
-  Button,
   Box,
-  Icon,
-  IconButton,
   styled,
-  Table,
-  Tooltip,
 } from "@mui/material";
 import SaveProfileInfo from "./SaveProfileInfo";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import { ToastContainer, toast } from "react-toastify";
-import moment from "moment";
 import "react-toastify/dist/ReactToastify.css";
-import { objStatus, approvedEndStatus , savedStatus } from "app/constant";
+import { objStatus, approvedEndStatus , savedStatus, statusOfRelease } from "app/constant";
+import { DetailIcon, InfoIcon } from "app/components/Button";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
@@ -49,17 +44,15 @@ function ReleaseEmployee() {
   const listEmployeeDataReducer = useSelector(
     (state) => state?.Employee?.listEmployeeData
   );
-  // const objStatus = useSelector((state) => state?.Employee?.objStatus);
-  const employeeData = useSelector((state) => state?.Employee?.employeeData);
+  
   const reloadRef = useRef();
   const handleChangeReload = (value) => {
     reloadRef.current = value;
   };
 
   const handleGetListEmployee = () => {
-    const status = "10,13";
-    dispatch(getTotalAction(status));
-    dispatch(getListEmployeeAction(status, page, pagesize));
+    dispatch(getTotalAction(statusOfRelease));
+    dispatch(getListEmployeeAction(statusOfRelease, page, pagesize));
   };
   useEffect(() => {
     handleGetListEmployee(page, pagesize);
@@ -85,31 +78,23 @@ function ReleaseEmployee() {
         return (
           <>
             {rowdata.status === savedStatus  && (
-              <Tooltip title="Thông tin">
-                <IconButton
+                <InfoIcon
                   onClick={() => {
                     dispatch(getFormDataAction(rowdata.employeeId));
                     dispatch(getEmployeeDataAction(rowdata.employeeId));
                     setShouldOpenDialog(true);
                     setIdview(rowdata.employeeId);
                   }}
-                >
-                  <Icon style={{ color: "#EED370" }}>report</Icon>
-                </IconButton>
-              </Tooltip>
+                />
             )}
             {rowdata.status === approvedEndStatus && (
-              <Tooltip title="Xem chi tiết">
-                <IconButton
+                <DetailIcon
                   onClick={() => {
                     dispatch(getFormDataAction(rowdata.employeeId));
                     dispatch(getEmployeeDataAction(rowdata.employeeId));
                     setShouldOpenReleaseDialog(true);
                   }}
-                >
-                  <Icon color="success">visibilityIcon</Icon>
-                </IconButton>
-              </Tooltip>
+                />
             )}
           </>
         );

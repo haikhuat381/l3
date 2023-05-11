@@ -11,7 +11,6 @@ import {
   IconButton,
 } from "@mui/material";
 import EmployeeRegisterDialog from "./EmployeeRegisterDialog";
-import { Close } from "@mui/icons-material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -30,8 +29,7 @@ import {
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import moment from "moment";
-import { formatDateSend } from "app/constant/formatDate";
+import { formatDateSend, randomValue } from "app/constant";
 
 function AddNewEmployeeDialog(props) {
   const { handleClose, handleChangeReload, employeeUpdate } = props;
@@ -177,12 +175,10 @@ function AddNewEmployeeDialog(props) {
 
           dispatch(updateEmployeeAction(employeeUpdate?.employeeId, updateData));
         }
-        handleChangeReload(Math.random().toString(36).slice(-5))
+        handleChangeReload(randomValue())
         setSaved(false);
         setShouldOpenDialog(false);
-
       }
-
     },
   });
 
@@ -250,6 +246,7 @@ function AddNewEmployeeDialog(props) {
               dispatch(getFormDataAction(employeeData?.employeeId));
               dispatch(getEmployeeDataAction(employeeData?.employeeId));
               setShouldOpenDialog("true");
+              console.log("bam dang ky ne")
             }}
           >
             Đăng kí
