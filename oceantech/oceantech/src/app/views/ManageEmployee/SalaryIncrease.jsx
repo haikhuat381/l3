@@ -3,9 +3,6 @@ import {
   TextField,
   Grid,
   Button,
-  Icon,
-  Tooltip,
-  IconButton,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -23,9 +20,8 @@ import {
 } from "app/redux/actions/actions";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-import moment from "moment";
-import { async } from "regenerator-runtime";
-import { formatDateSend, formatDateView } from "app/constant/formatDate";
+import { randomValue, formatDateSend, formatDateView  } from "app/constant";
+import { DeleteIcon, EditIcon } from "app/components/Button";
 function SalaryIncrease(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -50,22 +46,13 @@ function SalaryIncrease(props) {
     dispatch(getSalaryIncreaseHistoryAction(ID));
   }, [ID, refSalary.current]);
 
-  const handleAllGet = async () => {
-    handleGetSalary();
-    handleGetSalary();
-    // console.log("a");
-  };
-  const handleGetSalary = async () => {
-    dispatch(getSalaryIncreaseHistoryAction(ID));
-    // console.log("b");
-  };
-  const handleRemoveSalary = async () => {
+  const handleRemoveSalary = () => {
     dispatch(deleteSalaryIncreaseAction(deleteSalary?.salaryId));
-    handleReloadPro(Math.random().toString(36).slice(-5));
+    handleReloadPro(randomValue());
     setshouldOpenDeleteDialog(false);
   };
 
-  const handleEditSalary = async (rowData) => {
+  const handleEditSalary = (rowData) => {
     setUpdateSalary(rowData);
     formik.setValues({
       salary: rowData?.salary,
@@ -75,7 +62,6 @@ function SalaryIncrease(props) {
       note: rowData?.note,
     });
   };
-  // api
 
   const formik = useFormik({
     initialValues: {
@@ -96,10 +82,9 @@ function SalaryIncrease(props) {
       reason: Yup.string().required("Không được bỏ trống"),
       note: Yup.string().required("Không được bỏ trống"),
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: (values, { resetForm }) => {
       setSalaryDialog(values);
 
-      // console.log(" them luong ", updateSalary);
       if (!updateSalary?.employeeId) {
         dispatch(addSalaryIncreaseAction(ID, values));
       } else {
@@ -108,7 +93,7 @@ function SalaryIncrease(props) {
 
         setUpdateSalary({});
       }
-      handleReloadPro(Math.random().toString(36).slice(-5));
+      handleReloadPro(randomValue());
       setShouldOpenSalaryIncreaseDialog(true);
       resetForm();
     },
@@ -121,66 +106,17 @@ function SalaryIncrease(props) {
       render: (rowData) => {
         return (
           <>
-            {/* <Tooltip title="Thông tin">
-              <IconButton
-                disabled={
-                  rowData.status !== "Lưu mới" &&
-                  (rowData.additionInfo || rowData.refuseInfo)
-                    ? false
-                    : true
-                }
-                onClick={() => {
-                  if (rowData.additionInfo) {
-                    setRowDataInfo({
-                      ...rowData.additionInfo,
-                      status: "Yêu cầu bổ sung",
-                    });
-                  }
-                  if (rowData.refuseInfo) {
-                    setRowDataInfo({
-                      ...rowData.refuseInfo,
-                      status: "Từ chối",
-                    });
-                    // console.log("hai");
-                    // console.log({ ...rowData.refuseInfo, status: "Từ chối" });
-                  }
-                  // console.log("ROW DATA:", rowData);
-                  setShouldOpenRequestDialog(true);
-                }}
-              >
-                <Icon
-                  color={
-                    rowData.status !== "Lưu mới" &&
-                    (rowData.additionInfo || rowData.refuseInfo)
-                      ? "primary"
-                      : "disabled"
-                  }
-                >
-                  report
-                </Icon>
-              </IconButton>
-            </Tooltip> */}
-            <Tooltip title="Sửa">
-              <IconButton
-                color="primary"
+              <EditIcon
                 onClick={() => {
                   handleEditSalary(rowData);
                 }}
-              >
-                <Icon>edit</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Xóa">
-              <IconButton
-                color="error"
+              />
+              <DeleteIcon
                 onClick={() => {
                   setshouldOpenDeleteDialog(true);
                   setDeleteSalary(rowData);
                 }}
-              >
-                <Icon>delete</Icon>
-              </IconButton>
-            </Tooltip>
+              />
           </>
         );
       },

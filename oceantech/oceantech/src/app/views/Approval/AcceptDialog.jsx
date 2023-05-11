@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -19,7 +18,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
-import { pendingStatus, approvedStatus, pendingEndStatus , approvedEndStatus  } from "app/constant";
+import { pendingStatus, approvedStatus, pendingEndStatus , approvedEndStatus, randomValue  } from "app/constant";
 
 
 function AcceptDialog(props) {
@@ -42,8 +41,7 @@ function AcceptDialog(props) {
       }
       
       dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Phê duyệt"))
-      handleChangeReload(Math.random().toString(36).slice(-5))
-      // toast.success("Phê duyệt thành công");
+      handleChangeReload(randomValue())
       handleCloseAll();
     },
   });

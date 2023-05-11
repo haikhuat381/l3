@@ -22,7 +22,6 @@ import { BorderColor, Close } from "@mui/icons-material";
 import { updateEmployee } from "app/redux/actions/actions";
 
 function SalaryIncreaseDialog(props) {
-  //console.log('Tăng lương: ', employeeData);
   const [shouldOpenSalaryIncreaseDialog, setShouldOpenSalaryIncreaseDialog] =
     useState(false);
   const { handleClose, handleCloseAll, display, dataIncrease } = props;

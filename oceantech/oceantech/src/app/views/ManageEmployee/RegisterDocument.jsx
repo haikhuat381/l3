@@ -4,21 +4,17 @@ import {
   TextField,
   Grid,
   Button,
-  Icon,
-  Tooltip,
-  IconButton,
 } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
-
 import { useSelector, useDispatch } from "react-redux";
-// import { updateEmployee } from "app/redux/actions/actions";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import RegisterDocumentDialog from "./RegisterDocumentDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
+import { DeleteIcon, EditIcon } from "app/components/Button";
 
 function RegisterDocument(props) {
   const { handleClose } = props;
@@ -61,7 +57,6 @@ function RegisterDocument(props) {
       setShouldOpenDialog(true);
 
       if (!values.id) {
-        // console.log("them");
         values.id = uuidv4();
         setEmployee({
           ...employeeData,
@@ -77,19 +72,10 @@ function RegisterDocument(props) {
             { ...values, status: "Lưu mới" },
           ],
         };
-        // console.log("hai");
-        // console.log(dataUpdate);
-        // dispatch(updateEmployee(dataUpdate));
-        // toast.success("Thêm thành công");
       } else {
-        // console.log("sua");
-        // const newListFilter = listPromote.filter((Promote) => Promote.id != values.id);
-        // setEmployee([...newListFilter, values]);
-
         employeeData.listRegister = employeeData.listRegister.filter(
           (register) => register.id !== values.id
         );
-        // console.log(employeeData);
         employeeData.listRegister.push({ ...values, status: "Lưu mới" });
         // dispatch(updateEmployee(employeeData));
         toast.success("Sửa thành công");
@@ -107,16 +93,12 @@ function RegisterDocument(props) {
     employeeData.listRegister = employeeData.listRegister.filter(
       (register) => register.id !== registerData.id
     );
-    // console.log(employeeData);
     setEmployee(employeeData);
-    // dispatch(updateEmployee(employeeData));
+
     setshouldOpenConfirmationDeleteDialog(false);
     toast.success("Xóa thành công");
   };
 
-  const handleSave = () => {
-    toast.success("Lưu thành công");
-  };
   const columns = [
     {
       title: "Hành động",
@@ -124,71 +106,17 @@ function RegisterDocument(props) {
       render: (rowData) => {
         return (
           <>
-            {/* <Tooltip title="Thông tin">
-              <IconButton
-                disabled={
-                  (rowData.additionalRequest || rowData.refuseInfo) &&
-                  rowData.status !== "Lưu mới"
-                    ? false
-                    : true
-                }
-                onClick={() => {
-                  // dispatch(getEmployeeData(rowData));
-                  // setIdRowDataInfo(rowData.id)
-                  if (rowData.additionalRequest) {
-                    // setRowDataInfo(rowData.additionalRequest?.content)
-                    setRowDataInfo({
-                      ...rowData.additionalRequest,
-                      status: "Yêu cầu bổ sung",
-                    });
-                  }
-                  if (rowData.refuseInfo) {
-                    // setRowDataInfo(rowData.refuseInfo?.content)
-                    setRowDataInfo({
-                      ...rowData.refuseInfo,
-                      status: "Từ chối",
-                    });
-                  }
-
-                  setShouldOpenRequestDialog(true);
-                }}
-              >
-                <Icon
-                  color={
-                    (rowData.additionalRequest || rowData.refuseInfo) &&
-                    rowData.status !== "Lưu mới"
-                      ? "primary"
-                      : "disabled"
-                  }
-                >
-                  report
-                </Icon>
-              </IconButton>
-            </Tooltip> */}
-            <Tooltip title="Sửa">
-              <IconButton
-                // disabled={rowData.status === "Đã duyệt" ? true : false}
-                color="primary"
+              <EditIcon
                 onClick={() => {
                   handleEditPropose(rowData);
                 }}
-              >
-                <Icon>edit</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Xóa">
-              <IconButton
-                // disabled={rowData.status === "Đã duyệt" ? true : false}
-                color="error"
+              />
+              <DeleteIcon
                 onClick={() => {
-                  // handleRemovePropose(rowData);
                   setshouldOpenConfirmationDeleteDialog(true);
                   setRegisterData(rowData);
                 }}
-              >
-                <Icon>delete</Icon>
-              </IconButton>
-            </Tooltip>
+              />
           </>
         );
       },

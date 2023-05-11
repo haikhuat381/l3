@@ -34,7 +34,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { statusSuccess } from "app/constant";
 
-
 export function* getTotalSaga(data) {
   try {
     const res = yield call(getTotal, data?.payload?.status);
@@ -78,11 +77,10 @@ export function* resetEmployeeDataSaga(action) {
 
 export function* addNewEmployeeSaga(action) {
   const res = yield call(addNewEmployee, action.payload);
-  console.log("resres", res);
   if (res.status === statusSuccess) {
     toast.success("Lưu mới thành công");
   } else {
-    console.log("lỗi", res);
+    toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
   }
   yield put({
     type: ActionTypes.ADD_NEW_EMPLOYEE_SUCCESS,
@@ -99,7 +97,7 @@ export function* updateEmployeeSaga(action) {
   if (res.status === statusSuccess) {
     toast.success("Cập nhật thành công");
   } else {
-    console.log("lỗi", res);
+    toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
   }
 }
 
@@ -108,7 +106,7 @@ export function* deleteEmployeeSaga(action) {
   if (res.status === statusSuccess) {
     toast.success("Xóa nhân viên thành công");
   } else {
-    console.log("lỗi", res);
+    toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
   }
 }
 
@@ -129,7 +127,7 @@ export function* updateFormSaga(action) {
   if (resForm.status === statusSuccess) {
     toast.success("Cập nhật hồ sơ thành công");
   } else {
-    console.log("lỗi", res);
+    toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
   }
   const res = yield call(getFormData, action.payload.id);
   yield put({
@@ -150,7 +148,7 @@ export function* addRegistSaga(action) {
   if (res.status === statusSuccess) {
     toast.success("Gửi lãnh đạo thành công");
   } else {
-    console.log("lỗi", res);
+    toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
   }
 }
 
@@ -163,7 +161,7 @@ export function* leaderActionSaga(action) {
   if (res.status === statusSuccess) {
     toast.success(`${action.payload.action} thành công`);
   } else {
-    console.log("lỗi", res);
+    toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
   }
 }
 
@@ -172,8 +170,7 @@ export function* leaderActionSaga(action) {
 export function* deletePromotesaga(action) {
   const res = yield call(deletePromote, action.payload);
   if (res?.status === statusSuccess) {
-    console.log("đã xóa thành cong", res?.message);
-    toast.success("xóa thành công ");
+    toast.success("Đã xóa thành công!");
   }
 }
 
@@ -196,14 +193,15 @@ export function* addPromotesaga(action) {
       action?.payload?.data
     );
     if (res?.status === statusSuccess) {
-      toast.success("them moi ");
+      toast.success("Thêm mới thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
     }
   } catch (error) {
     console.log(error);
   }
 }
 export function* UpdatePromotesaga(action) {
-  console.log("updatesaga", action?.payload?.id, action?.payload?.data);
   try {
     const res = yield call(
       updatePromote,
@@ -211,7 +209,9 @@ export function* UpdatePromotesaga(action) {
       action.payload.data
     );
     if (res?.status === statusSuccess) {
-      toast.success("Sua thanh cong ");
+      toast.success("Chỉnh sửa thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
     }
   } catch (error) {
     console.log(error);
@@ -221,7 +221,6 @@ export function* UpdatePromotesaga(action) {
 export function* getSalaryIncreaseHistorysaga(action) {
   try {
     const res = yield call(getSalaryIncreaseHistory, action?.payload);
-    console.log("getSalaryIncreaseHistory", res?.data?.data);
     yield put({
       type: ActionTypes.GET_SALARY_INCREASE_HISTORY_SUCCESS,
       payload: res?.data?.data,
@@ -232,7 +231,6 @@ export function* getSalaryIncreaseHistorysaga(action) {
 }
 
 export function* addSalarysaga(action) {
-  console.log("them luong tu saga", action);
   try {
     const res = yield call(
       addSalaryIncrease,
@@ -240,7 +238,9 @@ export function* addSalarysaga(action) {
       action?.payload?.data
     );
     if (res?.status === statusSuccess) {
-      toast.success(" them thanh cong ");
+      toast.success("Thêm mới thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
     }
   } catch (error) {
     console.log(err);
@@ -248,11 +248,11 @@ export function* addSalarysaga(action) {
 }
 
 export function* deleteSalarysaga(action) {
-  console.log("đã xoa tang luong ", action);
   const res = yield call(deleteSalaryIncrease, action.payload);
   if (res?.status === statusSuccess) {
-    console.log("đã xóa thành cong", res?.message);
-    toast.success("xóa thành công ");
+    toast.success("Đã xóa thành công!");
+  } else {
+    toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
   }
 }
 
@@ -264,8 +264,9 @@ export function* updateSalarysaga(action) {
       action?.payload?.data
     );
     if (res?.status === statusSuccess) {
-      console.log("sua thanh cong ");
-      toast.success("Sua thanh cong ");
+      toast.success("Chỉnh sửa thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
     }
   } catch (error) {
     console.log(error);
@@ -275,7 +276,6 @@ export function* updateSalarysaga(action) {
 export function* getProposalConsultationsaga(action) {
   try {
     const res = yield call(getProposalConsultation, action?.payload);
-    console.log("getProposalConsultationsaga", res?.data?.data);
     yield put({
       type: ActionTypes.GET_PROPOSAL_CONSULTATION_SUCCESS,
       payload: res?.data?.data,
@@ -286,7 +286,6 @@ export function* getProposalConsultationsaga(action) {
 }
 
 export function* addProposalConsultsaga(action) {
-  console.log("action", action);
   try {
     const res = yield call(
       addProposalConsultation,
@@ -294,9 +293,10 @@ export function* addProposalConsultsaga(action) {
       action?.payload?.data
     );
     if (res?.status == 200) {
-      toast.success("them thanh cong ");
+      toast.success("Thêm mới thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
     }
-    console.log("them thanh cong", res);
   } catch (error) {
     console.log(err);
   }
@@ -306,7 +306,9 @@ export function* deleteProposalConsultsaga(action) {
   try {
     const res = yield call(deleteProposalConsultation, action?.payload);
     if (res?.status == 200) {
-      toast.success("xoa thanh cong ");
+      toast.success("Đã xóa thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
     }
   } catch (error) {
     console.log(err);
@@ -320,7 +322,9 @@ export function* updateProposalConsultsaga(action) {
       action?.payload?.data
     );
     if (res?.status === statusSuccess) {
-      toast.success("sua thanh cong ");
+      toast.success("Chỉnh sửa thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
     }
   } catch (error) {
     console.log(err);
@@ -336,7 +340,9 @@ export function* ReleaseManagesaga(action) {
       action?.payload?.data
     );
     if (res?.status === statusSuccess) {
-      toast.success("Gui  lanh dao");
+      toast.success("Gửi lãnh đạo thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi, xin hãy thử lại!");
     }
   } catch (error) {
     console.log(err);

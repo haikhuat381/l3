@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
-import { formatDateSend, formatDateView } from "app/constant/formatDate";
+import { formatDateSend, formatDateView } from "app/constant";
 
 
 function EmployeeDiploma(props) {
@@ -91,7 +91,7 @@ function EmployeeDiploma(props) {
       handleClose();
     },
   });
-  console.log("listDiplomaData", listDiplomaData)
+  
   const columns = [
     {
       title: "Hành động",

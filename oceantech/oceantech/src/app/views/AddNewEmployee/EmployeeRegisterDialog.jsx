@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { updateFormAction } from "app/redux/actions/actions";
 import ConfirmPrintDialog from "./PrintDIalog";
-import { pendingStatus } from "app/constant";
+import { pendingStatus, randomValue } from "app/constant";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -112,13 +112,7 @@ export default function EmployeeRegisterDialog({
 
   return (
     <>
-      <Dialog open={true} maxWidth={"lg"} fullWidth 
-        sx={{
-          '& .MuiDialog-paper': {
-            minHeight: '680px',
-          },
-        }}
-      >
+      <Dialog open={true} maxWidth={"lg"} fullWidth className="form-dialog">
         <DialogTitle className="dialog-title"
         >
           Thông tin hồ sơ
@@ -181,7 +175,7 @@ export default function EmployeeRegisterDialog({
                 resume: formDataResumeUpdate,
                 cv: {...formDataCVUpdate, workExperiences: formDataCVUpdate?.workExperiences?.filter(data => data.startDate !== null && data.endDate !== null && data.startDate !== "Invalid date" && data.endDate !== "Invalid date") }
               }))
-              handleChangeReload(Math.random().toString(36).slice(-5))
+              handleChangeReload(randomValue())
               setSaved(false);
             }}
           >
@@ -193,7 +187,7 @@ export default function EmployeeRegisterDialog({
             disabled={saved}
             onClick={() => {
               setshouldOpenSendToLeadershipDialog(true);
-              handleChangeReload(Math.random().toString(36).slice(-5))
+              handleChangeReload(randomValue())
             }}
           >
             Gửi lãnh đạo

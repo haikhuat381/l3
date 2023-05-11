@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -17,7 +16,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
-import { pendingStatus, rejectedStatus, rejectedEndStatus } from "app/constant";
+import { pendingStatus, rejectedStatus, rejectedEndStatus, randomValue } from "app/constant";
 
 
 function RefuseDialog(props) {
@@ -44,10 +43,9 @@ function RefuseDialog(props) {
 
       employeeStatus === pendingStatus ? dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, rejectedStatusData, "Từ chối"))
        : dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, rejectedEndStatusData, "Từ chối"))
-      handleChangeReload(Math.random().toString(36).slice(-5))
+      handleChangeReload(randomValue())
 
       handleCloseAll();
-      // toast.success("Từ chối thành công");
     },
   });
   return (

@@ -22,7 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BorderColor, Close } from "@mui/icons-material";
 import { updateEmployee } from "app/redux/actions/actions";
 import moment from "moment/moment";
-import { formatDateView } from "app/constant/formatDate";
+import { formatDateView } from "app/constant";
 function SalarationLetter(props) {
   const { handleClose, dataIncreaseDialog, handleValues, status } = props;
   const employeeData = useSelector((state) => state.Employee.employeeData);
@@ -175,12 +175,12 @@ function SalarationLetter(props) {
             sx={{ pl: 10, pr: 10, pb: 2 }}
             justifyContent="flex-start"
           >
-            <Grid item sm={1.8} xs={1.8} sx={{ mt: 1 }}>
+            <Grid item sm={1.8} xs={1.8}>
               <Typography>Điều 1: Kể từ ngày:</Typography>
             </Grid>
             <Grid item sm={2} xs={2}>
               <TextField
-                className="luan3"
+                className="edit-text"
                 InputProps={{
                   readOnly: status,
                   style: { padding: 0 },
@@ -196,12 +196,12 @@ function SalarationLetter(props) {
                 }}
               />
             </Grid>
-            <Grid item sm={3.4} xs={3.4} sx={{ pl: 0, mt: 1 }}>
+            <Grid item sm={3.4} xs={3.4} sx={{ pl: 0 }}>
               <Typography>, điều chỉnh mức lương của Ông/Bà:</Typography>
             </Grid>
             <Grid item sm={2} xs={2}>
               <TextField
-                className="luan3"
+                className="edit-text"
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
@@ -214,12 +214,12 @@ function SalarationLetter(props) {
                 value={employeeData?.employeeInfo?.fullName}
               />
             </Grid>
-            <Grid item sm={1.2} xs={1.2} sx={{ mt: 1, ml: 0 }}>
+            <Grid item sm={1.2} xs={1.2} sx={{ ml: 0 }}>
               <Typography>, sẽ tăng lên:</Typography>
             </Grid>
             <Grid item sm={1.5} xs={1.5}>
               <TextField
-                className="luan3  "
+                className="edit-text"
                 InputProps={{
                   readOnly: status,
                   style: { padding: 0 },

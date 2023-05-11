@@ -1,24 +1,11 @@
 import React from "react";
 import {
-  Dialog,
-  DialogTitle,
-  Box,
-  Button,
-  Card,
   styled,
-  DialogActions,
-  DialogContent,
   Grid,
-  TextField,
-  MenuItem,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  IconButton,
   Icon,
-  CardContent,
-  CardHeader,
-  Divider,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -27,21 +14,10 @@ import SalaryIncrease from "./SalaryIncrease";
 import ProposeAdvisory from "./ProposeAdvisory";
 import Promote from "./Promote";
 import { useRef, useEffect } from "react";
-import { color } from "echarts";
-
-import {
-  addNewEmployee,
-  updateEmployee,
-  getEmployeeData,
-  getPromoteHistoryAction,
-} from "app/redux/actions/actions";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { getPromoteHistory } from "./ManageEmployeeServices";
-
 function UpdateOptions({ EmployeeId }) {
-  // console.log("ID a ", EmployeeId);
   const dispatch = useDispatch();
 
   const accordion1Ref = useRef(null);
@@ -73,7 +49,6 @@ function UpdateOptions({ EmployeeId }) {
   };
 
   const handleClose = (panel) => {
-    // console.log("run", panel);
     const newExpanded = { ...expanded };
     newExpanded[panel] = false;
     setExpanded(newExpanded);

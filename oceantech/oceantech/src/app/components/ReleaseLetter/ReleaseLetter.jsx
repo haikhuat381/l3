@@ -6,7 +6,6 @@ import { otherFeature } from "app/constant";
 function ReleaseLetter(props) {
   const { employeeData, handleValues, status, dataReleaseDialog } = props;
   var today = new Date();
-  console.log("chao bn ", employeeData);
   const [dataRelease, setDataRelease] = useState({
     status: "8",
     terminateRequestDetail:
@@ -14,8 +13,6 @@ function ReleaseLetter(props) {
       employeeData?.terminateRequestDetail ||
       "",
   });
-
-  console.log(" gui quan li  ", dataRelease);
 
   const handlechangeValuse = (event, method) => {
     const data = { ...dataRelease };
@@ -101,7 +98,7 @@ function ReleaseLetter(props) {
             </Grid>
             <Grid sm={11} xs={11}>
               <TextField
-                className="luan"
+                className="edit-text"
                 value={
                   employeeData?.employeeInfo?.fullName || employeeData?.fullName
                 }
@@ -130,7 +127,7 @@ function ReleaseLetter(props) {
             </Grid>
             <Grid item sm={9.3} xs={9.3}>
               <TextField
-                className="luan"
+                className="edit-text"
                 value={
                   otherFeature[employeeData?.employeeInfo?.teamId]?.name ||
                   otherFeature[employeeData?.teamId]?.name
@@ -160,7 +157,7 @@ function ReleaseLetter(props) {
             </Grid>
             <Grid item sm={8.6} xs={8.6}>
               <TextField
-                className="luan"
+                className="edit-text"
                 InputProps={{
                   readOnly: true,
                   style: { padding: 0 },
@@ -192,7 +189,7 @@ function ReleaseLetter(props) {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
-                    className="luan"
+                    className="edit-text"
                     InputProps={{
                       readOnly: status,
                       style: { padding: 0 },

@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -17,7 +16,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
-import { pendingStatus, needMoreInfoStatus , moreInfoEndingStatus  } from "app/constant";
+import { pendingStatus, needMoreInfoStatus , moreInfoEndingStatus, randomValue  } from "app/constant";
 
 
 function AdditionalRequestDialog(props) {
@@ -40,7 +39,7 @@ function AdditionalRequestDialog(props) {
       values.status = employeeStatus === pendingStatus ? needMoreInfoStatus : moreInfoEndingStatus 
 
       dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values, "Yêu cầu bổ sung"))
-      handleChangeReload(Math.random().toString(36).slice(-5))
+      handleChangeReload(randomValue())
       handleCloseAll();
       // handleClose();
     },

@@ -1,10 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
-  Box,
   Button,
   DialogActions,
   DialogContent,
@@ -13,10 +11,10 @@ import {
   Icon, 
   IconButton
 } from "@mui/material";
+
 function SaveProfileInfo(props) {
   const { handleClose, openEditDialog, openViewDialog } = props;
   const employeeData = useSelector((state) => state?.Employee?.employeeData);
-  console.log(employeeData);
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle className="dialog-title">

@@ -36,19 +36,6 @@
   padding: 0 30px;
 }
 
-// .form-resume .css-2ulfj5-MuiTypography-root,
-// .form-resume .css-1y8v3j7-MuiTypography-root,
-// .form-resume .css-tjvwag-MuiTypography-root,
-// .form-resume .css-z49yrg-MuiTypography-root,
-// .form-resume .css-ahj2mt-MuiTypography-root,
-// .form-resume .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input,
-// .form-resume .css-1v7ub50-MuiTypography-root,
-// .form-resume .css-15wwp11-MuiTableHead-root,
-// .form-resume .css-1qgma8u-MuiButtonBase-root-MuiTableSortLabel-root,
-// .form-resume .css-dsuxgy-MuiTableCell-root,
-// .form-resume .css-6aghek-MuiTypography-root {
-//   font-family: 'Times New Roman', Times, serif !important;
-// }
 .form-resume h6,
 .form-resume h5,
 .form-resume p,
@@ -79,10 +66,6 @@
   box-shadow: none !important;
   margin: 10px 0 20px !important;
 }
-
-// .table-resume .css-1ex1afd-MuiTableCell-root {
-//   border: 1px solid black;
-// }
 
 .table-resume td {
   border: 1px solid black;
@@ -121,14 +104,6 @@
   border-bottom: 1px dotted black;
 }
 
-// .rs-noReadonly .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input, 
-// .rs-readonly .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input{
-//   padding: 1px;
-// }
-// .rs-noReadonly .css-1d3z3hw-MuiOutlinedInput-notchedOutline,
-// .rs-readonly .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-//   border: none !important;
-// }
 .rs-noReadonly input, 
 .rs-readonly input{
   padding: 1px;
@@ -138,30 +113,3 @@
 .rs-readonly fieldset {
   border: none !important;
 }
-
-// .cv-noReadonly,
-// .cv-readonly {
-//     color: #d32f2f;
-//     padding: 0 !important;
-// }
-
-// .cv-noReadonly::after {
-//     position: absolute;
-//     content: "";
-//     width: 100%;
-//     bottom: 16px;
-//     left: 14px;
-//     height: 1px;
-//     border-bottom: 2px dotted black;
-// }
-
-// .cv-noReadonly .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input,
-// .cv-readonly .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
-//     padding: 0 ;
-// }
-
-// .cv-noReadonly .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,
-// .cv-readonly .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-//   padding: 12px 0 ;
-//   margin-left: 14px;
-// }

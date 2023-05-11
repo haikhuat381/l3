@@ -4,7 +4,7 @@ import { Grid, TextField, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
 import moment from "moment";
-import { formatDateView } from "app/constant/formatDate";
+import { formatDateView } from "app/constant";
 function PromotionLetter(props) {
   const dispatch = useDispatch();
   const { promoteDataDialog, status, handleValues } = props;
@@ -195,7 +195,7 @@ function PromotionLetter(props) {
             </Grid>
             <Grid item sm={1.5} xs={1.5}>
               <TextField
-                className="luan "
+                className="edit-text "
                 InputProps={{
                   readOnly: status,
                   style: { padding: 0 },
@@ -216,7 +216,7 @@ function PromotionLetter(props) {
             </Grid>
             <Grid item sm={2} xs={2}>
               <TextField
-                className="luan "
+                className="edit-text "
                 value={employeeData?.employeeInfo?.fullName}
                 InputProps={{
                   readOnly: true,
@@ -235,7 +235,7 @@ function PromotionLetter(props) {
 
             <Grid item sm={1.9} xs={1.9}>
               <TextField
-                className="luan "
+                className="edit-text "
                 value={promoteData?.newPosition}
                 onChange={(event) => {
                   handlechangeValuse(event, "newPosition");
@@ -259,7 +259,7 @@ function PromotionLetter(props) {
             </Grid>
             <Grid item sm={10.1} xs={10.1}>
               <TextField
-                className="luan"
+                className="edit-text"
                 value={promoteData?.reason}
                 onChange={(event) => {
                   handlechangeValuse(event, "reason");
@@ -296,7 +296,7 @@ function PromotionLetter(props) {
             </Grid>
             <Grid item sm={2} xs={2}>
               <TextField
-                className="luan"
+                className="edit-text"
                 value={employeeData?.employeeInfo?.fullName}
                 InputProps={{
                   readOnly: true,

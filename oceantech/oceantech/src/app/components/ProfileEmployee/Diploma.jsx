@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import MaterialTable from "@material-table/core";
 import moment from "moment";
-import { formatDateView } from "app/constant/formatDate";
+import { formatDateView } from "app/constant";
 
 const Diploma = React.forwardRef((props, ref) => {
   const { listDiploma } = props

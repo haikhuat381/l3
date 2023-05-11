@@ -1,12 +1,10 @@
 import * as React from "react";
 import {
-  Tooltip,
   Dialog,
   DialogContent,
   DialogActions,
   Button,
   DialogTitle,
-  Box,
   IconButton,
   Icon,
 } from "@mui/material";
@@ -20,13 +18,7 @@ export default function ApprovedDialog({ handleClose }) {
 
   return (
     <>
-      <Dialog open={true} maxWidth={"lg"} fullWidth
-        sx={{
-          '& .MuiDialog-paper': {
-            minHeight: '680px',
-          },
-        }}
-      >
+      <Dialog open={true} maxWidth={"lg"} fullWidth className="form-dialog">
         <DialogTitle className="dialog-title" >
           Thông tin hồ sơ
           <IconButton onClick={handleClose}>

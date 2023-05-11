@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import Breadcrumb from "app/components/Breadcrumb";
 import {
@@ -9,24 +8,18 @@ import {
   getTotalAction,
 } from "app/redux/actions/actions";
 import MaterialTable from "@material-table/core";
-import moment from "moment";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
 import {
-  Button,
   Box,
-  Icon,
-  IconButton,
   styled,
-  Table,
-  Tooltip,
 } from "@mui/material";
 import ManagerEmployeeDialog from "./ManagerEmployeeDialog";
 import ReleaseDialog from "./ReleaseDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { objStatus, moreInfoEndingStatus } from "app/constant";
-import { formatDateView } from "app/constant/formatDate";
+import { objStatus, moreInfoEndingStatus, statusOfManageEmployee, formatDateView } from "app/constant";
+import { DetailIcon, InfoIcon } from "app/components/Button";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px 30px 0",
@@ -49,12 +42,11 @@ function ManagerEmployee() {
   const listEmployee = useSelector((state) => state.Employee.listEmployeeData);
   const handleChangeReload = (value) => {
     reloadRef.current = value;
-    console.log(" cjao bn ", reloadRef.current);
   };
 
   useEffect(() => {
-    dispatch(getTotalAction("5,8,9"));
-    dispatch(getListEmployeeAction("5,8,9", page, pageSize));
+    dispatch(getTotalAction(statusOfManageEmployee));
+    dispatch(getListEmployeeAction(statusOfManageEmployee, page, pageSize));
   }, [page, pageSize, reloadRef.current]);
 
   const onHandleChange = (page, pageSize) => {
@@ -79,40 +71,26 @@ function ManagerEmployee() {
         return (
           <>
             {rowData.status === moreInfoEndingStatus && (
-              <Tooltip title="Thông tin">
-                <span>
-                  <IconButton
+                  <InfoIcon
                     onClick={() => {
                       dispatch(getEmployeeDataAction(rowData?.employeeId));
                       setDataReport(rowData);
                       setShouldOpenRequestDialog(true);
                     }}
-                  >
-                    <Icon
-                      style={{ color: "#EED370" }}
-                    >
-                      report
-                    </Icon>
-                  </IconButton>
-                </span>
-              </Tooltip>
+                  />
             )}
 
-            <Tooltip title="Cập nhật diễn biến">
-              <IconButton
+              <DetailIcon
+                title="Cập nhật diễn biến"
                 onClick={() => {
                   setShouldDialogManage(true);
                   dispatch(getEmployeeDataAction(rowData?.employeeId));
                 }}
-              >
-                <Icon color="success">visibilityIcon</Icon>
-              </IconButton>
-            </Tooltip>
+              />
           </>
         );
       },
     },
-    // { title: "Mã nhân viên", width: 160, field: "code" },
     { title: "Họ và tên", field: "fullName", width: 220 },
     {
       title: "Ngày sinh",
