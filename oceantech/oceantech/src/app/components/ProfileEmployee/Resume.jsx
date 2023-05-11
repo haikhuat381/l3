@@ -4,8 +4,7 @@ import MaterialTable from "@material-table/core";
 import CustomAvatar from "../Avatar/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { Gender } from "app/constant";
-import { formatDateSend, formatDateView } from "app/constant/formatDate";
+import { formatDateSend, formatDateView, Gender } from "app/constant";
 
 const Resume = React.forwardRef((props, ref) => {
   const {

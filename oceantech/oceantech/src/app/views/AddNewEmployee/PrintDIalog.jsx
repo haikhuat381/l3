@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,

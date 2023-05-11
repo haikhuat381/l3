@@ -3,9 +3,6 @@ import {
   TextField,
   Grid,
   Button,
-  Icon,
-  Tooltip,
-  IconButton,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -23,7 +20,8 @@ import {
 } from "app/redux/actions/actions";
 import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-import { formatDateSend, formatDateView } from "app/constant/formatDate";
+import { randomValue, formatDateSend, formatDateView  } from "app/constant";
+import { DeleteIcon, EditIcon } from "app/components/Button";
 function SalaryIncrease(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -50,7 +48,7 @@ function SalaryIncrease(props) {
 
   const handleRemoveSalary = () => {
     dispatch(deleteSalaryIncreaseAction(deleteSalary?.salaryId));
-    handleReloadPro(Math.random().toString(36).slice(-5));
+    handleReloadPro(randomValue());
     setshouldOpenDeleteDialog(false);
   };
 
@@ -95,7 +93,7 @@ function SalaryIncrease(props) {
 
         setUpdateSalary({});
       }
-      handleReloadPro(Math.random().toString(36).slice(-5));
+      handleReloadPro(randomValue());
       setShouldOpenSalaryIncreaseDialog(true);
       resetForm();
     },
@@ -108,27 +106,17 @@ function SalaryIncrease(props) {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Sửa">
-              <IconButton
-                color="primary"
+              <EditIcon
                 onClick={() => {
                   handleEditSalary(rowData);
                 }}
-              >
-                <Icon>edit</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Xóa">
-              <IconButton
-                color="error"
+              />
+              <DeleteIcon
                 onClick={() => {
                   setshouldOpenDeleteDialog(true);
                   setDeleteSalary(rowData);
                 }}
-              >
-                <Icon>delete</Icon>
-              </IconButton>
-            </Tooltip>
+              />
           </>
         );
       },

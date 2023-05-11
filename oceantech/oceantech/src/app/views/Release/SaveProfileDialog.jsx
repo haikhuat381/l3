@@ -1,12 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
-  Box,
   Button,
-  styled,
   DialogActions,
   DialogContent,
   Grid,
@@ -17,6 +14,7 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { leaderAction } from "app/redux/actions/actions";
+import { randomValue } from "app/constant";
 
 
 function SaveProfileDialog(props) {
@@ -34,14 +32,10 @@ function SaveProfileDialog(props) {
     }),
     onSubmit: (values) => {
       values.status = 13
-      console.log("nop luu ho soooooooooo")
-      console.log(employeeData?.employeeInfo?.employeeId)
-      console.log(values)
+      // console.log(employeeData?.employeeInfo?.employeeId)
       // dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, values))
       dispatch(leaderAction(employeeData?.employeeInfo?.employeeId, {status: values.status, storedProfileCode:values.storedProfileCode}, "Lưu hồ sơ"))
-      // handleChangeReload(employeeData?.employeeInfo?.employeeId)
-      handleChangeReload(Math.random().toString(36).slice(-5))
-      // toast.success("Lưu hồ sơ thành côngg");
+      handleChangeReload(randomValue())
       handleCloseAll();
     },
   });

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
-  Box,
   Button,
   DialogActions,
   DialogContent,
@@ -21,7 +19,6 @@ import { leader } from "app/constant";
 function SendToLeadershipDialog(props) {
   const { handleClose, employeeId, handleCloseAll, status } = props;
   const dispatch = useDispatch();
-  // const employee = useSelector((state) => state.Employee.employeeData);
   const [position, setPosition] = useState()
 
 
@@ -48,9 +45,7 @@ function SendToLeadershipDialog(props) {
       values.registerPosition = position
       values.status = status
       dispatch(addRegistAction(employeeId, values))
-
       handleCloseAll();
-      toast.success("Gửi lãnh đạo thành công");
     },
   });
   return (

@@ -11,8 +11,10 @@ import {
 import { updateProposalConsult } from "app/redux/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
 import PropostionLetter from "app/components/PropostionLetter/PropostionLetter";
-import { processingStatus } from "app/constant";
+import { processingStatus, randomValue } from "app/constant";
 import SendToLeadershipDialog from "../AddNewEmployee/SendToLeadershipDialog";
+
+
 function ProposeAdvisoryDialog(props) {
   const dispatch = useDispatch();
   const { handleClose, proposeDataDialog, handleReloadPro, idProposal, ID } =
@@ -34,7 +36,7 @@ function ProposeAdvisoryDialog(props) {
         proposeData
       )
     );
-    handleReloadPro(Math.random().toString(36).slice(-5));
+    handleReloadPro(randomValue());
   };
   const handleCloseAll = () => {
     handleClose();

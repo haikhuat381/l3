@@ -1,12 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
 import {
   TextField,
   Grid,
   Button,
-  Icon,
-  Tooltip,
-  IconButton,
 } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import { useState } from "react";
@@ -26,7 +22,8 @@ import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
 
 import moment from "moment";
 import { async } from "regenerator-runtime";
-import { formatDateSend, formatDateView } from "app/constant/formatDate";
+import { randomValue, formatDateSend, formatDateView } from "app/constant";
+import { DeleteIcon, EditIcon } from "app/components/Button";
 function Promote(props) {
   const { handleClose, ID } = props;
   const dispatch = useDispatch();
@@ -52,7 +49,7 @@ function Promote(props) {
   const handleDeletePromote = () => {
     dispatch(deletePromoteHistoryAction(employeeDelete?.promotionId));
 
-    handleReloadPro(Math.random().toString(36).slice(-5));
+    handleReloadPro(randomValue);
     setshouldOpenDeleteDialog(false);
   };
   const handleEditPromote = (rowData) => {
@@ -88,7 +85,7 @@ function Promote(props) {
         );
         setUpdatePromote({});
       }
-      handleReloadPro(Math.random().toString(36).slice(-5));
+      handleReloadPro(randomValue);
       setShouldOpenDialog(true);
       setPromoteDataDialog(values);
       resetForm();
@@ -102,28 +99,18 @@ function Promote(props) {
       render: (rowData) => {
         return (
           <>
-            <Tooltip title="Sửa">
-              <IconButton
-                color="primary"
+              <EditIcon
                 onClick={() => {
                   handleEditPromote(rowData);
                 }}
-              >
-                <Icon>edit</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Xóa">
-              <IconButton
-                color="error"
+              />
+              <DeleteIcon
                 onClick={() => {
                   setshouldOpenDeleteDialog(true);
                   setEmployeeDelete(rowData);
                   formik.resetForm();
                 }}
-              >
-                <Icon>delete</Icon>
-              </IconButton>
-            </Tooltip>
+              />
           </>
         );
       },

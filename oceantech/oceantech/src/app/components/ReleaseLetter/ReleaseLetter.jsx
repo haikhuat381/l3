@@ -6,7 +6,6 @@ import { otherFeature } from "app/constant";
 function ReleaseLetter(props) {
   const { employeeData, handleValues, status, dataReleaseDialog } = props;
   var today = new Date();
-  console.log("chao bn ", employeeData);
   const [dataRelease, setDataRelease] = useState({
     status: "8",
     terminateRequestDetail:
@@ -14,8 +13,6 @@ function ReleaseLetter(props) {
       employeeData?.terminateRequestDetail ||
       "",
   });
-
-  console.log(" gui quan li  ", dataRelease);
 
   const handlechangeValuse = (event, method) => {
     const data = { ...dataRelease };

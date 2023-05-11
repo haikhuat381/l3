@@ -2,13 +2,11 @@ import * as React from "react";
 import SaveProfileDialog from "./SaveProfileDIalog";
 import { useState } from "react";
 import {
-  Tooltip,
   Dialog,
   DialogContent,
   DialogActions,
   Button,
   DialogTitle,
-  Box,
   IconButton,
   Icon,
 } from "@mui/material";
@@ -25,13 +23,7 @@ export default function ReleaseEmployeeDialog({ handleClose,handleChangeReload }
   
   return (
     <>
-      <Dialog open={true} maxWidth={"lg"} fullWidth
-        sx={{
-          '& .MuiDialog-paper': {
-            minHeight: '680px',
-          },
-        }}
-      >
+      <Dialog open={true} maxWidth={"lg"} fullWidth className="form-dialog">
         <DialogTitle className="dialog-title"
         >
           Thông tin hồ sơ

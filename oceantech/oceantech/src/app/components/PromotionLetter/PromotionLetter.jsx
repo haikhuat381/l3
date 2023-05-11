@@ -4,7 +4,7 @@ import { Grid, TextField, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
 import moment from "moment";
-import { formatDateView } from "app/constant/formatDate";
+import { formatDateView } from "app/constant";
 function PromotionLetter(props) {
   const dispatch = useDispatch();
   const { promoteDataDialog, status, handleValues } = props;

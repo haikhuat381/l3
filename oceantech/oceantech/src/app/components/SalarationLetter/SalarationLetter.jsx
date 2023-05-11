@@ -22,7 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BorderColor, Close } from "@mui/icons-material";
 import { updateEmployee } from "app/redux/actions/actions";
 import moment from "moment/moment";
-import { formatDateView } from "app/constant/formatDate";
+import { formatDateView } from "app/constant";
 function SalarationLetter(props) {
   const { handleClose, dataIncreaseDialog, handleValues, status } = props;
   const employeeData = useSelector((state) => state.Employee.employeeData);

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 export default function ConfirmDialog({ onConfirmDialogClose, onYesClick, title, content }) {
-  console.log("ra");
+  
   return (
     <>
       <Dialog

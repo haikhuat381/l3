@@ -26,8 +26,7 @@ import CustomAvatar from "app/components/Avatar/Avatar";
 import ReleaseDialog from "./ReleaseDialog";
 import UpdateOptions from "./UpdateOptions";
 import { useSelector, useDispatch } from "react-redux";
-import { otherFeature, Gender } from "app/constant";
-import { formatDateView } from "app/constant/formatDate";
+import { otherFeature, Gender, formatDateView } from "app/constant";
 
 function ManagerEmployeeDialog(props) {
   const employeeData = useSelector(
