@@ -1,7 +1,7 @@
 import React from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { Box, styled } from "@mui/system";
 import { Span } from "../Typography";
-import { Link } from "react-router-dom";
 import { Icon, IconButton, MenuItem, Hidden, Avatar } from "@mui/material";
 import MenuTopBar from "./MenuTopBar";
 const StyledIconButton = styled(IconButton)(() => ({
@@ -49,6 +49,11 @@ const StyledItem = styled(MenuItem)(() => ({
 
 function LayoutTopbar(props) {
   const { handleChangeSideNavTheme } = props;
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/session/signin");
+  };
   return (
     <TopbarRoot>
       <TopbarContainer>
@@ -64,11 +69,12 @@ function LayoutTopbar(props) {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{"Admin"}</strong>
+                    <strong>{"Admin"}</strong>
                   </Span>
                 </Hidden>
+
                 <Avatar
-                  src="/assets/images/illustrations/dreamer.svg"
+                  src="https://png.pngtree.com/png-clipart/20190924/original/pngtree-businessman-user-avatar-free-vector-png-image_4827807.jpg"
                   sx={{ cursor: "pointer" }}
                 />
               </UserMenu>
@@ -93,7 +99,7 @@ function LayoutTopbar(props) {
             </StyledItem>
             <StyledItem>
               <Icon> power_settings_new </Icon>
-              <Span> Logout </Span>
+              <Span onClick={() => handleLogout()}> Logout </Span>
             </StyledItem>
           </MenuTopBar>
         </Box>

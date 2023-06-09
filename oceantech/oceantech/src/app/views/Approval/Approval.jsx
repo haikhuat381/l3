@@ -1,18 +1,9 @@
-import React, { useState } from "react";
 import Breadcrumb from "app/components/Breadcrumb";
 import MaterialTable from "@material-table/core";
-import {
-  Button,
-  Box,
-  Icon,
-  IconButton,
-  styled,
-  Table,
-  Tooltip,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useRef } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { useState, useRef, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   getTotalAction,
@@ -22,53 +13,51 @@ import {
   resetFormDataAction,
   resetEmployeeDataAction,
 } from "app/redux/actions/actions";
-import ApprovalDialog from "./ApprovalDialog";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
-import moment from "moment";
-import { objStatus, statusOfApproval } from "app/constant";
-import { DetailIcon } from "app/components/Button";
+import { objStatus, statusOfApproval, Container, pageDefault, pageSizeDefault, messageOfNoData } from "app/constant";
+import { DetailIcon } from "app/components/Icon";
+import LoadingBay from "app/components/LoadingBay";
+import ProfileFormDialog from "app/components/ProfileFormDialog/ProfileFormDialog";
 
-const Container = styled("div")(({ theme }) => ({
-  margin: "30px 30px 0",
-  [theme.breakpoints.down("sm")]: { margin: "16px" },
-  "& .breadcrumb": {
-    marginBottom: "0px",
-    [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
-  },
-}));
 
 function Approval() {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(1);
-  const [pagesize, setPageSize] = useState(5);
+  const loadingChange = useSelector((state) => state?.Employee?.loading);
 
-  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  const listEmployeeDataReducer = useSelector(
+  const reloadData = useRef();
+  const handleChangeReloadData = (value) => {
+    reloadData.current = value;
+  };
+
+  const [page, setPage] = useState(pageDefault);
+  const [pagesize, setPageSize] = useState(pageSizeDefault);
+
+  const [shouldOpenProfileFormDialog, setShouldOpenProfileFormDialog] = useState(false);
+  const listEmployeeDataApproval = useSelector(
     (state) => state?.Employee?.listEmployeeData
   );
-  
-  const reloadRef = useRef();
-  const handleChangeReload = (value) => {
-    reloadRef.current = value;
+
+
+  const getListEmployeeOfApproval = () => {
+    dispatch(getListEmployeeAction(statusOfApproval, page, pagesize));
+    dispatch(getTotalAction(statusOfApproval));
   };
 
-  const handleGetListEmployee = () => {
-    dispatch(getTotalAction(statusOfApproval));
-    dispatch(getListEmployeeAction(statusOfApproval, page, pagesize));
-  };
   useEffect(() => {
-    handleGetListEmployee(page, pagesize);
-  }, [page, pagesize, reloadRef.current]);
+    getListEmployeeOfApproval();
+  }, [page, pagesize, reloadData.current]);
+
   const onHandleChange = (page, pageSize) => {
     setPage(page);
     setPageSize(pageSize);
   };
 
-  const handleClose = () => {
+  const handleCloseProfileFormDialog = () => {
+    dispatch(resetEmployeeDataAction({}));
     dispatch(resetFormDataAction({}));
-    dispatch(resetEmployeeDataAction({}))
-    setShouldOpenDialog(false);
+    setShouldOpenProfileFormDialog(false);
   };
+
   const columns = [
     {
       title: "Hành động",
@@ -80,10 +69,13 @@ function Approval() {
         return (
           <DetailIcon
             onClick={() => {
-              dispatch(getFormDataAction(rowdata.employeeId));
-              dispatch(getEmployeeDataAction(rowdata.employeeId));
-              setShouldOpenDialog(true);
+              dispatch(getFormDataAction(rowdata?.employeeId));
+              dispatch(getEmployeeDataAction(rowdata?.employeeId));
+              setTimeout(() => {
+                setShouldOpenProfileFormDialog(true);
+              }, 300)
             }}
+            status={rowdata?.status}
           />
         );
       },
@@ -114,50 +106,63 @@ function Approval() {
         pauseOnHover
         theme="colored"
       />
-      <Box className="breadcrumb">
-        <Breadcrumb
-          routeSegments={[
-            { name: "Lãnh đạo", path: "/" },
-            { name: "Chờ duyệt" },
-          ]}
-        />
-      </Box>
+      <div className="box-container">
+        <Box className="breadcrumb">
+          <Breadcrumb
+            routeSegments={[
+              { name: "Lãnh đạo", path: "/" },
+              { name: "Chờ duyệt" },
+            ]}
+          />
+        </Box>
+        <Box width="100%" overflow="auto" className="box-content" >
+          <div className="box-table-first-column">
+            <MaterialTable
+              title={""}
+              data={listEmployeeDataApproval}
+              columns={columns}
+              localization={{
+                toolbar: {
+                  searchTooltip: 'Tìm kiếm',
+                  searchPlaceholder: 'Tìm kiếm',
+                },
+                body: {
+                  emptyDataSourceMessage: messageOfNoData,
+                },
+              }}
+              options={{
+                paging: false,
+                rowStyle: (rowData, index) => {
+                  return {
+                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+                  };
+                },
+                headerStyle: {
+                  pointerEvents: "none",
+                  backgroundColor: "#222943",
+                  color: "#fff",
+                  zIndex: 1,
+                  position: "sticky",
+                  top: 0,
+                },
+                padding: "default",
+                toolbar: true,
+                maxBodyHeight: "823px",
+              }}
+            />
+          </div>
+          <PaginationCustom onHandleChange={onHandleChange} className="box-content-pagination" />
+        </Box>
+      </div>
 
-      <Box width="100%" overflow="auto">
-        <MaterialTable
-          title={""}
-          data={listEmployeeDataReducer}
-          columns={columns}
-          options={{
-            paging: false,
-            rowStyle: (rowData, index) => {
-              return {
-                backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-              };
-            },
-            maxBodyHeight: "470px",
-            minBodyHeight: "470px",
-            headerStyle: {
-              backgroundColor: "#222943",
-              color: "#fff",
-              position: "sticky",
-              top: 0,
-              zIndex: 1,
-            },
-
-            padding: "default",
-
-            toolbar: true,
-          }}
-        />
-        <PaginationCustom onHandleChange={onHandleChange} />
-      </Box>
-      {shouldOpenDialog && (
-        <ApprovalDialog
-          handleClose={handleClose}
-          handleChangeReload={handleChangeReload}
+      {shouldOpenProfileFormDialog && (
+        <ProfileFormDialog
+          handleChangeReload={handleChangeReloadData}
+          handleClose={handleCloseProfileFormDialog}
+          isType={"approval"}
         />
       )}
+      {loadingChange && <LoadingBay />}
     </Container>
   );
 }

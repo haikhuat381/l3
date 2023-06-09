@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Grid, TextField } from "@mui/material";
 import MaterialTable from "@material-table/core";
-import CustomAvatar from "../Avatar/Avatar";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import { formatDateSend, formatDateView, Gender } from "app/constant";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  citizenIdIssuanceDateAfterCurrentDate,
+  formatDateSend,
+  formatDateView,
+  Gender,
+  messageOfNoData,
+  imageDefault
+} from "app/constant";
 
 const Resume = React.forwardRef((props, ref) => {
   const {
@@ -14,10 +21,9 @@ const Resume = React.forwardRef((props, ref) => {
     status,
   } = props;
 
-  const dispatch = useDispatch();
-  var today = new Date();
+  const today = new Date();
   const employeeData = useSelector((state) => state?.Employee?.formData);
-  
+
   const [resumeData, setResumeData] = useState();
   useEffect(() => {
     setResumeData(formDataResumeUpdate);
@@ -31,47 +37,54 @@ const Resume = React.forwardRef((props, ref) => {
 
   const handleChange = (event, method) => {
     const newValues = { ...resumeData };
-    newValues[method] = event.target.value;
+    const today = formatDateSend(new Date())
+    if (method === "citizenIdIssuanceDate" && event.target.value > today) {
+      toast.warning(citizenIdIssuanceDateAfterCurrentDate);
+    } else {
+      newValues[method] = event.target.value;
+    }
     setResumeData(newValues);
   };
 
   const columns = [
-    // {
-    //   title: "STT",
-    //   width: 50,
-    //   render: (rowData) => rowData.tableData.index + 1
-    // },
-    { title: "Họ và tên", field: "name", width: 150 },
+    {
+      title: "STT",
+      headerStyle: {textAlign: "center"},
+      render: (rowData) => rowData.tableData.index + 1
+    },
+    { title: "Họ và tên", width: 200, field: "name" },
     {
       title: "Ngày sinh ",
       field: "dateOfBirth",
-      width: 150,
-      render: (rowData) =>formatDateView(rowData?.dateOfBirth),
+      width: 170,
+      render: (rowData) => formatDateView(rowData?.dateOfBirth),
     },
     {
       title: "Giới tính",
       field: "gender",
-      width: 150,
-      render: (rowData) => Gender[rowData.gender]?.gender,
+      width: 160,
+      render: (rowData) => Gender[rowData?.gender]?.gender,
     },
     {
       title: "Quan hệ",
       field: "relation",
       width: 140,
     },
-    { title: "Địa chỉ", field: "address", width: 200 },
-    { title: "Số CMND/CMT", width: 180, field: "citizenId" },
+    { title: "Số CCCD/CMT", 
+      width: 180, 
+      field: "citizenId" },
+    { title: "Địa chỉ", field: "address", width: 180 },
   ];
 
   return (
     <div ref={ref} className="form-resume">
       <Grid item container xs={12} className="resum-container" spacing={0}>
         <Grid item xs={3}>
-          <CustomAvatar
-            image={employeeData?.resume?.photoUrl}
-            displayButton={"none"}
-            isNoneBorder={true}
-          />
+          <div className="form-resume-avatar">
+            {
+              <img src={employeeData?.resume?.photoUrl ? employeeData.resume.photoUrl : imageDefault} className="form-resume-img"/>
+            }
+          </div>
         </Grid>
         <Grid
           item
@@ -109,16 +122,22 @@ const Resume = React.forwardRef((props, ref) => {
       <Grid container spacing={2}>
         <Grid container item xs={12} spacing={2}>
           <Grid item xs={12} sx={{ mt: 2 }}>
-            <Typography variant="h6" fontWeight={"600"}>
+            <Typography variant="h6" className="title-resume">
               I. BẢN THÂN
             </Typography>
           </Grid>
-          <Grid item container xs={12} justifyContent="space-between">
-            <Grid item container xs={5.8} className="self-items">
-              <Typography item xs={2}>
-                Họ và tên:
-              </Typography>
-              <Grid item fullWidth xs={9.9}>
+          <Grid
+            item
+            container
+            xs={12}
+            spacing={2}
+            justifyContent="space-between"
+          >
+            <Grid item container xs={6} spacing={1} className="self-items">
+              <Grid item xs="auto">
+                <Typography>Họ và tên:</Typography>
+              </Grid>
+              <Grid item fullWidth xs={true}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -130,17 +149,14 @@ const Resume = React.forwardRef((props, ref) => {
                   name="fullName"
                   size="small"
                   value={employeeData?.resume?.fullName}
-                  onChange={(event) => {
-                    // handleChangeEmployee(event, "fullName");
-                  }}
                 ></TextField>
               </Grid>
             </Grid>
-            <Grid item container xs={6} className="self-items">
-              <Typography item xs={2}>
-                Giới tính:
-              </Typography>
-              <Grid item xs={10.1}>
+            <Grid item container xs={6} spacing={1} className="self-items">
+              <Grid item xs="auto">
+                <Typography>Giới tính:</Typography>
+              </Grid>
+              <Grid item xs={true}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -152,18 +168,15 @@ const Resume = React.forwardRef((props, ref) => {
                   size="small"
                   value={Gender[employeeData?.resume?.gender]?.gender}
                   name="gender"
-                  onChange={(event) => {
-                    // handleChangeEmployee(event, "gender");
-                  }}
                 ></TextField>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={12} className="self-items">
-            <Typography item xs={2}>
-              Sinh ngày:
-            </Typography>
-            <Grid item xs={10.95} fullWidth>
+          <Grid item container xs={12} spacing={1} className="self-items">
+            <Grid item xs="auto">
+              <Typography>Sinh ngày:</Typography>
+            </Grid>
+            <Grid item xs={true} fullWidth>
               <TextField
                 className="rs-noReadonly"
                 type="date"
@@ -174,19 +187,23 @@ const Resume = React.forwardRef((props, ref) => {
                 id="standard-adornment-mount"
                 fullWidth
                 size="small"
-                value={ formatDateSend(employeeData?.resume?.dateOfBirth)
-                   || ""
-                }
+                value={formatDateSend(employeeData?.resume?.dateOfBirth) || ""}
                 name="birthday"
               ></TextField>
             </Grid>
           </Grid>
-          <Grid item container xs={12} justifyContent="space-between">
-            <Grid item container xs={5.8} className="self-items">
-              <Typography item xs={2}>
-                Điện thoại:
-              </Typography>
-              <Grid item xs={9.8}>
+          <Grid
+            item
+            container
+            xs={12}
+            spacing={2}
+            justifyContent="space-between"
+          >
+            <Grid item container xs={6} spacing={1} className="self-items">
+              <Grid item xs="auto">
+                <Typography>Điện thoại:</Typography>
+              </Grid>
+              <Grid item xs={true}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -198,17 +215,14 @@ const Resume = React.forwardRef((props, ref) => {
                   size="small"
                   value={employeeData?.resume?.phone}
                   name="phone"
-                  onChange={(event) => {
-                    // handleChangeEmployee(event, "phone");
-                  }}
                 ></TextField>
               </Grid>
             </Grid>
-            <Grid item container xs={6} className="self-items">
-              <Typography item xs={1}>
-                Email:
-              </Typography>
-              <Grid item xs={10.65}>
+            <Grid item container xs={6} spacing={1} className="self-items">
+              <Grid item xs="auto">
+                <Typography>Email:</Typography>
+              </Grid>
+              <Grid item xs={true}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -220,19 +234,16 @@ const Resume = React.forwardRef((props, ref) => {
                   size="small"
                   name="email"
                   value={employeeData?.resume?.email}
-                  onChange={(event) => {
-                    // handleChangeEmployee(event, "email");
-                  }}
                 ></TextField>
               </Grid>
             </Grid>
           </Grid>
 
-          <Grid item container xs={12} className="self-items">
-            <Typography item xs={2}>
-              Chỗ ở hiện nay:
-            </Typography>
-            <Grid item xs={10.45} fullWidth>
+          <Grid item container xs={12} spacing={1} className="self-items">
+            <Grid item xs="auto">
+              <Typography>Chỗ ở hiện nay:</Typography>
+            </Grid>
+            <Grid item xs={true} fullWidth>
               <TextField
                 className="rs-noReadonly"
                 InputProps={{
@@ -248,12 +259,18 @@ const Resume = React.forwardRef((props, ref) => {
             </Grid>
           </Grid>
 
-          <Grid item container xs={12} justifyContent="space-between">
-            <Grid item container xs={5.8} className="self-items">
-              <Typography item xs={2}>
-                Dân tộc:
-              </Typography>
-              <Grid item xs={10.2}>
+          <Grid
+            item
+            container
+            xs={12}
+            spacing={2}
+            justifyContent="space-between"
+          >
+            <Grid item container xs={6} spacing={1} className="self-items">
+              <Grid item xs="auto">
+                <Typography>Dân tộc:</Typography>
+              </Grid>
+              <Grid item xs={true}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -273,11 +290,11 @@ const Resume = React.forwardRef((props, ref) => {
                 ></TextField>
               </Grid>
             </Grid>
-            <Grid item container xs={6} className="self-items">
-              <Typography item xs={2}>
-                Tôn giáo:
-              </Typography>
-              <Grid item xs={10.1}>
+            <Grid item container xs={6} spacing={1} className="self-items">
+              <Grid item xs="auto">
+                <Typography>Tôn giáo:</Typography>
+              </Grid>
+              <Grid item xs={true}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -296,12 +313,18 @@ const Resume = React.forwardRef((props, ref) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={12} justifyContent="space-between">
-            <Grid item container xs={5.8} className="self-items">
-              <Typography item xs={2}>
-                Số CCCD:
-              </Typography>
-              <Grid item xs={9.8}>
+          <Grid
+            item
+            container
+            xs={12}
+            spacing={2}
+            justifyContent="space-between"
+          >
+            <Grid item container xs={6} spacing={1} className="self-items">
+              <Grid item xs="auto">
+                <Typography>Số CCCD/CMT:</Typography>
+              </Grid>
+              <Grid item xs={true}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -317,11 +340,11 @@ const Resume = React.forwardRef((props, ref) => {
                 ></TextField>
               </Grid>
             </Grid>
-            <Grid item container xs={6} className="self-items">
-              <Typography item xs={2}>
-                Cấp ngày:
-              </Typography>
-              <Grid item xs={10}>
+            <Grid item container xs={6} spacing={1} className="self-items">
+              <Grid item xs="auto">
+                <Typography>Cấp ngày:</Typography>
+              </Grid>
+              <Grid item xs={true}>
                 <TextField
                   className="rs-noReadonly"
                   InputProps={{
@@ -347,11 +370,11 @@ const Resume = React.forwardRef((props, ref) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={12} className="self-items">
-            <Typography item xs={1.1}>
-              Nơi cấp:
-            </Typography>
-            <Grid item xs={11.1} fullWidth>
+          <Grid item container xs={12} spacing={1} className="self-items">
+            <Grid item xs="auto">
+              <Typography>Nơi cấp:</Typography>
+            </Grid>
+            <Grid item xs={true} fullWidth>
               <TextField
                 className="rs-noReadonly"
                 InputProps={{
@@ -376,7 +399,7 @@ const Resume = React.forwardRef((props, ref) => {
 
         <Grid item xs={12} container>
           <Grid item xs={12}>
-            <Typography variant="h6" fontWeight={"600"}>
+            <Typography variant="h6" className="title-resume">
               II. QUAN HỆ GIA ĐÌNH
             </Typography>
           </Grid>
@@ -391,7 +414,6 @@ const Resume = React.forwardRef((props, ref) => {
               title={""}
               data={!listRelationship ? [] : listRelationship}
               columns={columns}
-              // className="table-resume"
               style={{
                 boxShadow: "none",
                 fontFamily: "Times New Roman",
@@ -405,6 +427,7 @@ const Resume = React.forwardRef((props, ref) => {
                 pageSizeOptions: [5, 10, 15, 20],
                 cellStyle: { border: "1px solid black" },
                 headerStyle: {
+                  pointerEvents: "none",
                   border: "1px solid black",
                   fontWeight: "600",
                 },
@@ -413,18 +436,13 @@ const Resume = React.forwardRef((props, ref) => {
               }}
               localization={{
                 body: {
-                  emptyDataSourceMessage: "Không có thông tin",
+                  emptyDataSourceMessage: messageOfNoData,
                 },
               }}
             />
           </Grid>
-          <Grid item xs={12} justify="center" alignItems="center">
-            <Typography
-              variant="h6"
-              fontWeight={"600"}
-              align="center"
-              margin={"4px 0 8px"}
-            >
+          <Grid item xs={12}>
+            <Typography variant="h6" className="assure">
               LỜI CAM ĐOAN
             </Typography>
           </Grid>

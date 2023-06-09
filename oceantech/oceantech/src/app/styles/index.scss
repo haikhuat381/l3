@@ -47,13 +47,14 @@
 .dialog-content {
   flex-grow: 1;
   display: flex;
-  padding: 0 24px !important;
+  padding: 0 !important;
   margin-top: 8px;
 }
 
 .tab-items {
   width: 100%;
 }
+
 .dialog-action {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -61,6 +62,125 @@
   z-index: 99;
 }
 
-.form-dialog .MuiDialog-paper {
+.form-dialog .MuiDialog-paper,
+.manager-employee-dialog .MuiDialog-paper {
   min-height: 95%;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  width: 100%;
+}
+
+.ant-image {
+  display: block;
+  position: static;
+}
+
+.avatar {
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+}
+
+.avatar-img {
+  border-radius: 50%;
+  height: 100% !important;
+  width: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+
+.avatar-manager {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+
+.avatar-manager-img {
+  width: 200px;
+  height: 220px;
+  border: 1px solid #E5E5E5;
+  object-fit: cover;
+}
+
+
+
+@media (max-width: 600px) {
+  .avatar-manager-img-content {
+    max-width: 50%;
+
+  }
+
+
+}
+
+
+.custom-moreinfo {
+  width: 280px;
+  margin: auto;
+  transform: translate(-215%, -90%);
+}
+
+.tab {
+  padding: 12px 28px !important;
+  text-align: left !important;
+  align-items: start !important;
+}
+
+.feedback-note {
+  white-space: break-spaces;
+  max-width: 170px;
+  margin-top: 260px !important;
+  padding: 0 16px;
+}
+
+.tabs-register,
+.tabs-custom {
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.tabs-custom {
+  padding: 0;
+  position: sticky;
+  top: 0;
+}
+
+.button-custom {
+  padding: 7px 16px !important;
+}
+
+.box-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.box-content {
+  flex: 1;
+  position: relative;
+}
+
+.box-table-first-column {
+  height: calc(100% - 71px);
+  overflow: auto;
+  max-height: 887px;
+}
+
+.box-table-first-column .MuiPaper-root {
+  box-shadow: none !important;
+}
+
+.box-content-pagination {
+  position: absolute;
+  bottom: 0;
 }

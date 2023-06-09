@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, styled, Button } from "@mui/material";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { Box, styled } from "@mui/material";
 import { Span } from "../Typography";
 const BrandRoot = styled(Box)(() => ({
   display: "flex",
@@ -8,7 +7,7 @@ const BrandRoot = styled(Box)(() => ({
   justifyContent: "space-between",
   margin: "0 auto",
 }));
-const StyledSpan = styled(Span)(({}) => ({
+const StyledSpan = styled(Span)(() => ({
   fontSize: "18px",
   marginLeft: ".5rem",
   lineHeight: "1.5",
@@ -25,7 +24,11 @@ function Brand(props) {
   return (
     <BrandRoot>
       <Box display="flex" alignItems="center">
-        <Logo sideNavTheme={sideNavTheme} src="/assets/images/logos/osd-logo-white.png" alt="" />
+        <Logo
+          sideNavTheme={sideNavTheme}
+          src="https://i.imgur.com/tEciosY.png"
+          alt=""
+        />
         <StyledSpan>Oceantech</StyledSpan>
       </Box>
     </BrandRoot>

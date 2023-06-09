@@ -20,7 +20,6 @@ const ExtAndIntCommon = {
   },
   "& .icon": {
     fontSize: "18px",
-    // color: "red",
     verticalAlign: "middle",
   },
 };
@@ -54,20 +53,20 @@ function Sidenav({ items, sideNavTheme }) {
     return data.map((item, index) => {
       if (item.type === "label")
         return (
-          <ListLabel sideNavTheme={sideNavTheme} key={index}>
+          <ListLabel sideNavTheme={sideNavTheme} key={item?.name}>
             {item.label}
           </ListLabel>
         );
 
       if (item.children) {
         return (
-          <NavExpansionPanel sideNavTheme={sideNavTheme} item={item} key={index}>
+          <NavExpansionPanel sideNavTheme={sideNavTheme} item={item} key={item?.name}>
             {renderLevels(item.children)}
           </NavExpansionPanel>
         );
       } else {
         return (
-          <InternalLink key={index}>
+          <InternalLink key={item?.name}>
             <NavLink to={item.path} className={"compactNavItem"}>
               <ButtonBase key={item.name} name="child" sx={{ width: "100%", paddingLeft: 2 }}>
                 <Icon

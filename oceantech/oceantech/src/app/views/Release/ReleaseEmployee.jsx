@@ -1,4 +1,3 @@
-import React from "react";
 import Breadcrumb from "app/components/Breadcrumb";
 import MaterialTable from "@material-table/core";
 import { useState, useEffect, useRef } from "react";
@@ -10,61 +9,49 @@ import {
   resetEmployeeDataAction,
 } from "app/redux/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
-import ReleaseEmployeeDialog from "./ReleaseEmployeeDialog";
-import {
-  Box,
-  styled,
-} from "@mui/material";
-import SaveProfileInfo from "./SaveProfileInfo";
+import { Box } from "@mui/material";
+import ProfileFormDialog from "app/components/ProfileFormDialog/ProfileFormDialog";
+import { DetailIcon } from "app/components/Icon";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { objStatus, approvedEndStatus , savedStatus, statusOfRelease } from "app/constant";
-import { DetailIcon, InfoIcon } from "app/components/Button";
-
-const Container = styled("div")(({ theme }) => ({
-  margin: "30px 30px 0",
-  [theme.breakpoints.down("sm")]: { margin: "16px" },
-  "& .breadcrumb": {
-    marginBottom: "0px",
-    [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
-  },
-}));
+import { pageDefault, pageSizeDefault, objStatus, statusOfRelease, Container, messageOfNoData } from "app/constant";
+import LoadingBay from "app/components/LoadingBay";
 
 function ReleaseEmployee() {
   const dispatch = useDispatch();
 
-  const [page, setPage] = useState(1);
-  const [pagesize, setPageSize] = useState(5);
+  const [page, setPage] = useState(pageDefault);
+  const [pagesize, setPageSize] = useState(pageSizeDefault);
 
-  const [shouldOpenReleaseDialog, setShouldOpenReleaseDialog] = useState(false);
-  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  const [idView, setIdview] = useState();
+  const [shouldOpenProfileFormDialog, setShouldOpenProfileFormDialog] = useState(false);
 
-  const listEmployeeDataReducer = useSelector(
+  const reloadDataReleaseEmployee = useRef();
+
+  const listReleaseEmployeeData = useSelector(
     (state) => state?.Employee?.listEmployeeData
   );
-  
-  const reloadRef = useRef();
+
+  const loading = useSelector(
+    (state) => state.Employee.loading
+  );
   const handleChangeReload = (value) => {
-    reloadRef.current = value;
+    reloadDataReleaseEmployee.current = value;
   };
 
-  const handleGetListEmployee = () => {
+  useEffect(() => {
     dispatch(getTotalAction(statusOfRelease));
     dispatch(getListEmployeeAction(statusOfRelease, page, pagesize));
+  }, [reloadDataReleaseEmployee.current, page, pagesize]);
+
+  const handleCloseProfileFormDialog = () => {
+    dispatch(resetEmployeeDataAction({}));
+    setShouldOpenProfileFormDialog(false);
   };
-  useEffect(() => {
-    handleGetListEmployee(page, pagesize);
-  }, [page, pagesize, reloadRef.current]);
 
   const onHandleChange = (page, pageSize) => {
     setPage(page);
     setPageSize(pageSize);
-  };
-  const handleClose = () => {
-    setShouldOpenReleaseDialog(false);
-    dispatch(resetEmployeeDataAction({}))
   };
 
   const columns = [
@@ -76,27 +63,16 @@ function ReleaseEmployee() {
       },
       render: (rowdata) => {
         return (
-          <>
-            {rowdata.status === savedStatus  && (
-                <InfoIcon
-                  onClick={() => {
-                    dispatch(getFormDataAction(rowdata.employeeId));
-                    dispatch(getEmployeeDataAction(rowdata.employeeId));
-                    setShouldOpenDialog(true);
-                    setIdview(rowdata.employeeId);
-                  }}
-                />
-            )}
-            {rowdata.status === approvedEndStatus && (
-                <DetailIcon
-                  onClick={() => {
-                    dispatch(getFormDataAction(rowdata.employeeId));
-                    dispatch(getEmployeeDataAction(rowdata.employeeId));
-                    setShouldOpenReleaseDialog(true);
-                  }}
-                />
-            )}
-          </>
+          <DetailIcon
+            onClick={() => {
+              dispatch(getFormDataAction(rowdata?.employeeId));
+              dispatch(getEmployeeDataAction(rowdata?.employeeId));
+              setTimeout(() => {
+                setShouldOpenProfileFormDialog(true);
+              }, 300)
+            }}
+            status={rowdata?.status}
+          />
         );
       },
     },
@@ -111,6 +87,7 @@ function ReleaseEmployee() {
       render: (rowdata) => objStatus[rowdata.status],
     },
   ];
+
   return (
     <Container>
       <ToastContainer
@@ -125,58 +102,60 @@ function ReleaseEmployee() {
         pauseOnHover
         theme="colored"
       />
-      <Box className="breadcrumb">
-        <Breadcrumb
-          routeSegments={[
-            { name: "Lãnh đạo", path: "/" },
-            { name: "Kết thúc" },
-          ]}
-        />
-      </Box>
-
-      <Box width="100%" overflow="auto">
-        <MaterialTable
-          title={""}
-          data={listEmployeeDataReducer}
-          columns={columns}
-          options={{
-            paging: false,
-            rowStyle: (rowData, index) => {
-              return {
-                backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-              };
-            },
-            maxBodyHeight: "470px",
-            minBodyHeight: "470px",
-            headerStyle: {
-              backgroundColor: "#222943",
-              color: "#fff",
-              position: "sticky",
-              top: 0,
-              zIndex: 1,
-            },
-            padding: "default",
-            toolbar: true,
-          }}
-        />
-        <PaginationCustom onHandleChange={onHandleChange} />
-      </Box>
-      {shouldOpenReleaseDialog && (
-        <ReleaseEmployeeDialog
-          handleClose={handleClose}
+      <div className="box-container">
+        <Box className="breadcrumb">
+          <Breadcrumb
+            routeSegments={[
+              { name: "Lãnh đạo", path: "/" },
+              { name: "Kết thúc" },
+            ]}
+          />
+        </Box>
+        <Box width="100%" overflow="auto" className="box-content" >
+          <div className="box-table-first-column">
+            <MaterialTable
+              title={""}
+              columns={columns}
+              data={listReleaseEmployeeData}
+              localization={{
+                toolbar: {
+                  searchTooltip: 'Tìm kiếm',
+                  searchPlaceholder: 'Tìm kiếm',
+                },
+                body: {
+                  emptyDataSourceMessage: messageOfNoData,
+                },
+              }}
+              options={{
+                rowStyle: (rowData, index) => {
+                  return {
+                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+                  };
+                },
+                headerStyle: {
+                  pointerEvents: "none",
+                  backgroundColor: "#222943",
+                  color: "#fff",
+                  zIndex: 1,
+                  position: "sticky",
+                  top: 0,
+                },
+                paging: false,
+                padding: "default",
+                maxBodyHeight: "823px",
+                toolbar: true,
+              }}
+            />
+          </div>
+          <PaginationCustom onHandleChange={onHandleChange} className="box-content-pagination" />
+        </Box>
+      </div>
+      {loading && <LoadingBay />}
+      {shouldOpenProfileFormDialog && (
+        <ProfileFormDialog
+          handleClose={handleCloseProfileFormDialog}
           handleChangeReload={handleChangeReload}
-        />
-      )}
-      {shouldOpenDialog && (
-        <SaveProfileInfo
-          handleClose={() => {
-            setShouldOpenDialog(false);
-          }}
-          openViewDialog={() => {
-            dispatch(getFormDataAction(idView));
-            dispatch(getEmployeeDataAction(idView));
-            setShouldOpenReleaseDialog(true);
-          }}
+          isType={"release"}
         />
       )}
     </Container>

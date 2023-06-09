@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, ThemeProvider } from "@mui/material";
+import { Menu } from "@mui/material";
 import { Box, styled } from "@mui/system";
 const MenuButton = styled(Box)(() => ({
   display: "inline-block",
@@ -38,7 +38,7 @@ function MenuTopBar(props) {
         }}
       >
         {children.map((child, index) => (
-          <div onClick={shouldCloseOnItemClick ? handleClose : () => {}} key={index}>
+          <div onClick={shouldCloseOnItemClick ? handleClose : () => {}} key={child?.id}>
             {child}
           </div>
         ))}
