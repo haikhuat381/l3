@@ -46,52 +46,67 @@ export const addRegistAction = (id, data) => {
   return { type: ActionTypes.ADD_REGIST, payload: { id, data } };
 };
 
-export const leaderAction = (id, data, action) => {
-  return { type: ActionTypes.LEADER_ACTION, payload: { id, data, action } };
+export const leaderAction = (id, data, message) => {
+  return { type: ActionTypes.LEADER_ACTION, payload: { id, data, message } };
 };
-
 // promote
 export const getPromoteHistoryAction = (id) => {
   return { type: ActionTypes.GET_PROMOTE_HISTORY_DATA, payload: id };
 };
-export const deletePromoteHistoryAction = (id) => {
-  return { type: ActionTypes.DELETE_PROMOTE, payload: id };
-};
-export const addPromoteHistoryAction = (id, data) => {
-  return { type: ActionTypes.ADD_PROMOTE, payload: { id, data } };
-};
-export const updatePromoteHistoryAction = (id, data) => {
-  return { type: ActionTypes.UPDATE_PROMOTE, payload: { id, data } };
-};
 
-// Increase Salary
+export const deletePromoteHistoryAction = (id, idRegister) => {
+  return { type: ActionTypes.DELETE_PROMOTE, payload: { id, idRegister } };
+};
+export const addPromoteHistoryAction = (idRegister, data) => {
+  return { type: ActionTypes.ADD_PROMOTE, payload: { idRegister, data } };
+};
+export const updatePromoteHistoryAction = (id, data, idRegister) => {
+  return {
+    type: ActionTypes.UPDATE_PROMOTE,
+    payload: { id, data, idRegister },
+  };
+};
 
 export const getSalaryIncreaseHistoryAction = (id) => {
   return { type: ActionTypes.GET_SALARY_INCREASE_HISTORY, payload: id };
 };
-export const addSalaryIncreaseAction = (id, data) => {
-  return { type: ActionTypes.ADD_SALARY_INCREASE, payload: { id, data } };
+export const addSalaryIncreaseAction = (idRegister, data) => {
+  return {
+    type: ActionTypes.ADD_SALARY_INCREASE,
+    payload: { idRegister, data },
+  };
 };
-export const updateSalaryIncreaseAction = (id, data) => {
-  return { type: ActionTypes.UPDATE_SALARY_INCREASE, payload: { id, data } };
+export const updateSalaryIncreaseAction = (id, data, idRegister) => {
+  return {
+    type: ActionTypes.UPDATE_SALARY_INCREASE,
+    payload: { id, data, idRegister },
+  };
 };
-export const deleteSalaryIncreaseAction = (id) => {
-  return { type: ActionTypes.DELETE_SALARY, payload: id };
+export const deleteSalaryIncreaseAction = (id, idRegister) => {
+  return { type: ActionTypes.DELETE_SALARY, payload: { id, idRegister } };
 };
-// Proposal Consultation
 export const getProposalConsultationAction = (id) => {
   return { type: ActionTypes.GET_PROPOSAL_CONSULTATION, payload: id };
 };
-export const addProposalConsult = (id, data) => {
-  return { type: ActionTypes.ADD_PROPOSACONSULT, payload: { id, data } };
+export const addProposalConsult = (idRegister, data) => {
+  return {
+    type: ActionTypes.ADD_PROPOSACONSULT,
+    payload: { idRegister, data },
+  };
 };
-export const updateProposalConsult = (id, data) => {
-  return { type: ActionTypes.UPDATE_PROPOSACONSULT, payload: { id, data } };
+export const updateProposalConsult = (id, data, idRegister) => {
+  return {
+    type: ActionTypes.UPDATE_PROPOSACONSULT,
+    payload: { id, data, idRegister },
+  };
 };
-export const deleteProposalConsult = (id) => {
-  return { type: ActionTypes.DELETE_PROPOSACONSULT, payload: id };
+export const deleteProposalConsult = (id, idRegister) => {
+  return {
+    type: ActionTypes.DELETE_PROPOSACONSULT,
+    payload: { id, idRegister },
+  };
 };
-//Release
-export const ReleaseManageAction = (id, data) => {
+
+export const releaseManageAction = (id, data) => {
   return { type: ActionTypes.RELEASE_MANAGE, payload: { id, data } };
 };

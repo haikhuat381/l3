@@ -1,4 +1,4 @@
-import { Breadcrumbs, Hidden, Icon, styled } from "@mui/material";
+import { Breadcrumbs, Icon, styled } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 const BreadcrumbRoot = styled("div")(() => ({
@@ -21,7 +21,9 @@ const Breadcrumb = ({ routeSegments }) => {
   return (
     <BreadcrumbRoot>
       <Breadcrumbs
-        separator={<Icon sx={{ color: "rgba(52, 49, 76, 0.38)" }}>navigate_next</Icon>}
+        separator={
+          <Icon sx={{ color: "rgba(52, 49, 76, 0.38)" }}>navigate_next</Icon>
+        }
         sx={{ display: "flex", alignItems: "center", position: "relative" }}
       >
         <NavLink to="/">
@@ -33,7 +35,7 @@ const Breadcrumb = ({ routeSegments }) => {
               return index !== routeSegments.length - 1 ? (
                 <SubName>{route.name}</SubName>
               ) : (
-                <SubName key={index}>{route.name}</SubName>
+                <SubName key={route.name}>{route.name}</SubName>
               );
             })
           : null}

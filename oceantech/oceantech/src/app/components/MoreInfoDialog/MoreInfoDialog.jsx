@@ -1,41 +1,32 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 import {
   Dialog,
   DialogTitle,
-  Box,
   Button,
   DialogActions,
   DialogContent,
-  Grid,
-  TextField,
-  MenuItem,
   Typography,
   Icon,
   IconButton,
 } from "@mui/material";
-import { rejectedStatus, rejectedEndStatus  } from "app/constant";
+import { rejectedStatus, rejectedEndStatus } from "app/constant";
 
 
 function MoreInfoDialog(props) {
   const {
     handleClose,
-    openEditDialog,
-    openViewDialog,
-    display,
-    title,
-    rowDataInfo,
-    handleEditPromote,
+    openEditDialog
   } = props;
   const employeeData = useSelector(
     (state) => state?.Employee?.employeeData?.employeeInfo
   );
-  
+  const statusOfReject = employeeData?.status === rejectedStatus || employeeData?.status === rejectedEndStatus;
+
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle className="dialog-title">
-        {employeeData?.status === rejectedStatus  || employeeData?.status === rejectedEndStatus ? "Từ chối" : "Yêu cầu bổ sung"}
+        {statusOfReject ? "Từ chối" : "Yêu cầu bổ sung"}
 
         <IconButton onClick={handleClose}>
           <Icon color="error">close</Icon>
@@ -44,8 +35,8 @@ function MoreInfoDialog(props) {
 
       <DialogContent style={{ paddingTop: 20 }}>
         <Typography>
-          {employeeData?.status === rejectedStatus  ? "Lý do:" : "Nội dung:"}{" "}
-          {employeeData?.status === rejectedStatus 
+          {statusOfReject ? "Lý do từ chối:" : "Nội dung yêu cầu:"}{" "}
+          {statusOfReject
             ? employeeData?.rejectedReason
             : employeeData?.statusLog}
         </Typography>
@@ -55,13 +46,11 @@ function MoreInfoDialog(props) {
         <Button
           variant="contained"
           color="primary"
-          sx={{ display: employeeData?.status === rejectedStatus  ? "none" : "" }}
           onClick={openEditDialog}
-          // onClick={employeeData?.status === rejectedStatus  ? openViewDialog : openEditDialog}
-          // onClick={rowDataInfo !== undefined ? handleEditPromote() : openEditDialog }
         >
-          {/* employeeData?.status === rejectedStatus  ? "Xem hồ sơ" : "Bổ sung thông tin" */}
-          {"Bổ sung thông tin"}
+          {
+            statusOfReject ? "Chỉnh sửa thông tin" : "Bổ sung thông tin"
+          }
         </Button>
         <Button variant="contained" onClick={handleClose} color="error">
           Hủy

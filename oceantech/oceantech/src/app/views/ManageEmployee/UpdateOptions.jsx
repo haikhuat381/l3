@@ -1,4 +1,3 @@
-import React from "react";
 import {
   styled,
   Grid,
@@ -8,18 +7,13 @@ import {
   Icon,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import RegisterDocument from "./RegisterDocument";
 import SalaryIncrease from "./SalaryIncrease";
 import ProposeAdvisory from "./ProposeAdvisory";
 import Promote from "./Promote";
-import { useRef, useEffect } from "react";
-
-import { useSelector, useDispatch } from "react-redux";
 
 function UpdateOptions({ EmployeeId }) {
-  const dispatch = useDispatch();
-
   const accordion1Ref = useRef(null);
   const accordion2Ref = useRef(null);
   const accordion3Ref = useRef(null);
@@ -56,22 +50,25 @@ function UpdateOptions({ EmployeeId }) {
 
   return (
     <div>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+      <Grid container xs={12} spacing={2} pl={5}>
+        <Grid item xs={12} md={12} >
           <Accordion
             ref={accordion1Ref}
             expanded={expanded.panel1 === "panel1"}
             onChange={handleChange("panel1", accordion1Ref)}
+
           >
             <MyAccordionSummary
               className="update-option"
               expandIcon={<Icon className="icon">expand_more</Icon>}
               aria-controls="panel1a-content"
               id="panel1a-header"
+
+
             >
-              <Typography>Đăng kí hồ sơ</Typography>
+              <Typography fontSize={22}  >Đăng kí hồ sơ</Typography>
             </MyAccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails className="accordion-detail">
               <RegisterDocument
                 handleClose={() => {
                   handleClose("panel1");
@@ -87,18 +84,20 @@ function UpdateOptions({ EmployeeId }) {
             onChange={handleChange("panel2", accordion2Ref)}
           >
             <MyAccordionSummary
+              className="update-option"
               expandIcon={<Icon className="icon">expand_more</Icon>}
               aria-controls="panel1a-content"
               id="panel1a-header"
+              sx={{ height: 10 }}
             >
-              <Typography>Tăng lương</Typography>
+              <Typography fontSize={22} >Tăng lương</Typography>
             </MyAccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails className="accordion-detail">
               <SalaryIncrease
                 handleClose={() => {
                   handleClose("panel2");
                 }}
-                ID={EmployeeId}
+                idRegister={EmployeeId}
               />
             </AccordionDetails>
           </Accordion>
@@ -110,18 +109,20 @@ function UpdateOptions({ EmployeeId }) {
             onChange={handleChange("panel3", accordion3Ref)}
           >
             <MyAccordionSummary
+              className="update-option"
               expandIcon={<Icon className="icon">expand_more</Icon>}
               aria-controls="panel1a-content"
               id="panel1a-header"
+              sx={{ height: 10 }}
             >
-              <Typography>Thăng chức</Typography>
-            </MyAccordionSummary>
-            <AccordionDetails>
+              <Typography fontSize={22} >Thăng chức</Typography>
+            </MyAccordionSummary >
+            <AccordionDetails className="accordion-detail">
               <Promote
                 handleClose={() => {
                   handleClose("panel3");
                 }}
-                ID={EmployeeId}
+                idRegister={EmployeeId}
               />
             </AccordionDetails>
           </Accordion>
@@ -133,18 +134,20 @@ function UpdateOptions({ EmployeeId }) {
             onChange={handleChange("panel4", accordion4Ref)}
           >
             <MyAccordionSummary
+              className="update-option"
               expandIcon={<Icon className="icon">expand_more</Icon>}
               aria-controls="panel1a-content"
               id="panel1a-header"
+              sx={{ height: 10 }}
             >
-              <Typography>Đề xuất tham mưu</Typography>
+              <Typography fontSize={22} >Đề xuất tham mưu</Typography>
             </MyAccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails className="accordion-detail">
               <ProposeAdvisory
                 handleClose={() => {
                   handleClose("panel4");
                 }}
-                ID={EmployeeId}
+                idRegister={EmployeeId}
               />
             </AccordionDetails>
           </Accordion>

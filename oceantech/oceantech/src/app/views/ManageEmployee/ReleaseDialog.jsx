@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -8,40 +8,38 @@ import {
   IconButton,
   Icon,
 } from "@mui/material";
-import SendToLeadershipDialog from "../AddNewEmployee/SendToLeadershipDialog";
-import { ToastContainer, toast } from "react-toastify";
+import SendToLeadershipDialog from "app/components/RecordComponents/SendToLeadershipDialog";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector, useDispatch } from "react-redux";
-import { ReleaseManageAction } from "app/redux/actions/actions";
+import { useSelector } from "react-redux";
 import ReleaseLetter from "app/components/ReleaseLetter/ReleaseLetter";
 import { pendingEndStatus } from "app/constant";
-
+import TabsLetter from "app/components/TabsLetter/TabsLetter";
 function ReleaseDialog(props) {
   const { handleClose, handleCloseAll, handleChangeReload } = props;
-  const dispatch = useDispatch();
   const [shouldSenToLeader, setShouldSenToLeader] = useState(false);
   const employeeData = useSelector((state) => state.Employee.employeeData);
-
+  const [saved, setSaved] = useState("block");
+  useEffect(() => {
+    if (employeeData?.employeeInfo?.status === pendingEndStatus) {
+      setSaved("none")
+    }
+  }, [employeeData])
   const [dataReleaseDialog, setDataReleaseDialog] = useState({
-    status: "8",
+    status: pendingEndStatus,
     terminateRequestDetail:
       employeeData?.employeeInfo?.terminateRequestDetail ||
       employeeData?.terminateRequestDetail ||
       "",
   });
+
   const handleValues = (data) => {
     setDataReleaseDialog(data);
   };
-  const id = employeeData?.employeeInfo?.employeeId;
-  const handlesubmit = async () => {
-    dispatch(ReleaseManageAction(id, dataReleaseDialog));
-    setShouldOpenTime();
-  };
-  function setShouldOpenTime() {
-    setTimeout(() => {
-      handleCloseAll();
-    }, 1500);
-  }
+
+  const idRegister = employeeData?.employeeInfo?.employeeId;
+
+
   return (
     <>
       <ToastContainer
@@ -56,30 +54,23 @@ function ReleaseDialog(props) {
         pauseOnHover
         theme="colored"
       />
-      <Dialog open={true} maxWidth={"lg"} fullWidth>
-        <DialogTitle className="dialog-title">
-          <div
-            style={{
-              display: "flex",
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {/* Biểu Mẫu Đơn Xin Thôi Việc */}
-          </div>
+      <Dialog open={true} maxWidth={"lg"} fullWidth className="manager-employee-dialog"  >
+        <DialogTitle className="dialog-title" >
+          Biểu mẫu
           <IconButton onClick={handleClose}>
             <Icon color="error">close</Icon>
           </IconButton>
         </DialogTitle>
 
-        <DialogContent>
-          <ReleaseLetter
-            dataReleaseDialog={dataReleaseDialog}
-            employeeData={employeeData}
-            handleValues={handleValues}
-            status={false}
-          />
+        <DialogContent className="dialog-content">
+          <TabsLetter title={"Đơn xin nghỉ việc"}
+            element={<ReleaseLetter
+              dataReleaseDialog={dataReleaseDialog}
+              employeeData={employeeData}
+              handleValues={handleValues}
+              status={false}
+            />} />
+
         </DialogContent>
         <DialogActions className="dialog-action">
           <Button
@@ -87,9 +78,10 @@ function ReleaseDialog(props) {
             variant="contained"
             color="success"
             type="submit"
+            sx={{ display: saved }}
             onClick={async () => {
-              handlesubmit();
-              handleChangeReload(id);
+
+              setShouldSenToLeader("true")
             }}
           >
             Trình lãnh đạo
@@ -110,11 +102,13 @@ function ReleaseDialog(props) {
           handleClose={() => {
             setShouldSenToLeader(false);
           }}
-          employeeId={employeeData?.employeeInfo?.employeeId}
-          // status={employeeData?.employeeInfo?.status}
+          employeeId={idRegister}
           status={pendingEndStatus}
+          content={dataReleaseDialog}
+          handleChangeReload={handleChangeReload}
         />
       )}
+
     </>
   );
 }

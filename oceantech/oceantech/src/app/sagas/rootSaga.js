@@ -13,6 +13,9 @@ import {
   getTotalSaga,
   addRegistSaga,
   leaderActionSaga,
+} from "./EmployeeSaga";
+
+import {
   // Employee management
   getPromoteHistorysaga,
   deletePromotesaga,
@@ -26,10 +29,8 @@ import {
   addProposalConsultsaga,
   updateProposalConsultsaga,
   deleteProposalConsultsaga,
-  ReleaseManagesaga,
-} from "./EmployeeSaga";
-
-
+  releaseManagesaga,
+} from "./ManageEmployeeSaga";
 export default function* rootSaga() {
   yield takeLatest(ActionTypes.GET_TOTAL, getTotalSaga);
   yield takeLatest(ActionTypes.GET_LIST_EMPLOYEE_DATA, getListEmployeeDataSaga);
@@ -45,14 +46,11 @@ export default function* rootSaga() {
 
   yield takeLatest(ActionTypes.ADD_REGIST, addRegistSaga);
   yield takeLatest(ActionTypes.LEADER_ACTION, leaderActionSaga);
-  // Employee management
 
-  // PROMOTE
   yield takeLatest(ActionTypes.GET_PROMOTE_HISTORY_DATA, getPromoteHistorysaga);
   yield takeLatest(ActionTypes.DELETE_PROMOTE, deletePromotesaga);
   yield takeLatest(ActionTypes.ADD_PROMOTE, addPromotesaga);
   yield takeLatest(ActionTypes.UPDATE_PROMOTE, UpdatePromotesaga);
-  // SALARY_INCREASE
 
   yield takeLatest(
     ActionTypes.GET_SALARY_INCREASE_HISTORY,
@@ -62,12 +60,10 @@ export default function* rootSaga() {
   yield takeLatest(ActionTypes.DELETE_SALARY, deleteSalarysaga);
   yield takeLatest(ActionTypes.UPDATE_SALARY_INCREASE, updateSalarysaga);
 
-  // Proposal Consultation
   yield takeLatest(
     ActionTypes.GET_PROPOSAL_CONSULTATION,
     getProposalConsultationsaga
   );
-  // UPDATE_PROPOSACONSULT
   yield takeLatest(ActionTypes.ADD_PROPOSACONSULT, addProposalConsultsaga);
   yield takeLatest(
     ActionTypes.UPDATE_PROPOSACONSULT,
@@ -77,5 +73,5 @@ export default function* rootSaga() {
     ActionTypes.DELETE_PROPOSACONSULT,
     deleteProposalConsultsaga
   );
-  yield takeLatest(ActionTypes.RELEASE_MANAGE, ReleaseManagesaga);
+  yield takeLatest(ActionTypes.RELEASE_MANAGE, releaseManagesaga);
 }

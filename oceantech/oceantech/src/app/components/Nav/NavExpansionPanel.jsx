@@ -1,8 +1,7 @@
-import React from "react";
-import { ButtonBase, Icon, Button } from "@mui/material";
+import { ButtonBase, Icon } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import clsx from "clsx";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 const NavExpandRoot = styled("div")(({ theme }) => ({
   "& .expandIcon": {
@@ -34,7 +33,6 @@ const BaseButton = styled(ButtonBase)(({ sideNavTheme }) => ({
   padding: "0 16px",
   whiteSpace: "pre",
   overflow: "hidden",
-  // paddingRight: "16px",
   borderRadius: "4px",
   marginBottom: "8px",
   display: "flex",
@@ -44,7 +42,6 @@ const BaseButton = styled(ButtonBase)(({ sideNavTheme }) => ({
     width: 36,
 
     fontSize: "18px",
-    // paddingLeft: "16px",
     verticalAlign: "middle",
   },
 }));
@@ -77,15 +74,13 @@ function NavExpansionPanel({ item, children, sideNavTheme }) {
     }
 
     if (node.name === "child") componentHeight.current += node.scrollHeight;
-    else componentHeight.current += 44; //here 44 is node height
-    return;
+    else componentHeight.current += 44; 
   }, []);
   useEffect(() => {
     if (!elementRef) return;
 
     calcaulateHeight(elementRef.current);
 
-    // OPEN DROPDOWN IF CHILD IS ACTIVE
     for (let child of elementRef.current.children) {
       if (child.getAttribute("href") === pathname) {
         setCollapsed(false);

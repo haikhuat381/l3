@@ -1,43 +1,12 @@
-import React from "react";
-import { v4 as uuidv4 } from "uuid";
-import {
-  TextField,
-  Grid,
-  Button,
-} from "@mui/material";
+import { TextField, Grid, Button } from "@mui/material";
 import MaterialTable from "@material-table/core";
-import { useState, useEffect } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
-import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
-import RegisterDocumentDialog from "./RegisterDocumentDialog";
-import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-import { DeleteIcon, EditIcon } from "app/components/Button";
+import { DeleteIcon, EditIcon } from "app/components/Icon";
+import { messageOfNoData } from "app/constant";
 
-function RegisterDocument(props) {
-  const { handleClose } = props;
-  const dispatch = useDispatch();
-
-  const employee = useSelector((state) => state.Employee.employeeData);
-  const [employeeData, setEmployee] = useState(employee);
-  const [registerData, setRegisterData] = useState({});
-
-  const [registerDataDialog, setRegisterDataDialog] = useState({});
-  const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-
-  const [rowDataInfo, setRowDataInfo] = useState();
-  const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
-
-  const [
-    shouldOpenConfirmationDeleteDialog,
-    setshouldOpenConfirmationDeleteDialog,
-  ] = useState(false);
-
-  useEffect(() => {
-    setEmployee(employee);
-  }, [employee]);
+function RegisterDocument() {
 
   const formik = useFormik({
     initialValues: {
@@ -50,73 +19,32 @@ function RegisterDocument(props) {
       content: Yup.string().required("Không được bỏ trống"),
       note: Yup.string().required("Không được bỏ trống"),
       document: Yup.string().required("Không được bỏ trống"),
-      date: Yup.date().required("Vui lòng nhập ngày"),
+      date: Yup.date()
+        .max(new Date(), "Không được nhập ngày lớn hơn hiện tại")
+        .required("Vui lòng nhập ngày cấp")
     }),
-    onSubmit: (values, { resetForm }) => {
-      setRegisterDataDialog(values);
-      setShouldOpenDialog(true);
+    onSubmit: () => {
 
-      if (!values.id) {
-        values.id = uuidv4();
-        setEmployee({
-          ...employeeData,
-          listRegister: [
-            ...employeeData.listRegister,
-            { ...values, status: "Lưu mới" },
-          ],
-        });
-        const dataUpdate = {
-          ...employeeData,
-          listRegister: [
-            ...employeeData.listRegister,
-            { ...values, status: "Lưu mới" },
-          ],
-        };
-      } else {
-        employeeData.listRegister = employeeData.listRegister.filter(
-          (register) => register.id !== values.id
-        );
-        employeeData.listRegister.push({ ...values, status: "Lưu mới" });
-        // dispatch(updateEmployee(employeeData));
-        toast.success("Sửa thành công");
-      }
-
-      resetForm();
     },
   });
 
-  const handleEditPropose = (rowData) => {
-    formik.setValues(rowData);
-  };
-
-  const handleRemovePropose = (rowData) => {
-    employeeData.listRegister = employeeData.listRegister.filter(
-      (register) => register.id !== registerData.id
-    );
-    setEmployee(employeeData);
-
-    setshouldOpenConfirmationDeleteDialog(false);
-    toast.success("Xóa thành công");
-  };
-
   const columns = [
     {
-      title: "Hành động",
+      title: "STT",
+      render: (rowData) => rowData.tableData.index + 1,
       headerStyle: { borderTopLeftRadius: "4px" },
+      width: 50
+
+    },
+    {
+      title: "Hành động",
       render: (rowData) => {
         return (
           <>
-              <EditIcon
-                onClick={() => {
-                  handleEditPropose(rowData);
-                }}
-              />
-              <DeleteIcon
-                onClick={() => {
-                  setshouldOpenConfirmationDeleteDialog(true);
-                  setRegisterData(rowData);
-                }}
-              />
+            <EditIcon
+            />
+            <DeleteIcon
+            />
           </>
         );
       },
@@ -135,22 +63,11 @@ function RegisterDocument(props) {
 
   return (
     <>
-      {shouldOpenConfirmationDeleteDialog && (
-        <ConfirmDialog
-          onConfirmDialogClose={() => {
-            setshouldOpenConfirmationDeleteDialog(false);
-          }}
-          onYesClick={() => {
-            handleRemovePropose();
-          }}
-          title="Xóa đề xuất tham mưu"
-        />
-      )}
 
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} pt={1}>
           <Grid item container xs={12} spacing={2}>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextField
                 size="small"
                 label="Ngày đăng kí"
@@ -166,7 +83,7 @@ function RegisterDocument(props) {
                 helperText={formik.errors.date}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextField
                 size="small"
                 label="hồ sơ"
@@ -180,7 +97,7 @@ function RegisterDocument(props) {
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={2}>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextField
                 size="small"
                 fullWidth
@@ -192,7 +109,7 @@ function RegisterDocument(props) {
                 helperText={formik.errors.content}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item md={3} xs={12}>
               <TextField
                 size="small"
                 fullWidth
@@ -204,15 +121,20 @@ function RegisterDocument(props) {
                 helperText={formik.errors.note}
               />
             </Grid>
-            <Grid container item xs={3} spacing={1}>
+            <Grid container item md={3} xs={12} spacing={1}>
               <Grid item>
-                <Button variant="contained" color="primary" type="submit">
+                <Button
+                  variant="contained"
+                  className="button-custom"
+                  color="primary"
+                  type="submit">
                   Lưu
                 </Button>
               </Grid>
               <Grid item>
                 <Button
                   variant="contained"
+                  className="button-custom"
                   color="error"
                   onClick={() => formik.resetForm()}
                 >
@@ -222,55 +144,42 @@ function RegisterDocument(props) {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <MaterialTable
-              title={""}
-              // data={listPropose}
-              data={employeeData?.listRegister}
-              columns={columns}
-              options={{
-                paging: false,
-                rowStyle: (rowData, index) => {
-                  return {
-                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-                  };
-                },
-                maxBodyHeight: "215px",
-                minBodyHeight: "215px",
-                headerStyle: {
-                  backgroundColor: "#262e49",
-                  color: "#fff",
-                  position: "sticky",
-                  top: 0,
-                  zIndex: 1,
-                },
-                // padding: 'dense',
-                padding: "default",
-                // search: false,
-                // exportButton: true,
-                toolbar: false,
-              }}
-            />
+            <div className="table-two-columns">
+              <MaterialTable
+                title={""}
+                data={[]}
+                columns={columns}
+                options={{
+                  paging: false,
+                  rowStyle: (rowData, index) => {
+                    return {
+                      backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+                    };
+                  },
+                  maxBodyHeight: "336px",
+                  minBodyHeight: "336px",
+                  headerStyle: {
+                    backgroundColor: "#262e49",
+                    color: "#fff",
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                  },
+                  padding: "default",
+                  toolbar: false,
+                }}
+                localization={{
+                  body: {
+                    emptyDataSourceMessage: messageOfNoData,
+                  },
+                }}
+              />
+            </div>
           </Grid>
         </Grid>
       </form>
 
-      {shouldOpenDialog && (
-        <RegisterDocumentDialog
-          registerDataDialog={registerDataDialog}
-          handleClose={() => setShouldOpenDialog(false)}
-        />
-      )}
-      {shouldOpenRequestDialog && (
-        <MoreInfoDialog
-          rowDataInfo={rowDataInfo}
-          handleClose={() => {
-            setShouldOpenRequestDialog(false);
-          }}
-          openEditDialog={() => {
-            setShouldOpenDialog(true);
-          }}
-        />
-      )}
+
     </>
   );
 }

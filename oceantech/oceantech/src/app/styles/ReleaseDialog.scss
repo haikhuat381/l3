@@ -1,28 +1,78 @@
-.rs-noReadonly,
-.rs-readonly,
-.edit-text {
-  color: #d32f2f;
-  padding: 0 !important;
+.single h6,
+.single h5,
+.single p,
+.single input,
+.single span,
+.single td {
+  font-family: "Times New Roman", Times, serif !important;
 }
 
-.rs-noReadonly::after,
-.edit-text ::after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  bottom: 3px;
-  height: 1px;
-  border-bottom: 1px dotted black;
+.single {
+  padding: 0 85px;
 }
 
-.rs-noReadonly input,
-.rs-readonly input,
-.edit-text input {
-  padding: 1px;
-  height: 20px !important;
+.banner {
+  padding-top: 50px;
+  font-weight: bold !important;
 }
-.rs-noReadonly fieldset,
-.rs-readonly fieldset,
-.edit-text fieldset {
-  border: none !important;
+
+.text-left {
+  align-items: start !important;
+  text-align: left !important;
+}
+
+.title {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.container-form {
+  padding-top: 7px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 7px;
+}
+
+.container-title {
+  padding-top: 7px;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-bottom: 7px;
+}
+
+.applicant-content {
+  font-weight: bold !important;
+  padding-top: 8px;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.dialogcontent-form {
+  padding-left: 130px !important;
+  padding-right: 110px !important;
+}
+
+.update-option {
+  height: 10px !important;
+  overflow: hidden;
+  min-height: 48px !important;
+}
+
+.accordion-detail {
+  padding: 16px 0 0 0 !important;
+}
+
+.form-content {
+  padding-left: 32px !important;
+  padding-right: 16px !important;
+}
+
+.day-form {
+  width: 20px !important;
+  margin-left: 1px !important;
+  margin-right: 1px !important;
 }
