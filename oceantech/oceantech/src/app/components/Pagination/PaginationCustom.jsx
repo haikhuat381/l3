@@ -1,13 +1,12 @@
 import Pagination from '@mui/material/Pagination';
-import { Grid } from "semantic-ui-react";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { pageSizeDefault, pageSizeOptionsDefault } from 'app/constant';
+import { useSelector } from "react-redux";
+import { pageDefault, pageSizeDefault, pageSizeOptionsDefault } from 'app/constant';
 
 function PaginationCustom({ onHandleChange }) {
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(pageDefault)
   const [pageSize, setPageSize] = useState(pageSizeDefault)
 
   const totalData = useSelector((state) => state?.Employee?.total);

@@ -1,16 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import MaterialTable from "@material-table/core";
-import moment from "moment";
-import { formatDateView } from "app/constant";
+import { formatDateView, messageOfNoData } from "app/constant";
 
 const Diploma = React.forwardRef((props, ref) => {
   const { listDiploma } = props
-  const employeeData = useSelector((state) => state.Employee.employeeData);
   
   const columns = [
-    { title: "Tên văn bằng", field: "name",
+    {
+      title: "STT",
+      width:50,
       headerStyle: {borderTopLeftRadius: "4px"},
+      render: (rowData) => rowData.tableData.index + 1
+    },
+    { title: "Tên văn bằng", field: "name",
     },
     {
       title: "Nội dung ",
@@ -26,35 +28,37 @@ const Diploma = React.forwardRef((props, ref) => {
   ];
 
   return (
-    <div ref={ref} className="container-diploma">
+    <div ref={ref} className="container-diploma box-table-first-column">
       <MaterialTable
-        title={""}
-        data={!listDiploma ? [] : listDiploma}
-        columns={columns}
-        options={{
-          paging:false,
-          rowStyle: (rowData, index) => {
-            return {
-              backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-            };
-          },
-          headerStyle: {
-            backgroundColor: "#262e49",
-            color: "#fff",
-          },
-          maxBodyHeight: "1000px",
-          minBodyHeight: "370px",
-
-          padding: "default",
-          toolbar: false,
-
-        }}
-        localization={{
-            body: {
-              emptyDataSourceMessage: "Không có thông tin",
-            }
-        }}
-      />
+              title={""}
+              data={!listDiploma ? [] : listDiploma}
+              columns={columns}
+              style={{
+                boxShadow: "none",
+                fontFamily: "Times New Roman",
+              }}
+              sorting={false}
+              options={{
+                sorting: false,
+                filtering: false,
+                paging: false,
+                pageSize: 15,
+                pageSizeOptions: [5, 10, 15, 20],
+                cellStyle: { border: "1px solid black" },
+                headerStyle: {
+                  pointerEvents: "none",
+                  border: "1px solid black",
+                  fontWeight: "600",
+                },
+                padding: "default",
+                toolbar: false,
+              }}
+              localization={{
+                body: {
+                  emptyDataSourceMessage: messageOfNoData,
+                },
+              }}
+            />
     </div>
   );
 });

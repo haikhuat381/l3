@@ -8,11 +8,11 @@ import {
   IconButton,
   Icon,
 } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function RegisterDocumentDialog(props) {
   const { handleClose, registerDataDialog } = props;

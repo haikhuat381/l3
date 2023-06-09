@@ -1,315 +1,123 @@
-import React, { useState } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  Box,
-  Button,
-  styled,
-  DialogActions,
-  DialogContent,
-  Grid,
-  TextField,
-  IconButton,
-  Icon,
-  Typography,
-  MenuItem,
-  TextareaAutosize,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Grid, TextField, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import FormSingle from "../FormSingle/FormSingle";
+import Applicant from "../Application/Application";
+import DayFormm from "../DayForm/DayForm";
+import { otherFeature, citizenIdIssuanceDateAfterCurrentDate, formatDateSend } from "app/constant";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
-import { BorderColor, Close } from "@mui/icons-material";
-import { updateEmployee } from "app/redux/actions/actions";
-import moment from "moment/moment";
-import { formatDateView } from "app/constant";
 function SalarationLetter(props) {
-  const { handleClose, dataIncreaseDialog, handleValues, status } = props;
+  const { handleValues, status } = props;
   const employeeData = useSelector((state) => state.Employee.employeeData);
+  const dataIncreaseDialog = useSelector(
+    (state) => state.ManageEmployee.increaseHistory
+  );
   const [dataIncrease, setDataIncrease] = useState(dataIncreaseDialog);
-  var today = new Date();
+
+  useEffect(() => {
+    setDataIncrease(dataIncreaseDialog);
+  }, [dataIncreaseDialog])
+
   const handlechangeValuse = (event, method) => {
+
     const data = { ...dataIncrease };
-    data[method] = event.target.value;
+    const today = formatDateSend(new Date())
+    if (method === "date" && event.target.value > today) {
+      toast.warning(citizenIdIssuanceDateAfterCurrentDate);
+    }
+    else {
+      data[method] = event.target.value;
+    }
+
     setDataIncrease(data);
     handleValues(data);
   };
+
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        style={{
-          fontFamily: '"Times New Roman", Times, serif',
-          padding: 15,
-          marginTop: 30,
-        }}
-      >
+      <Grid className="single" container spacing={2}>
         <Grid container>
+          <FormSingle title=" Về việc điều chỉnh tăng lương cho Nhân viên" />
           <Grid
-            sx={{ mt: 1 }}
+            className="container-form"
             container
             item
             sm={12}
             xs={12}
-            justifyContent="center"
-            display="flex"
+            spacing={1}
           >
-            <Grid container item sm={7} xs={7} sx={{ pt: 2, pb: 2 }}>
-              <Grid
-                variant="h5"
-                textTransform="uppercase"
-                sm={12}
-                xs={12}
-                fullWidth
-                textAlign="center"
-              >
-                <Typography
-                  variant="h5"
-                  sm={12}
-                  xs={12}
-                  sx={{ fontWeight: "bold" }}
-                  fontFamily={"Times New Roman"}
-                >
-                  Cộng hòa xã hội chủ ngĩa Việt Nam
-                </Typography>
+            <Grid item container xs={6} spacing={1}>
+              <Grid item xs="auto">
+                <Typography>Chức vụ hiện tại: </Typography>
               </Grid>
-              <Grid variant="h6" sm={12} xs={12} fullWidth textAlign="center">
-                <Typography
-                  variant="h6"
-                  sm={12}
-                  xs={12}
-                  fontFamily={"Times New Roman"}
-                >
-                  Độc lập - Tự do - Hạnh phúc
-                </Typography>
-              </Grid>
-              <Grid sm={12} xs={12} fullWidth textAlign="center">
-                <Typography variant="h6" sm={12} xs={12}>
-                  -------------------------------------
-                </Typography>
+              <Grid item xs={true}>
+                <TextField
+                  className="rs-noReadonly "
+                  value={otherFeature[employeeData?.employeeInfo?.teamId]?.name}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  id="standard-adornment-mount"
+                  fullWidth
+                />
               </Grid>
             </Grid>
-          </Grid>
-
-          <Grid
-            sx={{ pt: 1, mt: 4 }}
-            container
-            item
-            sm={12}
-            xs={12}
-            justifyContent="center"
-          >
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: "bold" }}
-              sm={12}
-              xs={12}
-              fontFamily={"Times New Roman"}
-            >
-              QUYẾT ĐỊNH
-            </Typography>
-          </Grid>
-          <Grid
-            sx={{ pt: 1, pb: 3, mb: 2 }}
-            container
-            item
-            sm={12}
-            xs={12}
-            justifyContent="center"
-          >
-            <Typography
-              variant="h6"
-              sm={12}
-              xs={12}
-              fontFamily={"Times New Roman"}
-            >
-              Về việc điều chỉnh tăng lương cho Nhân viên
-            </Typography>
-          </Grid>
-          <Grid
-            container
-            item
-            sm={12}
-            xs={12}
-            className=" container-form"
-            sx={{ pl: 10, pr: 10, pb: 2 }}
-          >
-            <Grid sx={{ mb: 2 }} item sm={12} xs={12}>
-              <Typography sx={{ mt: 1 }}>
-                - Căn cứ tại quy chế, Điều lệ công ty Oceantech
-              </Typography>
-            </Grid>
-
-            <Grid item sm={12} xs={12}>
-              <Typography sx={{ mb: 2 }}>
-                - Căn cứ vào hợp đồng lao động với người lao động
-              </Typography>
-              <Typography>
-                - Xét những đóng góp của người lao động và đề nghị của trưởng
-                phòng nhân sự
-              </Typography>
-            </Grid>
-            <Grid
-              sx={{ pt: 1, mt: 4, mb: 3 }}
-              container
-              item
-              sm={12}
-              xs={12}
-              justifyContent="center"
-            >
-              <Typography
-                variant="h5"
-                sx={{ fontWeight: "bold" }}
-                fontFamily={"Times New Roman"}
-              >
-                GIÁM ĐỐC CÔNG TY QUYẾT ĐỊNH
-              </Typography>
+            <Grid item container xs={6} spacing={1}>
+              <Grid item xs="auto">
+                <Typography>Số lương được tăng: </Typography>
+              </Grid>
+              <Grid item xs={true}>
+                <TextField
+                  className="rs-noReadonly "
+                  value={`${Number(dataIncrease?.salary).toLocaleString()} đ`}
+                  onChange={(event) => {
+                    handlechangeValuse(event, "salary");
+                  }}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  id="standard-adornment-mount"
+                  fullWidth
+                />
+              </Grid>
             </Grid>
           </Grid>
-          <Grid
-            container
-            item
-            sm={12}
-            xs={12}
-            sx={{ pl: 10, pr: 10, pb: 2 }}
-            justifyContent="flex-start"
-          >
-            <Grid item sm={1.8} xs={1.8}>
-              <Typography>Điều 1: Kể từ ngày:</Typography>
-            </Grid>
-            <Grid item sm={2} xs={2}>
-              <TextField
-                className="edit-text"
-                InputProps={{
-                  readOnly: status,
-                  style: { padding: 0 },
-                }}
-                id="standard-adornment-mount"
-                fullWidth
-                sx={{
-                  "& fieldset": { border: "none", padding: 0 },
-                }}
-                value={formatDateView(dataIncrease?.date)}
-                onChange={(event) => {
-                  handlechangeValuse(event, "date");
-                }}
-              />
-            </Grid>
-            <Grid item sm={3.4} xs={3.4} sx={{ pl: 0 }}>
-              <Typography>, điều chỉnh mức lương của Ông/Bà:</Typography>
-            </Grid>
-            <Grid item sm={2} xs={2}>
-              <TextField
-                className="edit-text"
-                InputProps={{
-                  readOnly: true,
-                  style: { padding: 0 },
-                }}
-                id="standard-adornment-mount"
-                fullWidth
-                sx={{
-                  "& fieldset": { border: "none", padding: 0 },
-                }}
-                value={employeeData?.employeeInfo?.fullName}
-              />
-            </Grid>
-            <Grid item sm={1.2} xs={1.2} sx={{ ml: 0 }}>
-              <Typography>, sẽ tăng lên:</Typography>
-            </Grid>
-            <Grid item sm={1.5} xs={1.5}>
-              <TextField
-                className="edit-text"
-                InputProps={{
-                  readOnly: status,
-                  style: { padding: 0 },
-                }}
-                id="standard-adornment-mount"
-                fullWidth
-                sx={{
-                  "& fieldset": { border: "none", padding: 0 },
-                }}
-                value={dataIncrease?.salary}
-                onChange={(event) => {
-                  handlechangeValuse(event, "salary");
-                }}
-              />
+          <Grid className="container-form" container item sm={12} xs={12}>
+            <Grid item container xs={12} spacing={1}>
+              <Grid item xs="auto">
+                <Typography>Lý do tăng lương:</Typography>
+              </Grid>
+              <Grid item xs={true}>
+                <TextField
+                  className="rs-noReadonly"
+                  value={dataIncrease?.reason}
+                  onChange={(event) => {
+                    handlechangeValuse(event, "reason");
+                  }}
+                  InputProps={{
+                    readOnly: status,
+                  }}
+                  id="standard-adornment-mount"
+                  fullWidth
+                />
+              </Grid>
             </Grid>
           </Grid>
-          <Grid
-            container
-            item
-            sm={12}
-            xs={12}
-            sx={{ pl: 10, pr: 10, pb: 2 }}
-            justifyContent="flex-start"
-          >
+          <Grid className="container-form" container item sm={12} xs={12}>
             <Typography>
-              Điều 2: Các ông/bà Phòng Nhân Sự, Phòng Tài Chính kế toán căn cứ
-              quyết định thi hành.
+              Căn cứ vào bộ luật lao động năm 2019, hợp đồng lao động số
+              HĐLĐ001, thỏa ước lao động và tình hình thực tế của công ty, đề
+              xuất ban hành chính thi hành để đảm bảo công bằng cũng như là lời
+              động viên, tạo ra động lực để tôi làm việc tốt hơn .
             </Typography>
           </Grid>
+
+          <DayFormm handlechangeValuse={handlechangeValuse} data={dataIncreaseDialog} />
         </Grid>
-        <Grid
-          container
-          item
-          sm={12}
-          xs={12}
-          sx={{ pl: 10, pr: 10, mt: 1 }}
-          justifyContent="flex-end"
-        ></Grid>
-      </Grid>
-      <Grid
-        container
-        item
-        sm={12}
-        xs={12}
-        sx={{ pl: 10, pr: 10, pb: 5 }}
-        justifyContent="flex-end"
-      >
-        <Grid
-          item
-          sm={4}
-          xs={4}
-          container
-          direction="column"
-          textAlign="center"
-          spacing={1}
-        >
-          <Grid item>
-            <Typography style={{ fontStyle: "italic" }}>
-              {`Hà Nội, Ngày ${today.getDate()} tháng ${
-                today.getMonth() + 1
-              } năm ${today.getFullYear()}`}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              style={{ fontWeight: "bold" }}
-              fontFamily={"Times New Roman"}
-            >
-              Người làm đơn
-            </Typography>
-          </Grid>
-          <Grid item>
-            {" "}
-            <Typography
-              style={{ fontWeight: "bold" }}
-              fontFamily={"Times New Roman"}
-            >
-              {employeeData?.employeeInfo?.fullName.split(" ").pop()}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              style={{ fontWeight: "bold" }}
-              fontFamily={"Times New Roman"}
-            >
-              {employeeData?.employeeInfo?.fullName}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
+        <Applicant />
+
+      </Grid >
     </>
   );
 }

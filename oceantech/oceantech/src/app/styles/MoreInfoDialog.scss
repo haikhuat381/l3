@@ -1,0 +1,19 @@
+.more-info {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-265%, -180%);
+    width: 280px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+}
+
+.more-info-title {
+    margin: 20px 20px 10px;
+}
+
+.more-info-content {
+    margin: 10px 20px 20px;
+}

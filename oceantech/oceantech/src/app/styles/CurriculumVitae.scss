@@ -1,20 +1,130 @@
 .container-cv {
-    height: 560px;
+    height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     padding-left: 5px;
 }
 
-.resume-right {
-    // height: 660px;
+
+.cv-left {
+    padding-bottom: 12px;
+    background-color: #373E58;
+    box-sizing: border-box;
+    color: white;
+}
+
+.cv-right {
     height: 100%;
-    max-height: 660px;
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-bottom: 0;
+    padding-right: 4px;
+}
+
+.workExperiences-container {
+    padding-left: 21px !important;
+}
+.workExperiences {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    padding: 20px 0 22px;
+}
+
+.workExperiences:not(:last-of-type) {
+    border-bottom: 1px solid #cbcbcb !important;
+}
+
+.workExperiences:first-of-type {
+    padding: 0 0 24px;
 }
 
 .workExperiences-items {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
+}
+
+
+.avatar-cv {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-cv-div {
+    margin: 32px 0 24px;
+    position: relative;
+    width: 86%;
+    margin-bottom: calc(100% /1);
+}
+
+.avatar-cv-div > img {
+    border-radius: 50%;
+    height: 100% !important;
+    width: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+.avatar-cv-img {
+    border-radius: 50%;
+}
+
+.avatar-cv-div::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.cv-left-item {
+    padding-top: 100% !important;
+}
+
+.fullname-cv {
+    text-align: center;
+    margin: -24px 12px 0 !important;
+}
+
+.teamId-cv {
+    text-align: center;
+    font-size: 18px !important;
+}
+
+
+.cv-right-item {
+    display: flex;
+    gap: 8px !important;
+    align-items: center;
+    color: #373E58 !important;
+}
+
+.cv-right-icon {
+    font-size: 32px !important;
+}
+
+.cv-right-item-title {
+    text-transform: uppercase;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+}
+
+.workExperiences-items-date {
+    text-align: end;
+    padding-top: 2px !important;
+}
+.workExp-date {
+    font-size: 14px !important;
+    font-weight: 550 !important;
+}
+
+.workExperiences-items-icon-remove {
+    justify-content: end;
+    align-items: start;
+}
+
+.workExperiences-items-company {
+    padding-top: 0 !important;
 }

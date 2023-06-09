@@ -1,5 +1,4 @@
-import React, { useRef } from "react";
-import { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Breadcrumb from "app/components/Breadcrumb";
 import {
@@ -9,26 +8,21 @@ import {
 } from "app/redux/actions/actions";
 import MaterialTable from "@material-table/core";
 import PaginationCustom from "app/components/Pagination/PaginationCustom";
-import {
-  Box,
-  styled,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import ManagerEmployeeDialog from "./ManagerEmployeeDialog";
 import ReleaseDialog from "./ReleaseDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { objStatus, moreInfoEndingStatus, statusOfManageEmployee, formatDateView } from "app/constant";
-import { DetailIcon, InfoIcon } from "app/components/Button";
+import {
+  Container,
+  objStatus,
+  statusOfManageEmployee,
+} from "app/constant";
+import { DetailIcon, InfoIcon } from "app/components/Icon";
+import LoadingBay from "app/components/LoadingBay";
 
-const Container = styled("div")(({ theme }) => ({
-  margin: "30px 30px 0",
-  [theme.breakpoints.down("sm")]: { margin: "16px" },
-  "& .breadcrumb": {
-    marginBottom: "0",
-    [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
-  },
-}));
+
 
 function ManagerEmployee() {
   const dispatch = useDispatch();
@@ -37,9 +31,12 @@ function ManagerEmployee() {
   const reloadRef = useRef();
   const [shouldDialogManage, setShouldDialogManage] = useState(false);
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
-  const [dataReport, setDataReport] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
   const listEmployee = useSelector((state) => state.Employee.listEmployeeData);
+  const loading = useSelector(
+    (state) => state.Employee.loading
+  );
+
   const handleChangeReload = (value) => {
     reloadRef.current = value;
   };
@@ -63,51 +60,47 @@ function ManagerEmployee() {
   const columns = [
     {
       title: "Hành động",
-      width: 130,
+      width: 140,
       headerStyle: {
         borderTopLeftRadius: "4px",
       },
       render: (rowData) => {
         return (
           <>
-            {rowData.status === moreInfoEndingStatus && (
-                  <InfoIcon
-                    onClick={() => {
-                      dispatch(getEmployeeDataAction(rowData?.employeeId));
-                      setDataReport(rowData);
-                      setShouldOpenRequestDialog(true);
-                    }}
-                  />
-            )}
 
-              <DetailIcon
-                title="Cập nhật diễn biến"
-                onClick={() => {
-                  setShouldDialogManage(true);
-                  dispatch(getEmployeeDataAction(rowData?.employeeId));
-                }}
-              />
+            <InfoIcon
+              onClick={() => {
+                dispatch(getEmployeeDataAction(rowData?.employeeId));
+                setShouldOpenRequestDialog(true);
+              }}
+              status={rowData?.status}
+            />
+
+            <DetailIcon
+              title="Cập nhật diễn biến"
+              onClick={() => {
+                setShouldDialogManage(true);
+                dispatch(getEmployeeDataAction(rowData?.employeeId));
+
+              }}
+              status={rowData.status}
+            />
           </>
         );
       },
     },
-    { title: "Họ và tên", field: "fullName", width: 220 },
-    {
-      title: "Ngày sinh",
-      field: "dateOfBirth",
-      width: 150,
-      render: (rowdata) => formatDateView(rowdata?.dateOfBirth),
-    },
+    { title: "Mã nhân viên", width: 150, field: "code" },
+    { title: "Họ và tên", field: "fullName" },
     { title: "Email", field: "email" },
-    { title: "Số điện thoại", width: 150, field: "phone" },
+    { title: "Số điện thoại", field: "phone" },
     {
       title: "Trạng thái",
-      width: 300,
       field: "status",
       headerStyle: { borderTopRightRadius: "4px" },
-      render: (rowdata) => objStatus[rowdata.status],
+      render: (rowdata) => objStatus[rowdata?.status],
     },
   ];
+
   return (
     <Container>
       <ToastContainer
@@ -122,47 +115,62 @@ function ManagerEmployee() {
         pauseOnHover
         theme="colored"
       />
-      <Box className="breadcrumb">
-        <Breadcrumb
-          routeSegments={[
-            { name: "Quản lý", path: "/" },
-            { name: "Quản lý nhân viên" },
-          ]}
-        />
-      </Box>
-      <Box width="100%" overflow="auto">
-        <MaterialTable
-          title={""}
-          columns={columns}
-          data={listEmployee || []}
-          options={{
-            paging: false,
-            rowStyle: (rowData, index) => {
-              return {
-                backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-              };
-            },
-            maxBodyHeight: "470px",
-            minBodyHeight: "470px",
-            headerStyle: {
-              position: "sticky",
-              top: 0,
-              zIndex: 1,
+      <div className="box-container">
+        <Box className="breadcrumb">
+          <Breadcrumb
+            routeSegments={[
+              { name: "Quản lý", path: "/" },
+              { name: "Quản lý nhân viên" },
+            ]}
+          />
+        </Box>
 
-              backgroundColor: "#262e49",
-              color: "#fff",
-            },
-            padding: "default",
-            toolbar: true,
-          }}
-        />
 
-        <PaginationCustom onHandleChange={onHandleChange} />
-      </Box>
+        <Box width="100%" overflow="auto" className="box-content" >
+          <div className="box-table-first-column">
+            <MaterialTable
+              columns={columns}
+              data={listEmployee || []}
+              title={""}
+              localization={{
+                toolbar: {
+                  searchPlaceholder: 'Tìm kiếm',
+                  searchTooltip: 'Tìm kiếm',
+                },
+              }}
+              options={{
+                rowStyle: (rowData, index) => {
+                  return {
+                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+                  };
+                },
+                headerStyle: {
+                  backgroundColor: "#222943",
+                  color: "#fff",
+                  zIndex: 1,
+                  position: "sticky",
+                  top: 0,
+                },
+                paging: false,
+                padding: "default",
+                maxBodyHeight: "816px",
+                toolbar: true,
+              }}
+            />
+          </div>
+          <PaginationCustom onHandleChange={onHandleChange} className="box-content-pagination" />
+        </Box>
+      </div>
+
+
+      {loading && <LoadingBay />}
       {shouldDialogManage && (
         <ManagerEmployeeDialog
           handleClose={handleClose}
           handleChangeReload={handleChangeReload}
+          handleCloseMoreInfoDialog={() => {
+            setShouldOpenRequestDialog(false);
+          }}
         />
       )}
       {shouldOpenRequestDialog && (
@@ -171,7 +179,7 @@ function ManagerEmployee() {
             setShouldOpenRequestDialog(false);
           }}
           openEditDialog={() => {
-            setShouldOpenDialog(true);
+            setShouldDialogManage(true);
           }}
         />
       )}

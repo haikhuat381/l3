@@ -1,11 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import {
-  TextField,
-  Grid,
-  Button,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { TextField, Grid, Button } from "@mui/material";
 import MaterialTable from "@material-table/core";
-import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,41 +11,39 @@ import {
   deletePromoteHistoryAction,
   addPromoteHistoryAction,
 } from "app/redux/actions/actions";
-import ConfirmDialog from "app/components/confirmDialog/ConfirmDialog";
+import ConfirmationDialog from "app/components/confirmDialog/ConfirmationDialog";
 import PromoteDialog from "./PromoteDialog";
 import MoreInfoDialog from "app/components/MoreInfoDialog/MoreInfoDialog";
-
-import moment from "moment";
-import { async } from "regenerator-runtime";
-import { randomValue, formatDateSend, formatDateView } from "app/constant";
-import { DeleteIcon, EditIcon } from "app/components/Button";
+import { formatDateSend, formatDateView, messageOfNoData } from "app/constant";
+import { DeleteIcon, EditIcon } from "app/components/Icon";
 function Promote(props) {
-  const { handleClose, ID } = props;
+  const { handleClose, idRegister } = props;
   const dispatch = useDispatch();
-  const reloadPro = useRef();
-  const promoteData = useSelector((state) => state.Employee.listPromoteHistory);
+
+  const promoteData = useSelector(
+    (state) => state.ManageEmployee.listPromoteHistory
+  );
+
   const [shouldOpenDialog, setShouldOpenDialog] = useState(false);
   const [employeeDelete, setEmployeeDelete] = useState({});
   const [updatePromote, setUpdatePromote] = useState({});
   const [idPromoteDialog, setIdPromoteDialog] = useState();
   const [shouldOpenDeleteDialog, setshouldOpenDeleteDialog] = useState(false);
   const [promoteDataDialog, setPromoteDataDialog] = useState({});
-  const [rowDataInfo, setRowDataInfo] = useState();
-  const [rowData, setRowData] = useState();
   const [shouldOpenRequestDialog, setShouldOpenRequestDialog] = useState(false);
-  const handleReloadPro = (values) => {
-    reloadPro.current = values;
-  };
 
   useEffect(() => {
-    dispatch(getPromoteHistoryAction(ID));
-  }, [ID, reloadPro.current]);
+    if (idRegister) dispatch(getPromoteHistoryAction(idRegister));
+  }, [idRegister]);
+
 
   const handleDeletePromote = () => {
-    dispatch(deletePromoteHistoryAction(employeeDelete?.promotionId));
-
-    handleReloadPro(randomValue);
+    formik.resetForm();
+    dispatch(
+      deletePromoteHistoryAction(employeeDelete?.promotionId, idRegister)
+    );
     setshouldOpenDeleteDialog(false);
+
   };
   const handleEditPromote = (rowData) => {
     setUpdatePromote(rowData);
@@ -70,71 +63,98 @@ function Promote(props) {
       newPosition: updatePromote?.newPosition || "",
     },
     validationSchema: Yup.object({
-      reason: Yup.string().required("Không được bỏ trống"),
-      note: Yup.string().required("Không được bỏ trống"),
-      newPosition: Yup.string().required("Không được bỏ trống"),
-      date: Yup.date().required("Vui lòng nhập ngày"),
+      reason: Yup.string()
+        .min(6, "Nhập tối thiểu 6 kí tự")
+        .max(32, "Nhập tối đa 32 kí tự")
+        .required("Không được bỏ trống"),
+      note: Yup.string()
+        .min(6, "Nhập tối thiểu 6 kí tự")
+        .max(32, "Nhập tối đa 32 kí tự")
+        .required("Không được bỏ trống"),
+      newPosition: Yup.string()
+        .min(6, "Nhập tối thiểu 6 kí tự")
+        .max(32, "Nhập tối đa 32 kí tự")
+        .required("Không được bỏ trống"),
+      date: Yup.date()
+        .max(new Date(), "Không được nhập ngày lớn hơn hiện tại")
+        .required("Vui lòng nhập ngày cấp")
     }),
     onSubmit: (values, { resetForm }) => {
       if (!updatePromote?.employeeId) {
-        dispatch(addPromoteHistoryAction(ID, values));
+        dispatch(addPromoteHistoryAction(idRegister, values));
       } else {
         setIdPromoteDialog(updatePromote?.promotionId);
         dispatch(
-          updatePromoteHistoryAction(updatePromote?.promotionId, values)
+          updatePromoteHistoryAction(
+            updatePromote?.promotionId,
+            values,
+            idRegister
+          )
         );
         setUpdatePromote({});
       }
-      handleReloadPro(randomValue);
-      setShouldOpenDialog(true);
+
+
       setPromoteDataDialog(values);
+      setShouldOpenDialog(true);
+
+
       resetForm();
     },
   });
 
   const columns = [
     {
-      title: "Hành động",
+      title: "STT",
+      render: (rowData) => rowData.tableData.index + 1,
       headerStyle: { borderTopLeftRadius: "4px" },
+      width: 50
+
+    },
+    {
+      title: "Hành động",
       render: (rowData) => {
         return (
           <>
-              <EditIcon
-                onClick={() => {
-                  handleEditPromote(rowData);
-                }}
-              />
-              <DeleteIcon
-                onClick={() => {
-                  setshouldOpenDeleteDialog(true);
-                  setEmployeeDelete(rowData);
-                  formik.resetForm();
-                }}
-              />
+            <EditIcon
+              onClick={() => {
+                handleEditPromote(rowData);
+              }}
+              status={rowData.status}
+            />
+            <DeleteIcon
+              onClick={() => {
+                setshouldOpenDeleteDialog(true);
+                setEmployeeDelete(rowData);
+              }}
+              status={rowData.status}
+            />
           </>
         );
       },
     },
-
-    { title: "Chực vụ hiện tại", field: "newPosition" },
-    { title: "Lý do", field: "reason" },
+    {
+      title: "Số lần",
+      field: "count",
+    },
+    { title: "Chức vụ hiện tại", field: "newPosition" },
 
     {
       title: "Ngày",
       field: "date",
       render: (rowdata) => formatDateView(rowdata?.date),
     },
-    { title: "Ghi chú", field: "note" },
+    { title: "Lý do", field: "reason" },
     {
-      title: "Số lần",
-      field: "count",
+      title: "Ghi chú",
+      field: "note",
       headerStyle: { borderTopRightRadius: "4px" },
     },
   ];
   return (
     <>
       {shouldOpenDeleteDialog && (
-        <ConfirmDialog
+        <ConfirmationDialog
           onConfirmDialogClose={() => {
             setshouldOpenDeleteDialog(false);
           }}
@@ -142,14 +162,16 @@ function Promote(props) {
             handleDeletePromote();
           }}
           title="Xóa thăng chức"
+          content="Bạn có chắn chắn muốn xóa thăng chức!"
         />
       )}
 
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={2} pt={1}>
-          <Grid container item xs={12} spacing={2}>
-            <Grid item xs={4}>
+        <Grid container spacing={2} pt={1} >
+          <Grid container item xs={12} spacing={2} className="form-content">
+            <Grid item md={4} xs={12} >
               <TextField
+                autoComplete="off"
                 style={{ height: 5 }}
                 size="small"
                 label="Ngày tăng chức"
@@ -169,8 +191,9 @@ function Promote(props) {
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item md={4} xs={12} >
               <TextField
+                autoComplete="off"
                 size="small"
                 fullWidth
                 label="Chức vụ mới"
@@ -185,8 +208,9 @@ function Promote(props) {
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item md={4} xs={12} >
               <TextField
+                autoComplete="off"
                 size="small"
                 fullWidth
                 label="Ghi chú"
@@ -202,9 +226,10 @@ function Promote(props) {
               />
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={2}>
-            <Grid item xs={8}>
+          <Grid container item xs={12} spacing={2} className="form-content">
+            <Grid item md={8} xs={12}>
               <TextField
+                autoComplete="off"
                 size="small"
                 fullWidth
                 label="Lý do"
@@ -220,17 +245,26 @@ function Promote(props) {
               />
             </Grid>
 
-            <Grid container item xs={3} spacing={1}>
+            <Grid container item md={3} xs={12} spacing={1}>
               <Grid item>
-                <Button variant="contained" color="primary" type="submit">
+                <Button
+                  className="button-custom"
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
                   Lưu
                 </Button>
               </Grid>
               <Grid item>
                 <Button
                   variant="contained"
+                  className="button-custom"
                   color="error"
-                  onClick={() => formik.resetForm()}
+                  onClick={() => {
+                    formik.resetForm();
+                    setUpdatePromote({});
+                  }}
                 >
                   Hủy
                 </Button>
@@ -238,33 +272,40 @@ function Promote(props) {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <MaterialTable
-              title={""}
-              // data={listPromote}
-              data={promoteData}
-              columns={columns}
-              options={{
-                paging: false,
-                rowStyle: (rowData, index) => {
-                  return {
-                    backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
-                  };
-                },
-                maxBodyHeight: "215px",
-                minBodyHeight: "215px",
-                headerStyle: {
-                  backgroundColor: "#262e49",
-                  color: "#fff",
-                  position: "sticky",
-                  top: 0,
-                  zIndex: 1,
-                },
+            <div className="table-two-columns">
+              <MaterialTable
+                title={""}
+                data={promoteData}
+                columns={columns}
+                options={{
 
-                padding: "default",
+                  paging: false,
+                  rowStyle: (rowData, index) => {
+                    return {
+                      backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
+                    };
+                  },
+                  maxBodyHeight: "336px",
+                  minBodyHeight: "336px",
+                  headerStyle: {
+                    backgroundColor: "#262e49",
+                    color: "#fff",
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                  },
 
-                toolbar: false,
-              }}
-            />
+                  padding: "default",
+
+                  toolbar: false,
+                }}
+                localization={{
+                  body: {
+                    emptyDataSourceMessage: messageOfNoData,
+                  },
+                }}
+              />
+            </div>
           </Grid>
         </Grid>
       </form>
@@ -272,18 +313,16 @@ function Promote(props) {
       {shouldOpenDialog && (
         <PromoteDialog
           promoteDataDialog={promoteDataDialog}
-          handleReloadPro={handleReloadPro}
           handleClose={() => setShouldOpenDialog(false)}
           handleCloseAll={handleClose}
           status={false}
           idPromoteDialog={idPromoteDialog}
-          ID={ID}
+          idRegister={idRegister}
         />
       )}
 
       {shouldOpenRequestDialog && (
         <MoreInfoDialog
-          rowDataInfo={rowDataInfo}
           rowData={rowData}
           handleClose={() => {
             setShouldOpenRequestDialog(false);

@@ -1,4 +1,25 @@
 .container-diploma {
-    height: 560px;
-    padding-left: 30px;
+    min-height: 560px;
+    padding: 0 50px 0 30px;
 }
+.container-diploma td {
+  border: 1px solid black;
+}
+.box-table-first-column th svg,
+.table-two-columns svg {
+    display: none;
+}
+
+.box-table-first-column tr td:nth-child(1),
+.table-two-columns tr td:nth-child(1),
+.table-two-columns tr td:nth-child(2) {
+  text-align: center;
+}
+
+.box-table-first-column th:nth-child(1) div, 
+.table-two-columns th:nth-child(1) div,
+.table-two-columns th:nth-child(2) div {
+  justify-content: center;
+}
+
+
